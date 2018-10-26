@@ -35,6 +35,12 @@ In Laravel's composer.json add:
   ],
 ```
 
+Then run:
+```bash
+composer update
+```
+You should see ion2s/laratomics-brew in the list of discovered packages.
+
 ## Credits
 * [ion2s GmbH](https://github.com/poolingpeople)
 * [All Contributors](https://github.com/poolingpeople/laratomics-brew/graphs/contributors)

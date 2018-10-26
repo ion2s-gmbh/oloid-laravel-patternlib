@@ -1,0 +1,36 @@
+{
+  "name": "ion2s/laratomics-brew",
+  "type": "library",
+  "description": "Package to add laratomics powers to your Laravel application",
+  "version": "0.0.0",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Sebastian Baum",
+      "email": "sebastian.baum@ion2s.com"
+    }
+  ],
+  "require": {
+    "php": "^7.1.3",
+    "laravel/framework" : "~5.7.7"
+  },
+  "autoload": {
+    "psr-4": {
+      "Ion2s\\Laratomics\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Ion2s\\Laratomics\\Tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Ion2s\\Laratomics\\LaratomicsBrewServiceProvider"
+      ]
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}

@@ -43,4 +43,4 @@ In Laravel's composer.json add:
 If you discover a security vulnerability within laratomics-brew, please send an e-mail to Sebastian Baum via [sebastian.baum@ion2s.com](mailto:sebastian.baum@ion2s.com).
 
 ## License
-The MIT License (MIT). Please see [License File](LICENSE) for more information.
+The MIT License (MIT). Please see [License File](LICENSE.md) for more information.

@@ -1,5 +1,5 @@
 <?php
 
 Route::get('/', function () {
-    return 'Hello Laratomics!';
+    return view('laratomics-brew::home');
 });

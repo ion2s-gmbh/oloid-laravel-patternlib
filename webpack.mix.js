@@ -15,6 +15,10 @@ mix.js('resources/js/app.js', 'public/js');
 
 mix.sass('resources/sass/app.scss', 'public/css');
 
+/** @todo finc a better solution */
+mix.copyDirectory('public/js', '../../laravel/application/public/vendor/ion2s/laratomics-brew/js') // for development only
+  .copyDirectory('public/css', '../../laravel/application/public/vendor/ion2s/laratomics-brew/css'); // for development only
+
 
 /*
 |-----------------------------------------------------------------------

@@ -1,9 +1,5 @@
-<html>
-<head>
-    <title>Hello Laratomics</title>
-</head>
+@extends('laratomics-brew::layout')
 
-<body>
-    <h1>Hello Laratomics...</h1>
-</body>
-</html>
+@section('content')
+Hello Laravel
+@endsection

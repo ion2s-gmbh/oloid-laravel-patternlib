@@ -23,12 +23,14 @@ mix.sass('resources/sass/app.scss', 'public/css');
 |
 | BrowserSync refreshes the Browser if file changes (js, sass, php) are | detected.
 | Proxy specifies the location where the app is located.
+|
+| Virtualbox/Vagrant environment: proxy: 'http(s)://xxx.xxx.xxx.xxx' or a domain.
+| Localhost environment: proxy: 'http(s)://localhost' or 'http(s)://localhost:8000'
 */
 mix.browserSync({
-  proxy: 'http://localhost',
-  host: 'localhost',
-  open: false,
+  proxy: 'http://dev.host',
+  open: true,
   watchOptions: {
-    usePolling: true
+    usePolling: false
   }
 });

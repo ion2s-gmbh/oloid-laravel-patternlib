@@ -1,5 +1,5 @@
 @extends('laratomics-brew::layout')
 
 @section('content')
-Hello Laravel
+Hello Laratomics
 @endsection

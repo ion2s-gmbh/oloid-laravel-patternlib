@@ -34,6 +34,10 @@ In Laravel's composer.json add:
     }
   ],
 ```
+And in the require-dev section add:
+```
+"ion2s/laratomics-brew": "*",
+```
 
 Then run:
 ```bash

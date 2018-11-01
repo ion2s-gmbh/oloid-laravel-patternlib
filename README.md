@@ -1,49 +1,19 @@
-# Setup
+<p align="center">
+<h1>Laratomics Brew</h1>
+</p>
 
-1. Create a standard Laravel application.
-2. Link the package laratomics-brew in composer.json
+## Introduction
+Laratomics Brew enables a development GUI besides your current project.
+Using this GUI you can create and manage template snippets (patterns) and build your whole frontend
+using these reusable patterns.
 
-## Recommended folder structure
-* laratomics
-    * packages
-        * laratomics-brew
-    * laravel
+## Installation & Configuration
 
-This structure will be created in the following steps.
+### Installation
+Laratomics Brew is not yet available. So there is no straight forward installation process.
+Stay tuned.
 
-### Laratomics-brew
-```bash
-mkdir -p laratomics/packages
-git clone git@github.com:poolingpeople/laratomics-brew.git
-```
-
-### Laravel
-Setup a plain Laravel 5.7+ application following the instructions in the [official documentation](https://laravel.com/docs/5.7/installation#installing-laravel)
-```bash
-composer create-project --prefer-dist laravel/laravel laravel
-```
-
-### Link the package
-Finally you have to link the laravel-brew package in the Laravel application and you're ready to go.
-In Laravel's composer.json add:
-```
-"repositories": [
-    {
-      "type":"path",
-      "url":"/path/to/laratomics-brew"
-    }
-  ],
-```
-And in the require-dev section add:
-```
-"ion2s/laratomics-brew": "*",
-```
-
-Then run:
-```bash
-composer update
-```
-You should see ion2s/laratomics-brew in the list of discovered packages.
+### Configuration
 
 ## Credits
 * [ion2s GmbH](https://github.com/poolingpeople)

@@ -33,6 +33,7 @@ mix.copyDirectory('public/js', '/var/www/laravel/application/public/vendor/ion2s
 */
 mix.browserSync({
   proxy: 'http://localhost',
+  startPath: 'workshop',
   open: false,
   watchOptions: {
     usePolling: true

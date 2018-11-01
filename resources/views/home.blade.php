@@ -1,4 +1,4 @@
-@extends('laratomics-brew::layout')
+@extends('laratomics-workshop::layout')
 
 @section('content')
 Hello Laratomics

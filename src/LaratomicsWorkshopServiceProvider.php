@@ -5,7 +5,7 @@ namespace Ion2s\Laratomics;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
-class LaratomicsBrewServiceProvider extends BaseServiceProvider
+class LaratomicsWorkshopServiceProvider extends BaseServiceProvider
 {
     /**
      * Bootstrap any package services.
@@ -18,7 +18,7 @@ class LaratomicsBrewServiceProvider extends BaseServiceProvider
 //        $this->setPublishing();
 
         $this->loadViewsFrom(
-            __DIR__.'/../resources/views', 'laratomics-brew'
+            __DIR__.'/../resources/views', 'laratomics-workshop'
         );
     }
 
@@ -41,7 +41,7 @@ class LaratomicsBrewServiceProvider extends BaseServiceProvider
     {
         return [
             'namespace' => 'Ion2s\Laratomics\Http\Controllers',
-            'prefix' => config('laratomics-brew.path')
+            'prefix' => config('laratomics-workshop.path')
         ];
     }
 
@@ -53,7 +53,7 @@ class LaratomicsBrewServiceProvider extends BaseServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(
-            __DIR__ . '/../config/laratomics-brew.php', 'laratomics-brew'
+            __DIR__ . '/../config/laratomics-workshop.php', 'laratomics-workshop'
         );
     }
 }

@@ -1,5 +1,5 @@
 {
-  "name": "ion2s/laratomics-brew",
+  "name": "ion2s/laratomics-workshop",
   "type": "library",
   "description": "Package to add laratomics powers to your Laravel application",
   "version": "0.0.0",
@@ -27,7 +27,7 @@
   "extra": {
     "laravel": {
       "providers": [
-        "Ion2s\\Laratomics\\LaratomicsBrewServiceProvider"
+        "Ion2s\\Laratomics\\LaratomicsWorkshopServiceProvider"
       ]
     }
   },

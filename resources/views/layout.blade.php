@@ -10,16 +10,16 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('vendor/ion2s/laratomics-brew/js/app.js') }}" defer></script>
+    <script src="{{ asset('vendor/ion2s/laratomics-workshop/js/app.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
 
     <!-- Styles -->
-    {{--<link href="{{ asset('vendor/ion2s/laratomics-brew/css/app.css') }}" rel="stylesheet">--}}
-    {{--<link href='{{mix('app.css', 'vendor/laratomics-brew')}}' rel='stylesheet' type='text/css'>--}}
-    <link href='{{ asset('vendor/ion2s/laratomics-brew/css/app.css') }}' rel='stylesheet' type='text/css'>
+    {{--<link href="{{ asset('vendor/ion2s/laratomics-workshop/css/app.css') }}" rel="stylesheet">--}}
+    {{--<link href='{{mix('app.css', 'vendor/laratomics-workshop')}}' rel='stylesheet' type='text/css'>--}}
+    <link href='{{ asset('vendor/ion2s/laratomics-workshop/css/app.css') }}' rel='stylesheet' type='text/css'>
 </head>
 <body>
     <div id="app">

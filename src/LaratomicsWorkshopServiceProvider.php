@@ -52,8 +52,45 @@ class LaratomicsWorkshopServiceProvider extends BaseServiceProvider
      */
     public function register()
     {
+        $this->configure();
+        $this->publishFiles();
+
+    }
+
+    /**
+     * Merge configurations.
+     */
+    private function configure()
+    {
         $this->mergeConfigFrom(
             __DIR__ . '/../config/laratomics-workshop.php', 'laratomics-workshop'
         );
+    }
+
+    /**
+     * Publish package's configs and views.
+     */
+    private function publishFiles()
+    {
+        /*
+         * Publish configs
+         */
+        $this->publishes([
+            __DIR__ . '/../config/laratomics-workshop.php' => config_path('laratomics-workshop.php')
+        ], 'laratomics-config');
+
+        /*
+         * Publish views
+         */
+        $this->publishes([
+            __DIR__.'/../resources/views' => resource_path('views/vendor/ion2s/laratomics-workshop'),
+        ], 'laratomics-views');
+
+        /*
+         * Publish languages/translations
+         */
+//        $this->publishes([
+//            __DIR__ . '/../resources/lang' => resource_path('lang/vendor/ion2s/laratomics-workshop')
+//        ], 'laratomics-lang');
     }
 }

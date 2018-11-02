@@ -6,6 +6,7 @@ namespace Laratomics\Services;
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\File;
+use Illuminate\Contracts\View\Factory as ViewFactory;
 use Spatie\YamlFrontMatter\YamlFrontMatter;
 
 const INITIAL_STATE = 'TODO';
@@ -129,6 +130,7 @@ class PatternService
      * @param array $values
      * @return array
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     * @throws \Exception
      * @todo refactor
      */
     public function loadPattern($pattern, $values = [])
@@ -154,9 +156,7 @@ class PatternService
 //        $state = $patternStateService->checkRemoteState($section, $component);
         $state = 'DONE';
 
-        $compiledHtml = Blade::compileString($html);
-//        $preview = view(['template' => $compiledHtml], $values);
-        $preview = 'is empty';
+        $preview = compileBladeString($html, $values);
         return [$html, $preview, $metadata, $style, $state];
     }
 

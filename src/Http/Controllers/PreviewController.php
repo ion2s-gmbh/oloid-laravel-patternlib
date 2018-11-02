@@ -45,7 +45,7 @@ class PreviewController extends Controller
     public function getPreview($pattern)
     {
         list($html, $preview, $metadata, $style, $state) = $this->patternService->loadPattern($pattern);
-        return view('getPreview', [
+        return view('laratomics-workshop::getPreview', [
             'preview' => $preview
         ]);
     }

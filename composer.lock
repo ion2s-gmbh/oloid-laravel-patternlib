@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "219a5b8331863771859e4ea34ebc6770",
+    "content-hash": "147aadd3b72c73a0c460095fae8f92a0",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -2107,6 +2107,40 @@
                 "environment"
             ],
             "time": "2018-07-29T20:33:41+00:00"
+        },
+        {
+            "name": "wpb/string-blade-compiler",
+            "version": "2.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mikerogne/StringBladeCompiler.git",
+                "reference": "f53480df078bf08b34887ce6b275f4e802387a2d"
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Wpb\\StringBladeCompiler\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Terre Porter",
+                    "email": "tporter@webpage-builders.com"
+                }
+            ],
+            "description": "Render Blade templates from string",
+            "keywords": [
+                "blade",
+                "compiler",
+                "laravel"
+            ],
+            "time": "2015-06-24T14:23:03+00:00"
         }
     ],
     "packages-dev": [],

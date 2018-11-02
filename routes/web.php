@@ -15,5 +15,5 @@ Route::post('store-pattern', 'PatternController@store')
 Route::get('{pattern}', 'PreviewController@preview')
     ->name('preview-pattern');
 
-Route::get('/laratomics/preview/{pattern}', 'PreviewController@getPreview')
+Route::get('preview/{pattern}', 'PreviewController@getPreview')
     ->name('get-preview');

@@ -56,9 +56,9 @@
             <h2>Preview</h2>
             <div class="code">
                 <div class="card-body">
-                    {{--<iframe height="1500" width="1100"--}}
-                            {{--frameBorder="0"--}}
-                            {{--src="{{ route('get-preview', ['pattern' => $pattern]) }}"></iframe>--}}
+                    <iframe height="1500" width="1100"
+                            frameBorder="0"
+                            src="{{ route('get-preview', ['pattern' => $pattern]) }}"></iframe>
                 </div>
             </div>
         </div>

@@ -151,9 +151,6 @@ class PatternService
         $parts = explode('.', $pattern);
         $section = array_shift($parts);
         $component = implode('.', $parts);
-//        $patternStateService = app()->make(PatternStateService::class);
-
-//        $state = $patternStateService->checkRemoteState($section, $component);
         $state = 'DONE';
 
         $preview = compileBladeString($html, $values);

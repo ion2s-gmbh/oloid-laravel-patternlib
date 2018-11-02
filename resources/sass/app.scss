@@ -1,3 +1,42 @@
-body {
-  background-color: #005cbf;
+
+// Fonts
+//@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
+
+// Variables
+//@import "variables";
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+//@import "../../laratomics/patterns/patterns";
+
+.navbar-laravel {
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.state-todo {
+  color:red;
+}
+
+.state-review {
+  color: orange;
+}
+
+.state-done {
+  color: forestgreen;
+}
+
+.code {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  background-color: #f5f2f0;
+  border: 2px solid #949494;
+  margin-left: 5px;
+}
+
+.design {
+  max-height: 500px;
+  max-width: 1200px;
 }

@@ -12,7 +12,7 @@ Route::get('create-pattern', 'PatternController@createForm')
 Route::post('store-pattern', 'PatternController@store')
     ->name('store-pattern');
 
-Route::get('/laratomics/{pattern}', 'PreviewController@previewLocal')
+Route::get('{pattern}', 'PreviewController@preview')
     ->name('preview-pattern');
 
 Route::get('/laratomics/preview/{pattern}', 'PreviewController@getPreview')

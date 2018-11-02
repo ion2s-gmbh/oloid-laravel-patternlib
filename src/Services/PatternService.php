@@ -155,7 +155,8 @@ class PatternService
         $state = 'DONE';
 
         $compiledHtml = Blade::compileString($html);
-        $preview = view(['template' => $compiledHtml], $values);
+//        $preview = view(['template' => $compiledHtml], $values);
+        $preview = 'is empty';
         return [$html, $preview, $metadata, $style, $state];
     }
 

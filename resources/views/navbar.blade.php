@@ -15,7 +15,7 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         @foreach($navbar->patterns($section) as $pattern)
-                            <a href="/laratomics/{{ $navbar->slug($pattern) }}">{{ $pattern }}</a><br>
+                            <a href="{{ route('preview-pattern', ['pattern' => $navbar->slug($pattern)]) }}">{{ $pattern }}</a><br>
                         @endforeach
                     </div>
                 </li>

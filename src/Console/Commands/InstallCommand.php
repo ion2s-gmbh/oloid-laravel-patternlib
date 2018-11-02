@@ -11,14 +11,14 @@ class InstallCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'laratomics:install';
+    protected $signature = 'workshop:install';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Install all the Laratomics-workshop resoureces';
+    protected $description = 'Install all the Laratomics Workshop Resoureces';
 
     /**
      * Execute the console command.
@@ -32,9 +32,6 @@ class InstallCommand extends Command
 
         $this->comment('Publishing Laratomics Workshop Configuration...');
         $this->callSilent('vendor:publish', ['--tag' => 'workshop-config']);
-
-        $this->comment('Publishing Laratomics Workshop Views...');
-        $this->callSilent('vendor:publish', ['--tag' => 'workshop-views']);
 
         $this->info('Laratomics Workshop installed successfully.');
 

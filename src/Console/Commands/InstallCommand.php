@@ -3,13 +3,9 @@
 namespace Laratomics\Console\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Console\DetectsApplicationNamespace;
-use Illuminate\Support\Str;
 
 class InstallCommand extends Command
 {
-    use DetectsApplicationNamespace;
-
     /**
      * The name and signature of the console command.
      *

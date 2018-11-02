@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers;
+namespace Laratomics\Providers;
 
 use App\Services\PatternStateService;
 use Exception;
@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
 use Spatie\YamlFrontMatter\YamlFrontMatter;
 
-class AtomicDesignServiceProvider extends ServiceProvider
+class PatternServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap services.
@@ -20,37 +20,31 @@ class AtomicDesignServiceProvider extends ServiceProvider
     {
         Blade::directive('atom', function ($expression) {
             list($component, $extExpression) = $this->parse($expression, 'atoms');
-            $this->checkRemoteState('atoms', $component);
             return "<?php echo view({$extExpression}, array_except(get_defined_vars(), array('__data', '__path')))->render() ?>";
         });
 
         Blade::directive('molecule', function ($expression) {
             list($component, $extExpression) = $this->parse($expression, 'molecules');
-            $this->checkRemoteState('molecules', $component);
             return "<?php echo view({$extExpression}, array_except(get_defined_vars(), array('__data', '__path')))->render() ?>";
         });
 
         Blade::directive('organism', function ($expression) {
             list($component) = $this->parse($expression, 'organisms');
-            $this->checkRemoteState('organisms', $component);
             return "<?php echo view('patterns.organisms.{$component}', array_except(get_defined_vars(), array('__data', '__path')))->render() ?>";
         });
 
         Blade::directive('template', function ($expression) {
             list($component, $extExpression) = $this->parse($expression, 'templates');
-            $this->checkRemoteState('templates', $component);
             return "<?php echo view({$extExpression}, array_except(get_defined_vars(), array('__data', '__path')))->render() ?>";
         });
 
         Blade::directive('page', function ($expression) {
             list($component, $extExpression) = $this->parse($expression, 'pages');
-            $this->checkRemoteState('pages', $component);
             return "<?php echo view({$extExpression}, array_except(get_defined_vars(), array('__data', '__path')))->render() ?>";
         });
 
         Blade::directive('element', function ($expression) {
             list($component, $extExpression) = $this->parse($expression);
-            $this->checkRemoteState('atoms', $component);
             return "<?php echo view({$extExpression}, array_except(get_defined_vars(), array('__data', '__path')))->render() ?>";
         });
     }
@@ -181,18 +175,5 @@ class AtomicDesignServiceProvider extends ServiceProvider
         if ($metadata->state != 'DONE') {
             throw new Exception("Pattern {$section}.{$component} is not yet DONE!");
         }
-    }
-
-    /**
-     * @param $section
-     * @param $component
-     * @return void
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws Exception
-     */
-    private function checkRemoteState($section, $component)
-    {
-        $patternStateService = $this->app->make(PatternStateService::class);
-        $patternStateService->checkRemoteState($section, $component);
     }
 }

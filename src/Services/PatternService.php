@@ -44,7 +44,7 @@ class PatternService
      * @param $description
      * @param string $designFile
      */
-    public function createMarkdownFile($name, $description, $designFile = '')
+    public function createMarkdownFile($name, $description)
     {
         $parts = explode('.', $name);
         $filename = array_pop($parts);
@@ -52,10 +52,10 @@ class PatternService
         $filename = "{$filename}.md";
 
         $content = sprintf("---
-        design: %s
+        status: %s
         values:
         ---
-        {$description}", $designFile);
+        {$description}", INITIAL_STATE);
 
         $path = base_path("resources/laratomics/patterns/{$path}");
 

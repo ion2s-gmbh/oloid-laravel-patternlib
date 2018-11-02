@@ -6,13 +6,10 @@ Route::get(config('/'), function () {
     return view('laratomics-workshop::home');
 })->name('workshop');
 
-Route::post('laratomics/publish/{pattern}', 'PublishController@publish')
-    ->name('publish');
-
-Route::get('laratomics/create-pattern', 'PatternController@createForm')
+Route::get('create-pattern', 'PatternController@createForm')
     ->name('create-pattern');
 
-Route::post('laratomics/store-pattern', 'PatternController@store')
+Route::post('store-pattern', 'PatternController@store')
     ->name('store-pattern');
 
 Route::get('/laratomics/{pattern}', 'PreviewController@previewLocal')

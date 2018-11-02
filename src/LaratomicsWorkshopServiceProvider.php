@@ -4,6 +4,7 @@ namespace Laratomics;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
+use Laratomics\Console\Commands\InstallCommand;
 
 class LaratomicsWorkshopServiceProvider extends BaseServiceProvider
 {
@@ -60,7 +61,7 @@ class LaratomicsWorkshopServiceProvider extends BaseServiceProvider
     {
         $this->configure();
         $this->publishFiles();
-
+        $this->registerCommands();
     }
 
     /**
@@ -83,20 +84,27 @@ class LaratomicsWorkshopServiceProvider extends BaseServiceProvider
          */
         $this->publishes([
             __DIR__ . '/../config/laratomics-workshop.php' => config_path('laratomics-workshop.php')
-        ], 'laratomics-config');
+        ], 'workshop-config');
 
         /*
          * Publish views
          */
         $this->publishes([
             __DIR__.'/../resources/views' => resource_path('views/vendor/laratomics-workshop'),
-        ], 'laratomics-views');
+        ], 'workshop-views');
 
         /*
          * Publish assets
          */
         $this->publishes([
             __DIR__ . '/../public' => public_path('vendor/laratomics-workshop')
-        ], 'laratomics-assets');
+        ], 'workshop-assets');
+    }
+
+    private function registerCommands()
+    {
+        $this->commands([
+            InstallCommand::class
+        ]);
     }
 }

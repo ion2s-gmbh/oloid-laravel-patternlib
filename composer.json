@@ -16,18 +16,18 @@
   },
   "autoload": {
     "psr-4": {
-      "Ion2s\\Laratomics\\": "src/"
+      "Laratomics\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Ion2s\\Laratomics\\Tests\\": "tests/"
+      "Laratomics\\Tests\\": "tests/"
     }
   },
   "extra": {
     "laravel": {
       "providers": [
-        "Ion2s\\Laratomics\\LaratomicsWorkshopServiceProvider"
+        "Laratomics\\LaratomicsWorkshopServiceProvider"
       ]
     }
   },

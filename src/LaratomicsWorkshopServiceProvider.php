@@ -1,6 +1,6 @@
 <?php
 
-namespace Ion2s\Laratomics;
+namespace Laratomics;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
@@ -15,11 +15,7 @@ class LaratomicsWorkshopServiceProvider extends BaseServiceProvider
     public function boot()
     {
         $this->setRoutes();
-//        $this->setPublishing();
-
-        $this->loadViewsFrom(
-            __DIR__.'/../resources/views', 'laratomics-workshop'
-        );
+        $this->setViews();
     }
 
     /**
@@ -33,6 +29,16 @@ class LaratomicsWorkshopServiceProvider extends BaseServiceProvider
     }
 
     /**
+     * Set the package's views.
+     */
+    private function setViews()
+    {
+        $this->loadViewsFrom(
+            __DIR__.'/../resources/views', 'laratomics-workshop'
+        );
+    }
+
+    /**
      * Get the basic route configuration.
      *
      * @return array
@@ -40,7 +46,7 @@ class LaratomicsWorkshopServiceProvider extends BaseServiceProvider
     private function routeConfiguration()
     {
         return [
-            'namespace' => 'Ion2s\Laratomics\Http\Controllers',
+            'namespace' => 'Laratomics\Http\Controllers',
             'prefix' => config('laratomics-workshop.path')
         ];
     }
@@ -68,7 +74,7 @@ class LaratomicsWorkshopServiceProvider extends BaseServiceProvider
     }
 
     /**
-     * Publish package's configs and views.
+     * Publish package's configs, views and assets.
      */
     private function publishFiles()
     {
@@ -83,14 +89,14 @@ class LaratomicsWorkshopServiceProvider extends BaseServiceProvider
          * Publish views
          */
         $this->publishes([
-            __DIR__.'/../resources/views' => resource_path('views/vendor/ion2s/laratomics-workshop'),
+            __DIR__.'/../resources/views' => resource_path('views/vendor/laratomics-workshop'),
         ], 'laratomics-views');
 
         /*
-         * Publish languages/translations
+         * Publish assets
          */
-//        $this->publishes([
-//            __DIR__ . '/../resources/lang' => resource_path('lang/vendor/ion2s/laratomics-workshop')
-//        ], 'laratomics-lang');
+        $this->publishes([
+            __DIR__ . '/../public' => public_path('vendor/laratomics-workshop')
+        ], 'laratomics-assets');
     }
 }

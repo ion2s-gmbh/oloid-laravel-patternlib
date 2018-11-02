@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Ion2s\Laratomics\Services;
+namespace Laratomics\Services;
 
 use Illuminate\Support\Facades\Storage;
 

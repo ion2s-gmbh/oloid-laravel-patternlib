@@ -10,7 +10,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('vendor/ion2s/laratomics-workshop/js/app.js') }}" defer></script>
+    <script src="{{ asset('vendor/laratomics-workshop/js/app.js') }}" defer></script>
     <script
             src="https://code.jquery.com/jquery-3.3.1.min.js"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -25,7 +25,7 @@
 
 
     <!-- Styles -->
-    <link href='{{ asset('vendor/ion2s/laratomics-workshop/css/app.css') }}' rel='stylesheet' type='text/css'>
+    <link href='{{ asset('vendor/laratomics-workshop/css/app.css') }}' rel='stylesheet' type='text/css'>
     <link href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css' rel='stylesheet'
           type='text/css'>
 

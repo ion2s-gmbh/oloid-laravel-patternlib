@@ -16,8 +16,8 @@ mix.js('resources/js/app.js', 'public/js');
 mix.sass('resources/sass/app.scss', 'public/css');
 
 /** @todo find a better solution */
-mix.copyDirectory('public/js', '/var/www/laravel/application/public/vendor/ion2s/laratomics-workshop/js') // for development only
-  .copyDirectory('public/css', '/var/www/laravel/application/public/vendor/ion2s/laratomics-workshop/css'); // for development only
+mix.copyDirectory('public/js', '/var/www/laravel/application/public/vendor/laratomics-workshop/js') // for development only
+  .copyDirectory('public/css', '/var/www/laravel/application/public/vendor/laratomics-workshop/css'); // for development only
 
 
 /*

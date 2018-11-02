@@ -1,4 +1,4 @@
-@inject('navbar', 'Ion2s\Laratomics\Services\NavbarService)
+@inject('navbar', 'Laratomics\Services\NavbarService)
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="/">{{ config('app.name') }}</a>

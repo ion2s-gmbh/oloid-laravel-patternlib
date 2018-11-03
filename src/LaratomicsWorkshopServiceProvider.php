@@ -1,9 +1,10 @@
 <?php
 
-namespace Ion2s\Laratomics;
+namespace Laratomics;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
+use Laratomics\Console\Commands\InstallCommand;
 
 class LaratomicsWorkshopServiceProvider extends BaseServiceProvider
 {
@@ -15,11 +16,7 @@ class LaratomicsWorkshopServiceProvider extends BaseServiceProvider
     public function boot()
     {
         $this->setRoutes();
-//        $this->setPublishing();
-
-        $this->loadViewsFrom(
-            __DIR__.'/../resources/views', 'laratomics-workshop'
-        );
+        $this->setViews();
     }
 
     /**
@@ -33,6 +30,16 @@ class LaratomicsWorkshopServiceProvider extends BaseServiceProvider
     }
 
     /**
+     * Set the package's views.
+     */
+    private function setViews()
+    {
+        $this->loadViewsFrom(
+            __DIR__.'/../resources/views', 'laratomics-workshop'
+        );
+    }
+
+    /**
      * Get the basic route configuration.
      *
      * @return array
@@ -40,7 +47,7 @@ class LaratomicsWorkshopServiceProvider extends BaseServiceProvider
     private function routeConfiguration()
     {
         return [
-            'namespace' => 'Ion2s\Laratomics\Http\Controllers',
+            'namespace' => 'Laratomics\Http\Controllers',
             'prefix' => config('laratomics-workshop.path')
         ];
     }
@@ -52,8 +59,52 @@ class LaratomicsWorkshopServiceProvider extends BaseServiceProvider
      */
     public function register()
     {
+        $this->configure();
+        $this->publishFiles();
+        $this->registerCommands();
+    }
+
+    /**
+     * Merge configurations.
+     */
+    private function configure()
+    {
         $this->mergeConfigFrom(
             __DIR__ . '/../config/laratomics-workshop.php', 'laratomics-workshop'
         );
+    }
+
+    /**
+     * Publish package's configs, views and assets.
+     */
+    private function publishFiles()
+    {
+        /*
+         * Publish configs
+         */
+        $this->publishes([
+            __DIR__ . '/../config/laratomics-workshop.php' => config_path('laratomics-workshop.php')
+        ], 'workshop-config');
+
+        /*
+         * Publish views
+         */
+        $this->publishes([
+            __DIR__.'/../resources/views' => resource_path('views/vendor/laratomics-workshop'),
+        ], 'workshop-views');
+
+        /*
+         * Publish assets
+         */
+        $this->publishes([
+            __DIR__ . '/../public' => public_path('vendor/laratomics-workshop')
+        ], 'workshop-assets');
+    }
+
+    private function registerCommands()
+    {
+        $this->commands([
+            InstallCommand::class
+        ]);
     }
 }

@@ -14,6 +14,16 @@ Laratomics Workshop is not yet available. So there is no straight forward instal
 Stay tuned.
 
 ### Configuration
+#### Add a custom disk
+In `config/filesystems.php` add:
+```php
+'disks' => [
+
+        'patterns' => [
+            'driver' => 'local',
+            'root' => base_path('resources/laratomics/patterns')
+        ],
+```
 
 ## Credits
 * [ion2s GmbH](https://github.com/poolingpeople)

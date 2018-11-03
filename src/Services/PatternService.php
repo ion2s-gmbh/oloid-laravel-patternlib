@@ -27,7 +27,8 @@ class PatternService
 
         $content = "<!-- {$name} -->";
 
-        $path = base_path("resources/laratomics/patterns/{$path}");
+//        $path = base_path("resources/laratomics/patterns/{$path}");
+        $path = config('laratomics-workshop.path') . "/{$path}";
 
         if (!File::exists($path)) {
             File::makeDirectory($path, 493, true);
@@ -58,7 +59,8 @@ class PatternService
         ---
         {$description}", INITIAL_STATE);
 
-        $path = base_path("resources/laratomics/patterns/{$path}");
+//        $path = base_path("resources/laratomics/patterns/{$path}");
+        $path = config('laratomics-workshop.path') . "/{$path}";
 
         if (!File::exists($path)) {
             File::makeDirectory($path, 493, true);
@@ -83,7 +85,8 @@ class PatternService
 
         $content = "/* {$filename} */";
 
-        $path = base_path("resources/laratomics/patterns/{$path}");
+//        $path = base_path("resources/laratomics/patterns/{$path}");
+        $path = config('laratomics-workshop.path') . "/{$path}";
 
         if (!File::exists($path)) {
             File::makeDirectory($path, 493, true);

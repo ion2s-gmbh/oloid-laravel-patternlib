@@ -18,6 +18,6 @@ return [
     |--------------------------------------------------------------------------
     | Here you configure the filesystem path where your patterns are stored.
     */
-    'path' => resource_path('laratomics/patterns')
+    'patternPath' => resource_path('laratomics/patterns')
 
 ];

@@ -43,7 +43,7 @@ class PatternController extends Controller
         // TODO: validation and authorization
         $name = $request->get('name');
         $description = $request->get('description');
-        $this->patternService->createPattern($name);
+        $this->patternService->createBladeFile($name);
         $this->patternService->createMarkdownFile($name, $description);
         $this->patternService->createSassFile($name);
 

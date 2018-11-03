@@ -10,33 +10,22 @@ use Illuminate\Contracts\View\Factory as ViewFactory;
 use Spatie\YamlFrontMatter\YamlFrontMatter;
 
 const INITIAL_STATE = 'TODO';
+const BLADE_EXTENSION = 'blade.php';
+const SASS_EXTENSION = 'scss';
+const MARKDOWN_EXTENSION = 'md';
 
 class PatternService
 {
     /**
-     * Create a new Pattern
+     * Create a new Blade file for the Pattern.
      *
      * @param $name
      */
-    public function createPattern($name)
+    public function createBladeFile($name): void
     {
-        $parts = explode('.', $name);
-        $filename = array_pop($parts);
-        $path = implode('/', $parts);
-        $filename = "{$filename}.blade.php";
-
+        $filePath = $this->getFileLocation($name, BLADE_EXTENSION);
         $content = "<!-- {$name} -->";
-
-//        $path = base_path("resources/laratomics/patterns/{$path}");
-        $path = config('laratomics-workshop.path') . "/{$path}";
-
-        if (!File::exists($path)) {
-            File::makeDirectory($path, 493, true);
-        }
-
-        $path .= '/' . $filename;
-
-        File::put($path, str_replace('        ', '', $content));
+        File::put($filePath, $content);
     }
 
     /**
@@ -60,7 +49,7 @@ class PatternService
         {$description}", INITIAL_STATE);
 
 //        $path = base_path("resources/laratomics/patterns/{$path}");
-        $path = config('laratomics-workshop.path') . "/{$path}";
+        $path = config('laratomics-workshop.patternPath') . "/{$path}";
 
         if (!File::exists($path)) {
             File::makeDirectory($path, 493, true);
@@ -86,7 +75,7 @@ class PatternService
         $content = "/* {$filename} */";
 
 //        $path = base_path("resources/laratomics/patterns/{$path}");
-        $path = config('laratomics-workshop.path') . "/{$path}";
+        $path = config('laratomics-workshop.patternPath') . "/{$path}";
 
         if (!File::exists($path)) {
             File::makeDirectory($path, 493, true);
@@ -158,6 +147,40 @@ class PatternService
 
         $preview = compileBladeString($html, $values);
         return [$html, $preview, $metadata, $style, $state];
+    }
+
+    /**
+     * Get the full file location (path, filename, extension).
+     *
+     * @param string $name
+     * @param string $extension
+     * @return string
+     */
+    private function getFileLocation(string $name, string $extension): string
+    {
+        $parts = explode('.', $name);
+        $filename = array_pop($parts);
+        $subpath = implode('/', $parts);
+        $directory = config('laratomics-workshop.patternPath') . "/{$subpath}";
+
+        $this->createIfMissing($directory);
+
+        $fullFilename = "{$filename}.{$extension}";
+
+        $location = "{$directory}/{$fullFilename}";
+        return $location;
+    }
+
+    /**
+     * Check if the given directory exists. If it does not exists, the whole directory path is created.
+     *
+     * @param $directory
+     */
+    private function createIfMissing($directory): void
+    {
+        if (!File::exists($directory)) {
+            File::makeDirectory($directory, 493, true);
+        }
     }
 
 }

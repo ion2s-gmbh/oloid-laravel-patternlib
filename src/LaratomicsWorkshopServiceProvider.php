@@ -48,7 +48,7 @@ class LaratomicsWorkshopServiceProvider extends BaseServiceProvider
     {
         return [
             'namespace' => 'Laratomics\Http\Controllers',
-            'prefix' => config('laratomics-workshop.path')
+            'prefix' => config('laratomics-workshop.uri')
         ];
     }
 

@@ -23,24 +23,20 @@ class PatternService
      */
     public function createBladeFile($name): void
     {
-        $filePath = $this->getFileLocation($name, BLADE_EXTENSION);
+        $file = $this->getFileLocation($name, BLADE_EXTENSION);
         $content = "<!-- {$name} -->";
-        File::put($filePath, $content);
+        File::put($file, $content);
     }
 
     /**
-     * Create the markdown file.
+     * Create a new Markdown file for the Pattern.
      *
      * @param $name
      * @param $description
-     * @param string $designFile
      */
-    public function createMarkdownFile($name, $description)
+    public function createMarkdownFile($name, $description): void
     {
-        $parts = explode('.', $name);
-        $filename = array_pop($parts);
-        $path = implode('/', $parts);
-        $filename = "{$filename}.md";
+        $file = $this->getFileLocation($name, MARKDOWN_EXTENSION);
 
         $content = sprintf("---
         status: %s
@@ -48,16 +44,7 @@ class PatternService
         ---
         {$description}", INITIAL_STATE);
 
-//        $path = base_path("resources/laratomics/patterns/{$path}");
-        $path = config('laratomics-workshop.patternPath') . "/{$path}";
-
-        if (!File::exists($path)) {
-            File::makeDirectory($path, 493, true);
-        }
-
-        $path .= '/' . $filename;
-
-        File::put($path, str_replace('        ', '', $content));
+        File::put($file, str_replace('        ', '', $content));
     }
 
     /**
@@ -67,21 +54,9 @@ class PatternService
      */
     public function createSassFile($name)
     {
-        $parts = explode('.', $name);
-        $filename = array_pop($parts);
-        $path = implode('/', $parts);
-        $filename = "{$filename}.scss";
-
-        $content = "/* {$filename} */";
-
-//        $path = base_path("resources/laratomics/patterns/{$path}");
-        $path = config('laratomics-workshop.patternPath') . "/{$path}";
-
-        if (!File::exists($path)) {
-            File::makeDirectory($path, 493, true);
-        }
-        $path .= '/' . $filename;
-        File::put($path, $content);
+        $file = $this->getFileLocation($name, SASS_EXTENSION);
+        $content = "/* {$name} */";
+        File::put($file, $content);
 
         $this->includeInParentSassFile($name);
     }

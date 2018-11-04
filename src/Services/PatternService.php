@@ -19,24 +19,24 @@ class PatternService
     /**
      * Create a new Blade file for the Pattern.
      *
-     * @param $name
+     * @param string $pattern
      */
-    public function createBladeFile($name): void
+    public function createBladeFile(string $pattern): void
     {
-        $file = $this->getFileLocation($name, BLADE_EXTENSION);
-        $content = "<!-- {$name} -->";
+        $file = $this->getFileLocation($pattern, BLADE_EXTENSION);
+        $content = "<!-- {$pattern} -->";
         File::put($file, $content);
     }
 
     /**
      * Create a new Markdown file for the Pattern.
      *
-     * @param $name
-     * @param $description
+     * @param string $pattern
+     * @param string $description
      */
-    public function createMarkdownFile($name, $description): void
+    public function createMarkdownFile(string $pattern, string $description): void
     {
-        $file = $this->getFileLocation($name, MARKDOWN_EXTENSION);
+        $file = $this->getFileLocation($pattern, MARKDOWN_EXTENSION);
 
         $content = sprintf("---
         status: %s
@@ -48,48 +48,52 @@ class PatternService
     }
 
     /**
-     * Create a sass file for the newly created component
+     * Create a sass file for the newly created component and import it in parent and main sass files.
      *
-     * @param $name
+     * @param string $pattern
      */
-    public function createSassFile($name)
+    public function createSassFile(string $pattern): void
     {
-        $file = $this->getFileLocation($name, SASS_EXTENSION);
-        $content = "/* {$name} */";
+        $file = $this->getFileLocation($pattern, SASS_EXTENSION);
+        $content = "/* {$pattern} */";
         File::put($file, $content);
 
-        $this->includeInParentSassFile($name);
+        $this->importInParentSassFile($pattern);
     }
 
     /**
-     * Include the generated sass file in the parent sass file.
+     * Import the generated sass file in the parent sass file.
      *
-     * @param $name
+     * @param string $pattern
      */
-    private function includeInParentSassFile($name)
+    private function importInParentSassFile(string $pattern): void
     {
-        $parts = explode('.', $name);
+        $parts = explode('.', $pattern);
         $parent = array_shift($parts);
-        $parentSassPath = base_path("resources/laratomics/patterns/{$parent}");
-        $parentSassFile = $parent . '.scss';
+        $parentSassPath = config('laratomics-workshop.patternPath') . "/{$parent}/{$parent}.scss";
         $includeFile = implode('/', $parts);
-        $parentPath = $parentSassPath . '/' . $parentSassFile;
 
         /*
-         * Import in sass file of category
+         * Import in sass file in parent sass file
          */
         $content = "\n@import \"{$includeFile}\";";
-        if (!File::exists($parentPath)) {
+        if (!File::exists($parentSassPath)) {
             $content = "@import \"{$includeFile}\";";
 
-            /*
-             * Import in main sass file
-             */
-            File::append(base_path('resources/laratomics/patterns/patterns.scss'),
-                "\n@import \"{$parent}/{$parent}\";");
+            $this->importInMainSassFile($parent);
         }
 
-        File::append($parentPath, $content);
+        File::append($parentSassPath, $content);
+    }
+
+    /**
+     * Import in main sass file
+     * @param string $parent
+     */
+    private function importInMainSassFile(string $parent): void
+    {
+        File::append(config('laratomics-workshop.patternPath') . '/patterns.scss',
+            "\n@import \"{$parent}/{$parent}\";");
     }
 
     /**
@@ -127,13 +131,13 @@ class PatternService
     /**
      * Get the full file location (path, filename, extension).
      *
-     * @param string $name
+     * @param string $pattern
      * @param string $extension
      * @return string
      */
-    private function getFileLocation(string $name, string $extension): string
+    private function getFileLocation(string $pattern, string $extension): string
     {
-        $parts = explode('.', $name);
+        $parts = explode('.', $pattern);
         $filename = array_pop($parts);
         $subpath = implode('/', $parts);
         $directory = config('laratomics-workshop.patternPath') . "/{$subpath}";

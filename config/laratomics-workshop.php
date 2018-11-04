@@ -10,14 +10,14 @@ return [
     |     http://<your-domain>/workshop
     |     http://<your-domain>/patterns
     */
-    'uri' => 'workshop',
+    'uri' => env('LARATOMICS_URI','workshop'),
 
     /*
     |--------------------------------------------------------------------------
     | Pattern folder path
     |--------------------------------------------------------------------------
-    | Here you configure the filesystem path where your patterns are stored.
+    | Here you configure the resources path where your patterns are stored.
     */
-    'patternPath' => resource_path('laratomics/patterns')
+    'patternPath' => resource_path(env('LARATOMICS_PATTERN_PATH', 'laratomics/patterns'))
 
 ];

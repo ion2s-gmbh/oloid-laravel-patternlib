@@ -14,6 +14,12 @@ Laratomics Workshop is not yet available. So there is no straight forward instal
 Stay tuned.
 
 ### Configuration
+#### .env configuration
+```
+LARATOMICS_URI=workshop
+LARATOMICS_PATTERN_PATH=laratomics/patterns
+```
+
 #### Add a custom disk
 In `config/filesystems.php` add:
 ```php

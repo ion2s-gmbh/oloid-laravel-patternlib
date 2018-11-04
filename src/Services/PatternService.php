@@ -107,7 +107,8 @@ class PatternService
     public function loadPattern($pattern, $values = [])
     {
         $patternPath = str_replace('.', '/', $pattern);
-        $patternPath = base_path("resources/laratomics/patterns/{$patternPath}");
+//        $patternPath = base_path("resources/laratomics/patterns/{$patternPath}");
+        $patternPath = config('laratomics-workshop.patternPath') . "/{$patternPath}";
         $sassFile = "{$patternPath}.scss";
         $style = '';
         if (File::exists($sassFile)) {

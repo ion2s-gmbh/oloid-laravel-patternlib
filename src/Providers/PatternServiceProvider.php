@@ -2,7 +2,6 @@
 
 namespace Laratomics\Providers;
 
-use App\Services\PatternStateService;
 use Exception;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\File;
@@ -73,7 +72,10 @@ class PatternServiceProvider extends ServiceProvider
     {
         $component = array_first(explode(',', $expression));
         $strippedComponent = str_replace("'", "", $component);
-        $extComponent = "patterns.{$path}.{$strippedComponent}";
+        $parts = explode('/', config('laratomics-workshop.patternPath'));
+        $prefix = array_pop($parts);
+
+        $extComponent = "{$prefix}.{$path}.{$strippedComponent}";
         $extExpression = str_replace($strippedComponent, "{$extComponent}", $expression);
         return [$strippedComponent, $extExpression];
     }

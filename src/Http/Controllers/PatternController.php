@@ -29,7 +29,7 @@ class PatternController extends Controller
      */
     public function createForm()
     {
-        return view('laratomics-workshop::createPattern');
+        return view('workshop::createPattern');
     }
 
     /**

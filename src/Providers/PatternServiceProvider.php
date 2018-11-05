@@ -72,7 +72,7 @@ class PatternServiceProvider extends ServiceProvider
     {
         $component = array_first(explode(',', $expression));
         $strippedComponent = str_replace("'", "", $component);
-        $parts = explode('/', config('laratomics-workshop.patternPath'));
+        $parts = explode('/', config('workshop.patternPath'));
         $prefix = array_pop($parts);
 
         $extComponent = "{$prefix}.{$path}.{$strippedComponent}";

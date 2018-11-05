@@ -11,7 +11,9 @@
   import Navbar from "./Navbar";
 
   export default {
-    components: {Navbar},
+    components: {
+      Navbar
+    },
     mounted() {
       console.log('Laratomics Workshop is open, come in and find out!')
     }

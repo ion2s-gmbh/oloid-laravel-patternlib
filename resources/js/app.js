@@ -9,13 +9,13 @@ import router from './router';
  */
 
 import Workshop from './components/Workshop';
-import Navbar from './components/Navbar';
+// import Navbar from './components/Navbar';
 
 const app = new Vue({
   el: '#workshop',
   components: {
     Workshop,
-    Navbar
+    // Navbar
   },
   router
 });

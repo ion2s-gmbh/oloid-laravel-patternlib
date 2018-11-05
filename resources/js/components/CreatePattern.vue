@@ -7,7 +7,7 @@
 
           <div class="card-body">
             <!--<form method="post" action="{{ route('store-pattern') }}">-->
-            <form method="post" action="/">
+            <form method="post">
               <div class="form-group">
                 <label for="name">Name</label>
                 <input id="name" class="form-control" type="text" name="name"
@@ -23,7 +23,7 @@
               </div>
 
               <div class="form-group">
-                <button class="btn btn-primary" type="submit">
+                <button @click.prevent="createPattern" class="btn btn-primary">
                   <i class="fas fa-pen-alt"></i>
                   SAVE
                 </button>
@@ -40,6 +40,12 @@
 
 <script>
   export default {
-    name: "CreatePattern"
+    name: "CreatePattern",
+    methods: {
+        createPattern: function() {
+          alert('create pattern');
+          this.$router.push('/preview');
+        }
+    }
   }
 </script>

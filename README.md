@@ -16,8 +16,9 @@ Stay tuned.
 ### Configuration
 #### .env configuration
 ```
-LARATOMICS_URI=workshop
-LARATOMICS_PATTERN_PATH=laratomics/patterns
+WORKSHOP_URI=workshop
+WORKSHOP_BASE_PATH=testing
+WORKSHOP_PATTERN_PATH="${WORKSHOP_BASE_PATH}/patterns"
 ```
 
 #### Add a custom disk

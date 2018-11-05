@@ -4,6 +4,7 @@ namespace Laratomics;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
+use Laratomics\Console\Commands\CleanCommand;
 use Laratomics\Console\Commands\InstallCommand;
 
 class LaratomicsWorkshopServiceProvider extends BaseServiceProvider
@@ -104,7 +105,8 @@ class LaratomicsWorkshopServiceProvider extends BaseServiceProvider
     private function registerCommands()
     {
         $this->commands([
-            InstallCommand::class
+            InstallCommand::class,
+            CleanCommand::class
         ]);
     }
 }

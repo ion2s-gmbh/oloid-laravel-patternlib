@@ -32,10 +32,11 @@
 
 </head>
 <body>
-    <div id="app">
+    <div id="workshop">
         @include('workshop::navbar')
 
         <main class="py-4">
+            <workshop></workshop>
             @yield('content')
         </main>
     </div>

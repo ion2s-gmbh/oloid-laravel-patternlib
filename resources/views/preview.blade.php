@@ -1,4 +1,4 @@
-@extends('laratomics-workshop::layout')
+@extends('workshop::layout')
 
 @section('content')
     <div class="row">

@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get(config('/'), function () {
-    return view('laratomics-workshop::home');
+    return view('workshop::home');
 })->name('workshop');
 
 Route::get('create-pattern', 'PatternController@createForm')

@@ -70,7 +70,7 @@ class PatternService
     {
         $parts = explode('.', $pattern);
         $parent = array_shift($parts);
-        $parentSassPath = config('laratomics-workshop.patternPath') . "/{$parent}/{$parent}.scss";
+        $parentSassPath = config('workshop.patternPath') . "/{$parent}/{$parent}.scss";
         $includeFile = implode('/', $parts);
 
         /*
@@ -92,7 +92,7 @@ class PatternService
      */
     private function importInMainSassFile(string $parent): void
     {
-        File::append(config('laratomics-workshop.patternPath') . '/patterns.scss',
+        File::append(config('workshop.patternPath') . '/patterns.scss',
             "\n@import \"{$parent}/{$parent}\";");
     }
 
@@ -107,8 +107,7 @@ class PatternService
     public function loadPattern($pattern, $values = [])
     {
         $patternPath = str_replace('.', '/', $pattern);
-//        $patternPath = base_path("resources/laratomics/patterns/{$patternPath}");
-        $patternPath = config('laratomics-workshop.patternPath') . "/{$patternPath}";
+        $patternPath = config('workshop.patternPath') . "/{$patternPath}";
         $sassFile = "{$patternPath}.scss";
         $style = '';
         if (File::exists($sassFile)) {
@@ -141,7 +140,7 @@ class PatternService
         $parts = explode('.', $pattern);
         $filename = array_pop($parts);
         $subpath = implode('/', $parts);
-        $directory = config('laratomics-workshop.patternPath') . "/{$subpath}";
+        $directory = config('workshop.patternPath') . "/{$subpath}";
 
         $this->createIfMissing($directory);
 

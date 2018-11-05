@@ -15,7 +15,7 @@ class ConfigurationService
     public function registerViewResources(): bool
     {
         $viewConfig = file_get_contents(config_path('view.php'));
-        $pathParts = explode('/', config('laratomics-workshop.basePath'));
+        $pathParts = explode('/', config('workshop.basePath'));
         $basePath = array_pop($pathParts);
         $resourcePath = "resource_path('{$basePath}'),";
         if (!Str::contains($viewConfig, $resourcePath)) {

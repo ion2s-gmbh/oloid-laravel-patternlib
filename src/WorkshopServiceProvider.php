@@ -32,16 +32,6 @@ class WorkshopServiceProvider extends BaseServiceProvider
     }
 
     /**
-     * Set the package's views.
-     */
-    private function setViews()
-    {
-        $this->loadViewsFrom(
-            __DIR__.'/../resources/views', 'workshop'
-        );
-    }
-
-    /**
      * Get the basic route configuration.
      *
      * @return array
@@ -52,6 +42,16 @@ class WorkshopServiceProvider extends BaseServiceProvider
             'namespace' => 'Laratomics\Http\Controllers',
             'prefix' => config('workshop.uri')
         ];
+    }
+
+    /**
+     * Set the package's views.
+     */
+    private function setViews()
+    {
+        $this->loadViewsFrom(
+            __DIR__.'/../resources/views', 'workshop'
+        );
     }
 
     /**

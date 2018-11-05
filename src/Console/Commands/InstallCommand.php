@@ -3,7 +3,7 @@
 namespace Laratomics\Console\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Str;
+use Laratomics\Services\ConfigurationService;
 
 class InstallCommand extends Command
 {
@@ -22,6 +22,21 @@ class InstallCommand extends Command
     protected $description = 'Install all the Laratomics Workshop Resoureces';
 
     /**
+     * @var ConfigurationService
+     */
+    private $configurationService;
+
+    /**
+     * InstallCommand constructor.
+     * @param ConfigurationService $configurationService
+     */
+    public function __construct(ConfigurationService $configurationService)
+    {
+        parent::__construct();
+        $this->configurationService = $configurationService;
+    }
+
+    /**
      * Execute the console command.
      *
      * @return mixed
@@ -34,26 +49,12 @@ class InstallCommand extends Command
         $this->comment('Publishing Laratomics Workshop Configuration...');
         $this->callSilent('vendor:publish', ['--tag' => 'workshop-config']);
 
-        $this->registerViewResources();
+        if ($this->configurationService->registerViewResources()) {
+            $this->comment('Extra view resources configuration have been added in the project\'s view.php');
+        }
 
         $this->info('Laratomics Workshop installed successfully.');
 
         return 0;
-    }
-
-    private function registerViewResources()
-    {
-        $viewConfig = file_get_contents(config_path('view.php'));
-        $pathParts = explode('/', config('laratomics-workshop.basePath'));
-        $basePath = array_pop($pathParts);
-        $resourcePath = "resource_path('{$basePath}'),";
-        if (!Str::contains($viewConfig, $resourcePath)) {
-            file_put_contents(config_path('view.php'), str_replace(
-                "resource_path('views'),".PHP_EOL,
-                "resource_path('views'),".PHP_EOL."        ".$resourcePath.PHP_EOL,
-                $viewConfig
-            ));
-            $this->comment('Extra view resources have been added in view.php');
-        }
     }
 }

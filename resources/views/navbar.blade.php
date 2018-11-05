@@ -21,10 +21,5 @@
                 </li>
             @endforeach
         </ul>
-        <a href="{{ route('create-pattern') }}">
-            <button class="btn btn-primary">
-                <i class="fas fa-plus-square"></i>
-            </button>
-        </a>
     </div>
 </nav>

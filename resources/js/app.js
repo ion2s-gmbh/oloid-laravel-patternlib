@@ -1,6 +1,6 @@
-console.log('workshop is open');
-
-window.Vue = require('vue');
+// window.Vue = require('vue');
+import Vue from 'vue';
+import router from './router';
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -8,8 +8,14 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('workshop', require('./components/Workshop.vue'));
+import Workshop from './components/Workshop';
+import Navbar from './components/Navbar';
 
 const app = new Vue({
-  el: '#workshop'
+  el: '#workshop',
+  components: {
+    Workshop,
+    Navbar
+  },
+  router
 });

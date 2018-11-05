@@ -1,5 +1,52 @@
 <template>
-  <h3>Dashboard</h3>
+  <div class="row">
+    <div class="col-md-3">
+      <div class="card">
+        <div class="card-header">Information</div>
+
+        <div class="card-body">
+          ...
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+
+      <div class="card">
+        <div class="card-header">
+          Pattern management
+        </div>
+        <div class="card-body">
+          <div class="py-1">
+            <router-link :to="{ name: 'create' }">
+              <button class="btn btn-primary">
+                <i class="fas fa-plus-square"></i>
+                NEW PATTERN
+              </button>
+            </router-link>
+          </div>
+
+          <div class="py-1">
+            <router-link :to="{ name: 'update' }">
+              <button class="btn btn-primary">
+                <i class="fas fa-pen"></i>
+                UPDATE PATTERN
+              </button>
+            </router-link>
+          </div>
+
+          <div class="py-1">
+            <router-link :to="{ name: 'preview' }">
+              <button class="btn btn-primary">
+                <i class="fas fa-eye"></i>
+                PREVIEW PATTERN
+              </button>
+            </router-link>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>

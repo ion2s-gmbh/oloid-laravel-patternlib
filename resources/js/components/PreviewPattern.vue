@@ -3,11 +3,8 @@
   <div class="row">
     <div class="col-sm-4">
       <h2>{{ patternName }}
-        <!--@if($state == 'REVIEW')-->
         <span v-if="state === 'REVIEW'" class="badge badge-warning">REVIEW</span>
-        <!--@elseif($state == 'DONE')-->
         <span v-if="state === 'DONE'" class="badge badge-success">DONE</span>
-        <!--@endif-->
       </h2>
       <h2>Description</h2>
       <div class="code">
@@ -62,8 +59,6 @@
         </div>
       </div>
     </div>
-    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.0/prism.min.js"></script>-->
-    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.1/clipboard.js"></script>-->
   </div>
 
 </template>

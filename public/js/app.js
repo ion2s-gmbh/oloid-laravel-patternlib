@@ -14673,27 +14673,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -14717,37 +14696,7 @@ var render = function() {
     [
       _c("navbar"),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "py-3" },
-        [
-          _c("router-link", { attrs: { to: { name: "create" } } }, [
-            _c("button", { staticClass: "btn btn-primary" }, [
-              _c("i", { staticClass: "fas fa-plus-square" }),
-              _vm._v("\n        NEW PATTERN\n      ")
-            ])
-          ]),
-          _vm._v(" "),
-          _c("router-link", { attrs: { to: { name: "update" } } }, [
-            _c("button", { staticClass: "btn btn-primary" }, [
-              _c("i", { staticClass: "fas fa-pen" }),
-              _vm._v("\n        UPDATE PATTERN\n      ")
-            ])
-          ]),
-          _vm._v(" "),
-          _c("router-link", { attrs: { to: { name: "preview" } } }, [
-            _c("button", { staticClass: "btn btn-primary" }, [
-              _c("i", { staticClass: "fas fa-eye" }),
-              _vm._v("\n        PREVIEW PATTERN\n      ")
-            ])
-          ]),
-          _vm._v(" "),
-          _c("hr"),
-          _vm._v(" "),
-          _c("div", { staticClass: "py-3" }, [_c("router-view")], 1)
-        ],
-        1
-      )
+      _c("div", { staticClass: "py-3" }, [_c("router-view")], 1)
     ],
     1
   )
@@ -15089,11 +15038,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "PreviewPattern",
@@ -15123,7 +15067,6 @@ var render = function() {
     _c("div", { staticClass: "col-sm-4" }, [
       _c("h2", [
         _vm._v(_vm._s(_vm.patternName) + "\n      "),
-        _vm._v(" "),
         _vm.state === "REVIEW"
           ? _c("span", { staticClass: "badge badge-warning" }, [
               _vm._v("REVIEW")
@@ -15375,6 +15318,53 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Dashboard"
@@ -15388,9 +15378,78 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("h3", [_vm._v("Dashboard")])
+  return _c("div", { staticClass: "row" }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-md-3" }, [
+      _c("div", { staticClass: "card" }, [
+        _c("div", { staticClass: "card-header" }, [
+          _vm._v("\n        Pattern management\n      ")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-body" }, [
+          _c(
+            "div",
+            { staticClass: "py-1" },
+            [
+              _c("router-link", { attrs: { to: { name: "create" } } }, [
+                _c("button", { staticClass: "btn btn-primary" }, [
+                  _c("i", { staticClass: "fas fa-plus-square" }),
+                  _vm._v("\n              NEW PATTERN\n            ")
+                ])
+              ])
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "py-1" },
+            [
+              _c("router-link", { attrs: { to: { name: "update" } } }, [
+                _c("button", { staticClass: "btn btn-primary" }, [
+                  _c("i", { staticClass: "fas fa-pen" }),
+                  _vm._v("\n              UPDATE PATTERN\n            ")
+                ])
+              ])
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "py-1" },
+            [
+              _c("router-link", { attrs: { to: { name: "preview" } } }, [
+                _c("button", { staticClass: "btn btn-primary" }, [
+                  _c("i", { staticClass: "fas fa-eye" }),
+                  _vm._v("\n              PREVIEW PATTERN\n            ")
+                ])
+              ])
+            ],
+            1
+          )
+        ])
+      ])
+    ])
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-3" }, [
+      _c("div", { staticClass: "card" }, [
+        _c("div", { staticClass: "card-header" }, [_vm._v("Information")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-body" }, [
+          _vm._v("\n        ...\n      ")
+        ])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

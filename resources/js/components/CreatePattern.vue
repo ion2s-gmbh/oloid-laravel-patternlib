@@ -6,7 +6,6 @@
           <div class="card-header">Create a new pattern</div>
 
           <div class="card-body">
-            <!--<form method="post" action="{{ route('store-pattern') }}">-->
             <form method="post">
               <div class="form-group">
                 <label for="name">Name</label>
@@ -27,7 +26,6 @@
                   <i class="fas fa-pen-alt"></i>
                   SAVE
                 </button>
-                <!--<a href="{{ route('workshop') }}">Cancel</a>-->
                 <router-link :to="{ name: 'dashboard' }">CANCEL</router-link>
               </div>
             </form>

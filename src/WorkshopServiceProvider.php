@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Laratomics\Console\Commands\CleanCommand;
 use Laratomics\Console\Commands\InstallCommand;
+use Laratomics\Console\Commands\ReconfigureCommand;
 
 class WorkshopServiceProvider extends BaseServiceProvider
 {
@@ -106,7 +107,8 @@ class WorkshopServiceProvider extends BaseServiceProvider
     {
         $this->commands([
             InstallCommand::class,
-            CleanCommand::class
+            CleanCommand::class,
+            ReconfigureCommand::class,
         ]);
     }
 }

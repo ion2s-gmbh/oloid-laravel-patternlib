@@ -33,13 +33,6 @@
 
 <script>
   export default {
-    name: "Navbar",
-    data() {
-      return {
-        appName: 'Laravel'
-      }
-    }
-
-
+    name: "Navbar"
   }
 </script>

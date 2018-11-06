@@ -17,7 +17,7 @@ Stay tuned.
 #### .env configuration
 ```
 WORKSHOP_URI=workshop
-WORKSHOP_BASE_PATH=testing
+WORKSHOP_BASE_PATH=laratomics
 WORKSHOP_PATTERN_PATH="${WORKSHOP_BASE_PATH}/patterns"
 ```
 

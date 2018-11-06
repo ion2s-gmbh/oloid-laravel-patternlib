@@ -42,9 +42,3 @@
     </div>
 </body>
 </html>
-<script>
-  import Navbar from "../js/components/Navbar";
-  export default {
-    components: {Navbar}
-  }
-</script>

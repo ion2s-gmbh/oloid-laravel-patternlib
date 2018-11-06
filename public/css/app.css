@@ -10498,3 +10498,7 @@ a.text-dark:focus {
   max-width: 1200px;
 }
 
+.error {
+  color: red;
+}
+

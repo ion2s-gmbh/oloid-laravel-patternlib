@@ -26,9 +26,34 @@ class WorkshopServiceProvider extends BaseServiceProvider
      */
     private function setRoutes()
     {
-        Route::group($this->routeConfiguration(), function () {
+        Route::group($this->webRouteConfiguration(), function () {
             $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
         });
+
+        Route::group($this->apiRouteConfiguration(), function () {
+            $this->loadRoutesFrom(__DIR__.'/../routes/api.php');
+        });
+    }
+
+    /**
+     * Get the basic route configuration.
+     *
+     * @return array
+     */
+    private function webRouteConfiguration()
+    {
+        return [
+            'namespace' => 'Laratomics\Http\Controllers',
+            'prefix' => config('workshop.uri')
+        ];
+    }
+
+    private function apiRouteConfiguration()
+    {
+        return [
+            'namespace' => 'Laratomics\Http\Controllers',
+            'prefix' => 'workshop/api/v1'
+        ];
     }
 
     /**
@@ -39,19 +64,6 @@ class WorkshopServiceProvider extends BaseServiceProvider
         $this->loadViewsFrom(
             __DIR__.'/../resources/views', 'workshop'
         );
-    }
-
-    /**
-     * Get the basic route configuration.
-     *
-     * @return array
-     */
-    private function routeConfiguration()
-    {
-        return [
-            'namespace' => 'Laratomics\Http\Controllers',
-            'prefix' => config('workshop.uri')
-        ];
     }
 
     /**

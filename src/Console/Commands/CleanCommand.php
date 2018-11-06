@@ -38,11 +38,11 @@ class CleanCommand extends Command
      */
     public function handle()
     {
-        $path = config('laratomics-workshop.basePath');
+        $path = config('workshop.basePath');
         $sure = $this->confirm("Are you sure, you want to remove all created patterns ({$path}) from your project?", false);
 
         if ($sure) {
-            return File::deleteDirectory(config('laratomics-workshop.basePath'));
+            return File::deleteDirectory($path);
         }
 
         return -1;

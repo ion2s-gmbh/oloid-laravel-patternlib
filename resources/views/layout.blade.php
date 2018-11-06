@@ -16,6 +16,7 @@
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
             crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.0/prism.min.js"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
@@ -32,11 +33,11 @@
 
 </head>
 <body>
-    <div id="app">
-        @include('workshop::navbar')
-
-        <main class="py-4">
-            @yield('content')
+    <div>
+        <main>
+            <div id="workshop">
+                <workshop-gui></workshop-gui>
+            </div>
         </main>
     </div>
 </body>

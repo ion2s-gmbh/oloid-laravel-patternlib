@@ -15,6 +15,12 @@
     "laravel/framework": "~5.7.7",
     "spatie/yaml-front-matter": "^2.0"
   },
+  "require-dev": {
+    "phpmetrics/phpmetrics": "^2.4",
+    "phpunit/phpunit": "^7.4",
+    "spatie/phpunit-watcher": "^1.7",
+    "orchestra/testbench": "~3.7"
+  },
   "autoload": {
     "files": [
       "src/helpers.php"
@@ -37,5 +43,10 @@
     }
   },
   "minimum-stability": "dev",
-  "prefer-stable": true
+  "prefer-stable": true,
+  "scripts": {
+    "test": "vendor/bin/phpunit",
+    "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
+    "analyze": "phpmetrics --report-html=phpmetrics ./"
+  }
 }

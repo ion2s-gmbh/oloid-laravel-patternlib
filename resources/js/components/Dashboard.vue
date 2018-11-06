@@ -26,15 +26,6 @@
           </div>
 
           <div class="py-1">
-            <router-link :to="{ name: 'update' }">
-              <button class="btn btn-primary">
-                <i class="fas fa-pen"></i>
-                UPDATE PATTERN
-              </button>
-            </router-link>
-          </div>
-
-          <div class="py-1">
             <router-link :to="{ name: 'preview' }">
               <button class="btn btn-primary">
                 <i class="fas fa-eye"></i>

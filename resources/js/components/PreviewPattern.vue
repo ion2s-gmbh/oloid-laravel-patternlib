@@ -2,6 +2,14 @@
 
   <div class="row">
     <div class="col-sm-4">
+      <div class="py-1">
+        <router-link :to="{ name: 'update' }">
+          <button class="btn btn-primary">
+            <i class="fas fa-pen"></i>
+            UPDATE PATTERN
+          </button>
+        </router-link>
+      </div>
       <h2>{{ patternName }}
         <span v-if="state === 'REVIEW'" class="badge badge-warning">REVIEW</span>
         <span v-if="state === 'DONE'" class="badge badge-success">DONE</span>

@@ -26,7 +26,7 @@
                   <i class="fas fa-pen-alt"></i>
                   SAVE
                 </button>
-                <router-link :to="{ name: 'dashboard' }">CANCEL</router-link>
+                <router-link :to="{ name: 'preview' }">CANCEL</router-link>
               </div>
             </form>
           </div>

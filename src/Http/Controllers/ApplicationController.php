@@ -3,6 +3,7 @@
 namespace Laratomics\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
+use Illuminate\Routing\Controller;
 use Response;
 
 class ApplicationController extends Controller

@@ -24684,13 +24684,20 @@ if (false) {
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */]);
 
 /* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
+
   state: {
     config: __WEBPACK_IMPORTED_MODULE_2__config__["a" /* default */],
-    appInfo: {
-      appName: 'test'
-    }
+    appInfo: {}
   },
+
   mutations: {
+
+    /*
+    |--------------------------------------------------------------------------
+    | appInfo
+    |--------------------------------------------------------------------------
+    | Set basic application information retrieved from Laravel.
+    */
     appInfo: function appInfo(state, info) {
       state.appInfo = info.data;
     }
@@ -27683,7 +27690,20 @@ if (hadRuntime) {
 
 "use strict";
 /* harmony default export */ __webpack_exports__["a"] = ({
+  /*
+  |--------------------------------------------------------------------------
+  | API URI
+  |--------------------------------------------------------------------------
+  | Here you can configure the URI to the backend API.
+  */
   apiUri: "workshop/api/v1",
+
+  /*
+  |--------------------------------------------------------------------------
+  | Development mode
+  |--------------------------------------------------------------------------
+  | Enable/disable development mode.
+  */
   devMode: true
 });
 

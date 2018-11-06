@@ -23,16 +23,6 @@ class PatternController extends Controller
     }
 
     /**
-     * Show the creation form.
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function createForm()
-    {
-        return view('workshop::createPattern');
-    }
-
-    /**
      * Store the newly created pattern.
      *
      * @param Request $request
@@ -40,13 +30,12 @@ class PatternController extends Controller
      */
     public function store(Request $request)
     {
-        // TODO: validation and authorization
         $name = $request->get('name');
         $description = $request->get('description');
         $this->patternService->createBladeFile($name);
         $this->patternService->createMarkdownFile($name, $description);
         $this->patternService->createSassFile($name);
 
-        return redirect(route('preview-pattern', ['pattern' => $name]));
+//        return redirect(route('preview-pattern', ['pattern' => $name]));
     }
 }

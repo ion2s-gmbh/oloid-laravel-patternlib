@@ -22,14 +22,6 @@
                     Pattern management
                 </div>
 
-                <div class="card-body">
-                    <a href="{{ route('create-pattern') }}">
-                        <button class="btn btn-primary">
-                            <i class="fas fa-plus-square"></i>
-                            NEW PATTERN
-                        </button>
-                    </a>
-                </div>
             </div>
         </div>
     </div>

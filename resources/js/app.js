@@ -2,8 +2,9 @@
  * Import of Vue and Vue-Plugins
  */
 import Vue from 'vue';
-import router from './router';
 import VeeValidate from 'vee-validate';
+import router from './router';
+import store from './store';
 
 Vue.use(VeeValidate);
 
@@ -17,5 +18,6 @@ const app = new Vue({
   components: {
     WorkshopGui,
   },
-  router
+  router,
+  store
 });

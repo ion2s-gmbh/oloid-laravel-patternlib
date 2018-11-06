@@ -16,7 +16,8 @@
     "spatie/yaml-front-matter": "^2.0"
   },
   "require-dev": {
-    "phpunit/phpunit": "^7.4"
+    "phpunit/phpunit": "^7.4",
+    "phpmetrics/phpmetrics": "^2.4"
   },
   "autoload": {
     "files": [
@@ -43,6 +44,7 @@
   "prefer-stable": true,
   "scripts": {
     "test": "vendor/bin/phpunit",
-    "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+    "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
+    "analyze": "phpmetrics --report-html=phpmetrics ./"
   }
 }

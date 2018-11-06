@@ -1,4 +1,3 @@
-// window.Vue = require('vue');
 import Vue from 'vue';
 import router from './router';
 
@@ -9,13 +8,11 @@ import router from './router';
  */
 
 import Workshop from './components/Workshop';
-// import Navbar from './components/Navbar';
 
 const app = new Vue({
   el: '#workshop',
   components: {
     Workshop,
-    // Navbar
   },
   router
 });

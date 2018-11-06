@@ -36,7 +36,7 @@
     <div>
         <main>
             <div id="workshop">
-                <workshop></workshop>
+                <workshop-gui></workshop-gui>
             </div>
         </main>
     </div>

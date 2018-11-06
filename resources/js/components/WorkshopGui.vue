@@ -11,6 +11,7 @@
   import Navbar from './Navbar';
 
   export default {
+    name: "WorkshopGui",
     components: {
       Navbar
     },

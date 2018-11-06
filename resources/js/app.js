@@ -10,12 +10,12 @@ Vue.use(VeeValidate);
 /**
  * Import of main components
  */
-import Workshop from './components/Workshop';
+import WorkshopGui from './components/WorkshopGui';
 
 const app = new Vue({
   el: '#workshop',
   components: {
-    Workshop,
+    WorkshopGui,
   },
   router
 });

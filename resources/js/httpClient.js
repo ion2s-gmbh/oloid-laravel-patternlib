@@ -1,5 +1,6 @@
 import axios from 'axios';
+import config from './config';
 
 export const API = axios.create({
-  baseURL: `workshop/api/v1`,
+  baseURL: config.apiUri,
 });

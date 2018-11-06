@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-md-3">
 
-      <div class="card" v-if="$store.state.devMode">
+      <div class="card" v-if="$store.state.config.devMode">
         <div class="card-header">
           Pattern management
         </div>

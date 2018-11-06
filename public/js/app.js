@@ -23800,7 +23800,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row" }, [
     _c("div", { staticClass: "col-md-3" }, [
-      _vm.$store.state.devMode
+      _vm.$store.state.config.devMode
         ? _c("div", { staticClass: "card" }, [
             _c("div", { staticClass: "card-header" }, [
               _vm._v("\n        Pattern management\n      ")
@@ -24676,6 +24676,8 @@ if (false) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__config__ = __webpack_require__(66);
+
 
 
 
@@ -24683,10 +24685,10 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
 
 /* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
   state: {
+    config: __WEBPACK_IMPORTED_MODULE_2__config__["a" /* default */],
     appInfo: {
       appName: 'test'
-    },
-    devMode: true
+    }
   },
   mutations: {
     appInfo: function appInfo(state, info) {
@@ -25958,10 +25960,12 @@ if (false) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return API; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(38);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__config__ = __webpack_require__(66);
+
 
 
 var API = __WEBPACK_IMPORTED_MODULE_0_axios___default.a.create({
-  baseURL: 'workshop/api/v1'
+  baseURL: __WEBPACK_IMPORTED_MODULE_1__config__["a" /* default */].apiUri
 });
 
 /***/ }),
@@ -27672,6 +27676,16 @@ if (hadRuntime) {
   (function() { return this })() || Function("return this")()
 );
 
+
+/***/ }),
+/* 66 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony default export */ __webpack_exports__["a"] = ({
+  apiUri: "workshop/api/v1",
+  devMode: true
+});
 
 /***/ })
 /******/ ]);

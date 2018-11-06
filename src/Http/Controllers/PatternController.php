@@ -3,6 +3,8 @@
 namespace Laratomics\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Laratomics\Http\Requests\PatternRequest;
+use Laratomics\Http\Resources\PatternResource;
 use Laratomics\Services\PatternService;
 use Illuminate\Routing\Controller;
 
@@ -25,10 +27,11 @@ class PatternController extends Controller
     /**
      * Store the newly created pattern.
      *
-     * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @param PatternRequest $request
+     * @return PatternResource
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
-    public function store(Request $request)
+    public function store(PatternRequest $request): PatternResource
     {
         $name = $request->get('name');
         $description = $request->get('description');
@@ -36,6 +39,6 @@ class PatternController extends Controller
         $this->patternService->createMarkdownFile($name, $description);
         $this->patternService->createSassFile($name);
 
-//        return redirect(route('preview-pattern', ['pattern' => $name]));
+        return new PatternResource($this->patternService->loadPattern($name));
     }
 }

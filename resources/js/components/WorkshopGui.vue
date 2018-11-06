@@ -9,14 +9,19 @@
 
 <script>
   import Navbar from './Navbar';
-
+  import { API } from '../httpClient';
   export default {
     name: "WorkshopGui",
     components: {
       Navbar
     },
-    mounted() {
-      console.log('Laratomics Workshop is open, come in and find out!')
+    async mounted() {
+      try {
+        let json  = await API.get('info');
+        this.$store.commit('appInfo', json.data);
+      } catch (e) {
+        console.error(e.status)
+      }
     }
   }
 </script>

@@ -14,6 +14,7 @@
                        class="form-control"
                        type="text"
                        name="name"
+                       v-model="pattern.name"
                        aria-describedby="nameHelp"
                        placeholder="nested.pattern.name"
                        v-validate.disable="'required'"
@@ -26,6 +27,7 @@
                 <textarea id="description"
                           class="form-control"
                           name="description"
+                          v-model="pattern.description"
                           v-validate.disable="'required'"
                           placeholder="Describe your pattern ..."></textarea>
                 <small class="error">{{ errors.first('description') }}</small>
@@ -47,17 +49,37 @@
 </template>
 
 <script>
+  import {API} from '../httpClient';
+
   export default {
     name: "CreatePattern",
+    data() {
+      return {
+        pattern: {}
+      }
+    },
     methods: {
-        store: function() {
-          this.$validator.validate()
-            .then(result => {
-              if (result) {
-                this.$router.push('/preview');
+      /**
+       * Store a new Pattern
+       */
+      store: function () {
+        this.$validator.validate()
+          .then(async result => {
+            if (result) {
+              try {
+                let response = await API.post('pattern', {
+                  'name': this.pattern.name,
+                  'description': this.pattern.description
+                });
+                if (response.status === 200) {
+                  this.$router.push('/preview');
+                }
+              } catch (e) {
+                console.error(e.status);
               }
-            });
-        }
+            }
+          });
+      }
     }
   }
 </script>

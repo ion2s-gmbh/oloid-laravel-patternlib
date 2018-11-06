@@ -23903,6 +23903,13 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(63);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__httpClient__ = __webpack_require__(37);
+
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
 //
 //
 //
@@ -23951,18 +23958,72 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "CreatePattern",
+  data: function data() {
+    return {
+      pattern: {}
+    };
+  },
+
   methods: {
+    /**
+     * Store a new Pattern
+     */
     store: function store() {
       var _this = this;
 
-      this.$validator.validate().then(function (result) {
-        if (result) {
-          _this.$router.push('/preview');
-        }
-      });
+      this.$validator.validate().then(function () {
+        var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(result) {
+          var response;
+          return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+            while (1) {
+              switch (_context.prev = _context.next) {
+                case 0:
+                  if (!result) {
+                    _context.next = 11;
+                    break;
+                  }
+
+                  _context.prev = 1;
+                  _context.next = 4;
+                  return __WEBPACK_IMPORTED_MODULE_1__httpClient__["a" /* API */].post('pattern', {
+                    'name': _this.pattern.name,
+                    'description': _this.pattern.description
+                  });
+
+                case 4:
+                  response = _context.sent;
+
+                  if (response.status === 200) {
+                    _this.$router.push('/preview');
+                  }
+                  _context.next = 11;
+                  break;
+
+                case 8:
+                  _context.prev = 8;
+                  _context.t0 = _context['catch'](1);
+
+                  console.error(_context.t0.status);
+
+                case 11:
+                case 'end':
+                  return _context.stop();
+              }
+            }
+          }, _callee, _this, [[1, 8]]);
+        }));
+
+        return function (_x) {
+          return _ref.apply(this, arguments);
+        };
+      }());
     }
   }
 });
@@ -24000,6 +24061,12 @@ var render = function() {
                 _c("input", {
                   directives: [
                     {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.pattern.name,
+                      expression: "pattern.name"
+                    },
+                    {
                       name: "validate",
                       rawName: "v-validate.disable",
                       value: "required",
@@ -24014,6 +24081,15 @@ var render = function() {
                     name: "name",
                     "aria-describedby": "nameHelp",
                     placeholder: "nested.pattern.name"
+                  },
+                  domProps: { value: _vm.pattern.name },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.pattern, "name", $event.target.value)
+                    }
                   }
                 }),
                 _vm._v(" "),
@@ -24030,6 +24106,12 @@ var render = function() {
                 _c("textarea", {
                   directives: [
                     {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.pattern.description,
+                      expression: "pattern.description"
+                    },
+                    {
                       name: "validate",
                       rawName: "v-validate.disable",
                       value: "required",
@@ -24042,6 +24124,15 @@ var render = function() {
                     id: "description",
                     name: "description",
                     placeholder: "Describe your pattern ..."
+                  },
+                  domProps: { value: _vm.pattern.description },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.pattern, "description", $event.target.value)
+                    }
                   }
                 }),
                 _vm._v(" "),

@@ -17,7 +17,7 @@
     },
     async mounted() {
       try {
-        let json  = await API.get('info');
+        let json = await API.get('info');
         this.$store.commit('appInfo', json.data);
       } catch (e) {
         console.error(e.status)

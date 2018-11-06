@@ -16,8 +16,10 @@
     "spatie/yaml-front-matter": "^2.0"
   },
   "require-dev": {
+    "phpmetrics/phpmetrics": "^2.4",
     "phpunit/phpunit": "^7.4",
-    "phpmetrics/phpmetrics": "^2.4"
+    "spatie/phpunit-watcher": "^1.7",
+    "orchestra/testbench": "~3.7"
   },
   "autoload": {
     "files": [

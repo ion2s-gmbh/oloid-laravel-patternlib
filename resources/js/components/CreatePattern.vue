@@ -9,20 +9,30 @@
             <form method="post">
               <div class="form-group">
                 <label for="name">Name</label>
-                <input id="name" class="form-control" type="text" name="name"
-                       aria-describedby="nameHelp"
-                       placeholder="nested.pattern.name"/>
                 <small id="nameHelp" class="form-text text-muted">E.g. atoms.buttons.button</small>
+                <input id="name"
+                       class="form-control"
+                       type="text"
+                       name="name"
+                       aria-describedby="nameHelp"
+                       placeholder="nested.pattern.name"
+                       v-validate.disable="'required'"
+                />
+                <small class="error">{{ errors.first('name') }}</small>
               </div>
 
               <div class="form-group">
                 <label for="description">Description</label>
-                <textarea id="description" class="form-control" name="description"
+                <textarea id="description"
+                          class="form-control"
+                          name="description"
+                          v-validate.disable="'required'"
                           placeholder="Describe your pattern ..."></textarea>
+                <small class="error">{{ errors.first('description') }}</small>
               </div>
 
               <div class="form-group">
-                <button @click.prevent="createPattern" class="btn btn-primary">
+                <button @click.prevent="store" class="btn btn-primary">
                   <i class="fas fa-pen-alt"></i>
                   SAVE
                 </button>
@@ -40,9 +50,13 @@
   export default {
     name: "CreatePattern",
     methods: {
-        createPattern: function() {
-          alert('create pattern');
-          this.$router.push('/preview');
+        store: function() {
+          this.$validator.validate()
+            .then(result => {
+              if (result) {
+                this.$router.push('/preview');
+              }
+            });
         }
     }
   }

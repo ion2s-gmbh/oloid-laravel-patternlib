@@ -40,7 +40,7 @@
   export default {
     name: "UpdatePattern",
     methods: {
-      createPattern: function() {
+      store: function() {
         alert('update pattern');
         this.$router.push('/preview');
       }

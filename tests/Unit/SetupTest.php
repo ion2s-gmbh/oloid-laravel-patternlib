@@ -12,7 +12,10 @@ class SetupTest extends BaseTestCase
      */
     protected $tempDir = __DIR__ . '/tmp';
 
-    /** @test */
+    /**
+     * @test
+     * @coversNothing
+     */
     public function it_should_have_test_directory_and_configs()
     {
         $fs = new Filesystem();

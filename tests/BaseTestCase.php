@@ -13,7 +13,7 @@ abstract class BaseTestCase extends TestCase
      * Temporary testing folder.
      * @var string
      */
-    protected $tempDir = __DIR__;
+    protected $tempDir = __DIR__ .'/tmp';
 
     /**
      * Setup before testing.

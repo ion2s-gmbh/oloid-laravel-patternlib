@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get(config('/'), function () {
-    return view('workshop::home');
+Route::get('/', function () {
+    return view('workshop::gui');
 })->name('workshop');
 
 //Route::get('create-pattern', 'PatternController@createForm')

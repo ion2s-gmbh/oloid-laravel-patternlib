@@ -29,7 +29,9 @@ abstract class BaseTestCase extends TestCase
      */
     protected function tearDown()
     {
-        rmdir($this->tempDir);
+        if (is_dir($this->tempDir)) {
+            rmdir($this->tempDir);
+        }
         parent::tearDown();
     }
 

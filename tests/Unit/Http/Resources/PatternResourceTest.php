@@ -35,7 +35,9 @@ class PatternResourceTest extends BaseTestCase
     public function it_should_respond_with_pattern_representation_as_array()
     {
         $expected = [
-            'name' => 'atoms.test.element'
+            'data' => [
+                'name' => 'atoms.test.element'
+            ]
         ];
         $result = $this->cut->toArray($this->mockRequest);
 

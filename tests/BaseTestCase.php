@@ -3,6 +3,7 @@
 
 namespace Laratomics\Tests;
 
+use Illuminate\Filesystem\Filesystem;
 use Laratomics\Providers\PatternServiceProvider;
 use Laratomics\WorkshopServiceProvider;
 use Orchestra\Testbench\TestCase;
@@ -13,26 +14,19 @@ abstract class BaseTestCase extends TestCase
      * Temporary testing folder.
      * @var string
      */
-    protected $tempDir = __DIR__ .'/tmp';
+    protected $tempDir = __DIR__ . '/tmp';
 
     /**
      * Setup before testing.
      */
     protected function setUp()
     {
+        $fs = new Filesystem();
+        if (is_dir($this->tempDir)) {
+            $fs->deleteDirectory($this->tempDir);
+        }
         mkdir($this->tempDir);
         parent::setUp();
-    }
-
-    /**
-     * Cleanup after testing.
-     */
-    protected function tearDown()
-    {
-        if (is_dir($this->tempDir)) {
-            rmdir($this->tempDir);
-        }
-        parent::tearDown();
     }
 
     /**

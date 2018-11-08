@@ -17,6 +17,19 @@ const MARKDOWN_EXTENSION = 'md';
 class PatternService
 {
     /**
+     * Crate all required files for the given new Pattern.
+     *
+     * @param $name
+     * @param $description
+     */
+    public function createPattern($name, $description)
+    {
+        $this->createBladeFile($name);
+        $this->createMarkdownFile($name, $description);
+        $this->createSassFile($name);
+    }
+
+    /**
      * Create a new Blade file for the Pattern.
      *
      * @param string $pattern

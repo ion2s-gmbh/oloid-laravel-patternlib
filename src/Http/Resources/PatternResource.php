@@ -15,7 +15,9 @@ class PatternResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'name' => $request->get('name')
+            'data' => [
+                'name' => $request->get('name')
+            ]
         ];
     }
 }

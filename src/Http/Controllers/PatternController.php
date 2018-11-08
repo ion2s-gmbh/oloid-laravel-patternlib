@@ -2,6 +2,7 @@
 
 namespace Laratomics\Http\Controllers;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use Laratomics\Http\Requests\PatternRequest;
 use Laratomics\Http\Resources\PatternResource;
@@ -29,14 +30,12 @@ class PatternController extends Controller
      * @param PatternRequest $request
      * @return PatternResource
      */
-    public function store(PatternRequest $request): PatternResource
+    public function store(PatternRequest $request): JsonResponse
     {
         $name = $request->get('name');
         $description = $request->get('description');
-        $this->patternService->createBladeFile($name);
-        $this->patternService->createMarkdownFile($name, $description);
-        $this->patternService->createSassFile($name);
+        $this->patternService->createPattern($name, $description);
 
-        return new PatternResource([]);
+        return JsonResponse::create(new PatternResource([]), JsonResponse::HTTP_CREATED);
     }
 }

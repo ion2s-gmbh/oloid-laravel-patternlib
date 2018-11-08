@@ -44,7 +44,7 @@ class ReconfigureCommand extends Command
      */
     public function handle()
     {
-        if ($this->configurationService->registerViewResources()) {
+        if ($this->configurationService->registerViewResources(config_path('view.php'))) {
             $path = config('workshop.basePath');
             $this->comment("Reset extra view path to {$path}.");
             return 0;

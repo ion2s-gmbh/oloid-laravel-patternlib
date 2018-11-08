@@ -89,7 +89,6 @@ class PatternService
         /*
          * Import in sass file in parent sass file
          */
-        $content = "\n@import \"{$includeFile}\";";
         if (!File::exists($parentSassPath)) {
             $content = "@import \"{$includeFile}\";";
 
@@ -106,7 +105,7 @@ class PatternService
     private function importInMainSassFile(string $parent): void
     {
         File::append(config('workshop.patternPath') . '/patterns.scss',
-            "\n@import \"{$parent}/{$parent}\";");
+            "@import \"{$parent}/{$parent}\";");
     }
 
     /**

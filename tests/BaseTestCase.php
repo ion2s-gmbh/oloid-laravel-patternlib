@@ -3,7 +3,6 @@
 
 namespace Laratomics\Tests;
 
-use Faker\Provider\File;
 use Illuminate\Filesystem\Filesystem;
 use Laratomics\Providers\PatternServiceProvider;
 use Laratomics\WorkshopServiceProvider;
@@ -37,6 +36,15 @@ abstract class BaseTestCase extends TestCase
     }
 
     /**
+     * Delete the temp testing directory if it exists.
+     */
+    protected function deleteTempDirectory(): void
+    {
+        $fs = new Filesystem();
+        $fs->deleteDirectory($this->tempDir);
+    }
+
+    /**
      * Get package providers.
      *
      * @param \Illuminate\Foundation\Application $app
@@ -64,16 +72,5 @@ abstract class BaseTestCase extends TestCase
         $config->set('workshop.uri', 'workshop');
         $config->set('workshop.basePath', $this->tempDir);
         $config->set('workshop.patternPath', $this->tempDir . '/patterns');
-    }
-
-    /**
-     * Delete the temp testing directory if it exists.
-     */
-    protected function deleteTempDirectory(): void
-    {
-        $fs = new Filesystem();
-        if (is_dir($this->tempDir)) {
-            $fs->deleteDirectory($this->tempDir);
-        }
     }
 }

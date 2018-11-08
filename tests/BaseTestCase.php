@@ -59,6 +59,7 @@ abstract class BaseTestCase extends TestCase
     protected function getEnvironmentSetUp($app)
     {
         $config = $app->get('config');
+        $config->set('app.name', 'testApp');
         $config->set('workshop.uri', 'workshop');
         $config->set('workshop.basePath', $this->tempDir);
         $config->set('workshop.patternPath', $this->tempDir . '/patterns');

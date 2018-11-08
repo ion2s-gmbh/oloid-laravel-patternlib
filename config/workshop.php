@@ -10,7 +10,7 @@ return [
     |     http://<your-domain>/workshop
     |     http://<your-domain>/patterns
     */
-    'uri' => env('WORKSHOP_URI','workshop'),
+    'uri' => env('WORKSHOP_URI', 'workshop'),
 
     /*
     |--------------------------------------------------------------------------

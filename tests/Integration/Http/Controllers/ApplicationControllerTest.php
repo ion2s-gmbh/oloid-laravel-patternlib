@@ -3,7 +3,6 @@
 namespace Laratomics\Tests\Integration;
 
 use Laratomics\Tests\BaseTestCase;
-use Orchestra\Testbench\TestCase;
 
 class ApplicationControllerTest extends BaseTestCase
 {

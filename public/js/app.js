@@ -24046,7 +24046,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                 case 4:
                   response = _context.sent;
 
-                  if (response.status === 200) {
+                  if (response.status === 201) {
                     _this.$router.push('/preview');
                   }
                   _context.next = 11;

@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-<a href="https://travis-ci.org/poolingpeople/laratomics-workshop"><img src="https://travis-ci.org/poolingpeople/laratomics-workshop.svg?branch=1.0" alt="Build Status"></a>
+<a href="https://travis-ci.org/poolingpeople/laratomics-workshop"><img src="https://travis-ci.org/poolingpeople/laratomics-workshop.svg?branch=master" alt="Build Status"></a>
 <a href="https://codecov.io/gh/poolingpeople/laratomics-workshop"><img src="https://codecov.io/gh/poolingpeople/laratomics-workshop/branch/master/graph/badge.svg" /></a>
 <a href="https://packagist.org/packages/poolingpeople/laratomics-workshop"><img src="https://poser.pugx.org/poolingpeople/laratomics-workshop/d/total.svg" alt="Total Downloads"></a>
 <a href="https://packagist.org/packages/poolingpeople/laratomics-workshop"><img src="https://poser.pugx.org/poolingpeople/laratomics-workshop/v/stable.svg" alt="Latest Stable Version"></a>

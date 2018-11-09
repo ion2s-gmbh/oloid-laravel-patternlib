@@ -20,11 +20,11 @@ class PatternService
     /**
      * Crate all required files for the given new Pattern.
      *
-     * @param $name
-     * @param $description
+     * @param string $name
+     * @param string $description
      * @return Pattern
      */
-    public function createPattern($name, $description): Pattern
+    public function createPattern(string $name, string $description): Pattern
     {
         $pattern = new Pattern();
         $pattern->name = $name;
@@ -149,6 +149,17 @@ class PatternService
 
         $preview = compileBladeString($html, $values);
         return [$html, $preview, $metadata, $style, $state];
+    }
+
+    /**
+     * Load the pattern template.
+     *
+     * @param string $pattern
+     * @return string
+     */
+    public function loadBladeFile(string $pattern): string
+    {
+
     }
 
     /**

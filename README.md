@@ -6,6 +6,7 @@
 <a href="https://github.com/poolingpeople/laratomics-workshop/releases"><img class="confluence-embedded-image confluence-external-resource" src="https://img.shields.io/github/release-pre/poolingpeople/laratomics-workshop.svg" data-image-src="https://img.shields.io/github/release-pre/poolingpeople/laratomics-workshop.svg" height="20"></a>
 <a href="https://travis-ci.org/poolingpeople/laratomics-workshop"><img class="confluence-embedded-image confluence-external-resource" src="https://img.shields.io/travis/poolingpeople/laratomics-workshop/master.svg" data-image-src="https://img.shields.io/travis/poolingpeople/laratomics-workshop/master.svg" height="20"></a>
 <a href="https://codecov.io/gh/poolingpeople/laratomics-workshop"><img class="confluence-embedded-image confluence-external-resource" src="https://img.shields.io/codecov/c/github/poolingpeople/laratomics-workshop/master.svg" data-image-src="https://img.shields.io/codecov/c/github/poolingpeople/laratomics-workshop/master.svg" height="20"></a>
+<img src="https://img.shields.io/david/poolingpeople/laratomics-workshop.svg">
 <a href="https://packagist.org/packages/poolingpeople/laratomics-workshop"><img src="https://img.shields.io/github/license/mashape/apistatus.svg" alt="License"></a>
 </p>
 

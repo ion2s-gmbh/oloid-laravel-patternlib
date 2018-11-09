@@ -21,7 +21,7 @@ class ConfigurationService
         $basePath = array_pop($pathParts);
         $resourcePath = "resource_path('{$basePath}'),";
         if (!Str::contains($viewConfig, $resourcePath)) {
-            file_put_contents(config_path('view.php'), str_replace(
+            file_put_contents($viewConfigFile, str_replace(
                 "resource_path('views'),".PHP_EOL,
                 "resource_path('views'),".PHP_EOL."        ".$resourcePath.PHP_EOL,
                 $viewConfig

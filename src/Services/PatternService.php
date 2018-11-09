@@ -7,6 +7,7 @@ namespace Laratomics\Services;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\File;
 use Illuminate\Contracts\View\Factory as ViewFactory;
+use Laratomics\Models\Pattern;
 use Spatie\YamlFrontMatter\YamlFrontMatter;
 
 const INITIAL_STATE = 'TODO';
@@ -21,24 +22,30 @@ class PatternService
      *
      * @param $name
      * @param $description
+     * @return Pattern
      */
-    public function createPattern($name, $description)
+    public function createPattern($name, $description): Pattern
     {
-        $this->createBladeFile($name);
-        $this->createMarkdownFile($name, $description);
-        $this->createSassFile($name);
+        $pattern = new Pattern();
+        $pattern->name = $name;
+        $pattern->template = $this->createBladeFile($name);
+        $pattern->markdown = $this->createMarkdownFile($name, $description);
+        $pattern->sass = $this->createSassFile($name);
+        return $pattern;
     }
 
     /**
      * Create a new Blade file for the Pattern.
      *
      * @param string $pattern
+     * @return string
      */
-    public function createBladeFile(string $pattern): void
+    public function createBladeFile(string $pattern): string
     {
         $file = $this->getFileLocation($pattern, BLADE_EXTENSION);
         $content = "<!-- {$pattern} -->";
         File::put($file, $content);
+        return $content;
     }
 
     /**
@@ -46,8 +53,9 @@ class PatternService
      *
      * @param string $pattern
      * @param string $description
+     * @return string
      */
-    public function createMarkdownFile(string $pattern, string $description): void
+    public function createMarkdownFile(string $pattern, string $description): string
     {
         $file = $this->getFileLocation($pattern, MARKDOWN_EXTENSION);
 
@@ -56,22 +64,25 @@ class PatternService
         values:
         ---
         {$description}", INITIAL_STATE);
-
-        File::put($file, str_replace('        ', '', $content));
+        $content = str_replace('        ', '', $content);
+        File::put($file, $content);
+        return $content;
     }
 
     /**
      * Create a sass file for the newly created component and import it in parent and main sass files.
      *
      * @param string $pattern
+     * @return string
      */
-    public function createSassFile(string $pattern): void
+    public function createSassFile(string $pattern): string
     {
         $file = $this->getFileLocation($pattern, SASS_EXTENSION);
         $content = "/* {$pattern} */";
         File::put($file, $content);
 
         $this->importInParentSassFile($pattern);
+        return $content;
     }
 
     /**

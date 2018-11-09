@@ -42,10 +42,11 @@ class PatternServiceTest extends BaseTestCase
      */
     public function it_should_create_a_blade_template_file()
     {
-        $this->cut->createBladeFile($this->name);
+        $content = $this->cut->createBladeFile($this->name);
 
         // assert
         $this->assertBladeFileCreation();
+        $this->assertEquals("<!-- {$this->name} -->", $content);
     }
 
     /**
@@ -54,10 +55,11 @@ class PatternServiceTest extends BaseTestCase
      */
     public function it_should_create_a_markdown_file()
     {
-        $this->cut->createMarkdownFile($this->name, $this->description);
+        $content = $this->cut->createMarkdownFile($this->name, $this->description);
 
         // assert
         $this->assertMarkdownFileCreation();
+        $this->assertMarkdownContent($content);
     }
 
     /**
@@ -66,10 +68,11 @@ class PatternServiceTest extends BaseTestCase
      */
     public function it_should_create_a_sass_file()
     {
-        $this->cut->createSassFile($this->name);
+        $content = $this->cut->createSassFile($this->name);
 
         // assert
         $this->assertSassFileCreation();
+        $this->assertEquals("/* {$this->name} */", $content);
     }
 
     /**
@@ -79,7 +82,12 @@ class PatternServiceTest extends BaseTestCase
     public function it_should_create_all_required_pattern_files()
     {
         // act
-        $this->cut->createPattern($this->name, $this->description);
+        $pattern = $this->cut->createPattern($this->name, $this->description);
+
+        $this->assertEquals($this->name, $pattern->name);
+        $this->assertEquals("<!-- {$this->name} -->", $pattern->template);
+        $this->assertMarkdownContent($pattern->markdown);
+        $this->assertEquals("/* {$this->name} */", $pattern->sass);
 
         // assert
         $this->assertBladeFileCreation();
@@ -105,8 +113,6 @@ class PatternServiceTest extends BaseTestCase
 
     /**
      * Asserting that the Pattern's markdown file was created.
-     *
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     protected function assertMarkdownFileCreation(): void
     {
@@ -114,13 +120,14 @@ class PatternServiceTest extends BaseTestCase
             $markdownFile = config('workshop.patternPath') . '/atoms/text/h1.md';
             $this->assertTrue($this->fs->isFile($markdownFile));
             $markdown = $this->fs->get($markdownFile);
-            $markdownContent = str_replace('   ', '',
-                "---
-            status: TODO
-            values:
-            ---
-            {$this->description}");
-            $this->assertEquals($markdownContent, $markdown);
+            $this->assertMarkdownContent($markdown);
+//            $markdownContent = str_replace('   ', '',
+//                "---
+//            status: TODO
+//            values:
+//            ---
+//            {$this->description}");
+//            $this->assertEquals($markdownContent, $markdown);
         } catch (FileNotFoundException $e) {
             $this->fail();
         }
@@ -128,8 +135,6 @@ class PatternServiceTest extends BaseTestCase
 
     /**
      * Asserting that the Pattern's blade file was created.
-     *
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     protected
     function assertSassFileCreation(): void
@@ -158,5 +163,19 @@ class PatternServiceTest extends BaseTestCase
         } catch (FileNotFoundException $e) {
             $this->fail();
         }
+    }
+
+    /**
+     * @param $markdown
+     */
+    protected function assertMarkdownContent($markdown): void
+    {
+        $markdownContent = str_replace('   ', '',
+            "---
+            status: TODO
+            values:
+            ---
+            {$this->description}");
+        $this->assertEquals($markdownContent, $markdown);
     }
 }

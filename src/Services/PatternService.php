@@ -12,13 +12,14 @@ use Illuminate\Contracts\View\Factory as ViewFactory;
 use Laratomics\Models\Pattern;
 use Spatie\YamlFrontMatter\YamlFrontMatter;
 
-const INITIAL_STATE = 'TODO';
-const BLADE_EXTENSION = 'blade.php';
-const SASS_EXTENSION = 'scss';
-const MARKDOWN_EXTENSION = 'md';
 
 class PatternService
 {
+    const INITIAL_STATE = 'TODO';
+    const BLADE_EXTENSION = 'blade.php';
+    const SASS_EXTENSION = 'scss';
+    const MARKDOWN_EXTENSION = 'md';
+
     /**
      * Crate all required files for the given new Pattern.
      *
@@ -44,7 +45,7 @@ class PatternService
      */
     public function createBladeFile(string $pattern): string
     {
-        $file = $this->getFileLocation($pattern, BLADE_EXTENSION);
+        $file = $this->getFileLocation($pattern, self::BLADE_EXTENSION);
         $content = "<!-- {$pattern} -->";
         File::put($file, $content);
         return $content;
@@ -59,13 +60,13 @@ class PatternService
      */
     public function createMarkdownFile(string $pattern, string $description): string
     {
-        $file = $this->getFileLocation($pattern, MARKDOWN_EXTENSION);
+        $file = $this->getFileLocation($pattern, self::MARKDOWN_EXTENSION);
 
         $content = sprintf("---
         status: %s
         values:
         ---
-        {$description}", INITIAL_STATE);
+        {$description}", self::INITIAL_STATE);
         $content = str_replace('        ', '', $content);
         File::put($file, $content);
         return $content;
@@ -79,7 +80,7 @@ class PatternService
      */
     public function createSassFile(string $pattern): string
     {
-        $file = $this->getFileLocation($pattern, SASS_EXTENSION);
+        $file = $this->getFileLocation($pattern, self::SASS_EXTENSION);
         $content = "/* {$pattern} */";
         File::put($file, $content);
 
@@ -156,7 +157,7 @@ class PatternService
      */
     public function loadBladeFile(string $pattern): string
     {
-        $file = $this->getFileLocation($pattern, BLADE_EXTENSION);
+        $file = $this->getFileLocation($pattern, self::BLADE_EXTENSION);
         return File::get($file);
     }
 
@@ -169,7 +170,7 @@ class PatternService
      */
     public function loadMarkdownFile(string $pattern): string
     {
-        $file = $this->getFileLocation($pattern, MARKDOWN_EXTENSION);
+        $file = $this->getFileLocation($pattern, self::MARKDOWN_EXTENSION);
         return File::get($file);
     }
 
@@ -182,7 +183,7 @@ class PatternService
      */
     public function loadSassFile(string $pattern): string
     {
-        $file = $this->getFileLocation($pattern, SASS_EXTENSION);
+        $file = $this->getFileLocation($pattern, self::SASS_EXTENSION);
         return File::get($file);
     }
 

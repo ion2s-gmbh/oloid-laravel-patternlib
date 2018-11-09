@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Services;
 
+use Exception;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Filesystem\Filesystem;
 use Laratomics\Services\PatternService;
@@ -263,7 +264,11 @@ class PatternServiceTest extends BaseTestCase
         $this->preparePattern();
 
         // act
-        $pattern = $this->cut->loadPattern($this->name, []);
+        try {
+            $pattern = $this->cut->loadPattern($this->name, []);
+        } catch (Exception $e) {
+            $this->fail($e->getMessage());
+        }
 
         // assert
         $this->assertTemplateContent($pattern->template);

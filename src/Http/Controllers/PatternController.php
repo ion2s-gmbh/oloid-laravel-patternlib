@@ -2,9 +2,11 @@
 
 namespace Laratomics\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Laratomics\Services\PatternService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
+use Laratomics\Http\Requests\PatternRequest;
+use Laratomics\Http\Resources\PatternResource;
+use Laratomics\Services\PatternService;
 
 class PatternController extends Controller
 {
@@ -23,30 +25,17 @@ class PatternController extends Controller
     }
 
     /**
-     * Show the creation form.
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function createForm()
-    {
-        return view('laratomics-workshop::createPattern');
-    }
-
-    /**
      * Store the newly created pattern.
      *
-     * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @param PatternRequest $request
+     * @return PatternResource
      */
-    public function store(Request $request)
+    public function store(PatternRequest $request): JsonResponse
     {
-        // TODO: validation and authorization
         $name = $request->get('name');
         $description = $request->get('description');
-        $this->patternService->createPattern($name);
-        $this->patternService->createMarkdownFile($name, $description);
-        $this->patternService->createSassFile($name);
+        $this->patternService->createPattern($name, $description);
 
-        return redirect(route('preview-pattern', ['pattern' => $name]));
+        return JsonResponse::create(new PatternResource([]), JsonResponse::HTTP_CREATED);
     }
 }

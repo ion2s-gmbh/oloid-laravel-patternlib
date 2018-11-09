@@ -4,9 +4,11 @@ namespace Laratomics;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
+use Laratomics\Console\Commands\CleanCommand;
 use Laratomics\Console\Commands\InstallCommand;
+use Laratomics\Console\Commands\ReconfigureCommand;
 
-class LaratomicsWorkshopServiceProvider extends BaseServiceProvider
+class WorkshopServiceProvider extends BaseServiceProvider
 {
     /**
      * Bootstrap any package services.
@@ -24,9 +26,34 @@ class LaratomicsWorkshopServiceProvider extends BaseServiceProvider
      */
     private function setRoutes()
     {
-        Route::group($this->routeConfiguration(), function () {
+        Route::group($this->webRouteConfiguration(), function () {
             $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
         });
+
+        Route::group($this->apiRouteConfiguration(), function () {
+            $this->loadRoutesFrom(__DIR__.'/../routes/api.php');
+        });
+    }
+
+    /**
+     * Get the basic route configuration.
+     *
+     * @return array
+     */
+    private function webRouteConfiguration()
+    {
+        return [
+            'namespace' => 'Laratomics\Http\Controllers',
+            'prefix' => config('workshop.uri')
+        ];
+    }
+
+    private function apiRouteConfiguration()
+    {
+        return [
+            'namespace' => 'Laratomics\Http\Controllers',
+            'prefix' => 'workshop/api/v1'
+        ];
     }
 
     /**
@@ -35,21 +62,8 @@ class LaratomicsWorkshopServiceProvider extends BaseServiceProvider
     private function setViews()
     {
         $this->loadViewsFrom(
-            __DIR__.'/../resources/views', 'laratomics-workshop'
+            __DIR__.'/../resources/views', 'workshop'
         );
-    }
-
-    /**
-     * Get the basic route configuration.
-     *
-     * @return array
-     */
-    private function routeConfiguration()
-    {
-        return [
-            'namespace' => 'Laratomics\Http\Controllers',
-            'prefix' => config('laratomics-workshop.uri')
-        ];
     }
 
     /**
@@ -70,7 +84,7 @@ class LaratomicsWorkshopServiceProvider extends BaseServiceProvider
     private function configure()
     {
         $this->mergeConfigFrom(
-            __DIR__ . '/../config/laratomics-workshop.php', 'laratomics-workshop'
+            __DIR__ . '/../config/workshop.php', 'workshop'
         );
     }
 
@@ -83,28 +97,30 @@ class LaratomicsWorkshopServiceProvider extends BaseServiceProvider
          * Publish configs
          */
         $this->publishes([
-            __DIR__ . '/../config/laratomics-workshop.php' => config_path('laratomics-workshop.php')
+            __DIR__ . '/../config/workshop.php' => config_path('workshop.php')
         ], 'workshop-config');
 
         /*
          * Publish views
          */
         $this->publishes([
-            __DIR__.'/../resources/views' => resource_path('views/vendor/laratomics-workshop'),
+            __DIR__.'/../resources/views' => resource_path('views/vendor/workshop'),
         ], 'workshop-views');
 
         /*
          * Publish assets
          */
         $this->publishes([
-            __DIR__ . '/../public' => public_path('vendor/laratomics-workshop')
+            __DIR__ . '/../public' => public_path('vendor/workshop')
         ], 'workshop-assets');
     }
 
     private function registerCommands()
     {
         $this->commands([
-            InstallCommand::class
+            InstallCommand::class,
+            CleanCommand::class,
+            ReconfigureCommand::class,
         ]);
     }
 }

@@ -50,3 +50,24 @@ Then run:
 composer update
 ```
 You should see ion2s/laratomics-workshop in the list of discovered packages.
+
+You can execute the tests with:
+```bash
+composer test
+```
+
+### Preparing the frontend
+Finally you have to build the frontend:
+```bash
+cd /path/to/laratomics-workshop
+npm install
+npm run dev
+```
+
+### BrowserSync
+To have a better frontend development experience you can use BrowserSync.
+The configuration can be found in `ẁebpack.mix.js`.  
+You can have webpack to watch and sync your frontend changes by running:
+```bash
+npm run watch
+```

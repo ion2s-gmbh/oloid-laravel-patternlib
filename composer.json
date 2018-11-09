@@ -2,7 +2,7 @@
   "name": "ion2s/laratomics-workshop",
   "type": "library",
   "description": "Package to add laratomics powers to your Laravel application",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "license": "MIT",
   "authors": [
     {
@@ -14,6 +14,13 @@
     "php": "^7.1.3",
     "laravel/framework": "~5.7.7",
     "spatie/yaml-front-matter": "^2.0"
+  },
+  "require-dev": {
+    "phpmetrics/phpmetrics": "^2.4",
+    "phpunit/phpunit": "^7.4",
+    "spatie/phpunit-watcher": "^1.7",
+    "orchestra/testbench": "~3.7",
+    "mockery/mockery": "^1.2"
   },
   "autoload": {
     "files": [
@@ -31,11 +38,16 @@
   "extra": {
     "laravel": {
       "providers": [
-        "Laratomics\\LaratomicsWorkshopServiceProvider",
+        "Laratomics\\WorkshopServiceProvider",
         "Laratomics\\Providers\\PatternServiceProvider"
       ]
     }
   },
   "minimum-stability": "dev",
-  "prefer-stable": true
+  "prefer-stable": true,
+  "scripts": {
+    "test": "vendor/bin/phpunit",
+    "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
+    "analyze": "phpmetrics --report-html=phpmetrics ./"
+  }
 }

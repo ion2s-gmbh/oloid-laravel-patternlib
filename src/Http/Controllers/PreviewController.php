@@ -30,22 +30,22 @@ class PreviewController extends Controller
         array_shift($explode);
         $patternUsage = implode('.', $explode);
 
-        return view('laratomics-workshop::preview', [
-            'type' => $type,
-            'patternUsage' => $patternUsage,
-            'pattern' => $pattern,
-            'html' => $html,
-            'style' => $style,
-            'metadata' => $metadata,
-            'preview' => $preview,
-            'state' => $state
-        ]);
+//        return view('workshop::preview', [
+//            'type' => $type,
+//            'patternUsage' => $patternUsage,
+//            'pattern' => $pattern,
+//            'html' => $html,
+//            'style' => $style,
+//            'metadata' => $metadata,
+//            'preview' => $preview,
+//            'state' => $state
+//        ]);
     }
 
     public function getPreview($pattern)
     {
         list($html, $preview, $metadata, $style, $state) = $this->patternService->loadPattern($pattern);
-        return view('laratomics-workshop::getPreview', [
+        return view('workshop::preview', [
             'preview' => $preview
         ]);
     }

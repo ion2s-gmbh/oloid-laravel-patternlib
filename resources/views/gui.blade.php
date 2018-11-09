@@ -10,12 +10,13 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('vendor/laratomics-workshop/js/app.js') }}" defer></script>
+    <script src="{{ asset('vendor/workshop/js/app.js') }}" defer></script>
     <script
             src="https://code.jquery.com/jquery-3.3.1.min.js"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
             crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.0/prism.min.js"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
@@ -25,18 +26,18 @@
 
 
     <!-- Styles -->
-    <link href='{{ asset('vendor/laratomics-workshop/css/app.css') }}' rel='stylesheet' type='text/css'>
+    <link href='{{ asset('vendor/workshop/css/app.css') }}' rel='stylesheet' type='text/css'>
     <link href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css' rel='stylesheet'
           type='text/css'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.0/themes/prism.min.css">
 
 </head>
 <body>
-    <div id="app">
-        @include('laratomics-workshop::navbar')
-
-        <main class="py-4">
-            @yield('content')
+    <div>
+        <main>
+            <div id="workshop">
+                <workshop-gui></workshop-gui>
+            </div>
         </main>
     </div>
 </body>

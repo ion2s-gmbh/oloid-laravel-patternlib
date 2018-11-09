@@ -49,7 +49,7 @@ class InstallCommand extends Command
         $this->comment('Publishing Laratomics Workshop Configuration...');
         $this->callSilent('vendor:publish', ['--tag' => 'workshop-config']);
 
-        if ($this->configurationService->registerViewResources()) {
+        if ($this->configurationService->registerViewResources(config_path('view.php'))) {
             $this->comment('Extra view resources configuration have been added in the project\'s view.php');
         }
 

@@ -6,6 +6,7 @@ use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Filesystem\Filesystem;
 use Laratomics\Services\PatternService;
 use Laratomics\Tests\BaseTestCase;
+use Spatie\YamlFrontMatter\Document;
 
 class PatternServiceTest extends BaseTestCase
 {
@@ -250,6 +251,26 @@ class PatternServiceTest extends BaseTestCase
 
         // assert
         $this->assertSassContent($content);
+    }
+
+    /**
+     * @test
+     * @covers \Laratomics\Services\PatternService
+     */
+    public function it_should_load_a_whole_pattern()
+    {
+        // arrange
+        $this->preparePattern();
+
+        // act
+        $pattern = $this->cut->loadPattern($this->name, []);
+
+        // assert
+        $this->assertTemplateContent($pattern->template);
+        $this->assertMarkdownContent($pattern->markdown);
+        $this->assertSassContent($pattern->sass);
+        $this->assertInstanceOf(Document::class, $pattern->metadata);
+        $this->assertEquals('DONE', $pattern->state);
     }
 
     /**

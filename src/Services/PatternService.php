@@ -4,6 +4,8 @@
 namespace Laratomics\Services;
 
 
+use Exception;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\File;
 use Illuminate\Contracts\View\Factory as ViewFactory;
@@ -120,35 +122,29 @@ class PatternService
     }
 
     /**
-     * @param $pattern
+     * @param $name
      * @param array $values
-     * @return array
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
-     * @throws \Exception
-     * @todo refactor
+     * @return Pattern
+     * @throws FileNotFoundException
+     * @throws Exception
      */
-    public function loadPattern($pattern, $values = [])
+    public function loadPattern($name, $values = []): Pattern
     {
-        $patternPath = str_replace('.', '/', $pattern);
-        $patternPath = config('workshop.patternPath') . "/{$patternPath}";
-        $sassFile = "{$patternPath}.scss";
-        $style = '';
-        if (File::exists($sassFile)) {
-            $style = File::get($sassFile);
-        }
-        $html = File::get("{$patternPath}.blade.php");
-        $markdown = File::get("{$patternPath}.md");
-        $metadata = YamlFrontMatter::parse($markdown);
+        $pattern = new Pattern();
+        $pattern->template = $this->loadBladeFile($name);
+        $markdown = $this->loadMarkdownFile($name);
+        $pattern->markdown = $markdown;
+        $pattern->metadata = YamlFrontMatter::parse($markdown);
+        $pattern->sass = $this->loadSassFile($name);
+        $pattern->state = 'DONE';
 
-        $values = !is_null($metadata->values) ? $metadata->values : array_merge($values, []);
+        /*
+         * Create the preview
+         */
+        $values = !is_null($pattern->metadata->values) ? $pattern->metadata->values : array_merge($values, []);
+        $pattern->preview = compileBladeString($pattern->template, $values);
 
-        $parts = explode('.', $pattern);
-        $section = array_shift($parts);
-        $component = implode('.', $parts);
-        $state = 'DONE';
-
-        $preview = compileBladeString($html, $values);
-        return [$html, $preview, $metadata, $style, $state];
+        return $pattern;
     }
 
     /**
@@ -156,7 +152,7 @@ class PatternService
      *
      * @param string $pattern
      * @return string
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     * @throws FileNotFoundException
      */
     public function loadBladeFile(string $pattern): string
     {
@@ -169,7 +165,7 @@ class PatternService
      *
      * @param string $pattern
      * @return string
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     * @throws FileNotFoundException
      */
     public function loadMarkdownFile(string $pattern): string
     {
@@ -182,7 +178,7 @@ class PatternService
      *
      * @param string $pattern
      * @return string
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     * @throws FileNotFoundException
      */
     public function loadSassFile(string $pattern): string
     {

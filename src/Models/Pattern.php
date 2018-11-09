@@ -8,9 +8,12 @@ class Pattern extends Model
 {
     protected $fillable = [
         'name',
+        'state',
         'template',
         'html',
         'sass',
-        'markdown'
+        'markdown',
+        'preview',
+        'metadata'
     ];
 }

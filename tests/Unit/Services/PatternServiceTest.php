@@ -46,7 +46,7 @@ class PatternServiceTest extends BaseTestCase
 
         // assert
         $this->assertBladeFileCreation();
-        $this->assertEquals("<!-- {$this->name} -->", $content);
+        $this->assertTemplateContent($content);
     }
 
     /**
@@ -103,12 +103,11 @@ class PatternServiceTest extends BaseTestCase
         try {
             $bladeFile = config('workshop.patternPath') . '/atoms/text/h1.blade.php';
             $this->assertTrue($this->fs->isFile($bladeFile));
-            $template = $this->fs->get($bladeFile);
-            $this->assertEquals("<!-- {$this->name} -->", $template);
+            $content = $this->fs->get($bladeFile);
+            $this->assertTemplateContent($content);
         } catch (FileNotFoundException $e) {
-            $this->fail();
+            $this->fail($e->getMessage());
         }
-
     }
 
     /**
@@ -121,13 +120,6 @@ class PatternServiceTest extends BaseTestCase
             $this->assertTrue($this->fs->isFile($markdownFile));
             $markdown = $this->fs->get($markdownFile);
             $this->assertMarkdownContent($markdown);
-//            $markdownContent = str_replace('   ', '',
-//                "---
-//            status: TODO
-//            values:
-//            ---
-//            {$this->description}");
-//            $this->assertEquals($markdownContent, $markdown);
         } catch (FileNotFoundException $e) {
             $this->fail();
         }
@@ -166,6 +158,16 @@ class PatternServiceTest extends BaseTestCase
     }
 
     /**
+     * Assert that the template content is equal.
+     *
+     * @param $content
+     */
+    protected function assertTemplateContent($content): void
+    {
+        $this->assertEquals("<!-- {$this->name} -->", $content);
+    }
+
+    /**
      * @param $markdown
      */
     protected function assertMarkdownContent($markdown): void
@@ -177,5 +179,35 @@ class PatternServiceTest extends BaseTestCase
             ---
             {$this->description}");
         $this->assertEquals($markdownContent, $markdown);
+    }
+
+    /**
+     * @test
+     * @covers \Laratomics\Services\PatternService
+     */
+    public function it_should_load_a_pattern_template()
+    {
+        // arrange
+        $this->preparePattern();
+
+        // act
+        $content = '';
+        try {
+            $content = $this->cut->loadBladeFile($this->name);
+        } catch (FileNotFoundException $e) {
+            $this->fail($e->getMessage());
+        }
+
+        // assert
+        $this->assertTemplateContent($content);
+    }
+
+    /**
+     * Prepare a whole Pattern file structure for the test.
+     * @todo refactor using a stub.
+     */
+    private function preparePattern()
+    {
+        $this->cut->createPattern($this->name, $this->description);
     }
 }

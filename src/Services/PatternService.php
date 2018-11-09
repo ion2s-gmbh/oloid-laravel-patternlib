@@ -156,10 +156,12 @@ class PatternService
      *
      * @param string $pattern
      * @return string
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function loadBladeFile(string $pattern): string
     {
-
+        $file = $this->getFileLocation($pattern, BLADE_EXTENSION);
+        return File::get($file);
     }
 
     /**

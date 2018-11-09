@@ -135,7 +135,7 @@ class PatternServiceTest extends BaseTestCase
             $sassFile = config('workshop.patternPath') . '/atoms/text/h1.scss';
             $this->assertTrue($this->fs->isFile($sassFile));
             $sassContent = $this->fs->get($sassFile);
-            $this->assertEquals("/* {$this->name} */", $sassContent);
+            $this->assertSassContent($sassContent);
 
             /*
              * Assert that created sass file is imported in the parent sass file
@@ -182,6 +182,14 @@ class PatternServiceTest extends BaseTestCase
     }
 
     /**
+     * @param $sassContent
+     */
+    protected function assertSassContent($sassContent): void
+    {
+        $this->assertEquals("/* {$this->name} */", $sassContent);
+    }
+
+    /**
      * @test
      * @covers \Laratomics\Services\PatternService
      */
@@ -200,6 +208,48 @@ class PatternServiceTest extends BaseTestCase
 
         // assert
         $this->assertTemplateContent($content);
+    }
+
+    /**
+     * @test
+     * @covers \Laratomics\Services\PatternService
+     */
+    public function it_should_load_a_markdown_file()
+    {
+        // arrange
+        $this->preparePattern();
+
+        // act
+        $content = '';
+        try {
+            $content = $this->cut->loadMarkdownFile($this->name);
+        } catch (FileNotFoundException $e) {
+            $this->fail($e->getMessage());
+        }
+
+        // assert
+        $this->assertMarkdownContent($content);
+    }
+
+    /**
+     * @test
+     * @covers \Laratomics\Services\PatternService
+     */
+    public function it_should_load_a_sass_file()
+    {
+        // arrange
+        $this->preparePattern();
+
+        // act
+        $content = '';
+        try {
+            $content = $this->cut->loadSassFile($this->name);
+        } catch (FileNotFoundException $e) {
+            $this->fail($e->getMessage());
+        }
+
+        // assert
+        $this->assertSassContent($content);
     }
 
     /**

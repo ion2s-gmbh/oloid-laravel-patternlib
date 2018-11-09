@@ -165,6 +165,32 @@ class PatternService
     }
 
     /**
+     * Load the pattern markdown file.
+     *
+     * @param string $pattern
+     * @return string
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     */
+    public function loadMarkdownFile(string $pattern): string
+    {
+        $file = $this->getFileLocation($pattern, MARKDOWN_EXTENSION);
+        return File::get($file);
+    }
+
+    /**
+     * Load the pattern sass file.
+     *
+     * @param string $pattern
+     * @return string
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     */
+    public function loadSassFile(string $pattern): string
+    {
+        $file = $this->getFileLocation($pattern, SASS_EXTENSION);
+        return File::get($file);
+    }
+
+    /**
      * Get the full file location (path, filename, extension).
      *
      * @param string $pattern

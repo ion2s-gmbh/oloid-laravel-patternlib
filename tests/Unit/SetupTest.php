@@ -1,6 +1,6 @@
 <?php
 
-namespace Laratomics\Tests\Unit;
+namespace Tests\Unit;
 
 use Illuminate\Filesystem\Filesystem;
 use Laratomics\Tests\BaseTestCase;

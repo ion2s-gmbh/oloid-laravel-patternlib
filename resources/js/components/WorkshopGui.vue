@@ -9,8 +9,9 @@
 
 <script>
   import Navbar from './Navbar';
-  import { API } from '../httpClient';
+  import {API} from '../httpClient';
   import LOG from '../logger';
+
   export default {
     name: "WorkshopGui",
     components: {

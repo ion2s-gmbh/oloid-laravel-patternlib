@@ -9,18 +9,19 @@
             UPDATE
           </button>
         </router-link>
-        <button class="btn btn-danger" @click="deletePattern(patternName)">
+        <button class="btn btn-danger" @click="deletePattern(pattern.name)">
           <i class="fas fa-trash-alt"></i>
           DELETE
         </button>
       </div>
-      <h2>{{ patternName }}
-        <span v-if="status === 'REVIEW'" class="badge badge-warning">REVIEW</span>
-        <span v-if="status === 'DONE'" class="badge badge-success">DONE</span>
+      <h2>{{ pattern.name }}
+        <span v-if="pattern.status === 'TODO'" class="badge badge-danger">TODO</span>
+        <span v-if="pattern.status === 'REVIEW'" class="badge badge-warning">REVIEW</span>
+        <span v-if="pattern.status === 'DONE'" class="badge badge-success">DONE</span>
       </h2>
       <h2>Description</h2>
       <div class="code">
-        <pre><code class="language-markdown">{{ description }}</code></pre>
+        <pre><code class="language-markdown">{{ pattern.description }}</code></pre>
       </div>
       <br>
       <h2>Usage
@@ -29,7 +30,7 @@
         </button>
       </h2>
       <div class="code">
-        <pre><code class="language-html" id="pattern">{{ '@' }}{{ type }}('{{ usage }}', [])</code></pre>
+        <pre><code class="language-html" id="pattern">{{ '@' }}{{ pattern.type }}('{{ pattern.usage }}', [])</code></pre>
       </div>
       <br>
       <h2>Markup/HTML</h2>
@@ -47,17 +48,17 @@
         <div class="tab-content">
           <div class="tab-pane fade show active" id="markup-view" role="tabpanel"
                aria-labelledby="markup-view">
-            <pre><code class="language-html">{{ markup }}</code></pre>
+            <pre><code class="language-html">{{ pattern.template }}</code></pre>
           </div>
           <div class="tab-pane fade" id="html-view" role="tabpanel" aria-labelledby="html-view">
-            <pre><code class="language-html">{{ html }}</code></pre>
+            <pre><code class="language-html">{{ pattern.html }}</code></pre>
           </div>
         </div>
       </div>
       <br>
       <h2>SASS/CSS</h2>
       <div class="code">
-        <pre><code class="language-css">{{ sass }}</code></pre>
+        <pre><code class="language-css">{{ pattern.sass }}</code></pre>
       </div>
     </div>
     <div class="col-sm-8">
@@ -76,18 +77,14 @@
 </template>
 
 <script>
+  import {API} from '../httpClient';
+  import LOG from '../logger';
+
   export default {
     name: "PreviewPattern",
     data() {
       return {
-        patternName: this.$route.params.pattern,
-        type: 'element',
-        description: 'Description of the pattern',
-        status: 'DONE',
-        usage: 'tests.dummy',
-        markup: '<h1>{{ $text }}</h1>',
-        html: '<h1>Heading 1</h1>',
-        sass: 'h1 { color: red; }'
+        pattern: {},
       }
     },
 
@@ -95,11 +92,22 @@
 
       /**
        * Delete the pattern
-       *
        * @param pattern
        */
       deletePattern: function (pattern) {
         alert('Deleting ' + pattern);
+      }
+    },
+
+    /**
+     * Load all Pattern information from API.
+     */
+    async beforeCreate() {
+      try {
+        let response = await API.get(this.$route.params.pattern);
+        this.pattern = response.data.data;
+      } catch (e) {
+        LOG.error(e);
       }
     }
   }

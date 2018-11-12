@@ -15,8 +15,8 @@
         </button>
       </div>
       <h2>{{ patternName }}
-        <span v-if="state === 'REVIEW'" class="badge badge-warning">REVIEW</span>
-        <span v-if="state === 'DONE'" class="badge badge-success">DONE</span>
+        <span v-if="status === 'REVIEW'" class="badge badge-warning">REVIEW</span>
+        <span v-if="status === 'DONE'" class="badge badge-success">DONE</span>
       </h2>
       <h2>Description</h2>
       <div class="code">
@@ -57,7 +57,7 @@
       <br>
       <h2>SASS/CSS</h2>
       <div class="code">
-        <pre><code class="language-css">{{ style }}</code></pre>
+        <pre><code class="language-css">{{ sass }}</code></pre>
       </div>
     </div>
     <div class="col-sm-8">
@@ -80,14 +80,14 @@
     name: "PreviewPattern",
     data() {
       return {
-        type: 'element',
         patternName: this.$route.params.pattern,
+        type: 'element',
         description: 'Description of the pattern',
-        state: 'DONE',
+        status: 'DONE',
         usage: 'tests.dummy',
         markup: '<h1>{{ $text }}</h1>',
         html: '<h1>Heading 1</h1>',
-        style: 'h1 { color: red; }'
+        sass: 'h1 { color: red; }'
       }
     },
 

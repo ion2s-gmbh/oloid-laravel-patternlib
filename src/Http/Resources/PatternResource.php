@@ -16,9 +16,21 @@ class PatternResource extends JsonResource
     {
         return [
             'data' => [
-                'name' => $this->name,
+                'patternName' => $this->name,
+                'type' => $this->getType(),
                 'description' => $this->metadata->body(),
+                'status' => $this->metadata->status,
+                'usage' => '',
+                'markup' => $this->markup,
+                'html' => $this->html,
+                'sass' => $this->sass
             ]
         ];
+    }
+
+    private function getType()
+    {
+        $explode = explode('.', $this->name);
+        return $type = substr(array_first($explode), 0, -1);
     }
 }

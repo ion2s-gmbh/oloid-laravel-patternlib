@@ -26,10 +26,18 @@ class PatternResourceTest extends BaseTestCase
 
         $pattern = new Pattern();
         $pattern->name = 'atoms.test.element';
+        $pattern->markup = '<h1>{{ $text }}</h1>';
+        $pattern->html = '<h1>Heading 1</h1>';
+        $pattern->sass = 'h1 { color: red; }';
+
+        /*
+         * Metadata Mock
+         */
         $pattern->metadata = Mockery::mock(YamlFrontMatter::class)
             ->shouldReceive('body')
             ->andReturn('This is a test description')
             ->getMock();
+        $pattern->metadata->status = 'TODO';
 
         $this->cut = new PatternResource($pattern);
     }
@@ -42,8 +50,14 @@ class PatternResourceTest extends BaseTestCase
     {
         $expected = [
             'data' => [
-                'name' => 'atoms.test.element',
+                'patternName' => 'atoms.test.element',
+                'type' => 'atom',
                 'description' => 'This is a test description',
+                'status' => 'TODO',
+                'usage' => '',
+                'markup' => '<h1>{{ $text }}</h1>',
+                'html' => '<h1>Heading 1</h1>',
+                'sass' => 'h1 { color: red; }'
             ]
         ];
         $result = $this->cut->toArray($this->pattern);

@@ -4,3 +4,4 @@ vendor
 coverage
 phpmetrics
 webpack.mix.js
+*.log

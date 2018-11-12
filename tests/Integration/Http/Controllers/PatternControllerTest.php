@@ -3,7 +3,10 @@
 namespace Tests\Integration\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
+use Laratomics\Models\Pattern;
+use Laratomics\Services\PatternService;
 use Laratomics\Tests\BaseTestCase;
+use Mockery;
 
 class PatternControllerTest extends BaseTestCase
 {
@@ -67,5 +70,55 @@ class PatternControllerTest extends BaseTestCase
 
         // assert
         $this->assertEquals(JsonResponse::HTTP_UNPROCESSABLE_ENTITY, $response->getStatusCode());
+    }
+
+    /**
+     * @test
+     * @covers \Laratomics\Http\Controllers\PatternController
+     */
+    public function it_should_load_all_pattern_information()
+    {
+        // arrange
+        $pattern = new Pattern();
+        $pattern->name = 'atoms.test.element';
+        $pattern->template = '<h1>{{ $text }}</h1>';
+        $pattern->html = '<h1>Heading 1</h1>';
+        $pattern->sass = 'h1 { color: red; }';
+
+        /*
+         * Metadata Mock
+         */
+        $pattern->metadata = Mockery::mock(YamlFrontMatter::class)
+            ->shouldReceive('body')
+            ->andReturn('This is a test description')
+            ->getMock();
+        $pattern->metadata->status = 'TODO';
+
+        $this->app->bind(PatternService::class, function () use ($pattern) {
+            $mock = Mockery::mock(PatternService::class)
+                ->shouldReceive('loadPattern')
+                ->andReturn($pattern)
+                ->getMock();
+            return $mock;
+        });
+
+        // act
+        $response = $this->getJson('workshop/api/v1/atoms.test.element');
+
+        // assert
+        $expected = [
+            'data' => [
+                'name' => 'atoms.test.element',
+                'type' => 'atom',
+                'description' => 'This is a test description',
+                'status' => 'TODO',
+                'usage' => 'test.element',
+                'template' => '<h1>{{ $text }}</h1>',
+                'html' => '<h1>Heading 1</h1>',
+                'sass' => 'h1 { color: red; }'
+            ]
+        ];
+        $response->assertSuccessful();
+        $response->assertJson($expected);
     }
 }

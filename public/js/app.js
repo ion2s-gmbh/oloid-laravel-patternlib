@@ -24024,6 +24024,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
   },
 
   methods: {
+
     /**
      * Store a new Pattern
      */
@@ -26260,6 +26261,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
   methods: {
+
+    /**
+     * Delete the pattern
+     *
+     * @param pattern
+     */
     deletePattern: function deletePattern(pattern) {
       alert('Deleting ' + pattern);
     }
@@ -27805,6 +27812,10 @@ if (false) {
 
 /* harmony default export */ __webpack_exports__["a"] = ({
 
+  /**
+   * Dubug logging if devMode is enabled.
+   * @param params
+   */
   debug: function debug() {
     if (__WEBPACK_IMPORTED_MODULE_0__config__["a" /* default */].devMode) {
       var _console;
@@ -27813,6 +27824,10 @@ if (false) {
     }
   },
 
+  /**
+   * Error logging if devMode is enabled.
+   * @param params
+   */
   error: function error() {
     if (__WEBPACK_IMPORTED_MODULE_0__config__["a" /* default */].devMode) {
       var _console2;

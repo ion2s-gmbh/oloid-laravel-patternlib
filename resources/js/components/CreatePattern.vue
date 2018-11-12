@@ -60,6 +60,7 @@
       }
     },
     methods: {
+
       /**
        * Store a new Pattern
        */

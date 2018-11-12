@@ -92,6 +92,12 @@
     },
 
     methods: {
+
+      /**
+       * Delete the pattern
+       *
+       * @param pattern
+       */
       deletePattern: function (pattern) {
         alert('Deleting ' + pattern);
       }

@@ -34,8 +34,21 @@ class PatternController extends Controller
     {
         $name = $request->get('name');
         $description = $request->get('description');
-        $this->patternService->createPattern($name, $description);
+        $pattern = $this->patternService->createPattern($name, $description);
 
-        return JsonResponse::create(new PatternResource([]), JsonResponse::HTTP_CREATED);
+        return JsonResponse::create(new PatternResource($pattern), JsonResponse::HTTP_CREATED);
+    }
+
+    /**
+     * Get all information about a Pattern to display it in the workshop.
+     *
+     * @param string $pattern
+     * @return PatternResource
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     */
+    public function preview(string $pattern): PatternResource
+    {
+        $patternInstance = $this->patternService->loadPattern($pattern);
+        return new PatternResource($patternInstance);
     }
 }

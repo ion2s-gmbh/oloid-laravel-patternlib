@@ -26,5 +26,5 @@ Route::post('pattern', 'PatternController@store');
 | Get all all information for the preview screen.
 | Except the actual rendered preview, that will be loaded by an iframe.
 */
-Route::get('{pattern}', 'PreviewController@getPreview');
+Route::get('{pattern}', 'PatternController@preview');
 

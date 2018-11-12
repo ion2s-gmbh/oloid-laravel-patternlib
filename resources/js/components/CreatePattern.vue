@@ -72,7 +72,7 @@
                   'description': this.pattern.description
                 });
                 if (response.status === 201) {
-                  this.$router.push('/preview');
+                  this.$router.push('/preview/' + this.pattern.name);
                 }
               } catch (e) {
                 console.error(e.status);

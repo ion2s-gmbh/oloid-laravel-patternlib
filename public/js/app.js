@@ -21112,7 +21112,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
 
 /* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
   mode: 'hash',
-  routes: [{ path: '/', component: __WEBPACK_IMPORTED_MODULE_2__components_Dashboard___default.a, name: 'dashboard' }, { path: '/create', component: __WEBPACK_IMPORTED_MODULE_3__components_CreatePattern___default.a, name: 'create' }, { path: '/update', component: __WEBPACK_IMPORTED_MODULE_4__components_UpdatePattern___default.a, name: 'update' }, { path: '/preview', component: __WEBPACK_IMPORTED_MODULE_5__components_PreviewPattern___default.a, name: 'preview' }]
+  routes: [{ path: '/', component: __WEBPACK_IMPORTED_MODULE_2__components_Dashboard___default.a, name: 'dashboard' }, { path: '/create', component: __WEBPACK_IMPORTED_MODULE_3__components_CreatePattern___default.a, name: 'create' }, { path: '/update', component: __WEBPACK_IMPORTED_MODULE_4__components_UpdatePattern___default.a, name: 'update' }, { path: '/preview/:pattern', component: __WEBPACK_IMPORTED_MODULE_5__components_PreviewPattern___default.a, name: 'preview' }]
 }));
 
 /***/ }),
@@ -23871,12 +23871,16 @@ var render = function() {
                 "div",
                 { staticClass: "py-1" },
                 [
-                  _c("router-link", { attrs: { to: { name: "preview" } } }, [
-                    _c("button", { staticClass: "btn btn-primary" }, [
-                      _c("i", { staticClass: "fas fa-eye" }),
-                      _vm._v("\n              PREVIEW PATTERN\n            ")
-                    ])
-                  ])
+                  _c(
+                    "router-link",
+                    { attrs: { to: "/preview/atoms.text.headline1" } },
+                    [
+                      _c("button", { staticClass: "btn btn-primary" }, [
+                        _c("i", { staticClass: "fas fa-eye" }),
+                        _vm._v("\n              PREVIEW PATTERN\n            ")
+                      ])
+                    ]
+                  )
                 ],
                 1
               )
@@ -24047,7 +24051,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                   response = _context.sent;
 
                   if (response.status === 201) {
-                    _this.$router.push('/preview');
+                    _this.$router.push('/preview/' + _this.pattern.name);
                   }
                   _context.next = 11;
                   break;
@@ -26238,7 +26242,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   data: function data() {
     return {
       type: 'element',
-      patternName: 'elements.tests.dummy',
+      patternName: this.$route.params.pattern,
       description: 'Description of the pattern',
       state: 'DONE',
       usage: 'tests.dummy',

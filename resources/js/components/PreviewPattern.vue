@@ -77,7 +77,7 @@
     data() {
       return {
         type: 'element',
-        patternName: 'elements.tests.dummy',
+        patternName: this.$route.params.pattern,
         description: 'Description of the pattern',
         state: 'DONE',
         usage: 'tests.dummy',

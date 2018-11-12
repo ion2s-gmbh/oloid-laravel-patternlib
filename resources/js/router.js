@@ -14,6 +14,6 @@ export default new VueRouter({
     { path: '/', component: Dashboard, name: 'dashboard' },
     { path: '/create', component: CreatePattern, name: 'create' },
     { path: '/update', component: UpdatePattern, name: 'update' },
-    { path: '/preview', component: PreviewPattern, name: 'preview' }
+    { path: '/preview/:pattern', component: PreviewPattern, name: 'preview' }
   ]
 });

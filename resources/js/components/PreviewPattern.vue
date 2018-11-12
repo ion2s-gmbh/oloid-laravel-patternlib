@@ -30,7 +30,8 @@
         </button>
       </h2>
       <div class="code">
-        <pre><code class="language-html" id="pattern">{{ '@' }}{{ pattern.type }}('{{ pattern.usage }}', [])</code></pre>
+        <pre><code class="language-html"
+                   id="pattern">{{ '@' }}{{ pattern.type }}('{{ pattern.usage }}', [])</code></pre>
       </div>
       <br>
       <h2>Markup/HTML</h2>
@@ -65,10 +66,9 @@
       <h2>Preview</h2>
       <div class="code">
         <div class="card-body">
-          NO YET CONNECTED!
-          <!--<iframe height="1500" width="1100"-->
-          <!--frameBorder="0"-->
-          <!--src="{{ route('get-preview', ['pattern' => $pattern]) }}"></iframe>-->
+          <iframe height="1500" width="1100"
+                  frameBorder="0"
+                  :src="'workshop/preview/atoms.text.headline1'"></iframe>
         </div>
       </div>
     </div>

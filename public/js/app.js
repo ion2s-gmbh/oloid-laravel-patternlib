@@ -26504,7 +26504,22 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _vm._m(2)
+    _c("div", { staticClass: "col-sm-8" }, [
+      _c("h2", [_vm._v("Preview")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "code" }, [
+        _c("div", { staticClass: "card-body" }, [
+          _c("iframe", {
+            attrs: {
+              height: "1500",
+              width: "1100",
+              frameBorder: "0",
+              src: "workshop/preview/atoms.text.headline1"
+            }
+          })
+        ])
+      ])
+    ])
   ])
 }
 var staticRenderFns = [
@@ -26569,20 +26584,6 @@ var staticRenderFns = [
         ])
       ]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-sm-8" }, [
-      _c("h2", [_vm._v("Preview")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "code" }, [
-        _c("div", { staticClass: "card-body" }, [
-          _vm._v("\n        NO YET CONNECTED!\n        ")
-        ])
-      ])
-    ])
   }
 ]
 render._withStripped = true

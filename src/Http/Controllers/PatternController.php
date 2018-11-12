@@ -51,4 +51,12 @@ class PatternController extends Controller
         $patternInstance = $this->patternService->loadPattern($pattern);
         return new PatternResource($patternInstance);
     }
+
+    public function getPreview(string $pattern)
+    {
+        $pattern = $this->patternService->loadPattern($pattern);
+        return view('workshop::preview', [
+            'preview' => $pattern->html
+        ]);
+    }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Laratomics\Tests\Integration;
+namespace Tests\Integration\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
 use Laratomics\Tests\BaseTestCase;
@@ -30,7 +30,7 @@ class PatternControllerTest extends BaseTestCase
 
         // assert
         $this->assertEquals(JsonResponse::HTTP_CREATED, $response->getStatusCode());
-        $response->assertJsonFragment($expectedJson);
+        $response->assertJson($expectedJson);
     }
 
     /**

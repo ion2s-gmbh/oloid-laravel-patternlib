@@ -142,7 +142,7 @@ class PatternService
          * Create the preview
          */
         $values = !is_null($pattern->metadata->values) ? $pattern->metadata->values : array_merge($values, []);
-        $pattern->preview = compileBladeString($pattern->template, $values);
+        $pattern->html = compileBladeString($pattern->template, $values);
 
         return $pattern;
     }

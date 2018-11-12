@@ -26,7 +26,7 @@ class PatternResourceTest extends BaseTestCase
 
         $pattern = new Pattern();
         $pattern->name = 'atoms.test.element';
-        $pattern->markup = '<h1>{{ $text }}</h1>';
+        $pattern->template = '<h1>{{ $text }}</h1>';
         $pattern->html = '<h1>Heading 1</h1>';
         $pattern->sass = 'h1 { color: red; }';
 
@@ -54,8 +54,8 @@ class PatternResourceTest extends BaseTestCase
                 'type' => 'atom',
                 'description' => 'This is a test description',
                 'status' => 'TODO',
-                'usage' => '',
-                'markup' => '<h1>{{ $text }}</h1>',
+                'usage' => 'test.element',
+                'template' => '<h1>{{ $text }}</h1>',
                 'html' => '<h1>Heading 1</h1>',
                 'sass' => 'h1 { color: red; }'
             ]

@@ -21,27 +21,6 @@ class PreviewController extends Controller
         $this->patternService = $patternService;
     }
 
-    public function preview($pattern)
-    {
-        list($html, $preview, $metadata, $style, $state) = $this->patternService->loadPattern($pattern);
-
-        $explode = explode('.', $pattern);
-        $type = substr(array_first($explode), 0, -1);
-        array_shift($explode);
-        $patternUsage = implode('.', $explode);
-
-//        return view('workshop::preview', [
-//            'type' => $type,
-//            'patternUsage' => $patternUsage,
-//            'pattern' => $pattern,
-//            'html' => $html,
-//            'style' => $style,
-//            'metadata' => $metadata,
-//            'preview' => $preview,
-//            'state' => $state
-//        ]);
-    }
-
     public function getPreview($pattern)
     {
         list($html, $preview, $metadata, $style, $state) = $this->patternService->loadPattern($pattern);

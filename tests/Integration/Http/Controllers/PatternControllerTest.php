@@ -21,7 +21,7 @@ class PatternControllerTest extends BaseTestCase
 
         $expectedJson = [
             'data' => [
-                'patternName' => 'pages.testpage'
+                'name' => 'pages.testpage'
             ]
         ];
 

@@ -50,6 +50,7 @@
 
 <script>
   import {API} from '../httpClient';
+  import LOG from '../logger';
 
   export default {
     name: "CreatePattern",
@@ -75,7 +76,7 @@
                   this.$router.push('/preview/' + this.pattern.name);
                 }
               } catch (e) {
-                console.error(e.status);
+                LOG.error(e.status);
               }
             }
           });

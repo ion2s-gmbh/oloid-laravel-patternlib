@@ -12084,7 +12084,7 @@ module.exports = Cancel;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(15);
-module.exports = __webpack_require__(62);
+module.exports = __webpack_require__(63);
 
 
 /***/ }),
@@ -23956,6 +23956,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__httpClient__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__logger__ = __webpack_require__(61);
 
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
@@ -24013,6 +24014,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "CreatePattern",
   data: function data() {
@@ -24060,7 +24062,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                   _context.prev = 8;
                   _context.t0 = _context['catch'](1);
 
-                  console.error(_context.t0.status);
+                  __WEBPACK_IMPORTED_MODULE_2__logger__["a" /* default */].error(_context.t0.status);
 
                 case 11:
                 case 'end':
@@ -27490,7 +27492,7 @@ var normalizeComponent = __webpack_require__(1)
 /* script */
 var __vue_script__ = __webpack_require__(57)
 /* template */
-var __vue_template__ = __webpack_require__(61)
+var __vue_template__ = __webpack_require__(62)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -27539,6 +27541,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Navbar__ = __webpack_require__(58);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Navbar___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Navbar__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__httpClient__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__logger__ = __webpack_require__(61);
 
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
@@ -27555,12 +27558,13 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "WorkshopGui",
   components: {
     Navbar: __WEBPACK_IMPORTED_MODULE_1__Navbar___default.a
   },
-  mounted: function () {
+  beforeCreate: function () {
     var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
       var json;
       return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
@@ -27582,7 +27586,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
               _context.prev = 7;
               _context.t0 = _context['catch'](0);
 
-              console.error(_context.t0.status);
+              __WEBPACK_IMPORTED_MODULE_3__logger__["a" /* default */].error(_context.t0);
 
             case 10:
             case 'end':
@@ -27592,11 +27596,11 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
       }, _callee, this, [[0, 7]]);
     }));
 
-    function mounted() {
+    function beforeCreate() {
       return _ref.apply(this, arguments);
     }
 
-    return mounted;
+    return beforeCreate;
   }()
 });
 
@@ -27793,6 +27797,33 @@ if (false) {
 
 /***/ }),
 /* 61 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config__ = __webpack_require__(13);
+
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+
+  debug: function debug() {
+    if (__WEBPACK_IMPORTED_MODULE_0__config__["a" /* default */].devMode) {
+      var _console;
+
+      (_console = console).log.apply(_console, arguments);
+    }
+  },
+
+  error: function error() {
+    if (__WEBPACK_IMPORTED_MODULE_0__config__["a" /* default */].devMode) {
+      var _console2;
+
+      (_console2 = console).error.apply(_console2, arguments);
+    }
+  }
+});
+
+/***/ }),
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -27820,7 +27851,7 @@ if (false) {
 }
 
 /***/ }),
-/* 62 */
+/* 63 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

@@ -16,7 +16,8 @@ class PatternResource extends JsonResource
     {
         return [
             'data' => [
-                'name' => $request->get('name')
+                'name' => $this->name,
+                'description' => $this->metadata->body(),
             ]
         ];
     }

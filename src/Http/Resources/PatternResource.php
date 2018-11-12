@@ -16,7 +16,7 @@ class PatternResource extends JsonResource
     {
         return [
             'data' => [
-                'patternName' => $this->name,
+                'name' => $this->name,
                 'type' => $this->getType(),
                 'description' => $this->metadata->body(),
                 'status' => $this->metadata->status,

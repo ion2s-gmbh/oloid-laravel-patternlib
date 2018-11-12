@@ -50,7 +50,7 @@ class PatternResourceTest extends BaseTestCase
     {
         $expected = [
             'data' => [
-                'patternName' => 'atoms.test.element',
+                'name' => 'atoms.test.element',
                 'type' => 'atom',
                 'description' => 'This is a test description',
                 'status' => 'TODO',

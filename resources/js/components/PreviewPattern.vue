@@ -6,9 +6,13 @@
         <router-link :to="{ name: 'update' }">
           <button class="btn btn-primary">
             <i class="fas fa-pen"></i>
-            UPDATE PATTERN
+            UPDATE
           </button>
         </router-link>
+        <button class="btn btn-danger" @click="deletePattern(patternName)">
+          <i class="fas fa-trash-alt"></i>
+          DELETE
+        </button>
       </div>
       <h2>{{ patternName }}
         <span v-if="state === 'REVIEW'" class="badge badge-warning">REVIEW</span>
@@ -62,8 +66,8 @@
         <div class="card-body">
           NO YET CONNECTED!
           <!--<iframe height="1500" width="1100"-->
-                  <!--frameBorder="0"-->
-                  <!--src="{{ route('get-preview', ['pattern' => $pattern]) }}"></iframe>-->
+          <!--frameBorder="0"-->
+          <!--src="{{ route('get-preview', ['pattern' => $pattern]) }}"></iframe>-->
         </div>
       </div>
     </div>
@@ -84,6 +88,12 @@
         markup: '<h1>{{ $text }}</h1>',
         html: '<h1>Heading 1</h1>',
         style: 'h1 { color: red; }'
+      }
+    },
+
+    methods: {
+      deletePattern: function (pattern) {
+        alert('Deleting ' + pattern);
       }
     }
   }

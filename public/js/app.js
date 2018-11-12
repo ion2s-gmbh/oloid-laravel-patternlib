@@ -26236,6 +26236,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "PreviewPattern",
@@ -26250,6 +26254,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       html: '<h1>Heading 1</h1>',
       style: 'h1 { color: red; }'
     };
+  },
+
+
+  methods: {
+    deletePattern: function deletePattern(pattern) {
+      alert('Deleting ' + pattern);
+    }
   }
 });
 
@@ -26270,9 +26281,25 @@ var render = function() {
           _c("router-link", { attrs: { to: { name: "update" } } }, [
             _c("button", { staticClass: "btn btn-primary" }, [
               _c("i", { staticClass: "fas fa-pen" }),
-              _vm._v("\n          UPDATE PATTERN\n        ")
+              _vm._v("\n          UPDATE\n        ")
             ])
-          ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-danger",
+              on: {
+                click: function($event) {
+                  _vm.deletePattern(_vm.patternName)
+                }
+              }
+            },
+            [
+              _c("i", { staticClass: "fas fa-trash-alt" }),
+              _vm._v("\n        DELETE\n      ")
+            ]
+          )
         ],
         1
       ),

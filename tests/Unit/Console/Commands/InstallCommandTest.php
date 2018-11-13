@@ -2,7 +2,6 @@
 
 namespace Unit\Console\Commands;
 
-use Illuminate\Filesystem\Filesystem;
 use Laratomics\Services\ConfigurationService;
 use Laratomics\Tests\BaseTestCase;
 use Mockery;
@@ -11,7 +10,8 @@ class InstallCommandTest extends BaseTestCase
 {
     /**
      * @test
-     * @covers \Laratomics\Console\Commands\CleanCommand
+     * @covers \Laratomics\Console\Commands\InstallCommand
+     * @covers \Laratomics\WorkshopServiceProvider
      */
     public function it_should_publish_workshop_resources_and_configs_without_extra_view_registration()
     {
@@ -32,6 +32,7 @@ class InstallCommandTest extends BaseTestCase
     /**
      * @test
      * @covers \Laratomics\Console\Commands\InstallCommand
+     * @covers \Laratomics\WorkshopServiceProvider
      */
     public function it_should_publish_workshop_resources_and_configs_with_extra_view_registration()
     {

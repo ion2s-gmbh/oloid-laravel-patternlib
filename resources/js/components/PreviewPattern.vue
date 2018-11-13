@@ -1,6 +1,9 @@
 <template>
 
   <div class="row">
+    <div class="loading" v-if="loading">
+      Loading...
+    </div>
     <div class="col-sm-4">
       <div class="py-1">
         <router-link :to="{ name: 'update' }">
@@ -78,16 +81,40 @@
 <script>
   import {API} from '../httpClient';
   import LOG from '../logger';
+  // import Prism from 'prismjs';
 
   export default {
     name: "PreviewPattern",
     data() {
       return {
         pattern: {},
+        loading: false,
       }
     },
 
+    watch: {
+      '$route': 'fetchPattern'
+    },
+
     methods: {
+
+      /**
+       * Fetch the Pattern's data from the API.
+       */
+      fetchPattern: async function () {
+        // set to true, if we have to show a loading spinner
+        this.loading = false;
+        try {
+          let response = await API.get(this.$route.params.pattern);
+          this.pattern = response.data.data;
+          this.loading = false;
+          // Prism.highlightAll(true, () => {
+          //   LOG.debug('PRISM');
+          // });
+        } catch (e) {
+          LOG.error(e);
+        }
+      },
 
       /**
        * Delete the pattern
@@ -101,13 +128,8 @@
     /**
      * Load all Pattern information from API.
      */
-    async beforeCreate() {
-      try {
-        let response = await API.get(this.$route.params.pattern);
-        this.pattern = response.data.data;
-      } catch (e) {
-        LOG.error(e);
-      }
+    created() {
+      this.fetchPattern();
     }
   }
 </script>

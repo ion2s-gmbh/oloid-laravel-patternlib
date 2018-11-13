@@ -30,8 +30,7 @@
         </button>
       </h2>
       <div class="code">
-        <pre><code class="language-html"
-                   id="pattern">{{ '@' }}{{ pattern.type }}('{{ pattern.usage }}', [])</code></pre>
+        <pre><code id="pattern">@{{ pattern.type }}('{{ pattern.usage }}', [])</code></pre>
       </div>
       <br>
       <h2>Markup/HTML</h2>
@@ -68,7 +67,7 @@
         <div class="card-body">
           <iframe height="1500" width="1100"
                   frameBorder="0"
-                  :src="'workshop/preview/' + pattern.name"></iframe>
+                  :src="`workshop/preview/${pattern.name}`"></iframe>
         </div>
       </div>
     </div>

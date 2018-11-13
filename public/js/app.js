@@ -26287,6 +26287,30 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -26421,8 +26445,6 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c("br"),
-      _vm._v(" "),
       _vm._m(0),
       _vm._v(" "),
       _c("div", { staticClass: "code" }, [
@@ -26442,8 +26464,6 @@ var render = function() {
           )
         ])
       ]),
-      _vm._v(" "),
-      _c("br"),
       _vm._v(" "),
       _c("h2", [_vm._v("Markup/HTML")]),
       _vm._v(" "),
@@ -26490,8 +26510,6 @@ var render = function() {
           )
         ])
       ]),
-      _vm._v(" "),
-      _c("br"),
       _vm._v(" "),
       _c("h2", [_vm._v("SASS/CSS")]),
       _vm._v(" "),
@@ -27648,6 +27666,17 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -27784,6 +27813,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Navbar"
@@ -27797,22 +27830,12 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "nav",
-    { staticClass: "navbar navbar-expand-lg navbar-dark bg-dark" },
-    [
-      _c("a", { staticClass: "navbar-brand", attrs: { href: "/" } }, [
-        _vm._v(_vm._s(_vm.$store.state.appInfo.appName))
-      ]),
-      _vm._v(" "),
-      _c(
-        "router-link",
-        { staticClass: "navbar-brand", attrs: { to: { name: "dashboard" } } },
-        [_vm._v("Workshop")]
-      ),
-      _vm._v(" "),
-      _vm._m(0),
-      _vm._v(" "),
+  return _c("section", { staticClass: "project" }, [
+    _c("div", { staticClass: "project-info" }, [
+      _vm._v(_vm._s(_vm.$store.state.appInfo.appName))
+    ]),
+    _vm._v(" "),
+    _c("nav", { staticClass: "project-navigation" }, [
       _c(
         "div",
         {
@@ -27820,66 +27843,18 @@ var render = function() {
           attrs: { id: "navbarNavDropdown" }
         },
         [
-          _vm._m(1),
-          _vm._v(" "),
           _c("router-link", { attrs: { to: { name: "create" } } }, [
-            _c("button", { staticClass: "btn btn-primary" }, [
+            _c("button", { staticClass: "btn btn--create" }, [
               _c("i", { staticClass: "fas fa-plus-square" })
             ])
           ])
         ],
         1
       )
-    ],
-    1
-  )
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      {
-        staticClass: "navbar-toggler",
-        attrs: {
-          type: "button",
-          "data-toggle": "collapse",
-          "data-target": "#navbarNavDropdown",
-          "aria-controls": "navbarNavDropdown",
-          "aria-expanded": "false",
-          "aria-label": "Toggle navigation"
-        }
-      },
-      [_c("span", { staticClass: "navbar-toggler-icon" })]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("ul", { staticClass: "navbar-nav" }, [
-      _c("li", { staticClass: "nav-item dropdown" }, [
-        _c("a", {
-          staticClass: "nav-link dropdown-toggle",
-          attrs: {
-            href: "#",
-            id: "navbarDropdownMenuLink",
-            "data-toggle": "dropdown",
-            "aria-haspopup": "true",
-            "aria-expanded": "false"
-          }
-        }),
-        _vm._v(" "),
-        _c("div", {
-          staticClass: "dropdown-menu",
-          attrs: { "aria-labelledby": "navbarDropdownMenuLink" }
-        })
-      ])
     ])
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -27898,11 +27873,14 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "div",
+    "main",
+    { staticClass: "window" },
     [
-      _c("navbar"),
+      _c("navbar", { staticClass: "header" }),
       _vm._v(" "),
-      _c("div", { staticClass: "py-3" }, [_c("router-view")], 1)
+      _c("section", [_c("router-view")], 1),
+      _vm._v(" "),
+      _c("footer", { staticClass: "footer" })
     ],
     1
   )

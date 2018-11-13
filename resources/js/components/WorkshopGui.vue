@@ -1,10 +1,21 @@
 <template>
-  <div>
-    <navbar></navbar>
-    <div class="py-3">
+  
+  <main class="window">
+
+    <navbar class="header">
+      
+    </navbar>
+
+    <section>
+
       <router-view></router-view>
-    </div>
-  </div>
+
+    </section>    
+
+    <footer class="footer"></footer>
+
+  </main>
+
 </template>
 
 <script>

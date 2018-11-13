@@ -28,7 +28,7 @@ class PatternController extends Controller
      * Store the newly created pattern.
      *
      * @param PatternRequest $request
-     * @return PatternResource
+     * @return JsonResponse
      */
     public function store(PatternRequest $request): JsonResponse
     {
@@ -52,6 +52,13 @@ class PatternController extends Controller
         return new PatternResource($patternInstance);
     }
 
+    /**
+     * Get a rendered html preview of the Pattern.
+     *
+     * @param string $pattern
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     */
     public function getPreview(string $pattern)
     {
         $pattern = $this->patternService->loadPattern($pattern);

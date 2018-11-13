@@ -95,6 +95,7 @@ class PatternServiceTest extends BaseTestCase
         $this->assertBladeFileCreation();
         $this->assertMarkdownFileCreation();
         $this->assertSassFileCreation();
+        $this->assertInstanceOf(Document::class, $pattern->metadata);
     }
 
     /**
@@ -130,8 +131,7 @@ class PatternServiceTest extends BaseTestCase
     /**
      * Asserting that the Pattern's blade file was created.
      */
-    protected
-    function assertSassFileCreation(): void
+    protected function assertSassFileCreation(): void
     {
         try {
             $sassFile = config('workshop.patternPath') . '/atoms/text/h1.scss';
@@ -275,7 +275,7 @@ class PatternServiceTest extends BaseTestCase
         $this->assertMarkdownContent($pattern->markdown);
         $this->assertSassContent($pattern->sass);
         $this->assertInstanceOf(Document::class, $pattern->metadata);
-        $this->assertEquals('DONE', $pattern->state);
+        $this->assertEquals('TODO', $pattern->metadata->status);
     }
 
     /**

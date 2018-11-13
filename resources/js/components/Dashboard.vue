@@ -17,7 +17,7 @@
           </div>
 
           <div class="py-1">
-            <router-link :to="{ name: 'preview' }">
+            <router-link to="/preview/atoms.text.headline1">
               <button class="btn btn-primary">
                 <i class="fas fa-eye"></i>
                 PREVIEW PATTERN

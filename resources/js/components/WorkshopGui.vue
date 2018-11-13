@@ -9,18 +9,20 @@
 
 <script>
   import Navbar from './Navbar';
-  import { API } from '../httpClient';
+  import {API} from '../httpClient';
+  import LOG from '../logger';
+
   export default {
     name: "WorkshopGui",
     components: {
       Navbar
     },
-    async mounted() {
+    async beforeCreate() {
       try {
         let json = await API.get('info');
         this.$store.commit('appInfo', json.data);
       } catch (e) {
-        console.error(e.status)
+        LOG.error(e);
       }
     }
   }

@@ -31,6 +31,7 @@ class PatternService
         $pattern->name = $name;
         $pattern->template = $this->createBladeFile($name);
         $pattern->markdown = $this->createMarkdownFile($name, $description);
+        $pattern->metadata = YamlFrontMatter::parse($pattern->markdown);
         $pattern->sass = $this->createSassFile($name);
         return $pattern;
     }
@@ -101,8 +102,8 @@ class PatternService
         /*
          * Import in sass file in parent sass file
          */
+        $content = "@import \"{$includeFile}\";";
         if (!File::exists($parentSassPath)) {
-            $content = "@import \"{$includeFile}\";";
 
             $this->importInMainSassFile($parent);
         }
@@ -130,18 +131,18 @@ class PatternService
     public function loadPattern($name, $values = []): Pattern
     {
         $pattern = new Pattern();
+        $pattern->name = $name;
         $pattern->template = $this->loadBladeFile($name);
         $markdown = $this->loadMarkdownFile($name);
         $pattern->markdown = $markdown;
         $pattern->metadata = YamlFrontMatter::parse($markdown);
         $pattern->sass = $this->loadSassFile($name);
-        $pattern->state = 'DONE';
 
         /*
          * Create the preview
          */
         $values = !is_null($pattern->metadata->values) ? $pattern->metadata->values : array_merge($values, []);
-        $pattern->preview = compileBladeString($pattern->template, $values);
+        $pattern->html = compileBladeString($pattern->template, $values);
 
         return $pattern;
     }

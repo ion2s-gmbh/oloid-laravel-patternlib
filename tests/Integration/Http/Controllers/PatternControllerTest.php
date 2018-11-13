@@ -7,9 +7,20 @@ use Laratomics\Models\Pattern;
 use Laratomics\Services\PatternService;
 use Laratomics\Tests\BaseTestCase;
 use Mockery;
+use Spatie\YamlFrontMatter\YamlFrontMatter;
 
 class PatternControllerTest extends BaseTestCase
 {
+    /**
+     * @var string
+     */
+    private $name = 'atoms.tests.element';
+
+    /**
+     * @var string
+     */
+    private $description = 'That\'s a test';
+
     /**
      * @test
      * @covers \Laratomics\Http\Controllers\PatternController
@@ -120,5 +131,31 @@ class PatternControllerTest extends BaseTestCase
         ];
         $response->assertSuccessful();
         $response->assertJson($expected);
+    }
+
+    /**
+     * @test
+     * @covers \Laratomics\Http\Controllers\PatternController
+     */
+    public function it_should_get_a_html_preview_of_a_pattern()
+    {
+        // arrange
+        $this->preparePattern();
+
+        // act
+        $response = $this->get("/workshop/preview/{$this->name}");
+
+        // assert
+        $response->assertStatus(200);
+    }
+
+    /**
+     * Prepare a pattern for the test.
+     * @todo refactor using a stub.
+     */
+    private function preparePattern()
+    {
+        $patternService = app()->make(PatternService::class);
+        $patternService->createPattern($this->name, $this->description);
     }
 }

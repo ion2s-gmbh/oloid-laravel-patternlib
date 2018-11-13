@@ -68,7 +68,7 @@
         <div class="card-body">
           <iframe height="1500" width="1100"
                   frameBorder="0"
-                  :src="'workshop/preview/atoms.text.headline1'"></iframe>
+                  :src="'workshop/preview/' + pattern.name"></iframe>
         </div>
       </div>
     </div>

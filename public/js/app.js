@@ -26514,7 +26514,7 @@ var render = function() {
               height: "1500",
               width: "1100",
               frameBorder: "0",
-              src: "workshop/preview/atoms.text.headline1"
+              src: "workshop/preview/" + _vm.pattern.name
             }
           })
         ])

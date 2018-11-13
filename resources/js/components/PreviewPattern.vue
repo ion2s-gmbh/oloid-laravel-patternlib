@@ -6,7 +6,7 @@
     </div>
     <div class="col-sm-4">
       <div class="py-1">
-        <router-link :to="{ name: 'update' }">
+        <router-link :to="{ name: 'update', params: { pattern: pattern.name }}">
           <button class="btn btn-primary">
             <i class="fas fa-pen"></i>
             UPDATE

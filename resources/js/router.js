@@ -13,7 +13,7 @@ export default new VueRouter({
   routes: [
     { path: '/', component: Dashboard, name: 'dashboard' },
     { path: '/create', component: CreatePattern, name: 'create' },
-    { path: '/update', component: UpdatePattern, name: 'update' },
+    { path: '/update/:pattern', component: UpdatePattern, name: 'update' },
     { path: '/preview/:pattern', component: PreviewPattern, name: 'preview' }
   ]
 });

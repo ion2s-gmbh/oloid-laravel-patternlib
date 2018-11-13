@@ -1,9 +1,12 @@
 <template>
 
   <div class="row">
+    <div class="loading" v-if="loading">
+      Loading...
+    </div>
     <div class="col-sm-4">
       <div class="py-1">
-        <router-link :to="{ name: 'update' }">
+        <router-link :to="{ name: 'update', params: { pattern: pattern.name }}">
           <button class="btn btn-primary">
             <i class="fas fa-pen"></i>
             UPDATE
@@ -30,8 +33,7 @@
         </button>
       </h2>
       <div class="code">
-        <pre><code class="language-html"
-                   id="pattern">{{ '@' }}{{ pattern.type }}('{{ pattern.usage }}', [])</code></pre>
+        <pre><code id="pattern">@{{ pattern.type }}('{{ pattern.usage }}', [])</code></pre>
       </div>
       <br>
       <h2>Markup/HTML</h2>
@@ -68,7 +70,7 @@
         <div class="card-body">
           <iframe height="1500" width="1100"
                   frameBorder="0"
-                  :src="'workshop/preview/' + pattern.name"></iframe>
+                  :src="`workshop/preview/${pattern.name}`"></iframe>
         </div>
       </div>
     </div>
@@ -79,16 +81,40 @@
 <script>
   import {API} from '../httpClient';
   import LOG from '../logger';
+  // import Prism from 'prismjs';
 
   export default {
     name: "PreviewPattern",
     data() {
       return {
         pattern: {},
+        loading: false,
       }
     },
 
+    watch: {
+      '$route': 'fetchPattern'
+    },
+
     methods: {
+
+      /**
+       * Fetch the Pattern's data from the API.
+       */
+      fetchPattern: async function () {
+        // set to true, if we have to show a loading spinner
+        this.loading = false;
+        try {
+          let response = await API.get(this.$route.params.pattern);
+          this.pattern = response.data.data;
+          this.loading = false;
+          // Prism.highlightAll(true, () => {
+          //   LOG.debug('PRISM');
+          // });
+        } catch (e) {
+          LOG.error(e);
+        }
+      },
 
       /**
        * Delete the pattern
@@ -102,13 +128,8 @@
     /**
      * Load all Pattern information from API.
      */
-    async beforeCreate() {
-      try {
-        let response = await API.get(this.$route.params.pattern);
-        this.pattern = response.data.data;
-      } catch (e) {
-        LOG.error(e);
-      }
+    created() {
+      this.fetchPattern();
     }
   }
 </script>

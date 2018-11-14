@@ -3,31 +3,36 @@
   <section class="project">
 
     
-    <div class="project-info">{{ $store.state.appInfo.appName }}</div>
+    <div class="project-info">
+
+      <h1 class="project-name">{{ $store.state.appInfo.appName }}</h1>
+      
+      <!-- <div class="project-updates">
+        <button class="btn">
+            <i class="fas fa-bell"></i>
+          </button>
+      </div> -->
+
+    </div>
 
 
     <nav class="project-navigation">
 
-      <!-- <a class="navbar-brand" href="/">{{ $store.state.appInfo.appName }}</a> -->
+      <!-- <ul class="patterns">
+        <li>Link[##]</li>
+        <li>Link[##]</li>
+        <li>Link[##]</li>
+        <li>Link[##]</li>
+        <li>Link[##]</li>
+      </ul> -->
 
-      <!-- <router-link :to="{ name: 'dashboard' }" class="navbar-brand">Workshop</router-link> -->
-
-      <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
-              aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button> -->
-
-      <div class="collapse navbar-collapse" id="navbarNavDropdown">
-
+      <!-- <router-link :to="{ name: 'create' }">
         
-        
-        <router-link :to="{ name: 'create' }">
-          <button class="btn btn--create">
-            <i class="fas fa-plus-square"></i>
-          </button>
-        </router-link>
+        <button class="btn btn--create">
+          <i class="fas fa-plus-square"></i>
+        </button>
 
-      </div>
+      </router-link> -->
 
     </nav>
     

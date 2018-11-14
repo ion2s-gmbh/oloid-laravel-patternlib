@@ -23865,7 +23865,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Dashboard"
@@ -23879,53 +23878,46 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row" }, [
-    _c("div", { staticClass: "col-md-3" }, [
-      _vm.$store.state.config.devMode
-        ? _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _vm._v("\n        Pattern management\n      ")
-            ]),
+  return _vm.$store.state.config.devMode
+    ? _c("div", { staticClass: "dashboard" }, [
+        _c(
+          "div",
+          { staticClass: "u-center" },
+          [
+            _vm._m(0),
             _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _c(
-                "div",
-                { staticClass: "py-1" },
-                [
-                  _c("router-link", { attrs: { to: { name: "create" } } }, [
-                    _c("button", { staticClass: "btn btn-primary" }, [
-                      _c("i", { staticClass: "fas fa-plus-square" }),
-                      _vm._v("\n              NEW PATTERN\n            ")
-                    ])
-                  ])
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "py-1" },
-                [
-                  _c(
-                    "router-link",
-                    { attrs: { to: "/preview/atoms.text.headline1" } },
-                    [
-                      _c("button", { staticClass: "btn btn-primary" }, [
-                        _c("i", { staticClass: "fas fa-eye" }),
-                        _vm._v("\n              PREVIEW PATTERN\n            ")
-                      ])
-                    ]
-                  )
-                ],
-                1
-              )
+            _c(
+              "router-link",
+              { attrs: { to: "/preview/atoms.text.headline1" } },
+              [
+                _c("button", { staticClass: "btn btn--secondary" }, [
+                  _c("span", [_vm._v("\n          Preview Pattern\n        ")])
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c("router-link", { attrs: { to: { name: "create" } } }, [
+              _c("button", { staticClass: "btn btn--primary" }, [
+                _c("span", [_vm._v("\n          New Pattern\n        ")])
+              ])
             ])
-          ])
-        : _vm._e()
-    ])
-  ])
+          ],
+          1
+        )
+      ])
+    : _vm._e()
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h2", { staticClass: "headline--one" }, [
+      _vm._v("\n      Welcome!\n      "),
+      _c("small", [_vm._v("This is our temporary dashboard!")])
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -26311,6 +26303,13 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -26386,95 +26385,16 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row" }, [
-    _c("div", { staticClass: "col-sm-4" }, [
-      _c(
-        "div",
-        { staticClass: "py-1" },
-        [
-          _c("router-link", { attrs: { to: { name: "update" } } }, [
-            _c("button", { staticClass: "btn btn-primary" }, [
-              _c("i", { staticClass: "fas fa-pen" }),
-              _vm._v("\n          UPDATE\n        ")
-            ])
-          ]),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-danger",
-              on: {
-                click: function($event) {
-                  _vm.deletePattern(_vm.pattern.name)
-                }
-              }
-            },
-            [
-              _c("i", { staticClass: "fas fa-trash-alt" }),
-              _vm._v("\n        DELETE\n      ")
-            ]
-          )
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c("h2", [
-        _vm._v(_vm._s(_vm.pattern.name) + "\n      "),
-        _vm.pattern.status === "TODO"
-          ? _c("span", { staticClass: "badge badge-danger" }, [_vm._v("TODO")])
-          : _vm._e(),
+  return _c("div", { staticClass: "view--inner" }, [
+    _c("div", { staticClass: "code" }, [
+      _c("div", { staticClass: "code-el" }, [
+        _c("h2", [_vm._v("Markup/HTML")]),
         _vm._v(" "),
-        _vm.pattern.status === "REVIEW"
-          ? _c("span", { staticClass: "badge badge-warning" }, [
-              _vm._v("REVIEW")
-            ])
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.pattern.status === "DONE"
-          ? _c("span", { staticClass: "badge badge-success" }, [_vm._v("DONE")])
-          : _vm._e()
-      ]),
-      _vm._v(" "),
-      _c("h2", [_vm._v("Description")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "code" }, [
-        _c("pre", [
-          _c("code", { staticClass: "language-markdown" }, [
-            _vm._v(_vm._s(_vm.pattern.description))
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _vm._m(0),
-      _vm._v(" "),
-      _c("div", { staticClass: "code" }, [
-        _c("pre", [
-          _c(
-            "code",
-            { staticClass: "language-html", attrs: { id: "pattern" } },
-            [
-              _vm._v(
-                _vm._s("@") +
-                  _vm._s(_vm.pattern.type) +
-                  "('" +
-                  _vm._s(_vm.pattern.usage) +
-                  "', [])"
-              )
-            ]
-          )
-        ])
-      ]),
-      _vm._v(" "),
-      _c("h2", [_vm._v("Markup/HTML")]),
-      _vm._v(" "),
-      _vm._m(1),
-      _vm._v(" "),
-      _c("div", { staticClass: "code" }, [
-        _c("div", { staticClass: "tab-content" }, [
+        _c("div", { staticClass: "code-tabs" }, [
           _c(
             "div",
             {
-              staticClass: "tab-pane fade show active",
+              staticClass: "tab",
               attrs: {
                 id: "markup-view",
                 role: "tabpanel",
@@ -26493,7 +26413,7 @@ var render = function() {
           _c(
             "div",
             {
-              staticClass: "tab-pane fade",
+              staticClass: "tab",
               attrs: {
                 id: "html-view",
                 role: "tabpanel",
@@ -26511,33 +26431,50 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c("h2", [_vm._v("SASS/CSS")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "code" }, [
-        _c("pre", [
-          _c("code", { staticClass: "language-css" }, [
-            _vm._v(_vm._s(_vm.pattern.sass))
+      _c("div", { staticClass: "code-el" }, [
+        _c("h2", [_vm._v("SASS/CSS")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "code" }, [
+          _c("pre", [
+            _c("code", { staticClass: "language-css" }, [
+              _vm._v(_vm._s(_vm.pattern.sass))
+            ])
           ])
         ])
       ])
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "col-sm-8" }, [
-      _c("h2", [_vm._v("Preview")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "code" }, [
-        _c("div", { staticClass: "card-body" }, [
-          _c("iframe", {
-            attrs: {
-              height: "1500",
-              width: "1100",
-              frameBorder: "0",
-              src: "workshop/preview/atoms.text.headline1"
+    _vm._m(0),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "footer" },
+      [
+        _c("router-link", { attrs: { to: { name: "update" } } }, [
+          _c("button", { staticClass: "btn btn-primary" }, [
+            _c("i", { staticClass: "fas fa-pen" }),
+            _vm._v("\n          UPDATE\n        ")
+          ])
+        ]),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-danger",
+            on: {
+              click: function($event) {
+                _vm.deletePattern(_vm.pattern.name)
+              }
             }
-          })
-        ])
-      ])
-    ])
+          },
+          [
+            _c("i", { staticClass: "fas fa-trash-alt" }),
+            _vm._v("\n        DELETE\n      ")
+          ]
+        )
+      ],
+      1
+    )
   ])
 }
 var staticRenderFns = [
@@ -26545,63 +26482,17 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("h2", [
-      _vm._v("Usage\n      "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-secondary",
-          attrs: { id: "copy", "data-clipboard-target": "#pattern" }
-        },
-        [_c("i", { staticClass: "far fa-clipboard" })]
-      )
+    return _c("div", { staticClass: "preview" }, [
+      _c("div", {}, [
+        _c("div", {
+          staticStyle: {
+            background: "transparent",
+            height: "5000px",
+            width: "5002px"
+          }
+        })
+      ])
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "ul",
-      { staticClass: "nav nav-tabs", attrs: { id: "myTab", role: "tablist" } },
-      [
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link active",
-              attrs: {
-                id: "home-tab",
-                "data-toggle": "tab",
-                href: "#markup-view",
-                role: "tab",
-                "aria-controls": "markup-view",
-                "aria-selected": "true"
-              }
-            },
-            [_vm._v("Markup")]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link",
-              attrs: {
-                id: "profile-tab",
-                "data-toggle": "tab",
-                href: "#html-view",
-                role: "tab",
-                "aria-controls": "html-view",
-                "aria-selected": "false"
-              }
-            },
-            [_vm._v("HTML")]
-          )
-        ])
-      ]
-    )
   }
 ]
 render._withStripped = true
@@ -27675,8 +27566,6 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
-//
-//
 
 
 
@@ -27817,6 +27706,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Navbar"
@@ -27832,26 +27726,12 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("section", { staticClass: "project" }, [
     _c("div", { staticClass: "project-info" }, [
-      _vm._v(_vm._s(_vm.$store.state.appInfo.appName))
+      _c("h1", { staticClass: "project-name" }, [
+        _vm._v(_vm._s(_vm.$store.state.appInfo.appName))
+      ])
     ]),
     _vm._v(" "),
-    _c("nav", { staticClass: "project-navigation" }, [
-      _c(
-        "div",
-        {
-          staticClass: "collapse navbar-collapse",
-          attrs: { id: "navbarNavDropdown" }
-        },
-        [
-          _c("router-link", { attrs: { to: { name: "create" } } }, [
-            _c("button", { staticClass: "btn btn--create" }, [
-              _c("i", { staticClass: "fas fa-plus-square" })
-            ])
-          ])
-        ],
-        1
-      )
-    ])
+    _c("nav", { staticClass: "project-navigation" })
   ])
 }
 var staticRenderFns = []
@@ -27878,9 +27758,7 @@ var render = function() {
     [
       _c("navbar", { staticClass: "header" }),
       _vm._v(" "),
-      _c("section", [_c("router-view")], 1),
-      _vm._v(" "),
-      _c("footer", { staticClass: "footer" })
+      _c("section", { staticClass: "view" }, [_c("router-view")], 1)
     ],
     1
   )

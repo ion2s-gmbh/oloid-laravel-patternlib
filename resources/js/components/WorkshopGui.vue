@@ -1,18 +1,16 @@
 <template>
   
   <main class="window">
-
-    <navbar class="header">
-      
-    </navbar>
-
-    <section>
+    
+    <!-- NAVIGATION -->
+    <navbar class="header"></navbar>
+    
+    <!-- MAIN VIEW SECTION -->
+    <section class="view">
 
       <router-view></router-view>
 
     </section>    
-
-    <footer class="footer"></footer>
 
   </main>
 

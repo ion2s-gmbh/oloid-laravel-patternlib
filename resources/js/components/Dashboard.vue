@@ -1,34 +1,33 @@
 <template>
-  <div class="row">
-    <div class="col-md-3">
 
-      <div class="card" v-if="$store.state.config.devMode">
-        <div class="card-header">
-          Pattern management
-        </div>
-        <div class="card-body">
-          <div class="py-1">
-            <router-link :to="{ name: 'create' }">
-              <button class="btn btn-primary">
-                <i class="fas fa-plus-square"></i>
-                NEW PATTERN
-              </button>
-            </router-link>
-          </div>
+  <div class="dashboard" v-if="$store.state.config.devMode">
 
-          <div class="py-1">
-            <router-link to="/preview/atoms.text.headline1">
-              <button class="btn btn-primary">
-                <i class="fas fa-eye"></i>
-                PREVIEW PATTERN
-              </button>
-            </router-link>
-          </div>
-        </div>
+    <div class="u-center">
 
+      <h2 class="headline--one">
+        Welcome!
+        <small>This is our temporary dashboard!</small>
+      </h2> 
+
+      <router-link to="/preview/atoms.text.headline1">
+        <button class="btn btn--secondary">        
+          <span>
+            Preview Pattern
+          </span>
+        </button>
+      </router-link>
+
+      <router-link :to="{ name: 'create' }">
+        <button class="btn btn--primary">
+          <span>
+            New Pattern
+          </span>
+        </button>
+      </router-link>    
       </div>
-    </div>
+
   </div>
+
 </template>
 
 <script>

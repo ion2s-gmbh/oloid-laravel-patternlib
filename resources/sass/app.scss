@@ -1,81 +1,24 @@
-@import 'variables';
+@import 'settings.variables';
 
-// Globals
+@import '~normalize.css/normalize.css';
 
-*,
-*::before,
-*::after {
-  box-sizing: inherit;
-}
+@import 'tools.mixins';
 
-body {
-  background: var(--brandMain);  
-}
+@import 'generic.shared';
 
-// Typography
+@import 'elements.buttons';
+@import 'elements.forms';
+@import 'elements.headings';
 
-html {
-  color: white;
-  font-family: 'Roboto Mono', sans-serif;
-  font-size: 100%;
-}
+@import 'components.header';
+@import 'components.dashboard';
+@import 'components.codeWindow';
+@import 'components.previewWindow';
 
 
-// Layout & Templating
-
-.window {
-  display: grid;
-  height: 100vh;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: $headerHght auto auto $headerHght;
-  grid-template-areas: 
-    "header header header header"
-    "code view view view"
-    "code view view view"
-    "code footer footer footer";
-}
-
-
-.header {  
-  height: $headerHght;
-  grid-area: header;
-}
-
-.code {
-  background: red;
-  grid-area: code;
-}
-
-.view {
-  background: yellow;
-  grid-area: view;
-}
-
-.footer {
-  background: lime;
-  grid-area: footer;
-}
-
-//--------------------------------------------------------//
-
-.project-info {
+.u-center {
   text-align: center;
 }
-
-//-------------------   BUTTONS    -----------------------//
-
-%btn {
-  background: none;
-  border: 0;
-}
-
-
-.btn--create {
-  @extend %btn;
-  background: var(--brandCon);
-  color: var(--brandMain);
-}
-
 
 //--------------------------------------------------------//
 
@@ -94,15 +37,6 @@ html {
 
 .state-done {
   color: forestgreen;
-}
-
-.code {
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 10px;
-  background-color: #f5f2f0;
-  border: 2px solid #949494;
-  margin-left: 5px;
 }
 
 .design {

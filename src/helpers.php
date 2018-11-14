@@ -1,6 +1,15 @@
 <?php
 
+
+use Laratomics\Exceptions\RenderingException;
+
 if (! function_exists('compileBladeString')) {
+    /**
+     * @param $value
+     * @param array $args
+     * @return false|string
+     * @throws RenderingException
+     */
     function compileBladeString($value, array $args = array())
     {
         $generated = Blade::compileString($value);
@@ -18,10 +27,10 @@ if (! function_exists('compileBladeString')) {
             // If we caught an exception, we'll silently flush the output
             // buffer so that no partially rendered views get thrown out
             // to the client and confuse the user with junk.
-        catch (\Exception $e)
+        catch (Exception $e)
         {
             ob_get_clean();
-            throw $e;
+            throw new RenderingException('Preview rendering failed', 0, $e);
         }
 
         $content = ob_get_clean();

@@ -3,9 +3,21 @@
 
 .code {
 
-	display: flex;
-	flex-direction: column;
+	display: flex;	
 	grid-area: code;
+	padding: var(--gap);
+
+	@include for-tablet-portrait-up {
+		
+		flex-direction: row;
+
+	}
+
+	@include for-desktop-up {
+
+		flex-direction: column;
+
+	}
 
 }
 
@@ -13,8 +25,8 @@
 
 .code-el {
 
-	display: flex;
-	height: 100%;
+	@include size(100%);
+	display: flex;	
 	flex-direction: column;
 
 }

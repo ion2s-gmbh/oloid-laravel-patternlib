@@ -27,8 +27,8 @@
 
 
         <!-- Styles -->
-        <link href='{{ asset('vendor/workshop/css/app.css') }}' rel='stylesheet' type='text/css'>    
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.0/themes/prism.min.css">
+        <link href='{{ asset('vendor/workshop/css/app.css') }}' rel='stylesheet' type='text/css'>            
 
     </head>
 

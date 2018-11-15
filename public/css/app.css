@@ -355,6 +355,7 @@ template {
   --brandMain: #03314B;
   --brandCon: #FFF621;
   --headerheight: 66px;
+  --gap: 1rem;
 }
 
 /* 
@@ -414,8 +415,21 @@ containing the header and the so called view, containing most of the UI.
   grid-area: main;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr var(--headerheight);
-  grid-template-areas: "code view view view" "code view view view" "code view view view" ".... footer footer footer";
   overflow: hidden;
+}
+
+@media (min-width: 600px) {
+  .view,
+  .view--inner {
+    grid-template-areas: "code code code code" "view view view view" "view view view view" "footer footer footer footer";
+  }
+}
+
+@media (min-width: 1200px) {
+  .view,
+  .view--inner {
+    grid-template-areas: "code view view view" "code view view view" "code view view view" ".... footer footer footer";
+  }
 }
 
 .view--inner {
@@ -554,18 +568,34 @@ These are the styles that are needed to render our welcome dashboard.
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
   grid-area: code;
+  padding: var(--gap);
+}
+
+@media (min-width: 600px) {
+  .code {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+  }
+}
+
+@media (min-width: 1200px) {
+  .code {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
 }
 
 .code-el {
+  width: 100%;
+  height: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  height: 100%;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;

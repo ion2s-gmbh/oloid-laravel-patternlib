@@ -26296,20 +26296,6 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -26388,7 +26374,7 @@ var render = function() {
   return _c("div", { staticClass: "view--inner" }, [
     _c("div", { staticClass: "code" }, [
       _c("div", { staticClass: "code-el" }, [
-        _c("h2", [_vm._v("Markup/HTML")]),
+        _vm._m(0),
         _vm._v(" "),
         _c("div", { staticClass: "code-tabs" }, [
           _c(
@@ -26403,9 +26389,11 @@ var render = function() {
             },
             [
               _c("pre", [
+                _vm._v("            "),
                 _c("code", { staticClass: "language-html" }, [
                   _vm._v(_vm._s(_vm.pattern.template))
-                ])
+                ]),
+                _vm._v("\n          ")
               ])
             ]
           ),
@@ -26422,29 +26410,21 @@ var render = function() {
             },
             [
               _c("pre", [
+                _vm._v("            "),
                 _c("code", { staticClass: "language-html" }, [
                   _vm._v(_vm._s(_vm.pattern.html))
-                ])
+                ]),
+                _vm._v("\n          ")
               ])
             ]
           )
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "code-el" }, [
-        _c("h2", [_vm._v("SASS/CSS")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "code" }, [
-          _c("pre", [
-            _c("code", { staticClass: "language-css" }, [
-              _vm._v(_vm._s(_vm.pattern.sass))
-            ])
-          ])
-        ])
-      ])
+      _vm._m(1)
     ]),
     _vm._v(" "),
-    _vm._m(0),
+    _vm._m(2),
     _vm._v(" "),
     _c(
       "div",
@@ -26478,6 +26458,51 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h2", [
+      _c("span", [_vm._v("Markup")]),
+      _vm._v(" / "),
+      _c("span", [_vm._v("HTML")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "code-el" }, [
+      _c("h2", [
+        _c("span", [_vm._v("SASS")]),
+        _vm._v(" / "),
+        _c("span", [_vm._v("CSS")])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "code-tabs" }, [
+        _c(
+          "div",
+          {
+            staticClass: "tab",
+            attrs: {
+              id: "markup-view",
+              role: "tabpanel",
+              "aria-labelledby": "markup-view"
+            }
+          },
+          [
+            _c("pre", [
+              _c("code", { staticClass: "language-css" }, [
+                _vm._v(
+                  ".class {\n              border: none;\n            }\n            "
+                )
+              ])
+            ])
+          ]
+        )
+      ])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

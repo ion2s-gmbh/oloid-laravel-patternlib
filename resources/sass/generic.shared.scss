@@ -19,6 +19,7 @@ html {
 }
 
 // CUSTOM SCROLLBARS ----------------------------------------- //
+
 *::-webkit-scrollbar {
     @include size(8px);
 }
@@ -38,7 +39,6 @@ html {
 body {
   background: var(--brandMain);  
 }
-
 
 /* 
 This builds the basic structure of the viewport, 
@@ -61,12 +61,24 @@ containing the header and the so called view, containing most of the UI.
   grid-area: main;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr var(--headerheight);
-  grid-template-areas: 
-    "code view view view"
-    "code view view view"
-    "code view view view"
-    ".... footer footer footer";
-    overflow: hidden;
+  overflow: hidden;
+  
+  @include for-tablet-portrait-up {
+    grid-template-areas: 
+      "code code code code"
+      "view view view view"
+      "view view view view"
+      "footer footer footer footer";
+  }
+
+  @include for-desktop-up {
+    grid-template-areas: 
+      "code view view view"
+      "code view view view"
+      "code view view view"
+      ".... footer footer footer";
+  }  
+
 }
 
 .view--inner { // We unfortunately need this until sub-grid is usable. :/  

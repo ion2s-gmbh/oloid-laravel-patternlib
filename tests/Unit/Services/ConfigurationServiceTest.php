@@ -21,6 +21,9 @@ class ConfigurationServiceTest extends BaseTestCase
      */
     private $viewConfigPath;
 
+    /**
+     * Setup before testing.
+     */
     protected function setUp()
     {
         parent::setUp();

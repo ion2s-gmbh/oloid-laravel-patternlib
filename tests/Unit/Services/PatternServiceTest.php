@@ -17,12 +17,12 @@ class PatternServiceTest extends BaseTestCase
     /**
      * @var string
      */
-    private $name = 'atoms.text.h1';
+    private $name = 'atoms.text.headline1';
 
     /**
      * @var string
      */
-    private $description = 'h1 test pattern';
+    private $description = 'Our h1 for testing';
 
     /**
      * @var PatternService
@@ -107,7 +107,7 @@ class PatternServiceTest extends BaseTestCase
     protected function assertBladeFileCreation(): void
     {
         try {
-            $bladeFile = config('workshop.patternPath') . '/atoms/text/h1.blade.php';
+            $bladeFile = config('workshop.patternPath') . '/atoms/text/headline1.blade.php';
             $this->assertTrue($this->fs->isFile($bladeFile));
             $content = $this->fs->get($bladeFile);
             $this->assertTemplateContent($content);
@@ -122,7 +122,7 @@ class PatternServiceTest extends BaseTestCase
     protected function assertMarkdownFileCreation(): void
     {
         try {
-            $markdownFile = config('workshop.patternPath') . '/atoms/text/h1.md';
+            $markdownFile = config('workshop.patternPath') . '/atoms/text/headline1.md';
             $this->assertTrue($this->fs->isFile($markdownFile));
             $markdown = $this->fs->get($markdownFile);
             $this->assertMarkdownContent($markdown);
@@ -137,7 +137,7 @@ class PatternServiceTest extends BaseTestCase
     protected function assertSassFileCreation(): void
     {
         try {
-            $sassFile = config('workshop.patternPath') . '/atoms/text/h1.scss';
+            $sassFile = config('workshop.patternPath') . '/atoms/text/headline1.scss';
             $this->assertTrue($this->fs->isFile($sassFile));
             $sassContent = $this->fs->get($sassFile);
             $this->assertSassContent($sassContent);
@@ -148,7 +148,7 @@ class PatternServiceTest extends BaseTestCase
             $parentSassFile = config('workshop.patternPath') . '/atoms/atoms.scss';
             $this->assertTrue($this->fs->isFile($parentSassFile));
             $parentSassContent = $this->fs->get($parentSassFile);
-            $this->assertEquals('@import "text/h1";', $parentSassContent);
+            $this->assertContains('@import "text/headline1";', $parentSassContent);
 
             /*
              * Assert that the parent sass file is imported in the main sass file
@@ -156,7 +156,7 @@ class PatternServiceTest extends BaseTestCase
             $mainSassFile = config('workshop.patternPath') . '/patterns.scss';
             $this->assertTrue($this->fs->isFile($mainSassFile));
             $mainSassContent = $this->fs->get($mainSassFile);
-            $this->assertEquals('@import "atoms/atoms";', $mainSassContent);
+            $this->assertContains('@import "atoms/atoms";', $mainSassContent);
         } catch (FileNotFoundException $e) {
             $this->fail();
         }
@@ -165,11 +165,11 @@ class PatternServiceTest extends BaseTestCase
     /**
      * Assert that the template content is equal.
      *
-     * @param $content
+     * @param $template
      */
-    protected function assertTemplateContent($content): void
+    protected function assertTemplateContent($template): void
     {
-        $this->assertEquals("<!-- {$this->name} -->", $content);
+        $this->assertEquals("<!-- {$this->name} -->", $template);
     }
 
     /**
@@ -187,11 +187,11 @@ class PatternServiceTest extends BaseTestCase
     }
 
     /**
-     * @param $sassContent
+     * @param $sass
      */
-    protected function assertSassContent($sassContent): void
+    protected function assertSassContent($sass): void
     {
-        $this->assertEquals("/* {$this->name} */", $sassContent);
+        $this->assertEquals("/* {$this->name} */", $sass);
     }
 
     /**
@@ -264,7 +264,7 @@ class PatternServiceTest extends BaseTestCase
     public function it_should_load_a_whole_pattern()
     {
         // arrange
-        $this->preparePattern($this->name, $this->description);
+        $this->preparePatternStub();
 
         // act
         try {
@@ -274,10 +274,36 @@ class PatternServiceTest extends BaseTestCase
         }
 
         // assert
-        $this->assertTemplateContent($pattern->template);
-        $this->assertMarkdownContent($pattern->markdown);
-        $this->assertSassContent($pattern->sass);
+        $this->assertTemplateContentUsingStub($pattern->template);
+        $this->assertMarkdownContentUsingStub($pattern->markdown);
+        $this->assertSassContentUsingStub($pattern->sass);
         $this->assertInstanceOf(Document::class, $pattern->metadata);
         $this->assertEquals('TODO', $pattern->metadata->status);
+    }
+
+    /**
+     * @param $template
+     */
+    private function assertTemplateContentUsingStub($template)
+    {
+        $templateContent = "<!-- atoms.text.headline1 -->\n<h1>{{ \$text }}</h1>";
+        $this->assertEquals($templateContent, $template);
+    }
+
+    /**
+     * @param $markdown
+     */
+    private function assertMarkdownContentUsingStub($markdown)
+    {
+        $markdownContent = "---\nstatus: TODO\nvalues:\n    text: Heading 1\n---\n{$this->description}";
+        $this->assertEquals($markdownContent, $markdown);
+    }
+
+    /**
+     * @param $sass
+     */
+    private function assertSassContentUsingStub($sass)
+    {
+        $this->assertEquals("/* {$this->name} */", $sass);
     }
 }

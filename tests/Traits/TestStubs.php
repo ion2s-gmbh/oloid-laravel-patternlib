@@ -26,11 +26,18 @@ trait TestStubs
      */
     public function prepareViewConfigStub()
     {
-        // prepare view config double
         $fs = new Filesystem();
         $sourcePath = realpath(__DIR__ . '/../stubs/view.php');
         $this->viewConfigPath = "{$this->tempDir}/view.php";
         $fs->copy($sourcePath, $this->viewConfigPath);
+    }
+
+    public function preparePatternStub()
+    {
+        $fs = new Filesystem();
+        $sourcePath = realpath(__DIR__ . '/../stubs/patterns');
+        $targetPath = "{$this->tempDir}/patterns";
+        $fs->copyDirectory($sourcePath, $targetPath);
     }
 
 }

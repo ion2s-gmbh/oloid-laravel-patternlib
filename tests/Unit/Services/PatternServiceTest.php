@@ -7,10 +7,13 @@ use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Filesystem\Filesystem;
 use Laratomics\Services\PatternService;
 use Laratomics\Tests\BaseTestCase;
+use Laratomics\Tests\Traits\TestStubs;
 use Spatie\YamlFrontMatter\Document;
 
 class PatternServiceTest extends BaseTestCase
 {
+    use TestStubs;
+
     /**
      * @var string
      */
@@ -198,7 +201,7 @@ class PatternServiceTest extends BaseTestCase
     public function it_should_load_a_pattern_template()
     {
         // arrange
-        $this->preparePattern();
+        $this->preparePattern($this->name, $this->description);
 
         // act
         $content = '';
@@ -219,7 +222,7 @@ class PatternServiceTest extends BaseTestCase
     public function it_should_load_a_markdown_file()
     {
         // arrange
-        $this->preparePattern();
+        $this->preparePattern($this->name, $this->description);
 
         // act
         $content = '';
@@ -240,7 +243,7 @@ class PatternServiceTest extends BaseTestCase
     public function it_should_load_a_sass_file()
     {
         // arrange
-        $this->preparePattern();
+        $this->preparePattern($this->name, $this->description);
 
         // act
         $content = '';
@@ -261,7 +264,7 @@ class PatternServiceTest extends BaseTestCase
     public function it_should_load_a_whole_pattern()
     {
         // arrange
-        $this->preparePattern();
+        $this->preparePattern($this->name, $this->description);
 
         // act
         try {
@@ -276,14 +279,5 @@ class PatternServiceTest extends BaseTestCase
         $this->assertSassContent($pattern->sass);
         $this->assertInstanceOf(Document::class, $pattern->metadata);
         $this->assertEquals('TODO', $pattern->metadata->status);
-    }
-
-    /**
-     * Prepare a whole Pattern file structure for the test.
-     * @todo refactor using a stub.
-     */
-    private function preparePattern()
-    {
-        $this->cut->createPattern($this->name, $this->description);
     }
 }

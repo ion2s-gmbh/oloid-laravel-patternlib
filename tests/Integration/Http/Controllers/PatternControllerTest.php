@@ -6,11 +6,14 @@ use Illuminate\Http\JsonResponse;
 use Laratomics\Models\Pattern;
 use Laratomics\Services\PatternService;
 use Laratomics\Tests\BaseTestCase;
+use Laratomics\Tests\Traits\TestStubs;
 use Mockery;
 use Spatie\YamlFrontMatter\YamlFrontMatter;
 
 class PatternControllerTest extends BaseTestCase
 {
+    use TestStubs;
+
     /**
      * @var string
      */
@@ -140,22 +143,12 @@ class PatternControllerTest extends BaseTestCase
     public function it_should_get_a_html_preview_of_a_pattern()
     {
         // arrange
-        $this->preparePattern();
+        $this->preparePattern($this->name, $this->description);
 
         // act
         $response = $this->get("/workshop/preview/{$this->name}");
 
         // assert
         $response->assertStatus(200);
-    }
-
-    /**
-     * Prepare a pattern for the test.
-     * @todo refactor using a stub.
-     */
-    private function preparePattern()
-    {
-        $patternService = app()->make(PatternService::class);
-        $patternService->createPattern($this->name, $this->description);
     }
 }

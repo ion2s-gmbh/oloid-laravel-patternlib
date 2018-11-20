@@ -124,6 +124,9 @@ class PatternControllerTest extends BaseTestCase
         $response = $this->get("/workshop/preview/{$this->name}");
 
         // assert
-        $response->assertStatus(200);
+        $response->assertSuccessful(200);
+        $response->assertViewIs('workshop::preview');
+        $response->assertSee('Testing');
+        $response->assertViewHas('preview', "<!-- atoms.text.headline1 -->\n<h1>Testing</h1>");
     }
 }

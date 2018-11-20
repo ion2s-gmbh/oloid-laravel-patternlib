@@ -99,6 +99,27 @@
               </router-link>
             </li>
 
+            <li class="pattern"
+                v-if="typeof item === 'object'"
+                v-for="item in menu.items"
+                :class="{ active: item.name === activeSubMenu }">
+              <span @click="toggleSubMenuItem(item.name)">{{ item.name }}
+                <i class="fas fa-caret-down"></i>
+              </span>
+              <!--<router-link :to="{ name: 'preview', params: { pattern: `${menu.name}.${item}` } }">-->
+              <!--{{ item }}-->
+              <!--</router-link>-->
+              <ul class="patterns--sub">
+
+                <li class="pattern"
+                    v-for="subItem in item.items">
+                  <router-link :to="{ name: 'preview', params: { pattern: `${menu.name}.${item.name}.${subItem}` } }">
+                    {{ subItem }}
+                  </router-link>
+                </li>
+              </ul>
+            </li>
+
             <!--<li class="pattern">-->
             <!-- TODO:  this must be active on click -  can't use the same logic here or else it will be automatically applied -->
 
@@ -145,15 +166,15 @@
               'name': 'atoms',
               'items': [
                 {
-                  'subs': [
-                    {
+                  // 'subs': [
+                  //   {
                       'name': 'buttons',
                       'items': [
                         'submit',
                         'cancel'
                       ]
-                    }
-                  ]
+                    // }
+                  // ]
                 },
                 'headline1'
               ]
@@ -185,7 +206,8 @@
         }
       },
       toggleSubMenuItem: function (subMenu) {
-        if (this.activeMainMenu === subMenu) {
+        console.log(subMenu);
+        if (this.activeSubMenu === subMenu) {
           this.activeSubMenu = '';
         } else {
           this.activeSubMenu = subMenu;

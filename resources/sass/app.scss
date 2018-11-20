@@ -1,15 +1,30 @@
+@import 'settings.variables';
 
-// Fonts
-//@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
+@import '~normalize.css/normalize.css';
 
-// Variables
-//@import "variables";
+@import 'tools.mixins';
+
+@import 'generic.shared';
+
+@import 'elements.links';
+@import 'elements.buttons';
+@import 'elements.forms';
+@import 'elements.headings';
+
+@import 'components.header';
+@import 'components.dashboard';
+@import 'components.codeWindow';
+@import 'components.previewWindow';
+@import 'components.footer';
+
 @import '~prismjs/themes/prism.css';
 
-// Bootstrap
-@import '~bootstrap/scss/bootstrap';
 
-//@import "../../laratomics/patterns/patterns";
+.u-center {
+  text-align: center;
+}
+
+//--------------------------------------------------------//
 
 .navbar-laravel {
   background-color: #fff;
@@ -26,15 +41,6 @@
 
 .state-done {
   color: forestgreen;
-}
-
-.code {
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 10px;
-  background-color: #f5f2f0;
-  border: 2px solid #949494;
-  margin-left: 5px;
 }
 
 .design {

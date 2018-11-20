@@ -1,51 +1,72 @@
 <template>
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-8">
-        <div class="card">
-          <div class="card-header">Create a new pattern</div>
 
-          <div class="card-body">
-            <form method="post">
-              <div class="form-group">
-                <label for="name">Name</label>
-                <small id="nameHelp" class="form-text text-muted">E.g. atoms.buttons.button</small>
-                <input id="name"
-                       class="form-control"
-                       type="text"
-                       name="name"
-                       v-model="pattern.name"
-                       aria-describedby="nameHelp"
-                       placeholder="nested.pattern.name"
-                       v-validate.disable="'required'"
-                />
-                <small class="error">{{ errors.first('name') }}</small>
-              </div>
+  <div class="dashboard">
+    
+    <form method="post" class="form form--create">
 
-              <div class="form-group">
-                <label for="description">Description</label>
-                <textarea id="description"
-                          class="form-control"
-                          name="description"
-                          v-model="pattern.description"
-                          v-validate.disable="'required'"
-                          placeholder="Describe your pattern ..."></textarea>
-                <small class="error">{{ errors.first('description') }}</small>
-              </div>
+      <div class="form-group">
 
-              <div class="form-group">
-                <button @click.prevent="store" class="btn btn-primary">
-                  <i class="fas fa-pen-alt"></i>
-                  SAVE
-                </button>
-                <router-link :to="{ name: 'dashboard' }">CANCEL</router-link>
-              </div>
-            </form>
-          </div>
-        </div>
+        <label for="name">
+        
+          <span class="label-name">Name</span>
+          <span class="label-hint">E.g. atoms.buttons.button</span>
+
+        </label>
+
+        
+
+        <input id="name"
+               class="form-control"
+               type="text"
+               name="name"
+               v-model="pattern.name"
+               aria-describedby="nameHelp"               
+               v-validate.disable="'required'"
+        />
+
+        <small class="error">{{ errors.first('name') }}</small>
+
       </div>
-    </div>
+
+        <div class="form-group">
+          
+          <label for="description">
+            
+            <span class="label-name">
+              Description <span>(optional)</span>
+            </span>
+
+            <span class="label-hint">E.g. atoms.buttons.button</span>          
+
+          </label>
+
+          <textarea id="description"
+                    class="form-control"
+                    name="description"
+                    v-model="pattern.description"
+                    v-validate.disable="'required'"
+                    ></textarea>
+          <small class="error">{{ errors.first('description') }}</small>
+        </div>
+
+        <div class="form-group form-group--end">
+
+          <router-link :to="{ name: 'dashboard' }">
+            <span>Cancel</span>
+          </router-link>
+          
+          <button @click.prevent="store" class="btn btn--primary btn--sm">
+            <span>Create pattern</span>  
+          </button>
+
+          
+
+        </div>
+        
+    </form>
+
   </div>
+
 </template>
 
 <script>

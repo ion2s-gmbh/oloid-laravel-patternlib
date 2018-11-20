@@ -1,0 +1,128 @@
+//--------------------------------------------------------//
+
+/* 
+These are the styles for the project pattern navigation.
+*/
+
+
+// Menue Base --------- //
+
+.project-navigation {
+	
+	width: 100%;
+
+	a {
+
+		text-decoration: none;
+
+	}
+
+}
+
+
+.patterns {
+
+	align-items: center;
+	display: flex;
+	justify-content: flex-start;
+
+	&--sub {
+
+		background: var(--brandDark);
+		left: 0;
+		position: absolute;
+		top: 2rem;
+		width: 100%;
+		z-index: 500;
+
+	}	
+
+}
+
+
+// MENUE Content ------------- // 
+
+.pattern {
+
+	font-size: 0.875rem;
+	padding: 0.5rem var(--gap);
+	position: relative;	
+	text-align: center;
+	transition: opacity 250ms;
+	width: 10rem;
+
+	&:not(:first-child) {
+
+		border: {
+
+			bottom: 0;
+			left: 1px;
+			left-color: rgba(255,255,255,0.1);			
+			right: 1px;
+			right-color: rgba(255,255,255,0.1);
+			style: solid;		
+			top: 0;			
+
+		}
+
+	}
+
+	// SIBLINGS FADE
+	.patterns:hover &  {
+
+		&:not(:hover) {
+			
+			opacity: 0.5;
+
+		}		
+
+	}
+
+	> .patterns--sub {
+	
+	    overflow: hidden;
+	    max-height: 0;
+	    margin: 0;
+    	padding: 0;
+
+    	.pattern {
+
+			border: none;
+    		text-align: left;
+
+    	}
+
+    	.patterns--sub {
+    		position: static;
+
+    		.pattern {    			
+    			padding: 0.5rem;
+    		}
+    	}
+	
+	}
+
+	i {
+		transition: transform 0.2s
+	}
+
+	// Styles after click
+
+	&.active {
+
+		opacity: 1 !important;
+
+		> .patterns--sub {
+
+			max-height: 120em;
+
+		}
+
+		> a > i {
+			transform: rotate(180deg);
+		}
+
+	}	
+
+}
+

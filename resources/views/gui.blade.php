@@ -2,9 +2,9 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
     <head>
+
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -20,15 +20,12 @@
 
         <!-- Fonts -->
         <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css?family=Noto+Serif:700|Roboto+Mono" rel="stylesheet">
-
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css"
+        <link href="https://fonts.googleapis.com/css?family=Noto+Serif:700|Roboto+Mono" rel="stylesheet"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css"
               integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
 
 
         <!-- Styles -->
-        <link href='{{ asset('vendor/workshop/css/app.css') }}' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.0/themes/prism.min.css">
+        <link href='{{ asset('vendor/workshop/css/app.css') }}' rel='stylesheet' type='text/css'>        
 
     </head>
 

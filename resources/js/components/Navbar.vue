@@ -20,48 +20,48 @@
 
       <ul class="patterns">
         
-        <li class="pattern u-center" @click="active = !active" :class="{ active: active }">
-          
-          Atoms
+        <li class="pattern u-center"
+            :class="{ active: activeMainMenu === menu.name }"
+
+            v-for="menu in navi.main"
+            v-if="menu.items.length > 0">
+
+          <span @click="toggleMainMenuItem(menu.name)">{{ menu.name }}</span>
 
           <ul class="patterns--sub">
 
-            <li class="pattern">
-
-              <a href="">Label</a>
-
-            </li>
-
-            <li class="pattern">headline one</li>
-
-            <li class="pattern">
+            <li class="pattern"
+                v-for="item in menu.items"
+                v-if="typeof item === 'object'">
           <!-- TODO:  this must be active on click -  can't use the same logic here or else it will be automatically applied -->
 
-              <a href="">
-                Buttons
+              <div v-for="sub in item.subs"
+                   :class="{ active: activeSubMenu === sub.name}"
+                   @click="toggleSubMenuItem(sub.name)">
+              {{ sub.name }}
                 <i class="fas fa-caret-down"></i> <!-- TODO: Only display when has children -->
-              </a>
 
-              <ul class="patterns--sub">
-              
-                <li class="pattern">btn_submit</li>
+                <ul class="patterns--sub">
 
-                <li class="pattern">btn_form</li>
-                
-              </ul>
+                  <li class="pattern" v-for="subItem in sub.items">
+                    <router-link :to="{ name: 'preview', params: { pattern: `${menu.name}.${sub.name}.${subItem}` } }">
+                      {{ subItem }}
+                    </router-link>
+                  </li>
+
+                </ul>
+
+              </div>
 
             </li>
 
-            <li class="pattern">Bla</li>
-            <li class="pattern">text</li>
+            <li class="pattern" v-else-if="typeof item !== 'object'">
+              <router-link :to="{ name: 'preview', params: { pattern: `${menu.name}.${item}` } }">
+                {{ item }}
+              </router-link>
+            </li>
 
           </ul>
-
-        </li>
-
-        <li class="pattern u-center">
-          
-          Forms
 
         </li>
 
@@ -90,10 +90,65 @@
     data() {
 
       return {
-        active: false
+        'navi': {
+          'main': [
+            {
+              'name': 'atoms',
+              'items': [
+                {
+                  'subs': [
+                    {
+                      'name': 'buttons',
+                      'items': [
+                        'submit',
+                        'cancel'
+                      ]
+                    }
+                  ]
+                },
+                'headline1'
+              ]
+            },
+            {
+              'name': 'pages',
+              'items': [
+                'about',
+                'home',
+                'imprint'
+              ]
+            },
+            {
+              'name':'elements',
+              'items': []
+            }
+          ]
+        },
+        activeMainMenu: '',
+        activeSubMenu: ''
       }
+    },
+    methods: {
+      toggleMainMenuItem: function(menu) {
+        if (this.activeMainMenu === menu) {
+          this.activeMainMenu = '';
+        } else {
+          this.activeMainMenu = menu;
+        }
+      },
+      toggleSubMenuItem: function(subMenu) {
+        if (this.activeMainMenu === subMenu) {
+          this.activeSubMenu = '';
+        } else {
+          this.activeSubMenu = subMenu;
+        }
+      }
+    },
 
-    }
+    // computed: {
+    //   isActive: function () {
+        // return this.activeMainMenu === menu;
+      // }
+    // }
 
   }
 

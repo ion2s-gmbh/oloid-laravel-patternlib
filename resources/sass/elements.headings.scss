@@ -1,0 +1,32 @@
+//-------------------   HEADINGS    -----------------------//
+
+/* 
+This is the rule set for all headings in our project.
+*/
+
+h1,
+.headline--one {
+	
+	font: {
+		family: 'Noto serif', serif;
+		size: 3.75rem;
+		weight: 700;
+	}
+
+	> small {
+		display: block;
+		font-size: 2rem;
+	}
+
+}
+
+h2,
+.headline--two {
+	
+	font: {
+		family: 'Roboto Mono', serif;
+		size: 1rem;
+		weight: 400;
+	}
+
+}

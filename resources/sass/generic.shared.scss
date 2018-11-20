@@ -1,0 +1,109 @@
+// GLOBALS ----------------------------------------- //
+/* 
+These are the styles that we want to acces globally throughout the whoel project.
+Here you can find the Grid-Definitions for the whole layout for example.  
+*/
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+  color: white;
+  font-family: 'Roboto Mono', sans-serif;
+  font-size: 100%;
+}
+
+body {
+  background: var(--brandMain);  
+}
+
+// CUSTOM SCROLLBARS ----------------------------------------- //
+
+*::-webkit-scrollbar {
+    @include size(8px);
+}
+ 
+*::-webkit-scrollbar-track,
+*::-webkit-scrollbar-corner {
+    background: #03314b;
+}
+ 
+*::-webkit-scrollbar-thumb {  
+  border-radius: 1rem;
+  background-color: #001B22;  
+}
+
+// LAYOUT & GRIDS ----------------------------------------- //
+
+/* 
+This builds the basic structure of the viewport, 
+containing the header and the so called view, containing most of the UI. 
+*/
+.window {
+  display: grid;
+  height: 100vh;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: var(--headerheight) auto;
+  grid-template-areas: 
+    "header header header header"
+    "main main main main";
+  overflow: hidden;
+}
+
+.view,
+.view--inner {   // We unfortunately need this until sub-grid is usable. :/  
+  display: grid;
+  grid-area: main;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr var(--headerheight);
+  overflow: hidden;
+  
+  @include for-phone-only {
+    grid-template-areas: 
+      "code code code code"
+      "view view view view"
+      "view view view view"
+      "footer footer footer footer";
+  }
+
+  @include for-tablet-portrait-up {
+    grid-template-areas: 
+      "code code code code"
+      "view view view view"
+      "view view view view"
+      "footer footer footer footer";
+  }
+
+  @include for-desktop-up {
+    grid-template-areas: 
+      "code view view view"
+      "code view view view"
+      "code view view view"
+      ".... footer footer footer";
+  }  
+
+}
+
+.view--inner { // We unfortunately need this until sub-grid is usable. :/  
+  grid-area: code / code/ footer / footer;
+}
+
+.preview {  
+  grid-area: view;
+  max-height: 100%;
+  max-width: 100%;
+  overflow: auto;
+  iframe {
+    width: 100%;
+  } 
+}
+
+.footer {  
+  grid-area: footer;
+}
+
+

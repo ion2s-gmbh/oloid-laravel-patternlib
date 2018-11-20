@@ -1,10 +1,19 @@
 <template>
-  <div>
-    <navbar></navbar>
-    <div class="py-3">
+  
+  <main class="window">
+    
+    <!-- NAVIGATION -->
+    <navbar class="header"></navbar>
+    
+    <!-- MAIN VIEW SECTION -->
+    <section class="view">
+
       <router-view></router-view>
-    </div>
-  </div>
+
+    </section>    
+
+  </main>
+
 </template>
 
 <script>

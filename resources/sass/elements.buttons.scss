@@ -1,0 +1,95 @@
+//-------------------   BUTTONS    -----------------------//
+
+/* 
+These are the styles for every interactive element that is clickable but no link.
+*/
+
+%btn {
+  	background: none;
+    border: 1px solid #fff;
+    color: #fff;    
+    margin: 0 1rem 1rem 0;
+    padding: 0;    
+    position: relative;
+
+    > span {
+    	align-items: center;
+    	display: flex;      
+    	height: 100%;
+    	justify-content: center;
+    	left: 0;
+    	padding: 1rem;
+    	position: relative;
+    	top: 0; 
+    	transform: translate(10px, -10px);
+    	transition: 150ms cubic-bezier(0.4, 0, 0.2, 1) transform;
+    	z-index: 1;
+    }
+
+
+    &:hover > span {
+      transform: translate(5px, -5px);
+    }
+
+}
+
+
+.btn--primary {
+
+  @extend %btn;
+
+  > span {
+
+    background: white;	
+    color: var(--brandMain);
+
+  }  
+
+}
+
+.btn--secondary {
+
+  @extend %btn;
+  
+  > span {
+
+    background: var(--brandMain);	
+    border: 1px solid white;
+    color: white;
+
+  }
+
+}
+
+.btn--sm {
+
+  height: auto;
+
+  > span {
+    padding: 0.5rem 1rem;
+    transform: translate(5px, -5px);
+  }
+
+  &:hover > span {
+    transform: translate(0px, -0px);
+  }
+
+}
+
+.btn--la {
+
+  min-height: 50px;
+  min-width: calc(100px + 2rem); 
+
+}
+
+.btn--cta {
+
+  > span {
+
+    background: var(--brandCon); 
+    color: var(--brandMain);
+
+  }  
+ 
+}

@@ -1,6 +1,6 @@
 ---
 status: TODO
 values:
-    text: Heading 1
+    text: Testing
 ---
 Our h1 for testing

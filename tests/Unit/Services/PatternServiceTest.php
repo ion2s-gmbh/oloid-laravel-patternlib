@@ -295,7 +295,7 @@ class PatternServiceTest extends BaseTestCase
      */
     private function assertMarkdownContentUsingStub($markdown)
     {
-        $markdownContent = "---\nstatus: TODO\nvalues:\n    text: Heading 1\n---\n{$this->description}";
+        $markdownContent = "---\nstatus: TODO\nvalues:\n    text: Testing\n---\n{$this->description}";
         $this->assertEquals($markdownContent, $markdown);
     }
 
@@ -304,6 +304,6 @@ class PatternServiceTest extends BaseTestCase
      */
     private function assertSassContentUsingStub($sass)
     {
-        $this->assertEquals("/* {$this->name} */", $sass);
+        $this->assertEquals("/* atoms.text.headline1 */\nh1 {\n  color: red;\n}", $sass);
     }
 }

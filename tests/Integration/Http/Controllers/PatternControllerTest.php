@@ -3,12 +3,8 @@
 namespace Tests\Integration\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
-use Laratomics\Models\Pattern;
-use Laratomics\Services\PatternService;
 use Laratomics\Tests\BaseTestCase;
 use Laratomics\Tests\Traits\TestStubs;
-use Mockery;
-use Spatie\YamlFrontMatter\YamlFrontMatter;
 
 class PatternControllerTest extends BaseTestCase
 {
@@ -17,7 +13,7 @@ class PatternControllerTest extends BaseTestCase
     /**
      * @var string
      */
-    private $name = 'atoms.tests.element';
+    private $name = 'atoms.text.headline1';
 
     /**
      * @var string
@@ -93,43 +89,22 @@ class PatternControllerTest extends BaseTestCase
     public function it_should_load_all_pattern_information()
     {
         // arrange
-        $pattern = new Pattern();
-        $pattern->name = 'atoms.test.element';
-        $pattern->template = '<h1>{{ $text }}</h1>';
-        $pattern->html = '<h1>Heading 1</h1>';
-        $pattern->sass = 'h1 { color: red; }';
-
-        /*
-         * Metadata Mock
-         */
-        $pattern->metadata = Mockery::mock(YamlFrontMatter::class)
-            ->shouldReceive('body')
-            ->andReturn('This is a test description')
-            ->getMock();
-        $pattern->metadata->status = 'TODO';
-
-        $this->app->bind(PatternService::class, function () use ($pattern) {
-            $mock = Mockery::mock(PatternService::class)
-                ->shouldReceive('loadPattern')
-                ->andReturn($pattern)
-                ->getMock();
-            return $mock;
-        });
+        $this->preparePatternStub();
 
         // act
-        $response = $this->getJson('workshop/api/v1/atoms.test.element');
+        $response = $this->getJson('workshop/api/v1/atoms.text.headline1');
 
         // assert
         $expected = [
             'data' => [
-                'name' => 'atoms.test.element',
+                'name' => 'atoms.text.headline1',
                 'type' => 'atom',
-                'description' => 'This is a test description',
+                'description' => 'Our h1 for testing',
                 'status' => 'TODO',
-                'usage' => 'test.element',
-                'template' => '<h1>{{ $text }}</h1>',
-                'html' => '<h1>Heading 1</h1>',
-                'sass' => 'h1 { color: red; }'
+                'usage' => 'text.headline1',
+                'template' => "<!-- atoms.text.headline1 -->\n<h1>{{ \$text }}</h1>",
+                'html' => "<!-- atoms.text.headline1 -->\n<h1>Testing</h1>",
+                'sass' => "/* atoms.text.headline1 */\nh1 {\n  color: red;\n}",
             ]
         ];
         $response->assertSuccessful();
@@ -143,7 +118,7 @@ class PatternControllerTest extends BaseTestCase
     public function it_should_get_a_html_preview_of_a_pattern()
     {
         // arrange
-        $this->preparePattern($this->name, $this->description);
+        $this->preparePatternStub();
 
         // act
         $response = $this->get("/workshop/preview/{$this->name}");

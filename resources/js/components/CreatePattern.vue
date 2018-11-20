@@ -20,8 +20,7 @@
                type="text"
                name="name"
                v-model="pattern.name"
-               aria-describedby="nameHelp"
-               placeholder="nested.pattern.name"
+               aria-describedby="nameHelp"               
                v-validate.disable="'required'"
         />
 
@@ -50,14 +49,17 @@
           <small class="error">{{ errors.first('description') }}</small>
         </div>
 
-        <div class="form-group">
+        <div class="form-group form-group--end">
+
+          <router-link :to="{ name: 'dashboard' }">
+            <span>Cancel</span>
+          </router-link>
           
-          <button @click.prevent="store" class="btn btn-primary">
-            <i class="fas fa-pen-alt"></i>
-            Create pattern
+          <button @click.prevent="store" class="btn btn--primary btn--sm">
+            <span>Create pattern</span>  
           </button>
 
-          <router-link :to="{ name: 'dashboard' }">Cancel</router-link>
+          
 
         </div>
         

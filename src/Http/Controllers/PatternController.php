@@ -2,8 +2,10 @@
 
 namespace Laratomics\Http\Controllers;
 
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
+use Laratomics\Exceptions\RenderingException;
 use Laratomics\Http\Requests\PatternRequest;
 use Laratomics\Http\Resources\PatternResource;
 use Laratomics\Services\PatternService;
@@ -43,13 +45,17 @@ class PatternController extends Controller
      * Get all information about a Pattern to display it in the workshop.
      *
      * @param string $pattern
-     * @return PatternResource
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     * @return JsonResponse
+     * @throws RenderingException
      */
-    public function preview(string $pattern): PatternResource
+    public function preview(string $pattern): JsonResponse
     {
-        $patternInstance = $this->patternService->loadPattern($pattern);
-        return new PatternResource($patternInstance);
+        try {
+            $patternInstance = $this->patternService->loadPattern($pattern);
+        } catch (FileNotFoundException $exception) {
+            return JsonResponse::create([], JsonResponse::HTTP_NOT_FOUND);
+        }
+        return JsonResponse::create(new PatternResource($patternInstance));
     }
 
     /**
@@ -57,7 +63,8 @@ class PatternController extends Controller
      *
      * @param string $pattern
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     * @throws FileNotFoundException
+     * @throws RenderingException
      */
     public function getPreview(string $pattern)
     {

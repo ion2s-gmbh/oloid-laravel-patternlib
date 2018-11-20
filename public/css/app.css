@@ -376,6 +376,8 @@ Here you can find the Grid-Definitions for the whole layout for example.
 }
 
 html {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   color: white;
   font-family: 'Roboto Mono', sans-serif;
   font-size: 100%;
@@ -464,6 +466,15 @@ containing the header and the so called view, containing most of the UI.
 }
 
 /* 
+These are the styles for all interactive elements that aren't buttons.
+*/
+
+a {
+  color: inherit;
+  display: inline-block;
+}
+
+/* 
 These are the styles for every interactive element that is clickable but no link.
 */
 
@@ -549,6 +560,40 @@ These are the styles for the form elements like inputs, fieldsets & labels etc.
 More special Forms might be a component. 
 */
 
+.form {
+  max-width: 50rem;
+  width: 100%;
+}
+
+.form-group--end {
+  -webkit-box-align: baseline;
+      -ms-flex-align: baseline;
+          align-items: baseline;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  padding: 1rem 0;
+}
+
+.form-group + .form-group--end {
+  margin-top: 1rem;
+}
+
+.form-group--end a {
+  margin: 0 2rem;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+}
+
+.form-group--end a > span {
+  display: block;
+  -webkit-transform: translate(5px, -5px);
+          transform: translate(5px, -5px);
+}
+
 label {
   margin-bottom: 1rem;
 }
@@ -565,6 +610,7 @@ input,
 textarea {
   background: transparent;
   border: 1px solid white;
+  color: inherit;
   margin: var(--gap) 0 var(--gap) 0;
   padding: 1rem;
   width: 100%;

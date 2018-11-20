@@ -24057,6 +24057,8 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
+//
 
 
 
@@ -25828,8 +25830,7 @@ var render = function() {
               id: "name",
               type: "text",
               name: "name",
-              "aria-describedby": "nameHelp",
-              placeholder: "nested.pattern.name"
+              "aria-describedby": "nameHelp"
             },
             domProps: { value: _vm.pattern.name },
             on: {
@@ -25886,12 +25887,16 @@ var render = function() {
         _vm._v(" "),
         _c(
           "div",
-          { staticClass: "form-group" },
+          { staticClass: "form-group form-group--end" },
           [
+            _c("router-link", { attrs: { to: { name: "dashboard" } } }, [
+              _c("span", [_vm._v("Cancel")])
+            ]),
+            _vm._v(" "),
             _c(
               "button",
               {
-                staticClass: "btn btn-primary",
+                staticClass: "btn btn--primary btn--sm",
                 on: {
                   click: function($event) {
                     $event.preventDefault()
@@ -25899,15 +25904,8 @@ var render = function() {
                   }
                 }
               },
-              [
-                _c("i", { staticClass: "fas fa-pen-alt" }),
-                _vm._v("\n          Create pattern\n        ")
-              ]
-            ),
-            _vm._v(" "),
-            _c("router-link", { attrs: { to: { name: "dashboard" } } }, [
-              _vm._v("Cancel")
-            ])
+              [_c("span", [_vm._v("Create pattern")])]
+            )
           ],
           1
         )

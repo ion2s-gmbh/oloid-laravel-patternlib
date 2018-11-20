@@ -74,19 +74,29 @@
     </div>
 
     <div class="footer">
+      
+      <button class="btn btn--secondary btn--sm" @click="deletePattern(pattern.name)">
+        
+        <span>
+          <i class="fas fa-trash-alt"></i>
+          Delete
+        </span>
+        
+      </button>
 
       <router-link :to="{ name: 'update' }">
-          <button class="btn btn-primary">
+          
+        <button class="btn btn--primary btn--sm">
+          
+          <span>
             <i class="fas fa-pen"></i>
-            UPDATE
-          </button>
-        </router-link>
+            Edit
+          </span>            
 
-        <button class="btn btn-danger" @click="deletePattern(pattern.name)">
-          <i class="fas fa-trash-alt"></i>
-          DELETE
-        </button>  
-      
+        </button>
+
+      </router-link>
+
     </div>
 
   </div>

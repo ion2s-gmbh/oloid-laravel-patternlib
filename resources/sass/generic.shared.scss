@@ -10,12 +10,14 @@ Here you can find the Grid-Definitions for the whole layout for example.
   box-sizing: inherit;
 }
 
-// TYPOGRAPHY ----------------------------------------- //
-
 html {
   color: white;
   font-family: 'Roboto Mono', sans-serif;
   font-size: 100%;
+}
+
+body {
+  background: var(--brandMain);  
 }
 
 // CUSTOM SCROLLBARS ----------------------------------------- //
@@ -35,10 +37,6 @@ html {
 }
 
 // LAYOUT & GRIDS ----------------------------------------- //
-
-body {
-  background: var(--brandMain);  
-}
 
 /* 
 This builds the basic structure of the viewport, 
@@ -63,6 +61,14 @@ containing the header and the so called view, containing most of the UI.
   grid-template-rows: 1fr 1fr 1fr var(--headerheight);
   overflow: hidden;
   
+  @include for-phone-only {
+    grid-template-areas: 
+      "code code code code"
+      "view view view view"
+      "view view view view"
+      "footer footer footer footer";
+  }
+
   @include for-tablet-portrait-up {
     grid-template-areas: 
       "code code code code"

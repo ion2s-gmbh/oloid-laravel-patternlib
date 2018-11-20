@@ -1,0 +1,29 @@
+//-------------------   FORMS    -----------------------//
+
+/* 
+These are the styles for the form elements like inputs, fieldsets & labels etc.
+More special Forms might be a component. 
+*/
+
+label {
+
+	margin-bottom: 1rem;
+
+	> span {
+		display: block;
+	}	
+
+}
+
+.label-hint {
+	font-size: 0.8rem;
+}
+
+input, 
+textarea {
+	background: transparent;
+	border: 1px solid white;
+	margin: var(--gap) 0 var(--gap) 0;
+	padding: 1rem;
+	width: 100%;
+}

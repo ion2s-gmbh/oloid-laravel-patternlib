@@ -23897,7 +23897,7 @@ var render = function() {
             ),
             _vm._v(" "),
             _c("router-link", { attrs: { to: { name: "create" } } }, [
-              _c("button", { staticClass: "btn btn--primary" }, [
+              _c("button", { staticClass: "btn btn--primary btn--cta" }, [
                 _c("span", [_vm._v("\n          New Pattern\n        ")])
               ])
             ])
@@ -23988,6 +23988,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -25780,146 +25799,151 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "row justify-content-center" }, [
-      _c("div", { staticClass: "col-md-8" }, [
-        _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "card-header" }, [
-            _vm._v("Create a new pattern")
-          ]),
+  return _c("div", { staticClass: "dashboard" }, [
+    _c(
+      "form",
+      { staticClass: "form form--create", attrs: { method: "post" } },
+      [
+        _c("div", { staticClass: "form-group" }, [
+          _vm._m(0),
           _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _c("form", { attrs: { method: "post" } }, [
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", { attrs: { for: "name" } }, [_vm._v("Name")]),
-                _vm._v(" "),
-                _c(
-                  "small",
-                  {
-                    staticClass: "form-text text-muted",
-                    attrs: { id: "nameHelp" }
-                  },
-                  [_vm._v("E.g. atoms.buttons.button")]
-                ),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.pattern.name,
-                      expression: "pattern.name"
-                    },
-                    {
-                      name: "validate",
-                      rawName: "v-validate.disable",
-                      value: "required",
-                      expression: "'required'",
-                      modifiers: { disable: true }
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: {
-                    id: "name",
-                    type: "text",
-                    name: "name",
-                    "aria-describedby": "nameHelp",
-                    placeholder: "nested.pattern.name"
-                  },
-                  domProps: { value: _vm.pattern.name },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.pattern, "name", $event.target.value)
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _c("small", { staticClass: "error" }, [
-                  _vm._v(_vm._s(_vm.errors.first("name")))
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", { attrs: { for: "description" } }, [
-                  _vm._v("Description")
-                ]),
-                _vm._v(" "),
-                _c("textarea", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.pattern.description,
-                      expression: "pattern.description"
-                    },
-                    {
-                      name: "validate",
-                      rawName: "v-validate.disable",
-                      value: "required",
-                      expression: "'required'",
-                      modifiers: { disable: true }
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: {
-                    id: "description",
-                    name: "description",
-                    placeholder: "Describe your pattern ..."
-                  },
-                  domProps: { value: _vm.pattern.description },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.pattern, "description", $event.target.value)
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _c("small", { staticClass: "error" }, [
-                  _vm._v(_vm._s(_vm.errors.first("description")))
-                ])
-              ]),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "form-group" },
-                [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-primary",
-                      on: {
-                        click: function($event) {
-                          $event.preventDefault()
-                          return _vm.store($event)
-                        }
-                      }
-                    },
-                    [
-                      _c("i", { staticClass: "fas fa-pen-alt" }),
-                      _vm._v("\n                SAVE\n              ")
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c("router-link", { attrs: { to: { name: "dashboard" } } }, [
-                    _vm._v("CANCEL")
-                  ])
-                ],
-                1
-              )
-            ])
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.pattern.name,
+                expression: "pattern.name"
+              },
+              {
+                name: "validate",
+                rawName: "v-validate.disable",
+                value: "required",
+                expression: "'required'",
+                modifiers: { disable: true }
+              }
+            ],
+            staticClass: "form-control",
+            attrs: {
+              id: "name",
+              type: "text",
+              name: "name",
+              "aria-describedby": "nameHelp",
+              placeholder: "nested.pattern.name"
+            },
+            domProps: { value: _vm.pattern.name },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.pattern, "name", $event.target.value)
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("small", { staticClass: "error" }, [
+            _vm._v(_vm._s(_vm.errors.first("name")))
           ])
-        ])
-      ])
-    ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group" }, [
+          _vm._m(1),
+          _vm._v(" "),
+          _c("textarea", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.pattern.description,
+                expression: "pattern.description"
+              },
+              {
+                name: "validate",
+                rawName: "v-validate.disable",
+                value: "required",
+                expression: "'required'",
+                modifiers: { disable: true }
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { id: "description", name: "description" },
+            domProps: { value: _vm.pattern.description },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.pattern, "description", $event.target.value)
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("small", { staticClass: "error" }, [
+            _vm._v(_vm._s(_vm.errors.first("description")))
+          ])
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "form-group" },
+          [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary",
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    return _vm.store($event)
+                  }
+                }
+              },
+              [
+                _c("i", { staticClass: "fas fa-pen-alt" }),
+                _vm._v("\n          Create pattern\n        ")
+              ]
+            ),
+            _vm._v(" "),
+            _c("router-link", { attrs: { to: { name: "dashboard" } } }, [
+              _vm._v("Cancel")
+            ])
+          ],
+          1
+        )
+      ]
+    )
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "name" } }, [
+      _c("span", { staticClass: "label-name" }, [_vm._v("Name")]),
+      _vm._v(" "),
+      _c("span", { staticClass: "label-hint" }, [
+        _vm._v("E.g. atoms.buttons.button")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "description" } }, [
+      _c("span", { staticClass: "label-name" }, [
+        _vm._v("\n            Description "),
+        _c("span", [_vm._v("(optional)")])
+      ]),
+      _vm._v(" "),
+      _c("span", { staticClass: "label-hint" }, [
+        _vm._v("E.g. atoms.buttons.button")
+      ])
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -26296,6 +26320,16 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -26430,28 +26464,27 @@ var render = function() {
       "div",
       { staticClass: "footer" },
       [
-        _c("router-link", { attrs: { to: { name: "update" } } }, [
-          _c("button", { staticClass: "btn btn-primary" }, [
-            _c("i", { staticClass: "fas fa-pen" }),
-            _vm._v("\n          UPDATE\n        ")
-          ])
-        ]),
-        _vm._v(" "),
         _c(
           "button",
           {
-            staticClass: "btn btn-danger",
+            staticClass: "btn btn--secondary btn--sm",
             on: {
               click: function($event) {
                 _vm.deletePattern(_vm.pattern.name)
               }
             }
           },
-          [
-            _c("i", { staticClass: "fas fa-trash-alt" }),
-            _vm._v("\n        DELETE\n      ")
-          ]
-        )
+          [_vm._m(3)]
+        ),
+        _vm._v(" "),
+        _c("router-link", { attrs: { to: { name: "update" } } }, [
+          _c("button", { staticClass: "btn btn--primary btn--sm" }, [
+            _c("span", [
+              _c("i", { staticClass: "fas fa-pen" }),
+              _vm._v("\n          Edit\n        ")
+            ])
+          ])
+        ])
       ],
       1
     )
@@ -26517,6 +26550,15 @@ var staticRenderFns = [
           }
         })
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [
+      _c("i", { staticClass: "fas fa-trash-alt" }),
+      _vm._v("\n        Delete\n      ")
     ])
   }
 ]

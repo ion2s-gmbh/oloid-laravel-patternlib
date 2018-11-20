@@ -18,7 +18,7 @@
       </router-link>
 
       <router-link :to="{ name: 'create' }">
-        <button class="btn btn--primary">
+        <button class="btn btn--primary btn--cta">
           <span>
             New Pattern
           </span>

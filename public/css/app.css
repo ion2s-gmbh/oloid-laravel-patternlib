@@ -354,9 +354,14 @@ template {
 :root {
   --brandMain: #03314B;
   --brandCon: #FFF621;
+  --positive: #10E2AB;
   --headerheight: 66px;
   --gap: 1rem;
 }
+
+/* 
+These are all our helpers that we might take from project to project. 
+*/
 
 /* 
 These are the styles that we want to acces globally throughout the whoel project.
@@ -376,6 +381,10 @@ html {
   font-size: 100%;
 }
 
+body {
+  background: var(--brandMain);
+}
+
 *::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -389,10 +398,6 @@ html {
 *::-webkit-scrollbar-thumb {
   border-radius: 1rem;
   background-color: #001B22;
-}
-
-body {
-  background: var(--brandMain);
 }
 
 /* 
@@ -416,6 +421,13 @@ containing the header and the so called view, containing most of the UI.
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr var(--headerheight);
   overflow: hidden;
+}
+
+@media (max-width: 599px) {
+  .view,
+  .view--inner {
+    grid-template-areas: "code code code code" "view view view view" "view view view view" "footer footer footer footer";
+  }
 }
 
 @media (min-width: 600px) {
@@ -460,15 +472,13 @@ These are the styles for every interactive element that is clickable but no link
   background: none;
   border: 1px solid #fff;
   color: #fff;
-  height: 50px;
   margin: 0 1rem 1rem 0;
   padding: 0;
-  min-width: calc(100px + 2rem);
   position: relative;
 }
 
-.btn--primary span,
-.btn--secondary span {
+.btn--primary > span,
+.btn--secondary > span {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -480,7 +490,7 @@ These are the styles for every interactive element that is clickable but no link
       -ms-flex-pack: center;
           justify-content: center;
   left: 0;
-  padding: 0 1rem;
+  padding: 1rem;
   position: relative;
   top: 0;
   -webkit-transform: translate(10px, -10px);
@@ -489,24 +499,75 @@ These are the styles for every interactive element that is clickable but no link
   transition: 150ms cubic-bezier(0.4, 0, 0.2, 1) -webkit-transform;
   transition: 150ms cubic-bezier(0.4, 0, 0.2, 1) transform;
   transition: 150ms cubic-bezier(0.4, 0, 0.2, 1) transform, 150ms cubic-bezier(0.4, 0, 0.2, 1) -webkit-transform;
-  width: calc(100% - 2rem);
   z-index: 1;
 }
 
-.btn--primary:hover span,
-.btn--secondary:hover span {
+.btn--primary:hover > span,
+.btn--secondary:hover > span {
   -webkit-transform: translate(5px, -5px);
           transform: translate(5px, -5px);
 }
 
-.btn--primary span {
+.btn--primary > span {
+  background: white;
+  color: var(--brandMain);
+}
+
+.btn--secondary > span {
+  background: var(--brandMain);
+  border: 1px solid white;
+  color: white;
+}
+
+.btn--sm {
+  height: auto;
+}
+
+.btn--sm > span {
+  padding: 0.5rem 1rem;
+  -webkit-transform: translate(5px, -5px);
+          transform: translate(5px, -5px);
+}
+
+.btn--sm:hover > span {
+  -webkit-transform: translate(0px, 0px);
+          transform: translate(0px, 0px);
+}
+
+.btn--la {
+  min-height: 50px;
+  min-width: calc(100px + 2rem);
+}
+
+.btn--cta > span {
   background: var(--brandCon);
   color: var(--brandMain);
 }
 
-.btn--secondary span {
-  background: white;
-  color: var(--brandMain);
+/* 
+These are the styles for the form elements like inputs, fieldsets & labels etc.
+More special Forms might be a component. 
+*/
+
+label {
+  margin-bottom: 1rem;
+}
+
+label > span {
+  display: block;
+}
+
+.label-hint {
+  font-size: 0.8rem;
+}
+
+input,
+textarea {
+  background: transparent;
+  border: 1px solid white;
+  margin: var(--gap) 0 var(--gap) 0;
+  padding: 1rem;
+  width: 100%;
 }
 
 /* 
@@ -613,6 +674,26 @@ These are the styles that are needed to render our welcome dashboard.
   left: 0;
   position: absolute;
   top: 0;
+}
+
+/* 
+These are the styles for the inline footer underneath the preview window - carrying the actions for each pattern.
+*/
+
+.footer {
+  height: var(--headerheight);
+  grid-area: footer;
+  padding: var(--gap);
+  text-align: right;
+}
+
+.project-info {
+  text-align: center;
+}
+
+.project-name {
+  font-family: sans-serif;
+  font-size: 0.75rem;
 }
 
 .u-center {

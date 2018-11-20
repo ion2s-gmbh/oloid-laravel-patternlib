@@ -1,4 +1,7 @@
-// MIXINS & PLACEHOLDERS
+// MIXINS & PLACEHOLDERS---------------------------- //
+/* 
+These are all our helpers that we might take from project to project. 
+*/
 
 @mixin size($width, $height: $width) {
   width: $width;
@@ -24,7 +27,7 @@
 }
 
 
-// Breakpoints 
+// Breakpoint Mixins
 
 @mixin for-phone-only {
   @media (max-width: 599px) { @content; }

@@ -1,0 +1,25 @@
+//-------------------   FOOTER    -----------------------//
+
+/* 
+These are the styles for the inline footer underneath the preview window - carrying the actions for each pattern.
+*/
+
+// Footer Base --------- //
+
+.footer {
+  	height: var(--headerheight);
+	grid-area: footer;
+	padding: var(--gap);
+	text-align: right;
+}
+
+// Footer Content
+
+.project-info {
+  text-align: center;
+}
+
+.project-name {
+  font-family: sans-serif;
+  font-size: 0.75rem;
+}

@@ -8,7 +8,11 @@ export default new Vuex.Store({
 
   state: {
     config,
-    appInfo: {}
+    appInfo: {},
+    menu: {
+      activeMain: '',
+      activeSub: ''
+    }
   },
 
   mutations: {
@@ -21,6 +25,23 @@ export default new Vuex.Store({
     */
     appInfo (state, info) {
       state.appInfo = info.data;
+    },
+
+    toggleMainMenu (state, menu) {
+      state.menu.activeMain = menu;
+      state.menu.activeSub = '';
+    },
+
+    toggleSubMenu (state, subMenu) {
+      state.menu.activeSub = subMenu;
+    },
+
+    resetMainMenu (state) {
+      state.menu.activeMain = '';
+    },
+
+    resetSubMenu (state) {
+      state.menu.activeSub = '';
     }
   }
 });

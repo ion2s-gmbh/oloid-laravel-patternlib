@@ -6,7 +6,7 @@
     <navbar class="header"></navbar>
     
     <!-- MAIN VIEW SECTION -->
-    <section class="view">
+    <section class="view" @click="resetMenu()">
 
       <router-view></router-view>
 
@@ -26,6 +26,13 @@
     components: {
       Navbar
     },
+
+    methods: {
+      resetMenu: function () {
+        this.$store.commit('resetMainMenu');
+      }
+    },
+
     async beforeCreate() {
       try {
         let json = await API.get('info');

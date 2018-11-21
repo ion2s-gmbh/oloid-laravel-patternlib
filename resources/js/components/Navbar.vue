@@ -20,11 +20,11 @@
       <ul class="patterns">
 
         <li class="pattern u-center"
-            :class="{ active: activeMainMenu === menu.name }"
+            :class="{ active: $store.state.menu.activeMain === menu.name }"
             v-for="menu in navi.main"
             v-if="menu.items.length > 0">
 
-          <span @click="toggleMainMenuItem(menu.name)">{{ menu.name }}</span>
+          <span @click="toggleMainMenu(menu.name)">{{ menu.name }}</span>
 
           <ul class="patterns--sub">
 
@@ -43,9 +43,9 @@
             <li class="pattern"
                 v-if="typeof item === 'object'"
                 v-for="item in menu.items"
-                :class="{ active: item.name === activeSubMenu }">
+                :class="{ active: $store.state.menu.activeSub === item.name }">
 
-              <span @click="toggleSubMenuItem(item.name)">{{ item.name }}
+              <span @click="toggleSubMenu(item.name)">{{ item.name }}
 
                 <i class="fas fa-caret-down"></i>
 
@@ -89,7 +89,6 @@
     data() {
 
       return {
-        'active': false,
         'navi': {
           'main': [
             {
@@ -98,8 +97,10 @@
                 {
                   'name': 'buttons',
                   'items': [
-                    'submit',
-                    'cancel'
+                    'button',
+                    'cancel',
+                    'submit.save',
+                    'submit.update'
                   ]
                 },
                 'headline1'
@@ -119,24 +120,32 @@
             }
           ]
         },
-        activeMainMenu: '',
-        activeSubMenu: ''
       }
     },
     methods: {
-      toggleMainMenuItem: function (menu) {
-        if (this.activeMainMenu === menu) {
-          this.activeMainMenu = '';
+
+      /**
+       * Set the active main menu.
+       * @param menu
+       */
+      toggleMainMenu: function (menu) {
+
+        if (this.$store.state.menu.activeMain === menu) {
+          this.$store.commit('resetMainMenu');
         } else {
-          this.activeMainMenu = menu;
+          this.$store.commit('toggleMainMenu', menu);
         }
       },
-      toggleSubMenuItem: function (subMenu) {
-        console.log(subMenu);
-        if (this.activeSubMenu === subMenu) {
-          this.activeSubMenu = '';
+
+      /**
+       * Set the active sub menu.
+       * @param subMenu
+       */
+      toggleSubMenu: function (subMenu) {
+        if (this.$store.state.menu.activeSub === subMenu) {
+          this.$store.commit('resetSubMenu');
         } else {
-          this.activeSubMenu = subMenu;
+          this.$store.commit('toggleSubMenu', subMenu);
         }
       }
     }

@@ -475,6 +475,10 @@ a {
   display: inline-block;
 }
 
+.back {
+  padding: 0.5rem 1rem;
+}
+
 /* 
 These are the styles for every interactive element that is clickable but no link.
 */
@@ -740,6 +744,12 @@ These are the styles for the project pattern navigation.
 */
 
 .project-navigation {
+  -webkit-box-align: baseline;
+      -ms-flex-align: baseline;
+          align-items: baseline;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   width: 100%;
 }
 

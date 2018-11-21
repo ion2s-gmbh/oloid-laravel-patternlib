@@ -21145,10 +21145,12 @@ var install = VeeValidate$1.install;
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]);
 
-/* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
+var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
   mode: 'hash',
   routes: [{ path: '/', component: __WEBPACK_IMPORTED_MODULE_2__components_Dashboard___default.a, name: 'dashboard' }, { path: '/create', component: __WEBPACK_IMPORTED_MODULE_3__components_CreatePattern___default.a, name: 'create' }, { path: '/update/:pattern', component: __WEBPACK_IMPORTED_MODULE_4__components_UpdatePattern___default.a, name: 'update' }, { path: '/preview/:pattern', component: __WEBPACK_IMPORTED_MODULE_5__components_PreviewPattern___default.a, name: 'preview' }]
-}));
+});
+
+/* harmony default export */ __webpack_exports__["a"] = (router);
 
 /***/ }),
 /* 21 */
@@ -26628,19 +26630,61 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
 
   state: {
     config: __WEBPACK_IMPORTED_MODULE_2__config__["a" /* default */],
-    appInfo: {}
+    appInfo: {},
+    menu: {
+      activeMain: '',
+      activeSub: ''
+    }
   },
 
   mutations: {
 
-    /*
-    |--------------------------------------------------------------------------
-    | appInfo
-    |--------------------------------------------------------------------------
-    | Set basic application information retrieved from Laravel.
-    */
+    /**
+     * Set basic application information retrieved from Laravel.
+     * @param state
+     * @param info
+     */
     appInfo: function appInfo(state, info) {
       state.appInfo = info.data;
+    },
+
+
+    /**
+     * Set the active main menu item.
+     * @param state
+     * @param menu
+     */
+    toggleMainMenu: function toggleMainMenu(state, menu) {
+      state.menu.activeMain = menu;
+      state.menu.activeSub = '';
+    },
+
+
+    /**
+     * Set the active sub menu item.
+     * @param state
+     * @param subMenu
+     */
+    toggleSubMenu: function toggleSubMenu(state, subMenu) {
+      state.menu.activeSub = subMenu;
+    },
+
+
+    /**
+     * Reset the active main menu item.
+     * @param state
+     */
+    resetMainMenu: function resetMainMenu(state) {
+      state.menu.activeMain = '';
+    },
+
+
+    /**
+     * Reset the active sub menu item.
+     * @param state
+     */
+    resetSubMenu: function resetSubMenu(state) {
+      state.menu.activeSub = '';
     }
   }
 }));
@@ -27681,6 +27725,21 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
   components: {
     Navbar: __WEBPACK_IMPORTED_MODULE_1__Navbar___default.a
   },
+
+  methods: {
+
+    /**
+     * Reset the main menu state.
+     */
+    resetMenu: function resetMenu() {
+      this.$store.commit('resetMainMenu');
+    }
+  },
+
+  /**
+   * Fetch application information before creating.
+   * @returns {Promise<void>}
+   */
   beforeCreate: function () {
     var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
       var json;
@@ -27857,6 +27916,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -27866,9 +27928,52 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   data: function data() {
 
     return {
-      active: false
+      'navi': {
+        'main': [{
+          'name': 'atoms',
+          'items': [{
+            'name': 'buttons',
+            'items': ['button', 'cancel', 'submit.save', 'submit.update']
+          }, 'headline1']
+        }, {
+          'name': 'pages',
+          'items': ['about', 'home', 'imprint']
+        }, {
+          'name': 'elements',
+          'items': []
+        }]
+      }
     };
+  },
+
+  methods: {
+
+    /**
+     * Set the active main menu.
+     * @param menu
+     */
+    toggleMainMenu: function toggleMainMenu(menu) {
+
+      if (this.$store.state.menu.activeMain === menu) {
+        this.$store.commit('resetMainMenu');
+      } else {
+        this.$store.commit('toggleMainMenu', menu);
+      }
+    },
+
+    /**
+     * Set the active sub menu.
+     * @param subMenu
+     */
+    toggleSubMenu: function toggleSubMenu(subMenu) {
+      if (this.$store.state.menu.activeSub === subMenu) {
+        this.$store.commit('resetSubMenu');
+      } else {
+        this.$store.commit('toggleSubMenu', subMenu);
+      }
+    }
   }
+
 });
 
 /***/ }),
@@ -27886,60 +27991,166 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _c("nav", { staticClass: "project-navigation" }, [
-      _c("ul", { staticClass: "patterns" }, [
+    _c(
+      "nav",
+      { staticClass: "project-navigation" },
+      [
         _c(
-          "li",
-          {
-            staticClass: "pattern u-center",
-            class: { active: _vm.active },
-            on: {
-              click: function($event) {
-                _vm.active = !_vm.active
-              }
-            }
-          },
-          [_vm._v("\n        \n        Atoms\n\n        "), _vm._m(0)]
+          "router-link",
+          { staticClass: "back", attrs: { to: { name: "dashboard" } } },
+          [_c("i", { staticClass: "fas fa-arrow-circle-left" })]
         ),
         _vm._v(" "),
-        _c("li", { staticClass: "pattern u-center" }, [
-          _vm._v("\n        \n        Forms\n\n      ")
-        ])
-      ])
-    ])
+        _c(
+          "ul",
+          { staticClass: "patterns" },
+          _vm._l(_vm.navi.main, function(menu) {
+            return menu.items.length > 0
+              ? _c(
+                  "li",
+                  {
+                    staticClass: "pattern u-center",
+                    class: {
+                      active: _vm.$store.state.menu.activeMain === menu.name
+                    }
+                  },
+                  [
+                    _c(
+                      "span",
+                      {
+                        on: {
+                          click: function($event) {
+                            _vm.toggleMainMenu(menu.name)
+                          }
+                        }
+                      },
+                      [_vm._v(_vm._s(menu.name))]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "ul",
+                      { staticClass: "patterns--sub" },
+                      [
+                        _vm._l(menu.items, function(item) {
+                          return typeof item !== "object"
+                            ? _c(
+                                "li",
+                                { staticClass: "pattern" },
+                                [
+                                  _c(
+                                    "router-link",
+                                    {
+                                      attrs: {
+                                        to: {
+                                          name: "preview",
+                                          params: {
+                                            pattern: menu.name + "." + item
+                                          }
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n\n              " +
+                                          _vm._s(item) +
+                                          "\n\n            "
+                                      )
+                                    ]
+                                  )
+                                ],
+                                1
+                              )
+                            : _vm._e()
+                        }),
+                        _vm._v(" "),
+                        _vm._l(menu.items, function(item) {
+                          return typeof item === "object"
+                            ? _c(
+                                "li",
+                                {
+                                  staticClass: "pattern",
+                                  class: {
+                                    active:
+                                      _vm.$store.state.menu.activeSub ===
+                                      item.name
+                                  }
+                                },
+                                [
+                                  _c(
+                                    "span",
+                                    {
+                                      on: {
+                                        click: function($event) {
+                                          _vm.toggleSubMenu(item.name)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        _vm._s(item.name) + "\n\n              "
+                                      ),
+                                      _c("i", {
+                                        staticClass: "fas fa-caret-down"
+                                      })
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "ul",
+                                    { staticClass: "patterns--sub" },
+                                    _vm._l(item.items, function(subItem) {
+                                      return _c(
+                                        "li",
+                                        { staticClass: "pattern" },
+                                        [
+                                          _c(
+                                            "router-link",
+                                            {
+                                              attrs: {
+                                                to: {
+                                                  name: "preview",
+                                                  params: {
+                                                    pattern:
+                                                      menu.name +
+                                                      "." +
+                                                      item.name +
+                                                      "." +
+                                                      subItem
+                                                  }
+                                                }
+                                              }
+                                            },
+                                            [
+                                              _vm._v(
+                                                "\n\n                  " +
+                                                  _vm._s(subItem) +
+                                                  "\n\n                "
+                                              )
+                                            ]
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    })
+                                  )
+                                ]
+                              )
+                            : _vm._e()
+                        })
+                      ],
+                      2
+                    )
+                  ]
+                )
+              : _vm._e()
+          })
+        )
+      ],
+      1
+    )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("ul", { staticClass: "patterns--sub" }, [
-      _c("li", { staticClass: "pattern" }, [
-        _c("a", { attrs: { href: "" } }, [_vm._v("Label")])
-      ]),
-      _vm._v(" "),
-      _c("li", { staticClass: "pattern" }, [_vm._v("headline one")]),
-      _vm._v(" "),
-      _c("li", { staticClass: "pattern" }, [
-        _c("a", { attrs: { href: "" } }, [
-          _vm._v("\n              Buttons\n              "),
-          _c("i", { staticClass: "fas fa-caret-down" })
-        ]),
-        _vm._v(" "),
-        _c("ul", { staticClass: "patterns--sub" }, [
-          _c("li", { staticClass: "pattern" }, [_vm._v("btn_submit")]),
-          _vm._v(" "),
-          _c("li", { staticClass: "pattern" }, [_vm._v("btn_form")])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("li", { staticClass: "pattern" }, [_vm._v("Bla")]),
-      _vm._v(" "),
-      _c("li", { staticClass: "pattern" }, [_vm._v("text")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -27963,7 +28174,19 @@ var render = function() {
     [
       _c("navbar", { staticClass: "header" }),
       _vm._v(" "),
-      _c("section", { staticClass: "view" }, [_c("router-view")], 1)
+      _c(
+        "section",
+        {
+          staticClass: "view",
+          on: {
+            click: function($event) {
+              _vm.resetMenu()
+            }
+          }
+        },
+        [_c("router-view")],
+        1
+      )
     ],
     1
   )

@@ -9,6 +9,8 @@ These are the styles for the project pattern navigation.
 
 .project-navigation {
 	
+	align-items: baseline;
+	display: flex;
 	width: 100%;
 
 	a {

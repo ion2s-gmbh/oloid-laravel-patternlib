@@ -10,6 +10,7 @@
         
           <span class="label-name">Name</span>
           <span class="label-hint">E.g. atoms.buttons.button</span>
+          <small class="error">{{ errors.first('name') }}</small>
 
         </label>
 
@@ -24,7 +25,7 @@
                v-validate.disable="'required'"
         />
 
-        <small class="error">{{ errors.first('name') }}</small>
+        
 
       </div>
 
@@ -36,7 +37,9 @@
               Description <span>(optional)</span>
             </span>
 
-            <span class="label-hint">E.g. atoms.buttons.button</span>          
+            <span class="label-hint">E.g. atoms.buttons.button</span>    
+
+            <small class="error">{{ errors.first('description') }}</small>      
 
           </label>
 
@@ -44,9 +47,10 @@
                     class="form-control"
                     name="description"
                     v-model="pattern.description"
-                    v-validate.disable="'required'"
-                    ></textarea>
-          <small class="error">{{ errors.first('description') }}</small>
+                    v-validate.disable="'required'">
+                    
+          </textarea>          
+
         </div>
 
         <div class="form-group form-group--end">

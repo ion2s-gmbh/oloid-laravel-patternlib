@@ -63,3 +63,11 @@ textarea {
 	padding: 1rem;
 	width: 100%;
 }
+
+// Validation --------- //
+
+.error {
+	@include a-fadeIn;	
+	color: var(--alert);
+	display: inline-block;
+}

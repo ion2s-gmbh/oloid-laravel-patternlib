@@ -351,10 +351,148 @@ template {
 [hidden] {
   display: none;
 }
+/**
+ * prism.js default theme for JavaScript, CSS and HTML
+ * Based on dabblet (http://dabblet.com)
+ * @author Lea Verou
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: black;
+	background: none;
+	text-shadow: 0 1px white;
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+pre[class*="language-"]::-moz-selection, pre[class*="language-"] ::-moz-selection,
+code[class*="language-"]::-moz-selection, code[class*="language-"] ::-moz-selection {
+	text-shadow: none;
+	background: #b3d4fc;
+}
+
+pre[class*="language-"]::selection, pre[class*="language-"] ::selection,
+code[class*="language-"]::selection, code[class*="language-"] ::selection {
+	text-shadow: none;
+	background: #b3d4fc;
+}
+
+@media print {
+	code[class*="language-"],
+	pre[class*="language-"] {
+		text-shadow: none;
+	}
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #f5f2f0;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: slategray;
+}
+
+.token.punctuation {
+	color: #999;
+}
+
+.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #905;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #690;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+	color: #9a6e3a;
+	background: hsla(0, 0%, 100%, .5);
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+	color: #07a;
+}
+
+.token.function,
+.token.class-name {
+	color: #DD4A68;
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+	color: #e90;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
 :root {
   --brandMain: #03314B;
   --brandCon: #FFF621;
   --positive: #10E2AB;
+  --alert: #FF7878;
   --headerheight: 66px;
   --gap: 1rem;
 }
@@ -463,6 +601,40 @@ containing the header and the so called view, containing most of the UI.
 
 .footer {
   grid-area: footer;
+}
+
+/* 
+These are the styles that we want to acces globally throughout the whole project.
+Here you can find the definition & mixins for our transitions and animations. 
+These are the only ones that are allowed. 
+*/
+
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: 0;
+    -webkit-transform: scaleX(0.5) translateX(-1000px);
+            transform: scaleX(0.5) translateX(-1000px);
+  }
+
+  100% {
+    opacity: 1;
+    -webkit-transform: scaleX(1) translateX(0px);
+            transform: scaleX(1) translateX(0px);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    -webkit-transform: scaleX(0.5) translateX(-1000px);
+            transform: scaleX(0.5) translateX(-1000px);
+  }
+
+  100% {
+    opacity: 1;
+    -webkit-transform: scaleX(1) translateX(0px);
+            transform: scaleX(1) translateX(0px);
+  }
 }
 
 /* 
@@ -616,6 +788,19 @@ textarea {
   width: 100%;
 }
 
+.error {
+  -webkit-animation-name: fadeIn;
+          animation-name: fadeIn;
+  -webkit-animation-duration: 900ms;
+          animation-duration: 900ms;
+  -webkit-animation-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+          animation-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+  -webkit-animation-iteration-count: 1;
+          animation-iteration-count: 1;
+  color: var(--alert);
+  display: inline-block;
+}
+
 /* 
 This is the rule set for all headings in our project.
 */
@@ -767,9 +952,5 @@ These are the styles for the inline footer underneath the preview window - carry
 .design {
   max-height: 500px;
   max-width: 1200px;
-}
-
-.error {
-  color: red;
 }
 

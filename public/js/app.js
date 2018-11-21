@@ -21147,7 +21147,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
 
 /* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
   mode: 'hash',
-  routes: [{ path: '/', component: __WEBPACK_IMPORTED_MODULE_2__components_Dashboard___default.a, name: 'dashboard' }, { path: '/create', component: __WEBPACK_IMPORTED_MODULE_3__components_CreatePattern___default.a, name: 'create' }, { path: '/update', component: __WEBPACK_IMPORTED_MODULE_4__components_UpdatePattern___default.a, name: 'update' }, { path: '/preview/:pattern', component: __WEBPACK_IMPORTED_MODULE_5__components_PreviewPattern___default.a, name: 'preview' }]
+  routes: [{ path: '/', component: __WEBPACK_IMPORTED_MODULE_2__components_Dashboard___default.a, name: 'dashboard' }, { path: '/create', component: __WEBPACK_IMPORTED_MODULE_3__components_CreatePattern___default.a, name: 'create' }, { path: '/update/:pattern', component: __WEBPACK_IMPORTED_MODULE_4__components_UpdatePattern___default.a, name: 'update' }, { path: '/preview/:pattern', component: __WEBPACK_IMPORTED_MODULE_5__components_PreviewPattern___default.a, name: 'preview' }]
 }));
 
 /***/ }),
@@ -24059,6 +24059,10 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -25807,7 +25811,17 @@ var render = function() {
       { staticClass: "form form--create", attrs: { method: "post" } },
       [
         _c("div", { staticClass: "form-group" }, [
-          _vm._m(0),
+          _c("label", { attrs: { for: "name" } }, [
+            _c("span", { staticClass: "label-name" }, [_vm._v("Name")]),
+            _vm._v(" "),
+            _c("span", { staticClass: "label-hint" }, [
+              _vm._v("E.g. atoms.buttons.button")
+            ]),
+            _vm._v(" "),
+            _c("small", { staticClass: "error" }, [
+              _vm._v(_vm._s(_vm.errors.first("name")))
+            ])
+          ]),
           _vm._v(" "),
           _c("input", {
             directives: [
@@ -25841,15 +25855,21 @@ var render = function() {
                 _vm.$set(_vm.pattern, "name", $event.target.value)
               }
             }
-          }),
-          _vm._v(" "),
-          _c("small", { staticClass: "error" }, [
-            _vm._v(_vm._s(_vm.errors.first("name")))
-          ])
+          })
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "form-group" }, [
-          _vm._m(1),
+          _c("label", { attrs: { for: "description" } }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c("span", { staticClass: "label-hint" }, [
+              _vm._v("E.g. atoms.buttons.button")
+            ]),
+            _vm._v(" "),
+            _c("small", { staticClass: "error" }, [
+              _vm._v(_vm._s(_vm.errors.first("description")))
+            ])
+          ]),
           _vm._v(" "),
           _c("textarea", {
             directives: [
@@ -25878,11 +25898,7 @@ var render = function() {
                 _vm.$set(_vm.pattern, "description", $event.target.value)
               }
             }
-          }),
-          _vm._v(" "),
-          _c("small", { staticClass: "error" }, [
-            _vm._v(_vm._s(_vm.errors.first("description")))
-          ])
+          })
         ]),
         _vm._v(" "),
         _c(
@@ -25918,27 +25934,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("label", { attrs: { for: "name" } }, [
-      _c("span", { staticClass: "label-name" }, [_vm._v("Name")]),
-      _vm._v(" "),
-      _c("span", { staticClass: "label-hint" }, [
-        _vm._v("E.g. atoms.buttons.button")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", { attrs: { for: "description" } }, [
-      _c("span", { staticClass: "label-name" }, [
-        _vm._v("\n            Description "),
-        _c("span", [_vm._v("(optional)")])
-      ]),
-      _vm._v(" "),
-      _c("span", { staticClass: "label-hint" }, [
-        _vm._v("E.g. atoms.buttons.button")
-      ])
+    return _c("span", { staticClass: "label-name" }, [
+      _vm._v("\n            Description "),
+      _c("span", [_vm._v("(optional)")])
     ])
   }
 ]
@@ -26045,10 +26043,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "UpdatePattern",
+
+  data: function data() {
+    return {
+      patternName: this.$route.params.pattern
+    };
+  },
+
+
   methods: {
-    store: function store() {
+    update: function update() {
       alert('update pattern');
-      this.$router.push('/preview');
+      this.$router.push({
+        name: 'preview',
+        params: { pattern: this.patternName }
+      });
     }
   }
 });
@@ -26066,7 +26075,7 @@ var render = function() {
       _c("div", { staticClass: "col-md-8" }, [
         _c("div", { staticClass: "card" }, [
           _c("div", { staticClass: "card-header" }, [
-            _vm._v("Create a new pattern")
+            _vm._v("Update pattern " + _vm._s(_vm.patternName))
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
@@ -26086,7 +26095,7 @@ var render = function() {
                       on: {
                         click: function($event) {
                           $event.preventDefault()
-                          return _vm.createPattern($event)
+                          return _vm.update($event)
                         }
                       }
                     },
@@ -26096,9 +26105,18 @@ var render = function() {
                     ]
                   ),
                   _vm._v(" "),
-                  _c("router-link", { attrs: { to: { name: "preview" } } }, [
-                    _vm._v("CANCEL")
-                  ])
+                  _c(
+                    "router-link",
+                    {
+                      attrs: {
+                        to: {
+                          name: "preview",
+                          params: { pattern: _vm.patternName }
+                        }
+                      }
+                    },
+                    [_vm._v("CANCEL")]
+                  )
                 ],
                 1
               )
@@ -26336,12 +26354,64 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
   name: "PreviewPattern",
   data: function data() {
     return {
-      pattern: {}
+      pattern: {
+        'name': 'undefined'
+      },
+      loading: false
     };
   },
 
 
+  watch: {
+    '$route': 'fetchPattern'
+  },
+
   methods: {
+
+    /**
+     * Fetch the Pattern's data from the API.
+     */
+    fetchPattern: function () {
+      var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
+        var response;
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                // set to true, if we have to show a loading spinner
+                this.loading = true;
+                _context.prev = 1;
+                _context.next = 4;
+                return __WEBPACK_IMPORTED_MODULE_1__httpClient__["a" /* API */].get(this.$route.params.pattern);
+
+              case 4:
+                response = _context.sent;
+
+                this.pattern = response.data.data;
+                this.loading = false;
+                _context.next = 12;
+                break;
+
+              case 9:
+                _context.prev = 9;
+                _context.t0 = _context['catch'](1);
+
+                __WEBPACK_IMPORTED_MODULE_2__logger__["a" /* default */].error(_context.t0);
+
+              case 12:
+              case 'end':
+                return _context.stop();
+            }
+          }
+        }, _callee, this, [[1, 9]]);
+      }));
+
+      function fetchPattern() {
+        return _ref.apply(this, arguments);
+      }
+
+      return fetchPattern;
+    }(),
 
     /**
      * Delete the pattern
@@ -26355,44 +26425,9 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
   /**
    * Load all Pattern information from API.
    */
-  beforeCreate: function () {
-    var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
-      var response;
-      return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              _context.prev = 0;
-              _context.next = 3;
-              return __WEBPACK_IMPORTED_MODULE_1__httpClient__["a" /* API */].get(this.$route.params.pattern);
-
-            case 3:
-              response = _context.sent;
-
-              this.pattern = response.data.data;
-              _context.next = 10;
-              break;
-
-            case 7:
-              _context.prev = 7;
-              _context.t0 = _context['catch'](0);
-
-              __WEBPACK_IMPORTED_MODULE_2__logger__["a" /* default */].error(_context.t0);
-
-            case 10:
-            case 'end':
-              return _context.stop();
-          }
-        }
-      }, _callee, this, [[0, 7]]);
-    }));
-
-    function beforeCreate() {
-      return _ref.apply(this, arguments);
-    }
-
-    return beforeCreate;
-  }()
+  created: function created() {
+    this.fetchPattern();
+  }
 });
 
 /***/ }),
@@ -26456,7 +26491,26 @@ var render = function() {
       _vm._m(1)
     ]),
     _vm._v(" "),
-    _vm._m(2),
+    _c("div", { staticClass: "preview" }, [
+      _c("div", {}, [
+        _c("iframe", {
+          attrs: {
+            height: "1500",
+            width: "1100",
+            frameBorder: "0",
+            src: "workshop/preview/" + _vm.pattern.name
+          }
+        }),
+        _vm._v(" "),
+        _c("div", {
+          staticStyle: {
+            background: "transparent",
+            height: "5000px",
+            width: "5002px"
+          }
+        })
+      ])
+    ]),
     _vm._v(" "),
     _c(
       "div",
@@ -26472,7 +26526,7 @@ var render = function() {
               }
             }
           },
-          [_vm._m(3)]
+          [_vm._m(2)]
         ),
         _vm._v(" "),
         _c("router-link", { attrs: { to: { name: "update" } } }, [
@@ -26531,22 +26585,6 @@ var staticRenderFns = [
             ])
           ]
         )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "preview" }, [
-      _c("div", {}, [
-        _c("div", {
-          staticStyle: {
-            background: "transparent",
-            height: "5000px",
-            width: "5002px"
-          }
-        })
       ])
     ])
   },

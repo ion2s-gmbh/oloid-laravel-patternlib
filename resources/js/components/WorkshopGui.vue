@@ -28,11 +28,19 @@
     },
 
     methods: {
+
+      /**
+       * Reset the main menu state.
+       */
       resetMenu: function () {
         this.$store.commit('resetMainMenu');
       }
     },
 
+    /**
+     * Fetch application information before creating.
+     * @returns {Promise<void>}
+     */
     async beforeCreate() {
       try {
         let json = await API.get('info');

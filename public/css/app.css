@@ -488,11 +488,31 @@ pre[class*="language-"] {
 .token.entity {
 	cursor: help;
 }
-:root {
+/* 
+Here we do define the variables that we are using across all pages of our project.
+We use the CSS variables to keep theming a possibility in the future. 
+We also declare basically the same stuff as a SASS variable to be able to declare fallback 
+solutions for the browsers that can't use CSS vars.
+
+this would then look like this
+
+.el {
+	background: var(--var, $varFallback);
+}
+
+*/
+
+/* for layout*/
+
+/* for colors*/
+
+html {
+  /* for colors*/
   --brandMain: #03314B;
   --brandCon: #FFF621;
   --positive: #10E2AB;
   --alert: #FF7878;
+  /* for layout*/
   --headerheight: 66px;
   --gap: 1rem;
 }
@@ -522,7 +542,7 @@ html {
 }
 
 body {
-  background: var(--brandMain);
+  background: var(--brandMain, #03314B);
 }
 
 *::-webkit-scrollbar {
@@ -616,8 +636,11 @@ These are the only ones that are allowed.
             transform: scaleX(0.5) translateX(-1000px);
   }
 
-  100% {
+  75% {
     opacity: 1;
+  }
+
+  100% {
     -webkit-transform: scaleX(1) translateX(0px);
             transform: scaleX(1) translateX(0px);
   }
@@ -630,8 +653,11 @@ These are the only ones that are allowed.
             transform: scaleX(0.5) translateX(-1000px);
   }
 
-  100% {
+  75% {
     opacity: 1;
+  }
+
+  100% {
     -webkit-transform: scaleX(1) translateX(0px);
             transform: scaleX(1) translateX(0px);
   }
@@ -676,8 +702,8 @@ These are the styles for every interactive element that is clickable but no link
   padding: 1rem;
   position: relative;
   top: 0;
-  -webkit-transform: translate(10px, -10px);
-          transform: translate(10px, -10px);
+  -webkit-transform: translate(5px, -5px);
+          transform: translate(5px, -5px);
   -webkit-transition: 150ms cubic-bezier(0.4, 0, 0.2, 1) -webkit-transform;
   transition: 150ms cubic-bezier(0.4, 0, 0.2, 1) -webkit-transform;
   transition: 150ms cubic-bezier(0.4, 0, 0.2, 1) transform;
@@ -687,17 +713,17 @@ These are the styles for every interactive element that is clickable but no link
 
 .btn--primary:hover > span,
 .btn--secondary:hover > span {
-  -webkit-transform: translate(5px, -5px);
-          transform: translate(5px, -5px);
+  -webkit-transform: translate(2px, -2px);
+          transform: translate(2px, -2px);
 }
 
 .btn--primary > span {
   background: white;
-  color: var(--brandMain);
+  color: var(--brandMain, #03314B);
 }
 
 .btn--secondary > span {
-  background: var(--brandMain);
+  background: var(--brandMain, #03314B);
   border: 1px solid white;
   color: white;
 }
@@ -708,8 +734,8 @@ These are the styles for every interactive element that is clickable but no link
 
 .btn--sm > span {
   padding: 0.5rem 1rem;
-  -webkit-transform: translate(5px, -5px);
-          transform: translate(5px, -5px);
+  -webkit-transform: translate(3px, -3px);
+          transform: translate(3px, -3px);
 }
 
 .btn--sm:hover > span {
@@ -723,8 +749,8 @@ These are the styles for every interactive element that is clickable but no link
 }
 
 .btn--cta > span {
-  background: var(--brandCon);
-  color: var(--brandMain);
+  background: var(--brandCon, #FFF621);
+  color: var(--brandMain, #03314B);
 }
 
 /* 
@@ -735,6 +761,10 @@ More special Forms might be a component.
 .form {
   max-width: 50rem;
   width: 100%;
+}
+
+.form-group {
+  padding: var(--gap, 1rem) 0;
 }
 
 .form-group--end {
@@ -783,9 +813,13 @@ textarea {
   background: transparent;
   border: 1px solid white;
   color: inherit;
-  margin: var(--gap) 0 var(--gap) 0;
+  margin: var(--gap, 1rem) 0;
   padding: 1rem;
   width: 100%;
+}
+
+textarea {
+  min-height: 200px;
 }
 
 .error {
@@ -797,7 +831,7 @@ textarea {
           animation-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
   -webkit-animation-iteration-count: 1;
           animation-iteration-count: 1;
-  color: var(--alert);
+  color: var(--alert, #FF7878);
   display: inline-block;
 }
 
@@ -854,6 +888,7 @@ These are the styles that are needed to render our welcome dashboard.
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  padding: var(--gap, 1rem);
 }
 
 .code {
@@ -861,7 +896,7 @@ These are the styles that are needed to render our welcome dashboard.
   display: -ms-flexbox;
   display: flex;
   grid-area: code;
-  padding: var(--gap);
+  padding: var(--gap, 1rem);
 }
 
 @media (min-width: 600px) {
@@ -914,7 +949,7 @@ These are the styles for the inline footer underneath the preview window - carry
 .footer {
   height: var(--headerheight);
   grid-area: footer;
-  padding: var(--gap);
+  padding: var(--gap, 1rem);
   text-align: right;
 }
 

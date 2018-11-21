@@ -11,6 +11,8 @@ More special Forms might be a component.
 }
 
 .form-group {
+
+	padding: var(--gap, $l-gap) 0;
 	
 	&--end {
 		align-items: baseline;
@@ -59,15 +61,19 @@ textarea {
 	background: transparent;
 	border: 1px solid white;
 	color: inherit;
-	margin: var(--gap) 0 var(--gap) 0;
+	margin: var(--gap, $l-gap) 0;
 	padding: 1rem;
 	width: 100%;
+}
+
+textarea {
+	min-height: 200px;
 }
 
 // Validation --------- //
 
 .error {
 	@include a-fadeIn;	
-	color: var(--alert);
+	color: var(--alert, $c-alert);
 	display: inline-block;
 }

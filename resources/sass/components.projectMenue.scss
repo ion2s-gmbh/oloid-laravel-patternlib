@@ -30,7 +30,7 @@ These are the styles for the project pattern navigation.
 
 	&--sub {
 
-		background: var(--brandDark);
+		background: var(--brandDark, $c-brandDark);
 		left: 0;
 		position: absolute;
 		top: 2rem;
@@ -47,7 +47,7 @@ These are the styles for the project pattern navigation.
 .pattern {
 
 	font-size: 0.875rem;
-	padding: 0.5rem var(--gap);
+	padding: 0.5rem var(--gap, $l-gap);
 	position: relative;	
 	text-align: center;
 	transition: opacity 250ms;

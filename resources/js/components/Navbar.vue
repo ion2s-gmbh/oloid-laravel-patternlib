@@ -7,12 +7,6 @@
 
       <h1 class="project-name">{{ $store.state.appInfo.appName }}</h1>
 
-      <!-- <div class="project-updates">
-        <button class="btn">
-            <i class="fas fa-bell"></i>
-          </button>
-      </div> -->
-
     </div>
 
     <nav class="project-navigation">
@@ -21,27 +15,26 @@
 
         <li class="pattern u-center"
             :class="{ active: $store.state.menu.activeMain === menu.name }"
-            v-for="menu in navi.main"
-            v-if="menu.items.length > 0">
+            v-for="menu in navi">
 
           <span @click="toggleMainMenu(menu.name)">{{ menu.name }}</span>
 
           <ul class="patterns--sub">
 
             <li class="pattern"
-                v-if="typeof item !== 'object'"
+                v-if="item.items.length === 0"
                 v-for="item in menu.items">
 
-              <router-link :to="{ name: 'preview', params: { pattern: `${menu.name}.${item}` } }">
+              <router-link :to="{ name: 'preview', params: { pattern: `${menu.name}.${item.name}` } }">
 
-                {{ item }}
+                {{ item.name }}
 
               </router-link>
 
             </li>
 
             <li class="pattern"
-                v-if="typeof item === 'object'"
+                v-if="item.items.length > 0"
                 v-for="item in menu.items"
                 :class="{ active: $store.state.menu.activeSub === item.name }">
 
@@ -56,9 +49,10 @@
                 <li class="pattern"
                     v-for="subItem in item.items">
 
-                  <router-link :to="{ name: 'preview', params: { pattern: `${menu.name}.${item.name}.${subItem}` } }">
+                  <router-link
+                          :to="{ name: 'preview', params: { pattern: `${menu.name}.${item.name}.${subItem.name}` } }">
 
-                    {{ subItem }}
+                    {{ subItem.name }}
 
                   </router-link>
 
@@ -89,37 +83,51 @@
     data() {
 
       return {
-        'navi': {
-          'main': [
-            {
-              'name': 'atoms',
-              'items': [
-                {
-                  'name': 'buttons',
-                  'items': [
-                    'button',
-                    'cancel',
-                    'submit.save',
-                    'submit.update'
-                  ]
-                },
-                'headline1'
-              ]
-            },
-            {
-              'name': 'pages',
-              'items': [
-                'about',
-                'home',
-                'imprint'
-              ]
-            },
-            {
-              'name': 'elements',
-              'items': []
-            }
-          ]
-        },
+        navi: [
+          {
+            name: 'atoms',
+            items: [
+              {
+                name: 'buttons',
+                items: [
+                  {
+                    name: 'button',
+                    items: []
+                  },
+                  {
+                    name: 'cancel',
+                    items: []
+                  }
+                ]
+              },
+              {
+                name: 'headline1',
+                items: []
+              }
+            ]
+          },
+          {
+            name: 'pages',
+            items: [
+              {
+                name: 'about',
+                items: []
+              },
+              {
+                name: 'home',
+                items: []
+              },
+              {
+                name: 'imprint',
+                items: []
+              }
+            ]
+          },
+          {
+            name: 'landingpage',
+            items: []
+          }
+        ]
       }
     },
     methods: {

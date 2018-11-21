@@ -2,11 +2,11 @@
 
   <section class="project">
 
-    
+
     <div class="project-info">
 
       <h1 class="project-name">{{ $store.state.appInfo.appName }}</h1>
-      
+
       <!-- <div class="project-updates">
         <button class="btn">
             <i class="fas fa-bell"></i>
@@ -15,68 +15,67 @@
 
     </div>
 
-
     <nav class="project-navigation">
 
       <ul class="patterns">
-        
-        <li class="pattern u-center" @click="active = !active" :class="{ active: active }">
-          
-          Atoms
+
+        <li class="pattern u-center"
+            :class="{ active: $store.state.menu.activeMain === menu.name }"
+            v-for="menu in navi.main"
+            v-if="menu.items.length > 0">
+
+          <span @click="toggleMainMenu(menu.name)">{{ menu.name }}</span>
 
           <ul class="patterns--sub">
 
-            <li class="pattern">
+            <li class="pattern"
+                v-if="typeof item !== 'object'"
+                v-for="item in menu.items">
 
-              <a href="">Label</a>
+              <router-link :to="{ name: 'preview', params: { pattern: `${menu.name}.${item}` } }">
+
+                {{ item }}
+
+              </router-link>
 
             </li>
 
-            <li class="pattern">headline one</li>
+            <li class="pattern"
+                v-if="typeof item === 'object'"
+                v-for="item in menu.items"
+                :class="{ active: $store.state.menu.activeSub === item.name }">
 
-            <li class="pattern">
-          <!-- TODO:  this must be active on click -  can't use the same logic here or else it will be automatically applied -->
+              <span @click="toggleSubMenu(item.name)">{{ item.name }}
 
-              <a href="">
-                Buttons
-                <i class="fas fa-caret-down"></i> <!-- TODO: Only display when has children -->
-              </a>
+                <i class="fas fa-caret-down"></i>
+
+              </span>
 
               <ul class="patterns--sub">
-              
-                <li class="pattern">btn_submit</li>
 
-                <li class="pattern">btn_form</li>
-                
+                <li class="pattern"
+                    v-for="subItem in item.items">
+
+                  <router-link :to="{ name: 'preview', params: { pattern: `${menu.name}.${item.name}.${subItem}` } }">
+
+                    {{ subItem }}
+
+                  </router-link>
+
+                </li>
+
               </ul>
 
             </li>
-
-            <li class="pattern">Bla</li>
-            <li class="pattern">text</li>
 
           </ul>
 
         </li>
 
-        <li class="pattern u-center">
-          
-          Forms
-
-        </li>
-
       </ul>
 
-      <!-- <router-link :to="{ name: 'create' }">
-        
-        <button class="btn btn--create">
-          <i class="fas fa-plus-square"></i>
-        </button>
-
-      </router-link> -->
-
     </nav>
-    
+
   </section>
 
 </template>
@@ -90,9 +89,65 @@
     data() {
 
       return {
-        active: false
+        'navi': {
+          'main': [
+            {
+              'name': 'atoms',
+              'items': [
+                {
+                  'name': 'buttons',
+                  'items': [
+                    'button',
+                    'cancel',
+                    'submit.save',
+                    'submit.update'
+                  ]
+                },
+                'headline1'
+              ]
+            },
+            {
+              'name': 'pages',
+              'items': [
+                'about',
+                'home',
+                'imprint'
+              ]
+            },
+            {
+              'name': 'elements',
+              'items': []
+            }
+          ]
+        },
       }
+    },
+    methods: {
 
+      /**
+       * Set the active main menu.
+       * @param menu
+       */
+      toggleMainMenu: function (menu) {
+
+        if (this.$store.state.menu.activeMain === menu) {
+          this.$store.commit('resetMainMenu');
+        } else {
+          this.$store.commit('toggleMainMenu', menu);
+        }
+      },
+
+      /**
+       * Set the active sub menu.
+       * @param subMenu
+       */
+      toggleSubMenu: function (subMenu) {
+        if (this.$store.state.menu.activeSub === subMenu) {
+          this.$store.commit('resetSubMenu');
+        } else {
+          this.$store.commit('toggleSubMenu', subMenu);
+        }
+      }
     }
 
   }

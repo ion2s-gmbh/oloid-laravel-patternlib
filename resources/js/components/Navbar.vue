@@ -120,24 +120,6 @@
               </ul>
             </li>
 
-            <!--<li class="pattern">-->
-            <!-- TODO:  this must be active on click -  can't use the same logic here or else it will be automatically applied -->
-
-            <!--<a href="">-->
-            <!--Buttons-->
-            <!--<i class="fas fa-caret-down"></i> &lt;!&ndash; TODO: Only display when has children &ndash;&gt;-->
-            <!--</a>-->
-
-            <!--<ul class="patterns&#45;&#45;sub">-->
-
-            <!--<li class="pattern">btn_submit</li>-->
-
-            <!--<li class="pattern">btn_form</li>-->
-
-            <!--</ul>-->
-
-            <!--</li>-->
-
           </ul>
 
         </li>
@@ -166,15 +148,11 @@
               'name': 'atoms',
               'items': [
                 {
-                  // 'subs': [
-                  //   {
-                      'name': 'buttons',
-                      'items': [
-                        'submit',
-                        'cancel'
-                      ]
-                    // }
-                  // ]
+                  'name': 'buttons',
+                  'items': [
+                    'submit',
+                    'cancel'
+                  ]
                 },
                 'headline1'
               ]

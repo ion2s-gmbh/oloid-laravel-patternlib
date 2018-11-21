@@ -13,61 +13,43 @@
 
       <ul class="patterns">
 
-        <li class="pattern u-center"
-            :class="{ active: $store.state.menu.activeMain === menu.name }"
-            v-for="menu in navi">
+        <navbar-main
+                v-for="(menu, index) in navi"
+                :menu="menu" :key="index">
+        </navbar-main>
 
-          <span @click="toggleMainMenu(menu.name)">{{ menu.name }}</span>
-
-          <ul class="patterns--sub">
-
-            <li class="pattern"
-                v-if="item.items.length === 0"
-                v-for="item in menu.items">
-
-              <router-link :to="{ name: 'preview', params: { pattern: `${menu.name}.${item.name}` } }">
-
-                {{ item.name }}
-
-              </router-link>
-
-            </li>
-
-            <li class="pattern"
-                v-if="item.items.length > 0"
-                v-for="item in menu.items"
-                :class="{ active: $store.state.menu.activeSub === item.name }">
-
-              <span @click="toggleSubMenu(item.name)">{{ item.name }}
-
-                <i class="fas fa-caret-down"></i>
-
-              </span>
-
-              <ul class="patterns--sub">
-
-                <li class="pattern"
-                    v-for="subItem in item.items">
-
-                  <router-link
-                          :to="{ name: 'preview', params: { pattern: `${menu.name}.${item.name}.${subItem.name}` } }">
-
-                    {{ subItem.name }}
-
-                  </router-link>
-
-                </li>
-
-              </ul>
-
-            </li>
-
-          </ul>
-
-        </li>
-
+        <!--<li class="pattern u-center"-->
+            <!--:class="{ active: $store.state.menu.activeMain === menu.name }"-->
+            <!--v-for="menu in navi">-->
+          <!--<span @click="toggleMainMenu(menu.name)">{{ menu.name }}</span>-->
+          <!--<ul class="patterns&#45;&#45;sub">-->
+            <!--<li class="pattern"-->
+                <!--v-if="item.items.length === 0"-->
+                <!--v-for="item in menu.items">-->
+              <!--<router-link :to="{ name: 'preview', params: { pattern: `${menu.name}.${item.name}` } }">-->
+                <!--{{ item.name }}-->
+              <!--</router-link>-->
+            <!--</li>-->
+            <!--<li class="pattern"-->
+                <!--v-if="item.items.length > 0"-->
+                <!--v-for="item in menu.items"-->
+                <!--:class="{ active: $store.state.menu.activeSub === item.name }">-->
+              <!--<span @click="toggleSubMenu(item.name)">{{ item.name }}-->
+                <!--<i class="fas fa-caret-down"></i>-->
+              <!--</span>-->
+              <!--<ul class="patterns&#45;&#45;sub">-->
+                <!--<li class="pattern"-->
+                    <!--v-for="subItem in item.items">-->
+                  <!--<router-link-->
+                          <!--:to="{ name: 'preview', params: { pattern: `${menu.name}.${item.name}.${subItem.name}` } }">-->
+                    <!--{{ subItem.name }}-->
+                  <!--</router-link>-->
+                <!--</li>-->
+              <!--</ul>-->
+            <!--</li>-->
+          <!--</ul>-->
+        <!--</li>-->
       </ul>
-
     </nav>
 
   </section>
@@ -76,12 +58,19 @@
 
 <script>
 
-  export default {
+  import NavbarMain from "./NavbarMain";
+  import NavbarLink from "./NavbarLink";
+  import NavbarGroup from "./NavbarGroup";
 
+  export default {
     name: "Navbar",
+    components: {
+      NavbarMain,
+      NavbarLink,
+      NavbarGroup
+    },
 
     data() {
-
       return {
         navi: [
           {
@@ -92,7 +81,12 @@
                 items: [
                   {
                     name: 'button',
-                    items: []
+                    items: [
+                      {
+                        name: 'marek',
+                        items: []
+                      }
+                    ]
                   },
                   {
                     name: 'cancel',
@@ -117,14 +111,14 @@
                 name: 'home',
                 items: []
               },
-              {
-                name: 'imprint',
-                items: []
-              }
             ]
           },
           {
             name: 'landingpage',
+            items: []
+          },
+          {
+            name: 'about',
             items: []
           }
         ]

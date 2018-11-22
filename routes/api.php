@@ -19,6 +19,12 @@ Route::get('info', 'ApplicationController@info');
 */
 Route::post('pattern', 'PatternController@store');
 
+/*
+|--------------------------------------------------------------------------
+| GET /navi
+|--------------------------------------------------------------------------
+| Get the navigation.
+*/
 Route::get('navi', 'NavigationController@get');
 
 /*

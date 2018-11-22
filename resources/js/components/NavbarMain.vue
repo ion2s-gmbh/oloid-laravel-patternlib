@@ -1,5 +1,5 @@
 <template>
-  <li class="pattern u-center">
+  <li class="pattern u-center" :class="{ active: $store.state.menu.activeMain === menu.name }">
 
     <!-- Single stupid link to a pattern -->
     <navbar-link v-if="menu.items.length === 0"
@@ -7,7 +7,8 @@
     </navbar-link>
 
     <!-- We have a menu with multiple items -->
-    <span v-if="menu.items.length > 0">{{ menu.name }}</span>
+    <span v-if="menu.items.length > 0"
+          @click="toggleMainMenu(menu.name)">{{ menu.name }}</span>
     <navbar-group
             v-if="menu.items.length > 0"
             :name="menu.name"
@@ -29,6 +30,21 @@
     props: [
       'menu'
     ],
+
+    methods: {
+      /**
+       * Set the active main menu.
+       * @param menu
+       */
+      toggleMainMenu: function (menu) {
+
+        if (this.$store.state.menu.activeMain === menu) {
+          this.$store.commit('resetMainMenu');
+        } else {
+          this.$store.commit('toggleMainMenu', menu);
+        }
+      }
+    },
 
     mounted() {
       console.log(this.menu);

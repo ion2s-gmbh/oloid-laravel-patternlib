@@ -123,35 +123,7 @@
           }
         ]
       }
-    },
-    methods: {
-
-      /**
-       * Set the active main menu.
-       * @param menu
-       */
-      toggleMainMenu: function (menu) {
-
-        if (this.$store.state.menu.activeMain === menu) {
-          this.$store.commit('resetMainMenu');
-        } else {
-          this.$store.commit('toggleMainMenu', menu);
-        }
-      },
-
-      /**
-       * Set the active sub menu.
-       * @param subMenu
-       */
-      toggleSubMenu: function (subMenu) {
-        if (this.$store.state.menu.activeSub === subMenu) {
-          this.$store.commit('resetSubMenu');
-        } else {
-          this.$store.commit('toggleSubMenu', subMenu);
-        }
-      }
     }
-
   }
 
 </script>

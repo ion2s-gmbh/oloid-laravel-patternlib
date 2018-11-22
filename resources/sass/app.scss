@@ -5,6 +5,7 @@
 @import 'tools.mixins';
 
 @import 'generic.shared';
+@import 'generic.animations';
 
 @import 'elements.links';
 @import 'elements.buttons';
@@ -49,8 +50,4 @@
 .design {
   max-height: 500px;
   max-width: 1200px;
-}
-
-.error {
-  color: red;
 }

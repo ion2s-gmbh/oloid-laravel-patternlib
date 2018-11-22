@@ -18,7 +18,7 @@ html {
 }
 
 body {
-  background: var(--brandMain);  
+  background: var(--brandMain, $c-brandMain);  
 }
 
 // CUSTOM SCROLLBARS ----------------------------------------- //

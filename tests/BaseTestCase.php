@@ -31,7 +31,7 @@ abstract class BaseTestCase extends TestCase
      */
     protected function tearDown()
     {
-        $this->deleteTempDirectory();
+//        $this->deleteTempDirectory();
         parent::tearDown();
     }
 
@@ -69,6 +69,7 @@ abstract class BaseTestCase extends TestCase
     {
         $config = $app->get('config');
         $config->set('app.name', 'testApp');
+        $config->set('view.paths', array_merge($config->get('view.paths'), [$this->tempDir]));
         $config->set('workshop.uri', 'workshop');
         $config->set('workshop.basePath', $this->tempDir);
         $config->set('workshop.patternPath', $this->tempDir . '/patterns');

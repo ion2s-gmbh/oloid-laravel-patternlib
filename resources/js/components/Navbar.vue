@@ -19,35 +19,35 @@
         </navbar-main>
 
         <!--<li class="pattern u-center"-->
-            <!--:class="{ active: $store.state.menu.activeMain === menu.name }"-->
-            <!--v-for="menu in navi">-->
-          <!--<span @click="toggleMainMenu(menu.name)">{{ menu.name }}</span>-->
-          <!--<ul class="patterns&#45;&#45;sub">-->
-            <!--<li class="pattern"-->
-                <!--v-if="item.items.length === 0"-->
-                <!--v-for="item in menu.items">-->
-              <!--<router-link :to="{ name: 'preview', params: { pattern: `${menu.name}.${item.name}` } }">-->
-                <!--{{ item.name }}-->
-              <!--</router-link>-->
-            <!--</li>-->
-            <!--<li class="pattern"-->
-                <!--v-if="item.items.length > 0"-->
-                <!--v-for="item in menu.items"-->
-                <!--:class="{ active: $store.state.menu.activeSub === item.name }">-->
-              <!--<span @click="toggleSubMenu(item.name)">{{ item.name }}-->
-                <!--<i class="fas fa-caret-down"></i>-->
-              <!--</span>-->
-              <!--<ul class="patterns&#45;&#45;sub">-->
-                <!--<li class="pattern"-->
-                    <!--v-for="subItem in item.items">-->
-                  <!--<router-link-->
-                          <!--:to="{ name: 'preview', params: { pattern: `${menu.name}.${item.name}.${subItem.name}` } }">-->
-                    <!--{{ subItem.name }}-->
-                  <!--</router-link>-->
-                <!--</li>-->
-              <!--</ul>-->
-            <!--</li>-->
-          <!--</ul>-->
+        <!--:class="{ active: $store.state.menu.activeMain === menu.name }"-->
+        <!--v-for="menu in navi">-->
+        <!--<span @click="toggleMainMenu(menu.name)">{{ menu.name }}</span>-->
+        <!--<ul class="patterns&#45;&#45;sub">-->
+        <!--<li class="pattern"-->
+        <!--v-if="item.items.length === 0"-->
+        <!--v-for="item in menu.items">-->
+        <!--<router-link :to="{ name: 'preview', params: { pattern: `${menu.name}.${item.name}` } }">-->
+        <!--{{ item.name }}-->
+        <!--</router-link>-->
+        <!--</li>-->
+        <!--<li class="pattern"-->
+        <!--v-if="item.items.length > 0"-->
+        <!--v-for="item in menu.items"-->
+        <!--:class="{ active: $store.state.menu.activeSub === item.name }">-->
+        <!--<span @click="toggleSubMenu(item.name)">{{ item.name }}-->
+        <!--<i class="fas fa-caret-down"></i>-->
+        <!--</span>-->
+        <!--<ul class="patterns&#45;&#45;sub">-->
+        <!--<li class="pattern"-->
+        <!--v-for="subItem in item.items">-->
+        <!--<router-link-->
+        <!--:to="{ name: 'preview', params: { pattern: `${menu.name}.${item.name}.${subItem.name}` } }">-->
+        <!--{{ subItem.name }}-->
+        <!--</router-link>-->
+        <!--</li>-->
+        <!--</ul>-->
+        <!--</li>-->
+        <!--</ul>-->
         <!--</li>-->
       </ul>
     </nav>
@@ -82,20 +82,36 @@
                 path: 'atoms.buttons',
                 items: [
                   {
-                    name: 'button',
-                    path: 'atoms.buttons.button',
+                    name: 'positive',
+                    path: 'atoms.buttons.positive',
                     items: [
                       {
                         name: 'submit',
-                        path: 'atoms.buttons.button.submit',
+                        path: 'atoms.buttons.positive.submit',
+                        items: []
+                      },
+                      {
+                        name: 'order',
+                        path: 'atoms.buttons.positive.order',
                         items: []
                       }
                     ]
                   },
                   {
-                    name: 'cancel',
-                    path: 'atoms.buttons.cancel',
-                    items: []
+                    name: 'negative',
+                    path: 'atoms.buttons.negative',
+                    items: [
+                      {
+                        name: 'cancel',
+                        path: 'atoms.buttons.negative.cancel',
+                        items: []
+                      },
+                      {
+                        name: 'abort',
+                        path: 'atoms.buttons.negative.abort',
+                        items: []
+                      }
+                    ]
                   }
                 ]
               },
@@ -135,6 +151,6 @@
         ]
       }
     }
-  }
+    }
 
 </script>

@@ -5,19 +5,23 @@
 @import 'tools.mixins';
 
 @import 'generic.shared';
+@import 'generic.animations';
 
 @import 'elements.links';
 @import 'elements.buttons';
 @import 'elements.forms';
 @import 'elements.headings';
+@import 'elements.lists';
 
 @import 'components.header';
 @import 'components.dashboard';
 @import 'components.codeWindow';
 @import 'components.previewWindow';
+@import 'components.projectMenue';
 @import 'components.footer';
 
-@import '~prismjs/themes/prism.css';
+
+// @import '~prismjs/themes/prism.css';
 
 
 .u-center {
@@ -46,8 +50,4 @@
 .design {
   max-height: 500px;
   max-width: 1200px;
-}
-
-.error {
-  color: red;
 }

@@ -9,7 +9,7 @@ These are the styles for the inline footer underneath the preview window - carry
 .footer {
   	height: var(--headerheight);
 	grid-area: footer;
-	padding: var(--gap);
+	padding: var(--gap, $l-gap);
 	text-align: right;
 }
 

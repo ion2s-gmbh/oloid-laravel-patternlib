@@ -21,10 +21,19 @@ Route::post('pattern', 'PatternController@store');
 
 /*
 |--------------------------------------------------------------------------
+| GET /navi
+|--------------------------------------------------------------------------
+| Get the navigation.
+*/
+Route::get('navi', 'NavigationController@get');
+
+/*
+|--------------------------------------------------------------------------
 | GET /{pattern}
 |--------------------------------------------------------------------------
 | Get all all information for the preview screen.
 | Except the actual rendered preview, that will be loaded by an iframe.
 */
 Route::get('{pattern}', 'PatternController@preview');
+
 

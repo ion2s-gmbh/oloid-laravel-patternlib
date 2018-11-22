@@ -10,6 +10,7 @@ These are the styles that are needed to render our welcome dashboard.
   display: flex;
   grid-area: code / code / view / view; 
   justify-content: center;
+  padding: var(--gap, $l-gap);
 }
 
 // Dasboard Content

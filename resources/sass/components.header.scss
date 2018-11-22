@@ -4,6 +4,7 @@
 // Header Base --------- //
 
 .header {
+	background: var(--brandDark);
   	height: var(--headerheight);
 	grid-area: header;
 }

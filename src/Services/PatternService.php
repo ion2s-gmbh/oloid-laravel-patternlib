@@ -4,9 +4,9 @@
 namespace Laratomics\Services;
 
 
-use Exception;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Facades\File;
+use Laratomics\Exceptions\RenderingException;
 use Laratomics\Models\Pattern;
 use Spatie\YamlFrontMatter\YamlFrontMatter;
 
@@ -126,7 +126,7 @@ class PatternService
      * @param array $values
      * @return Pattern
      * @throws FileNotFoundException
-     * @throws Exception
+     * @throws RenderingException
      */
     public function loadPattern($name, $values = []): Pattern
     {

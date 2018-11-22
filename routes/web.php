@@ -19,3 +19,11 @@ Route::get('/', function () {
 | Get the acutal preview of a Pattern that is displayed in an iframe.
 */
 Route::get('preview/{pattern}', 'PatternController@getPreview');
+
+Route::get('testing/include', function () {
+    return view('workshop::testing.include');
+});
+
+Route::get('testing/atom', function () {
+    return view('workshop::testing.atom');
+});

@@ -2,46 +2,68 @@
 
   <section class="project">
 
-    
+
     <div class="project-info">
 
       <h1 class="project-name">{{ $store.state.appInfo.appName }}</h1>
-      
-      <!-- <div class="project-updates">
-        <button class="btn">
-            <i class="fas fa-bell"></i>
-          </button>
-      </div> -->
 
     </div>
 
-
     <nav class="project-navigation">
 
-      <!-- <ul class="patterns">
-        <li>Link[##]</li>
-        <li>Link[##]</li>
-        <li>Link[##]</li>
-        <li>Link[##]</li>
-        <li>Link[##]</li>
-      </ul> -->
+      <router-link :to="{ name: 'dashboard' }" class="back">
+        <i class="fas fa-arrow-circle-left"></i>
+      </router-link>
 
-      <!-- <router-link :to="{ name: 'create' }">
-        
-        <button class="btn btn--create">
-          <i class="fas fa-plus-square"></i>
-        </button>
+      <ul class="patterns">
 
-      </router-link> -->
+        <!-- render main navi items -->
+        <navbar-main
+                v-for="(menu, index) in navi"
+                :menu="menu" :key="index">
+        </navbar-main>
+      </ul>
 
     </nav>
-    
+
   </section>
 
 </template>
 
 <script>
+
+  import NavbarMain from "./NavbarMain";
+  import NavbarLink from "./NavbarLink";
+  import NavbarGroup from "./NavbarGroup";
+  import {API} from '../httpClient';
+  import LOG from '../logger';
+
   export default {
-    name: "Navbar"
+    name: "Navbar",
+    components: {
+      NavbarMain,
+      NavbarLink,
+      NavbarGroup
+    },
+
+    data() {
+      return {
+        navi: []
+      }
+    },
+
+    /**
+     * Fetch the workshop navigation.
+     * @returns {Promise<void>}
+     */
+    async beforeCreate() {
+      try {
+        let json = await API.get('navi');
+        this.navi = json.data.data;
+      } catch (e) {
+        LOG.error(e);
+      }
+    }
   }
+
 </script>

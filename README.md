@@ -29,17 +29,6 @@ WORKSHOP_BASE_PATH=laratomics
 WORKSHOP_PATTERN_PATH="${WORKSHOP_BASE_PATH}/patterns"
 ```
 
-#### Add a custom disk
-In `config/filesystems.php` add:
-```php
-'disks' => [
-
-        'patterns' => [
-            'driver' => 'local',
-            'root' => base_path('resources/laratomics/patterns')
-        ],
-```
-
 ## Testing
 ``` bash
 composer test

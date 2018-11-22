@@ -10,6 +10,15 @@ use Spatie\YamlFrontMatter\YamlFrontMatter;
 
 class PatternServiceProvider extends ServiceProvider
 {
+    private $components = [
+        'atom' => 'atoms',
+        'molecule' => 'moleculess',
+        'organism' => 'organisms',
+        'template' => 'templates',
+        'page' => 'pages',
+        'element' => '',
+    ];
+
     /**
      * Bootstrap services.
      *
@@ -17,48 +26,41 @@ class PatternServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Blade::directive('atom', function ($expression) {
-            list($component, $extExpression) = $this->parse($expression, 'atoms');
-            return "<?php echo view({$extExpression}, array_except(get_defined_vars(), array('__data', '__path')))->render() ?>";
-        });
-
-        Blade::directive('molecule', function ($expression) {
-            list($component, $extExpression) = $this->parse($expression, 'molecules');
-            return "<?php echo view({$extExpression}, array_except(get_defined_vars(), array('__data', '__path')))->render() ?>";
-        });
-
-        Blade::directive('organism', function ($expression) {
-            list($component) = $this->parse($expression, 'organisms');
-            return "<?php echo view('patterns.organisms.{$component}', array_except(get_defined_vars(), array('__data', '__path')))->render() ?>";
-        });
-
-        Blade::directive('template', function ($expression) {
-            list($component, $extExpression) = $this->parse($expression, 'templates');
-            return "<?php echo view({$extExpression}, array_except(get_defined_vars(), array('__data', '__path')))->render() ?>";
-        });
-
-        Blade::directive('page', function ($expression) {
-            list($component, $extExpression) = $this->parse($expression, 'pages');
-            return "<?php echo view({$extExpression}, array_except(get_defined_vars(), array('__data', '__path')))->render() ?>";
-        });
-
-        Blade::directive('element', function ($expression) {
-            list($component, $extExpression) = $this->parse($expression);
-            return "<?php echo view({$extExpression}, array_except(get_defined_vars(), array('__data', '__path')))->render() ?>";
-        });
-    }
-
-    /**
-     * Parse an atom expression.
-     *
-     * @param $expression
-     * @return array
-     */
-    private function parseAtom($expression)
-    {
-        $parsed = [];
-        preg_match('/(.*)%(.*)%/', $expression, $parsed);
-        return $this->withoutFirst($parsed);
+        foreach ($this->components as $component => $path) {
+            Blade::directive($component, function ($expression) use ($path) {
+                $extExpression = $this->parse($expression, $path);
+                return "<?php echo view({$extExpression}, array_except(get_defined_vars(), array('__data', '__path')))->render() ?>";
+            });
+        }
+//        Blade::directive('atom', function ($expression) {
+//            $extExpression = $this->parse($expression, 'atoms');
+/*            return "<?php echo view({$extExpression}, array_except(get_defined_vars(), array('__data', '__path')))->render() ?>";*/
+//        });
+//
+//        Blade::directive('molecule', function ($expression) {
+//            $extExpression = $this->parse($expression, 'molecules');
+/*            return "<?php echo view({$extExpression}, array_except(get_defined_vars(), array('__data', '__path')))->render() ?>";*/
+//        });
+//
+//        Blade::directive('organism', function ($expression) {
+//            $extExpression = $this->parse($expression, 'molecules');
+/*            return "<?php echo view({$extExpression}, array_except(get_defined_vars(), array('__data', '__path')))->render() ?>";*/
+//        });
+//
+//        Blade::directive('template', function ($expression) {
+//            $extExpression = $this->parse($expression, 'templates');
+/*            return "<?php echo view({$extExpression}, array_except(get_defined_vars(), array('__data', '__path')))->render() ?>";*/
+//        });
+//
+//        Blade::directive('page', function ($expression) {
+//            $extExpression = $this->parse($expression, 'pages');
+/*            return "<?php echo view({$extExpression}, array_except(get_defined_vars(), array('__data', '__path')))->render() ?>";*/
+//        });
+//
+//        Blade::directive('element', function ($expression) {
+//            $extExpression = $this->parse($expression);
+/*            return "<?php echo view({$extExpression}, array_except(get_defined_vars(), array('__data', '__path')))->render() ?>";*/
+//        });
     }
 
     /**
@@ -66,9 +68,9 @@ class PatternServiceProvider extends ServiceProvider
      *
      * @param $expression
      * @param $path
-     * @return array
+     * @return string
      */
-    private function parse($expression, $path = '')
+    private function parse($expression, $path = ''): string
     {
         $component = array_first(explode(',', $expression));
         $strippedComponent = str_replace("'", "", $component);
@@ -77,46 +79,7 @@ class PatternServiceProvider extends ServiceProvider
 
         $extComponent = "{$prefix}.{$path}.{$strippedComponent}";
         $extExpression = str_replace($strippedComponent, "{$extComponent}", $expression);
-        return [$strippedComponent, $extExpression];
-    }
-
-    /**
-     * Parse an organism expression.
-     *
-     * @param $expression
-     * @return array
-     */
-    private function parseOrganisms($expression)
-    {
-        $parsed = [];
-        preg_match('/(.*)/', $expression, $parsed);
-        return $this->withoutFirst($parsed);
-    }
-
-    /**
-     * Parse a template expression.
-     *
-     * @param $expression
-     * @return array
-     */
-    private function parseTemplate($expression)
-    {
-        $parsed = [];
-        preg_match('/(.*)/', $expression, $parsed);
-        return $this->withoutFirst($parsed);
-    }
-
-    /**
-     * Parse a page expression.
-     *
-     * @param $expression
-     * @return array
-     */
-    private function parsePage($expression)
-    {
-        $parsed = [];
-        preg_match('/(.*)/', $expression, $parsed);
-        return $this->withoutFirst($parsed);
+        return $extExpression;
     }
 
     /**
@@ -132,23 +95,6 @@ class PatternServiceProvider extends ServiceProvider
         return $this->withoutFirst($parsed);
     }
 
-    private function parseElement($expression)
-    {
-        $parsed = [];
-        preg_match('/(.*):(.*){(.*)}/', $expression, $parsed);
-        return $this->withoutFirst($parsed);
-    }
-
-    /**
-     * Register services.
-     *
-     * @return void
-     */
-    public function register()
-    {
-        //
-    }
-
     /**
      * @param $parsed
      * @return array
@@ -160,22 +106,12 @@ class PatternServiceProvider extends ServiceProvider
     }
 
     /**
-     * @param $section
-     * @param $component
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
-     * @throws Exception
+     * Register services.
+     *
+     * @return void
      */
-    private function checkLocaleState($section, $component)
+    public function register()
     {
-        if (!config('app.debug')) {
-            return;
-        }
-        $path = str_replace('.', '/', $component);
-        $markdownFile = $path = base_path("resources/laratomics/patterns/{$section}/{$path}.md");
-        $markdown = File::get($markdownFile);
-        $metadata = YamlFrontMatter::parse($markdown);
-        if ($metadata->state != 'DONE') {
-            throw new Exception("Pattern {$section}.{$component} is not yet DONE!");
-        }
+        //
     }
 }

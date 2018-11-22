@@ -5,7 +5,7 @@
 
 	display: flex;	
 	grid-area: code;
-	padding: var(--gap);
+	padding: var(--gap, $l-gap);
 
 	@include for-tablet-portrait-up {
 		

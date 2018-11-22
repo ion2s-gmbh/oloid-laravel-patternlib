@@ -8,7 +8,7 @@ import PreviewPattern from './components/PreviewPattern';
 
 Vue.use(VueRouter);
 
-export default new VueRouter({
+const router = new VueRouter({
   mode: 'hash',
   routes: [
     { path: '/', component: Dashboard, name: 'dashboard' },
@@ -17,3 +17,5 @@ export default new VueRouter({
     { path: '/preview/:pattern', component: PreviewPattern, name: 'preview' }
   ]
 });
+
+export default router;

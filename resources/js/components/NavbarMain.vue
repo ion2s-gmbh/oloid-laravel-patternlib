@@ -1,18 +1,18 @@
 <template>
-  <li class="pattern u-center active"> <!-- can be active -->
+  <li class="pattern u-center">
 
+    <!-- Single stupid link to a pattern -->
     <navbar-link v-if="menu.items.length === 0"
                  :item="menu">
     </navbar-link>
 
-    <div v-if="menu.items.length > 0">
-      <!--<span>{{ menu.name }}</span>-->
-      <!--<i class="fas fa-caret-down"></i>-->
-      <navbar-group
-              :name="menu.name"
-              :items="menu.items">
-      </navbar-group>
-    </div>
+    <!-- We have a menu with multiple items -->
+    <span v-if="menu.items.length > 0">{{ menu.name }}</span>
+    <navbar-group
+            v-if="menu.items.length > 0"
+            :name="menu.name"
+            :items="menu.items">
+    </navbar-group>
   </li>
 </template>
 

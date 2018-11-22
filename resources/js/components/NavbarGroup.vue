@@ -1,25 +1,21 @@
 <template>
-  <li class="pattern active">
-    <!--<span @click="toggleMainMenu(item.name)">{{ item.name }}</span>-->
-    <span>{{ name }}</span>
-    <i class="fas fa-caret-down"></i>
+  <ul class="patterns--sub">
 
-    <ul class="patterns--sub">
-      <li class="pattern" v-for="item in items">
-        <navbar-link v-if="item.items.length === 0"
-                     :parent="name"
-                     :item="item">
-        </navbar-link>
+    <li class="pattern" v-for="item in items">
+      <navbar-link v-if="item.items.length === 0"
+                   :parent="name"
+                   :item="item">
+      </navbar-link>
 
-        <navbar-group v-else-if="item.items.length > 0"
-                      :name="item.name"
-                      :items="item.items">
-        </navbar-group>
-      </li>
-    </ul>
-  </li>
+      <span v-if="item.items.length > 0">{{ item.name }}</span>
+      <i v-if="item.items.length > 0" class="fas fa-caret-down"></i>
+      <navbar-group
+              :name="item.name"
+              :items="item.items">
+      </navbar-group>
+    </li>
+  </ul>
 
-  <!--</li>-->
 </template>
 
 <script>

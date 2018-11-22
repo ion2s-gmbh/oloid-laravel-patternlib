@@ -1,5 +1,5 @@
 <template>
-  <li class="pattern u-center" :class="{ active: $store.state.menu.activeMain === menu.name }">
+  <li class="pattern u-center" :class="{ active: $store.state.menu.activeMain === menu.path }">
 
     <!-- Single stupid link to a pattern -->
     <navbar-link v-if="menu.items.length === 0"
@@ -8,7 +8,7 @@
 
     <!-- We have a menu with multiple items -->
     <span v-if="menu.items.length > 0"
-          @click="toggleMainMenu(menu.name)">{{ menu.name }}</span>
+          @click="toggleMainMenu(menu.name)">{{ menu.path }}</span>
     <navbar-group
             v-if="menu.items.length > 0"
             :name="menu.name"

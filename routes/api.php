@@ -19,6 +19,8 @@ Route::get('info', 'ApplicationController@info');
 */
 Route::post('pattern', 'PatternController@store');
 
+Route::get('navi', 'NavigationController@get');
+
 /*
 |--------------------------------------------------------------------------
 | GET /{pattern}
@@ -27,4 +29,5 @@ Route::post('pattern', 'PatternController@store');
 | Except the actual rendered preview, that will be loaded by an iframe.
 */
 Route::get('{pattern}', 'PatternController@preview');
+
 

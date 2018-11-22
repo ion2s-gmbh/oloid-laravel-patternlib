@@ -1,5 +1,5 @@
 <template>
-  <router-link :to="{ name: 'preview', params: { pattern: `${item.name}` } }">
+  <router-link :to="{ name: 'preview', params: { pattern: `${item.path}` } }">
     {{ item.name }}
   </router-link>
 </template>

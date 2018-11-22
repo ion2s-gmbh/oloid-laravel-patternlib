@@ -11,6 +11,10 @@
 
     <nav class="project-navigation">
 
+      <router-link :to="{ name: 'dashboard' }" class="back">
+        <i class="fas fa-arrow-circle-left"></i>
+      </router-link>
+
       <ul class="patterns">
 
         <!-- render main navi items -->

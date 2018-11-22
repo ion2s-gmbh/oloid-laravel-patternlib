@@ -353,6 +353,7 @@ template {
 }
 :root {
   --brandMain: #03314B;
+  --brandDark: #02273c;
   --brandCon: #FFF621;
   --positive: #10E2AB;
   --headerheight: 66px;
@@ -412,7 +413,7 @@ containing the header and the so called view, containing most of the UI.
   height: 100vh;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: var(--headerheight) auto;
-  grid-template-areas: "header header header header" "main main main main";
+  grid-template-areas: "header header header header" "main main main main";
   overflow: hidden;
 }
 
@@ -428,21 +429,21 @@ containing the header and the so called view, containing most of the UI.
 @media (max-width: 599px) {
   .view,
   .view--inner {
-    grid-template-areas: "code code code code" "view view view view" "view view view view" "footer footer footer footer";
+    grid-template-areas: "code code code code" "view view view view" "view view view view" "footer footer footer footer";
   }
 }
 
 @media (min-width: 600px) {
   .view,
   .view--inner {
-    grid-template-areas: "code code code code" "view view view view" "view view view view" "footer footer footer footer";
+    grid-template-areas: "code code code code" "view view view view" "view view view view" "footer footer footer footer";
   }
 }
 
 @media (min-width: 1200px) {
   .view,
   .view--inner {
-    grid-template-areas: "code view view view" "code view view view" "code view view view" ".... footer footer footer";
+    grid-template-areas: "code view view view" "code view view view" "code view view view" ".... footer footer footer";
   }
 }
 
@@ -640,7 +641,19 @@ h2,
   font-weight: 400;
 }
 
+/* 
+These are the styles for lists. 
+*/
+
+ul {
+  color: inherit;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
 .header {
+  background: var(--brandDark);
   height: var(--headerheight);
   grid-area: header;
 }
@@ -720,6 +733,103 @@ These are the styles that are needed to render our welcome dashboard.
   left: 0;
   position: absolute;
   top: 0;
+}
+
+/* 
+These are the styles for the project pattern navigation.
+*/
+
+.project-navigation {
+  width: 100%;
+}
+
+.project-navigation a {
+  text-decoration: none;
+}
+
+.patterns {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+}
+
+.patterns--sub {
+  background: var(--brandDark);
+  left: 0;
+  position: absolute;
+  top: 2rem;
+  width: 100%;
+  z-index: 500;
+}
+
+.pattern {
+  font-size: 0.875rem;
+  padding: 0.5rem var(--gap);
+  position: relative;
+  text-align: center;
+  -webkit-transition: opacity 250ms;
+  transition: opacity 250ms;
+  width: 10rem;
+}
+
+.pattern:not(:first-child) {
+  border-bottom: 0;
+  border-left: 1px;
+  border-left-color: rgba(255, 255, 255, 0.1);
+  border-right: 1px;
+  border-right-color: rgba(255, 255, 255, 0.1);
+  border-style: solid;
+  border-top: 0;
+}
+
+.patterns:hover .pattern:not(:hover) {
+  opacity: 0.5;
+}
+
+.pattern > .patterns--sub {
+  overflow: hidden;
+  max-height: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.pattern > .patterns--sub .pattern {
+  border: none;
+  text-align: left;
+}
+
+.pattern > .patterns--sub .patterns--sub {
+  position: static;
+}
+
+.pattern > .patterns--sub .patterns--sub .pattern {
+  padding: 0.5rem;
+}
+
+.pattern i {
+  -webkit-transition: -webkit-transform 0.2s;
+  transition: -webkit-transform 0.2s;
+  transition: transform 0.2s;
+  transition: transform 0.2s, -webkit-transform 0.2s;
+}
+
+.pattern.active {
+  opacity: 1 !important;
+}
+
+.pattern.active > .patterns--sub {
+  max-height: 120em;
+}
+
+.pattern.active > a > i {
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
 }
 
 /* 

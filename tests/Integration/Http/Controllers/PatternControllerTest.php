@@ -137,6 +137,19 @@ class PatternControllerTest extends BaseTestCase
      * @test
      * @covers \Laratomics\Http\Controllers\PatternController
      */
+    public function it_should_return_404_if_a_pattern_does_not_exist()
+    {
+        // act
+        $response = $this->getJson('workshop/api/v1/atoms.not.existing');
+
+        // assert
+        $response->assertStatus(404);
+    }
+
+    /**
+     * @test
+     * @covers \Laratomics\Http\Controllers\PatternController
+     */
     public function it_should_get_a_html_preview_of_a_pattern()
     {
         // arrange

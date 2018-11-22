@@ -2,16 +2,52 @@
 
 namespace Laratomics\Http\Controllers;
 
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Http\JsonResponse;
 
 class NavigationController extends Controller
 {
+    private function getNavi($path)
+    {
+        $data = [];
+        $fs = new Filesystem();
+        $directories = $fs->directories($path);
+
+        foreach ($directories as $directory) {
+            $data[] = [
+                'name' => str_after($directory, $path . '/'),
+                'path' => str_replace('/', '.', str_after($directory, config('workshop.patternPath') . '/')),
+                'items' => $this->getNavi($directory)
+            ];
+        }
+
+        $files = $fs->files($path);
+
+        foreach ($files as $pattern) {
+            if (ends_with($pattern, '.blade.php')) {
+                $name = str_after(str_before($pattern, '.blade.php'), $path . '/');
+                $patternPath = str_replace('/', '.', str_after(str_before($pattern, '.blade.php'), config('workshop.patternPath') . '/'));
+                $data[] = [
+                    'name' => $name,
+                    'path' => $patternPath,
+                    'items' => []
+                ];
+            }
+        }
+
+        return $data;
+    }
+
     /**
      * Get the navigation
-     *
+     * @return JsonResponse
      */
-    public function get()
+    public function get(): JsonResponse
     {
+        return JsonResponse::create([
+            'data' => $this->getNavi(config('workshop.patternPath'))
+        ]);
+
         return JsonResponse::create(
             [
                 'data' => [
@@ -19,23 +55,23 @@ class NavigationController extends Controller
                         'name' => 'atoms',
                         'path' => 'atoms',
                         'items' => [
-                            [
-                                'name' => 'buttons',
-                                'path' => 'atoms.buttons',
-                                'items' => [
-                                    [
-                                        'name' => 'positive',
-                                        'path' => 'atoms.buttons.positive',
-                                        'items' => [
-                                            [
-                                                'name' => 'submit',
-                                                'path' => 'atoms.buttons.positive.submit',
-                                                'items' => []
-                                            ]
-                                        ]
-                                    ]
-                                ]
-                            ],
+//                            [
+//                                'name' => 'buttons',
+//                                'path' => 'atoms.buttons',
+//                                'items' => [
+//                                    [
+//                                        'name' => 'positive',
+//                                        'path' => 'atoms.buttons.positive',
+//                                        'items' => [
+//                                            [
+//                                                'name' => 'submit',
+//                                                'path' => 'atoms.buttons.positive.submit',
+//                                                'items' => []
+//                                            ]
+//                                        ]
+//                                    ]
+//                                ]
+//                            ],
                             [
                                 'name' => 'headlines',
                                 'path' => 'atoms.headlines',
@@ -49,93 +85,18 @@ class NavigationController extends Controller
                             ],
                         ]
                     ],
-                    [
-                        'name' => 'landingpage',
-                        'path' => 'landingpage',
-                        'items' => []
-                    ],
-                    [
-                        'name' => 'about',
-                        'path' => 'about',
-                        'items' => []
-                    ]
-                ]
-            ]
-        );
-
-
-//        return JsonResponse::create([
-//            'data' => [
-//                'name' => 'atoms',
-//                'path' => 'atoms',
-//                'items' => [
-//                    'name' => 'buttons',
-//                    'path' => 'atoms.buttons',
-//                    'items' => [
-//                        'name' => 'positive',
-//                        'path' => 'atoms.buttons.positive',
-//                        'items' => [
-//                            [
-//                                'name' => 'submit',
-//                                'path' => 'atoms.buttons.positive.submit',
-//                                'items' => []
-//                            ],
-//                            [
-//                                'name' => 'order',
-//                                'path' => 'atoms.buttons.positive.order',
-//                                'items' => []
-//                            ]
-//                        ],
-//                        [
-//                            'name' => 'negative',
-//                            'path' => 'atoms.buttons.negative',
-//                            'items' => [
-//                                [
-//                                    'name' => 'cancel',
-//                                    'path' => 'atoms.buttons.negative.cancel',
-//                                    'items' => []
-//                                ],
-//                                [
-//                                    'name' => 'abort',
-//                                    'path' => 'atoms.buttons.negative.abort',
-//                                    'items' => []
-//                                ]
-//                            ],
-//                        ]
-//                    ],
-//                    [
-//                        'name' => 'headline1',
-//                        'path' => 'atoms.headline1',
-//                        'items' => []
-//                    ]
-//                ],
-//                [
-//                    'name' => 'pages',
-//                    'path' => 'pages',
-//                    'items' => [
-//                        [
-//                            'name' => 'about',
-//                            'path' => 'pages.about',
-//                            'items' => []
-//                        ],
-//                        [
-//                            'name' => 'home',
-//                            'path' => 'pages.home',
-//                            'items' => []
-//                        ],
-//                    ],
 //                    [
 //                        'name' => 'landingpage',
 //                        'path' => 'landingpage',
-//                        'items' => [],
+//                        'items' => []
 //                    ],
 //                    [
 //                        'name' => 'about',
 //                        'path' => 'about',
 //                        'items' => []
 //                    ]
-//                ]
-//            ]
-//        ]);
+                ]
+            ]
+        );
     }
 }

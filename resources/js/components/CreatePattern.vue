@@ -13,8 +13,6 @@
 
         </label>
 
-        
-
         <input id="name"
                class="form-control"
                type="text"

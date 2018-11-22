@@ -44,10 +44,6 @@
           this.$store.commit('toggleMainMenu', menu);
         }
       }
-    },
-
-    mounted() {
-      console.log(this.menu);
     }
   }
 </script>

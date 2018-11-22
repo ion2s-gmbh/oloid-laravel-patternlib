@@ -46,10 +46,6 @@
           this.$store.commit('toggleSubMenu', subMenu);
         }
       }
-    },
-
-    mounted() {
-      console.log(this.name);
     }
   }
 </script>

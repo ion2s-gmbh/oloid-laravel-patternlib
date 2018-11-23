@@ -4,6 +4,7 @@ namespace Laratomics\Http\Controllers;
 
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Routing\Controller;
 
 class NavigationController extends Controller
 {

@@ -16,15 +16,13 @@
 
           <div class="tab" id="markup-view" role="tabpanel" aria-labelledby="markup-view">
 
-            <pre>
-              <code class="language-html">{{ pattern.template }}</code>
-            </pre>
+            <pre><code class="language-html">{{ pattern.template }}</code></pre>
 
           </div>
 
           <div class="tab" id="html-view" role="tabpanel" aria-labelledby="html-view">
 
-            <pre><code class="language-html">{{ pattern.html }}</code></pre>
+            <!--<pre><code class="language-html">{{ pattern.html }}</code></pre>-->
 
           </div>
 

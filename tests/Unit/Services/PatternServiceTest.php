@@ -84,7 +84,7 @@ class PatternServiceTest extends BaseTestCase
      * @test
      * @covers \Laratomics\Services\PatternService
      */
-    public function it_should_create_all_required_pattern_files()
+    public function it_should_create_a_nested_pattern_structure()
     {
         // act
         $pattern = $this->cut->createPattern($this->name, $this->description);
@@ -99,6 +99,31 @@ class PatternServiceTest extends BaseTestCase
         $this->assertMarkdownFileCreation();
         $this->assertSassFileCreation();
         $this->assertInstanceOf(Document::class, $pattern->metadata);
+    }
+
+    /**
+     * @test
+     * @covers \Laratomics\Services\PatternService
+     * @todo improve this test
+     */
+    public function it_should_create_an_unnested_pattern_structure()
+    {
+        // act
+        $name = 'unnested';
+        $description = 'Unnested pattern';
+        $pattern = $this->cut->createPattern($name, $description);
+
+        // assert
+        $this->assertEquals($name, $pattern->name);
+        $this->assertEquals("<!-- {$name} -->", $pattern->template);
+//        $this->assertMarkdownContent($pattern->markdown);
+        $this->assertEquals("/* {$name} */", $pattern->sass);
+//
+        // assert
+//        $this->assertBladeFileCreation();
+//        $this->assertMarkdownFileCreation();
+//        $this->assertSassFileCreation();
+//        $this->assertInstanceOf(Document::class, $pattern->metadata);
     }
 
     /**

@@ -4,41 +4,50 @@
 namespace Laratomics\Services;
 
 
-use Illuminate\Support\Facades\Blade;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Facades\File;
-use Illuminate\Contracts\View\Factory as ViewFactory;
+use Laratomics\Exceptions\RenderingException;
+use Laratomics\Models\Pattern;
 use Spatie\YamlFrontMatter\YamlFrontMatter;
 
-const INITIAL_STATE = 'TODO';
-const BLADE_EXTENSION = 'blade.php';
-const SASS_EXTENSION = 'scss';
-const MARKDOWN_EXTENSION = 'md';
 
 class PatternService
 {
+    const INITIAL_STATE = 'TODO';
+    const BLADE_EXTENSION = 'blade.php';
+    const SASS_EXTENSION = 'scss';
+    const MARKDOWN_EXTENSION = 'md';
+
     /**
      * Crate all required files for the given new Pattern.
      *
-     * @param $name
-     * @param $description
+     * @param string $name
+     * @param string $description
+     * @return Pattern
      */
-    public function createPattern($name, $description)
+    public function createPattern(string $name, string $description): Pattern
     {
-        $this->createBladeFile($name);
-        $this->createMarkdownFile($name, $description);
-        $this->createSassFile($name);
+        $pattern = new Pattern();
+        $pattern->name = $name;
+        $pattern->template = $this->createBladeFile($name);
+        $pattern->markdown = $this->createMarkdownFile($name, $description);
+        $pattern->metadata = YamlFrontMatter::parse($pattern->markdown);
+        $pattern->sass = $this->createSassFile($name);
+        return $pattern;
     }
 
     /**
      * Create a new Blade file for the Pattern.
      *
      * @param string $pattern
+     * @return string
      */
-    public function createBladeFile(string $pattern): void
+    public function createBladeFile(string $pattern): string
     {
-        $file = $this->getFileLocation($pattern, BLADE_EXTENSION);
+        $file = $this->getFileLocation($pattern, self::BLADE_EXTENSION);
         $content = "<!-- {$pattern} -->";
         File::put($file, $content);
+        return $content;
     }
 
     /**
@@ -46,32 +55,36 @@ class PatternService
      *
      * @param string $pattern
      * @param string $description
+     * @return string
      */
-    public function createMarkdownFile(string $pattern, string $description): void
+    public function createMarkdownFile(string $pattern, string $description): string
     {
-        $file = $this->getFileLocation($pattern, MARKDOWN_EXTENSION);
+        $file = $this->getFileLocation($pattern, self::MARKDOWN_EXTENSION);
 
         $content = sprintf("---
         status: %s
         values:
         ---
-        {$description}", INITIAL_STATE);
-
-        File::put($file, str_replace('        ', '', $content));
+        {$description}", self::INITIAL_STATE);
+        $content = str_replace('        ', '', $content);
+        File::put($file, $content);
+        return $content;
     }
 
     /**
      * Create a sass file for the newly created component and import it in parent and main sass files.
      *
      * @param string $pattern
+     * @return string
      */
-    public function createSassFile(string $pattern): void
+    public function createSassFile(string $pattern): string
     {
-        $file = $this->getFileLocation($pattern, SASS_EXTENSION);
+        $file = $this->getFileLocation($pattern, self::SASS_EXTENSION);
         $content = "/* {$pattern} */";
         File::put($file, $content);
 
         $this->importInParentSassFile($pattern);
+        return $content;
     }
 
     /**
@@ -83,61 +96,103 @@ class PatternService
     {
         $parts = explode('.', $pattern);
         $parent = array_shift($parts);
-        $parentSassPath = config('workshop.patternPath') . "/{$parent}/{$parent}.scss";
-        $includeFile = implode('/', $parts);
 
-        /*
-         * Import in sass file in parent sass file
-         */
-        if (!File::exists($parentSassPath)) {
-            $content = "@import \"{$includeFile}\";";
+        if (count($parts) === 0) {
+            $import = "{$parent}";
+            $this->importInMainSassFile($import);
 
-            $this->importInMainSassFile($parent);
+        } elseif (count($parts) >= 1) {
+
+            $parentSassPath = config('workshop.patternPath') . "/{$parent}/{$parent}.scss";
+            $includeFile = implode('/', $parts);
+
+            /*
+             * Import in parent sass file
+             */
+            $content = "@import \"{$includeFile}\";\n";
+            if (!File::exists($parentSassPath)) {
+
+                $import = "{$parent}/{$parent}";
+                $this->importInMainSassFile($import);
+            }
+
+            File::append($parentSassPath, $content);
         }
-
-        File::append($parentSassPath, $content);
     }
 
     /**
      * Import in main sass file
-     * @param string $parent
+     * @param string $import
      */
-    private function importInMainSassFile(string $parent): void
+    private function importInMainSassFile(string $import): void
     {
         File::append(config('workshop.patternPath') . '/patterns.scss',
-            "@import \"{$parent}/{$parent}\";");
+            "@import \"{$import}\";\n");
     }
 
     /**
-     * @param $pattern
+     * @param $name
      * @param array $values
-     * @return array
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
-     * @throws \Exception
-     * @todo refactor
+     * @return Pattern
+     * @throws FileNotFoundException
+     * @throws RenderingException
      */
-    public function loadPattern($pattern, $values = [])
+    public function loadPattern($name, $values = []): Pattern
     {
-        $patternPath = str_replace('.', '/', $pattern);
-        $patternPath = config('workshop.patternPath') . "/{$patternPath}";
-        $sassFile = "{$patternPath}.scss";
-        $style = '';
-        if (File::exists($sassFile)) {
-            $style = File::get($sassFile);
-        }
-        $html = File::get("{$patternPath}.blade.php");
-        $markdown = File::get("{$patternPath}.md");
-        $metadata = YamlFrontMatter::parse($markdown);
+        $pattern = new Pattern();
+        $pattern->name = $name;
+        $pattern->template = $this->loadBladeFile($name);
+        $markdown = $this->loadMarkdownFile($name);
+        $pattern->markdown = $markdown;
+        $pattern->metadata = YamlFrontMatter::parse($markdown);
+        $pattern->sass = $this->loadSassFile($name);
 
-        $values = !is_null($metadata->values) ? $metadata->values : array_merge($values, []);
+        /*
+         * Create the preview
+         */
+        $values = !is_null($pattern->metadata->values) ? $pattern->metadata->values : array_merge($values, []);
+        $pattern->html = compileBladeString($pattern->template, $values);
 
-        $parts = explode('.', $pattern);
-        $section = array_shift($parts);
-        $component = implode('.', $parts);
-        $state = 'DONE';
+        return $pattern;
+    }
 
-        $preview = compileBladeString($html, $values);
-        return [$html, $preview, $metadata, $style, $state];
+    /**
+     * Load the pattern template.
+     *
+     * @param string $pattern
+     * @return string
+     * @throws FileNotFoundException
+     */
+    public function loadBladeFile(string $pattern): string
+    {
+        $file = $this->getFileLocation($pattern, self::BLADE_EXTENSION);
+        return File::get($file);
+    }
+
+    /**
+     * Load the pattern markdown file.
+     *
+     * @param string $pattern
+     * @return string
+     * @throws FileNotFoundException
+     */
+    public function loadMarkdownFile(string $pattern): string
+    {
+        $file = $this->getFileLocation($pattern, self::MARKDOWN_EXTENSION);
+        return File::get($file);
+    }
+
+    /**
+     * Load the pattern sass file.
+     *
+     * @param string $pattern
+     * @return string
+     * @throws FileNotFoundException
+     */
+    public function loadSassFile(string $pattern): string
+    {
+        $file = $this->getFileLocation($pattern, self::SASS_EXTENSION);
+        return File::get($file);
     }
 
     /**

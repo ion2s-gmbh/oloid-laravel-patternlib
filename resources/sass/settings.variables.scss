@@ -1,0 +1,50 @@
+// GlOBAL VARS ------------------------------------------------------ //
+
+/*
+Here we do define the variables that we are using across all pages of our project.
+We use the CSS variables to keep theming a possibility in the future.
+We also declare basically the same stuff as a SASS variable to be able to declare fallback
+solutions for the browsers that can't use CSS vars.
+
+this would then look like this
+
+.el {
+	background: var(--var, $varFallback);
+}
+
+*/
+
+// SASS VARS
+
+
+/* for layout*/
+
+$l-gap: 1rem;
+$l-headerheight: 66px;
+
+/* for colors*/
+
+$c-brandMain: #03314B;
+$c-brandCon: #FFF621;
+$c-positive: #10E2AB;
+$c-alert: #FF7878;
+
+// CSS VARS
+
+html {
+
+	/* for colors*/
+    
+    --brandMain: #03314B;
+    --brandDark: #02273c;
+    --brandCon: #FFF621;
+    --positive: #10E2AB;
+    --alert: #FF7878;
+
+    /* for layout*/
+
+    --headerheight: 66px;
+    --gap: 1rem;
+
+}
+

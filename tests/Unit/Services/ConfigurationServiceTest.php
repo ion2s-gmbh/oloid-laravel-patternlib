@@ -2,13 +2,15 @@
 
 namespace Tests\Unit\Services;
 
-use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
 use Laratomics\Services\ConfigurationService;
 use Laratomics\Tests\BaseTestCase;
+use Laratomics\Tests\Traits\TestStubs;
 
 class ConfigurationServiceTest extends BaseTestCase
 {
+    use TestStubs;
+
     /**
      * @var ConfigurationService
      */
@@ -19,16 +21,14 @@ class ConfigurationServiceTest extends BaseTestCase
      */
     private $viewConfigPath;
 
+    /**
+     * Setup before testing.
+     */
     protected function setUp()
     {
         parent::setUp();
         $this->cut = new ConfigurationService();
-
-        // prepare view config double
-        $fs = new Filesystem();
-        $sourcePath = realpath(__DIR__ . '/../../stubs/view.php');
-        $this->viewConfigPath = "{$this->tempDir}/view.php";
-        $fs->copy($sourcePath, $this->viewConfigPath);
+        $this->prepareViewConfigStub();
     }
 
     /**

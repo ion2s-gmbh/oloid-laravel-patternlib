@@ -1,0 +1,38 @@
+// GLOBAL Animation styles ----------------------------------------- //
+/* 
+These are the styles that we want to acces globally throughout the whole project.
+Here you can find the definition & mixins for our transitions and animations. 
+These are the only ones that are allowed. 
+*/
+
+
+// Fade-In Animation --- //
+
+
+@mixin a-fadeIn {
+	animation-name: fadeIn;	
+	animation-duration: 900ms;
+	animation-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+	animation-iteration-count: 1;
+}
+
+
+@keyframes fadeIn {
+	
+	0% {		
+		opacity: 0;
+		transform: scaleX(0.5) ()translateX(-1000px);
+
+	}
+
+	75% {
+		opacity: 1;
+	}
+
+	100% {		
+		transform: scaleX(1) translateX(0px);
+	}
+
+}
+
+// next Animation --- //

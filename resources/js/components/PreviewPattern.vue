@@ -1,90 +1,165 @@
 <template>
 
-  <div class="row">
-    <div class="col-sm-4">
-      <div class="py-1">
-        <router-link :to="{ name: 'update' }">
-          <button class="btn btn-primary">
-            <i class="fas fa-pen"></i>
-            UPDATE PATTERN
-          </button>
-        </router-link>
+  <div class="view--inner">
+
+    <div class="code">
+
+      <div class="code-el">
+
+        <h2>
+
+          <span>Markup</span> / <span>HTML</span>
+
+        </h2>
+
+        <div class="code-tabs">
+
+          <div class="tab" id="markup-view" role="tabpanel" aria-labelledby="markup-view">
+
+            <pre><code class="language-html">{{ pattern.template }}</code></pre>
+
+          </div>
+
+          <div class="tab" id="html-view" role="tabpanel" aria-labelledby="html-view">
+
+            <!--<pre><code class="language-html">{{ pattern.html }}</code></pre>-->
+
+          </div>
+
+        </div>
+
       </div>
-      <h2>{{ patternName }}
-        <span v-if="state === 'REVIEW'" class="badge badge-warning">REVIEW</span>
-        <span v-if="state === 'DONE'" class="badge badge-success">DONE</span>
-      </h2>
-      <h2>Description</h2>
-      <div class="code">
-        <pre><code class="language-markdown">{{ description }}</code></pre>
+
+      <div class="code-el">
+
+        <h2>
+
+          <span>SASS</span> / <span>CSS</span>
+
+        </h2>
+
+        <div class="code-tabs">
+
+          <div class="tab" id="markup-view" role="tabpanel" aria-labelledby="markup-view">
+
+              <pre><code>{{ pattern.sass }}</code></pre>
+
+          </div>
+
+        </div>
+
       </div>
-      <br>
-      <h2>Usage
-        <button id="copy" class="btn btn-secondary" data-clipboard-target="#pattern">
-          <i class="far fa-clipboard"></i>
+
+    </div>
+
+    <div class="preview">
+
+      <div class="">
+
+        <iframe height="1500" width="1100"
+                frameBorder="0"
+                :src="`workshop/preview/${pattern.name}`"></iframe>
+
+        <div style="background: transparent; height: 5000px; width: 5002px;"></div>
+
+      </div>
+
+    </div>
+
+    <div class="footer">
+
+      <router-link :to="{ name: 'create' }">
+
+        <button class="btn btn--primary btn--sm">
+
+          <span>
+
+            New Pattern
+
+          </span>
+
         </button>
-      </h2>
-      <div class="code">
-        <pre><code class="language-html" id="pattern">{{ '@' }}{{ type }}('{{ usage }}', [])</code></pre>
-      </div>
-      <br>
-      <h2>Markup/HTML</h2>
-      <ul class="nav nav-tabs" id="myTab" role="tablist">
-        <li class="nav-item">
-          <a class="nav-link active" id="home-tab" data-toggle="tab" href="#markup-view" role="tab"
-             aria-controls="markup-view" aria-selected="true">Markup</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" id="profile-tab" data-toggle="tab" href="#html-view" role="tab"
-             aria-controls="html-view" aria-selected="false">HTML</a>
-        </li>
-      </ul>
-      <div class="code">
-        <div class="tab-content">
-          <div class="tab-pane fade show active" id="markup-view" role="tabpanel"
-               aria-labelledby="markup-view">
-            <pre><code class="language-html">{{ markup }}</code></pre>
-          </div>
-          <div class="tab-pane fade" id="html-view" role="tabpanel" aria-labelledby="html-view">
-            <pre><code class="language-html">{{ html }}</code></pre>
-          </div>
-        </div>
-      </div>
-      <br>
-      <h2>SASS/CSS</h2>
-      <div class="code">
-        <pre><code class="language-css">{{ style }}</code></pre>
-      </div>
+
+      </router-link>
+
+      <button class="btn btn--secondary btn--sm" @click="deletePattern(pattern.name)">
+
+        <span>
+          <i class="fas fa-trash-alt"></i>
+          Delete
+        </span>
+
+      </button>
+
+      <router-link :to="{ name: 'update' }">
+
+        <button class="btn btn--primary btn--sm">
+
+          <span>
+            <i class="fas fa-pen"></i>
+            Edit
+          </span>
+
+        </button>
+
+      </router-link>
+
     </div>
-    <div class="col-sm-8">
-      <h2>Preview</h2>
-      <div class="code">
-        <div class="card-body">
-          NO YET CONNECTED!
-          <!--<iframe height="1500" width="1100"-->
-                  <!--frameBorder="0"-->
-                  <!--src="{{ route('get-preview', ['pattern' => $pattern]) }}"></iframe>-->
-        </div>
-      </div>
-    </div>
+
   </div>
 
 </template>
 
 <script>
+  import {API} from '../httpClient';
+  import LOG from '../logger';
+
   export default {
     name: "PreviewPattern",
     data() {
       return {
-        type: 'element',
-        patternName: 'elements.tests.dummy',
-        description: 'Description of the pattern',
-        state: 'DONE',
-        usage: 'tests.dummy',
-        markup: '<h1>{{ $text }}</h1>',
-        html: '<h1>Heading 1</h1>',
-        style: 'h1 { color: red; }'
+        pattern: {
+          'name': 'undefined'
+        },
+        loading: false,
       }
+    },
+
+    watch: {
+      '$route': 'fetchPattern',
+    },
+
+    methods: {
+
+      /**
+       * Fetch the Pattern's data from the API.
+       */
+      fetchPattern: async function () {
+        // set to true, if we have to show a loading spinner
+        this.loading = true;
+        try {
+          let response = await API.get(this.$route.params.pattern);
+          this.pattern = response.data.data;
+          this.loading = false;
+        } catch (e) {
+          LOG.error(e);
+        }
+      },
+
+      /**
+       * Delete the pattern
+       * @param pattern
+       */
+      deletePattern: function (pattern) {
+        alert('Deleting ' + pattern);
+      }
+    },
+
+    /**
+     * Load all Pattern information from API.
+     */
+    created() {
+      this.fetchPattern();
     }
   }
 </script>

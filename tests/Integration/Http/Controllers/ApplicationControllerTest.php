@@ -1,6 +1,6 @@
 <?php
 
-namespace Laratomics\Tests\Integration;
+namespace Tests\Integration\Http\Controllers;
 
 use Laratomics\Tests\BaseTestCase;
 

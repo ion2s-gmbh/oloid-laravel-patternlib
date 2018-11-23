@@ -3,7 +3,7 @@
     <div class="row justify-content-center">
       <div class="col-md-8">
         <div class="card">
-          <div class="card-header">Create a new pattern</div>
+          <div class="card-header">Update pattern {{ patternName }}</div>
 
           <div class="card-body">
             <form method="post">
@@ -22,11 +22,11 @@
               </div>
 
               <div class="form-group">
-                <button @click.prevent="createPattern" class="btn btn-primary">
+                <button @click.prevent="update" class="btn btn-primary">
                   <i class="fas fa-pen-alt"></i>
                   SAVE
                 </button>
-                <router-link :to="{ name: 'preview' }">CANCEL</router-link>
+                <router-link :to="{ name: 'preview', params: { pattern: patternName }}">CANCEL</router-link>
               </div>
             </form>
           </div>
@@ -39,10 +39,20 @@
 <script>
   export default {
     name: "UpdatePattern",
+
+    data() {
+      return {
+        patternName: this.$route.params.pattern
+      }
+    },
+
     methods: {
-      store: function() {
+      update: function() {
         alert('update pattern');
-        this.$router.push('/preview');
+        this.$router.push({
+          name: 'preview',
+          params: { pattern: this.patternName }
+        });
       }
     }
   }

@@ -1,0 +1,47 @@
+
+// Code Window Base --------- //
+
+.code {
+
+	display: flex;	
+	grid-area: code;
+	padding: var(--gap, $l-gap);
+
+	@include for-tablet-portrait-up {
+		
+		flex-direction: row;
+
+	}
+
+	@include for-desktop-up {
+
+		flex-direction: column;
+
+	}
+
+}
+
+// Content
+
+.code-el {
+
+	@include size(100%);
+	display: flex;	
+	flex-direction: column;
+
+}
+
+.code-tabs {
+
+	height: 100%;
+	position: relative;
+
+	.tab {
+		@include size(100%);
+		left: 0;
+		position: absolute;	
+		top: 0;
+	}
+
+}
+

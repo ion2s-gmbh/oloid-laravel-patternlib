@@ -52,7 +52,7 @@ class WorkshopServiceProvider extends BaseServiceProvider
     {
         return [
             'namespace' => 'Laratomics\Http\Controllers',
-            'prefix' => 'workshop/api/v1'
+            'prefix' => config('workshop.uri') . '/api/v1'
         ];
     }
 

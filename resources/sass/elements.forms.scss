@@ -1,0 +1,79 @@
+//-------------------   FORMS    -----------------------//
+
+/* 
+These are the styles for the form elements like inputs, fieldsets & labels etc.
+More special Forms might be a component. 
+*/
+
+.form {
+	max-width: 50rem;
+	width: 100%;
+}
+
+.form-group {
+
+	padding: var(--gap, $l-gap) 0;
+	
+	&--end {
+		align-items: baseline;
+		display: flex;
+		justify-content: flex-end;
+		padding: 1rem 0;
+
+		.form-group + & {
+			margin-top: 1rem;
+		}
+	
+	a {
+		margin: 0 2rem;
+		padding: 0.5rem 1rem;
+		text-decoration: none;
+
+		> span {
+
+			display: block;		
+			transform: translate(5px,-5px);
+
+			}
+
+		}
+
+	}
+
+}
+
+label {
+
+	margin-bottom: 1rem;
+
+	> span {
+		display: block;
+	}	
+
+}
+
+.label-hint {
+	font-size: 0.8rem;
+}
+
+input, 
+textarea {
+	background: transparent;
+	border: 1px solid white;
+	color: inherit;
+	margin: var(--gap, $l-gap) 0;
+	padding: 1rem;
+	width: 100%;
+}
+
+textarea {
+	min-height: 200px;
+}
+
+// Validation --------- //
+
+.error {
+	@include a-fadeIn;	
+	color: var(--alert, $c-alert);
+	display: inline-block;
+}

@@ -2,11 +2,8 @@
 
 namespace Laratomics\Providers;
 
-use Exception;
 use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
-use Spatie\YamlFrontMatter\YamlFrontMatter;
 
 class PatternServiceProvider extends ServiceProvider
 {
@@ -82,28 +79,28 @@ class PatternServiceProvider extends ServiceProvider
         return $extExpression;
     }
 
-    /**
-     * Parse a link expression.
-     *
-     * @param $expression
-     * @return array
-     */
-    private function parseLink($expression)
-    {
-        $parsed = [];
-        preg_match('/{(.*)\|(.*)}/', $expression, $parsed);
-        return $this->withoutFirst($parsed);
-    }
-
-    /**
-     * @param $parsed
-     * @return array
-     */
-    private function withoutFirst($parsed): array
-    {
-        unset($parsed[0]);
-        return array_values($parsed);
-    }
+//    /**
+//     * Parse a link expression.
+//     *
+//     * @param $expression
+//     * @return array
+//     */
+//    private function parseLink($expression)
+//    {
+//        $parsed = [];
+//        preg_match('/{(.*)\|(.*)}/', $expression, $parsed);
+//        return $this->withoutFirst($parsed);
+//    }
+//
+//    /**
+//     * @param $parsed
+//     * @return array
+//     */
+//    private function withoutFirst($parsed): array
+//    {
+//        unset($parsed[0]);
+//        return array_values($parsed);
+//    }
 
     /**
      * Register services.

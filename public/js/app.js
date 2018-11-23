@@ -23982,16 +23982,6 @@ var render = function() {
           [
             _vm._m(0),
             _vm._v(" "),
-            _c(
-              "router-link",
-              { attrs: { to: "/preview/atoms.text.headline1" } },
-              [
-                _c("button", { staticClass: "btn btn--secondary" }, [
-                  _c("span", [_vm._v("\n          Preview Pattern\n        ")])
-                ])
-              ]
-            ),
-            _vm._v(" "),
             _c("router-link", { attrs: { to: { name: "create" } } }, [
               _c("button", { staticClass: "btn btn--primary btn--cta" }, [
                 _c("span", [_vm._v("\n          New Pattern\n        ")])
@@ -24010,7 +24000,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("h2", { staticClass: "headline--one" }, [
       _vm._v("\n      Welcome!\n      "),
-      _c("small", [_vm._v("This is our temporary dashboard!")])
+      _c("small", [_vm._v("Start building something awesome!")])
     ])
   }
 ]
@@ -24153,8 +24143,6 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
-//
-//
 
 
 
@@ -24198,6 +24186,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                   response = _context.sent;
 
                   if (response.status === 201) {
+                    _this.$store.commit('reloadNavi', true);
                     _this.$router.push('/preview/' + _this.pattern.name);
                   }
                   _context.next = 11;
@@ -25903,7 +25892,19 @@ var render = function() {
       { staticClass: "form form--create", attrs: { method: "post" } },
       [
         _c("div", { staticClass: "form-group" }, [
-          _vm._m(0),
+          _c("label", { attrs: { for: "name" } }, [
+            _c("span", { staticClass: "label-name" }, [_vm._v("Name")]),
+            _vm._v(" "),
+            _c("span", { staticClass: "label-hint" }, [
+              _vm._v("E.g. atoms.buttons.button")
+            ]),
+            _vm._v(" "),
+            _vm.errors.has("name")
+              ? _c("small", { staticClass: "error" }, [
+                  _vm._v(_vm._s(_vm.errors.first("name")))
+                ])
+              : _vm._e()
+          ]),
           _vm._v(" "),
           _c("input", {
             directives: [
@@ -25937,15 +25938,21 @@ var render = function() {
                 _vm.$set(_vm.pattern, "name", $event.target.value)
               }
             }
-          }),
-          _vm._v(" "),
-          _c("small", { staticClass: "error" }, [
-            _vm._v(_vm._s(_vm.errors.first("name")))
-          ])
+          })
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "form-group" }, [
-          _vm._m(1),
+          _c("label", { attrs: { for: "description" } }, [
+            _c("span", { staticClass: "label-name" }, [
+              _vm._v("\n            Description\n          ")
+            ]),
+            _vm._v(" "),
+            _vm.errors.has("description")
+              ? _c("small", { staticClass: "error" }, [
+                  _vm._v(_vm._s(_vm.errors.first("description")))
+                ])
+              : _vm._e()
+          ]),
           _vm._v(" "),
           _c("textarea", {
             directives: [
@@ -25974,11 +25981,7 @@ var render = function() {
                 _vm.$set(_vm.pattern, "description", $event.target.value)
               }
             }
-          }),
-          _vm._v(" "),
-          _c("small", { staticClass: "error" }, [
-            _vm._v(_vm._s(_vm.errors.first("description")))
-          ])
+          })
         ]),
         _vm._v(" "),
         _c(
@@ -26009,35 +26012,7 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", { attrs: { for: "name" } }, [
-      _c("span", { staticClass: "label-name" }, [_vm._v("Name")]),
-      _vm._v(" "),
-      _c("span", { staticClass: "label-hint" }, [
-        _vm._v("E.g. atoms.buttons.button")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", { attrs: { for: "description" } }, [
-      _c("span", { staticClass: "label-name" }, [
-        _vm._v("\n            Description "),
-        _c("span", [_vm._v("(optional)")])
-      ]),
-      _vm._v(" "),
-      _c("span", { staticClass: "label-hint" }, [
-        _vm._v("E.g. atoms.buttons.button")
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -26444,6 +26419,13 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -26554,39 +26536,42 @@ var render = function() {
             },
             [
               _c("pre", [
-                _vm._v("            "),
                 _c("code", { staticClass: "language-html" }, [
                   _vm._v(_vm._s(_vm.pattern.template))
-                ]),
-                _vm._v("\n          ")
+                ])
               ])
             ]
           ),
           _vm._v(" "),
+          _c("div", {
+            staticClass: "tab",
+            attrs: {
+              id: "html-view",
+              role: "tabpanel",
+              "aria-labelledby": "html-view"
+            }
+          })
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "code-el" }, [
+        _vm._m(1),
+        _vm._v(" "),
+        _c("div", { staticClass: "code-tabs" }, [
           _c(
             "div",
             {
               staticClass: "tab",
               attrs: {
-                id: "html-view",
+                id: "markup-view",
                 role: "tabpanel",
-                "aria-labelledby": "html-view"
+                "aria-labelledby": "markup-view"
               }
             },
-            [
-              _c("pre", [
-                _vm._v("            "),
-                _c("code", { staticClass: "language-html" }, [
-                  _vm._v(_vm._s(_vm.pattern.html))
-                ]),
-                _vm._v("\n          ")
-              ])
-            ]
+            [_c("pre", [_c("code", [_vm._v(_vm._s(_vm.pattern.sass))])])]
           )
         ])
-      ]),
-      _vm._v(" "),
-      _vm._m(1)
+      ])
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "preview" }, [
@@ -26614,6 +26599,12 @@ var render = function() {
       "div",
       { staticClass: "footer" },
       [
+        _c("router-link", { attrs: { to: { name: "create" } } }, [
+          _c("button", { staticClass: "btn btn--primary btn--sm" }, [
+            _c("span", [_vm._v("\n\n          New Pattern\n\n        ")])
+          ])
+        ]),
+        _vm._v(" "),
         _c(
           "button",
           {
@@ -26655,35 +26646,10 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "code-el" }, [
-      _c("h2", [
-        _c("span", [_vm._v("SASS")]),
-        _vm._v(" / "),
-        _c("span", [_vm._v("CSS")])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "code-tabs" }, [
-        _c(
-          "div",
-          {
-            staticClass: "tab",
-            attrs: {
-              id: "markup-view",
-              role: "tabpanel",
-              "aria-labelledby": "markup-view"
-            }
-          },
-          [
-            _c("pre", [
-              _c("code", { staticClass: "language-css" }, [
-                _vm._v(
-                  ".class {\n              border: none;\n            }\n            "
-                )
-              ])
-            ])
-          ]
-        )
-      ])
+    return _c("h2", [
+      _c("span", [_vm._v("SASS")]),
+      _vm._v(" / "),
+      _c("span", [_vm._v("CSS")])
     ])
   },
   function() {
@@ -26725,9 +26691,10 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
   state: {
     config: __WEBPACK_IMPORTED_MODULE_2__config__["a" /* default */],
     appInfo: {},
-    menu: {
+    navi: {
       activeMain: '',
-      activeSub: ''
+      activeSub: '',
+      reload: false
     }
   },
 
@@ -26749,8 +26716,8 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
      * @param menu
      */
     toggleMainMenu: function toggleMainMenu(state, menu) {
-      state.menu.activeMain = menu;
-      state.menu.activeSub = '';
+      state.navi.activeMain = menu;
+      state.navi.activeSub = '';
     },
 
 
@@ -26760,7 +26727,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
      * @param subMenu
      */
     toggleSubMenu: function toggleSubMenu(state, subMenu) {
-      state.menu.activeSub = subMenu;
+      state.navi.activeSub = subMenu;
     },
 
 
@@ -26769,7 +26736,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
      * @param state
      */
     resetMainMenu: function resetMainMenu(state) {
-      state.menu.activeMain = '';
+      state.navi.activeMain = '';
     },
 
 
@@ -26778,7 +26745,17 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
      * @param state
      */
     resetSubMenu: function resetSubMenu(state) {
-      state.menu.activeSub = '';
+      state.navi.activeSub = '';
+    },
+
+
+    /**
+     * Start/stop a reload of the navi.
+     * @param state
+     * @param reload
+     */
+    reloadNavi: function reloadNavi(state, reload) {
+      state.navi.reload = reload;
     }
   }
 }));
@@ -27969,6 +27946,10 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -27992,48 +27973,71 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
   },
 
 
-  /**
-   * Fetch the workshop navigation.
-   * @returns {Promise<void>}
-   */
-  beforeCreate: function () {
-    var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
-      var json;
-      return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              _context.prev = 0;
-              _context.next = 3;
-              return __WEBPACK_IMPORTED_MODULE_4__httpClient__["a" /* API */].get('navi');
+  watch: {
+    '$store.state.navi.reload': 'reloadNavi'
+  },
 
-            case 3:
-              json = _context.sent;
+  methods: {
+    /**
+     * Fetch the workshop navigation.
+     * @returns {Promise<void>}
+     */
+    fetchNavi: function () {
+      var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
+        var json;
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.prev = 0;
+                _context.next = 3;
+                return __WEBPACK_IMPORTED_MODULE_4__httpClient__["a" /* API */].get('navi');
 
-              this.navi = json.data.data;
-              _context.next = 10;
-              break;
+              case 3:
+                json = _context.sent;
 
-            case 7:
-              _context.prev = 7;
-              _context.t0 = _context["catch"](0);
+                this.navi = json.data.data;
+                _context.next = 10;
+                break;
 
-              __WEBPACK_IMPORTED_MODULE_5__logger__["a" /* default */].error(_context.t0);
+              case 7:
+                _context.prev = 7;
+                _context.t0 = _context["catch"](0);
 
-            case 10:
-            case "end":
-              return _context.stop();
+                __WEBPACK_IMPORTED_MODULE_5__logger__["a" /* default */].error(_context.t0);
+
+              case 10:
+              case "end":
+                return _context.stop();
+            }
           }
-        }
-      }, _callee, this, [[0, 7]]);
-    }));
+        }, _callee, this, [[0, 7]]);
+      }));
 
-    function beforeCreate() {
-      return _ref.apply(this, arguments);
+      function fetchNavi() {
+        return _ref.apply(this, arguments);
+      }
+
+      return fetchNavi;
+    }(),
+
+    /**
+     * Reload the menu if requested.
+     */
+    reloadNavi: function reloadNavi() {
+      if (this.$store.state.navi.reload === true) {
+        this.fetchNavi();
+        this.$store.commit('reloadNavi', false);
+      }
     }
+  },
 
-    return beforeCreate;
-  }()
+  /**
+   * Load the navigation from the API.
+   */
+  created: function created() {
+    this.fetchNavi();
+  }
 });
 
 /***/ }),
@@ -28131,7 +28135,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
      */
     toggleMainMenu: function toggleMainMenu(menu) {
 
-      if (this.$store.state.menu.activeMain === menu) {
+      if (this.$store.state.navi.activeMain === menu) {
         this.$store.commit('resetMainMenu');
       } else {
         this.$store.commit('toggleMainMenu', menu);
@@ -28239,7 +28243,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
      * @param subMenu
      */
     toggleSubMenu: function toggleSubMenu(subMenu) {
-      if (this.$store.state.menu.activeSub.includes(subMenu)) {
+      if (this.$store.state.navi.activeSub.includes(subMenu)) {
         var pathComponents = subMenu.split('.');
         pathComponents.pop();
         subMenu = pathComponents.join('.');
@@ -28267,7 +28271,7 @@ var render = function() {
         "li",
         {
           staticClass: "pattern",
-          class: { active: _vm.$store.state.menu.activeSub.includes(item.path) }
+          class: { active: _vm.$store.state.navi.activeSub.includes(item.path) }
         },
         [
           item.items.length === 0
@@ -28320,7 +28324,7 @@ var render = function() {
     "li",
     {
       staticClass: "pattern u-center",
-      class: { active: _vm.$store.state.menu.activeMain === _vm.menu.path }
+      class: { active: _vm.$store.state.navi.activeMain === _vm.menu.path }
     },
     [
       _vm.menu.items.length === 0
@@ -28375,15 +28379,26 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _c("nav", { staticClass: "project-navigation" }, [
-      _c(
-        "ul",
-        { staticClass: "patterns" },
-        _vm._l(_vm.navi, function(menu, index) {
-          return _c("navbar-main", { key: index, attrs: { menu: menu } })
-        })
-      )
-    ])
+    _c(
+      "nav",
+      { staticClass: "project-navigation" },
+      [
+        _c(
+          "router-link",
+          { staticClass: "back", attrs: { to: { name: "dashboard" } } },
+          [_c("i", { staticClass: "fas fa-arrow-circle-left" })]
+        ),
+        _vm._v(" "),
+        _c(
+          "ul",
+          { staticClass: "patterns" },
+          _vm._l(_vm.navi, function(menu, index) {
+            return _c("navbar-main", { key: index, attrs: { menu: menu } })
+          })
+        )
+      ],
+      1
+    )
   ])
 }
 var staticRenderFns = []

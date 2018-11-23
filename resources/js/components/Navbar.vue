@@ -52,17 +52,40 @@
       }
     },
 
-    /**
-     * Fetch the workshop navigation.
-     * @returns {Promise<void>}
-     */
-    async beforeCreate() {
-      try {
-        let json = await API.get('navi');
-        this.navi = json.data.data;
-      } catch (e) {
-        LOG.error(e);
+    watch: {
+      '$store.state.navi.reload': 'reloadNavi'
+    },
+
+    methods: {
+      /**
+       * Fetch the workshop navigation.
+       * @returns {Promise<void>}
+       */
+      fetchNavi: async function () {
+        try {
+          let json = await API.get('navi');
+          this.navi = json.data.data;
+        } catch (e) {
+          LOG.error(e);
+        }
+      },
+
+      /**
+       * Reload the menu if requested.
+       */
+      reloadNavi: function () {
+        if (this.$store.state.navi.reload === true) {
+          this.fetchNavi();
+          this.$store.commit('reloadNavi', false);
+        }
       }
+    },
+
+    /**
+     * Load the navigation from the API.
+     */
+    created() {
+      this.fetchNavi();
     }
   }
 

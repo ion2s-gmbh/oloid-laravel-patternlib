@@ -96,29 +96,38 @@ class PatternService
     {
         $parts = explode('.', $pattern);
         $parent = array_shift($parts);
-        $parentSassPath = config('workshop.patternPath') . "/{$parent}/{$parent}.scss";
-        $includeFile = implode('/', $parts);
 
-        /*
-         * Import in sass file in parent sass file
-         */
-        $content = "@import \"{$includeFile}\";";
-        if (!File::exists($parentSassPath)) {
+        if (count($parts) === 0) {
+            $import = "{$parent}";
+            $this->importInMainSassFile($import);
 
-            $this->importInMainSassFile($parent);
+        } elseif (count($parts) >= 1) {
+
+            $parentSassPath = config('workshop.patternPath') . "/{$parent}/{$parent}.scss";
+            $includeFile = implode('/', $parts);
+
+            /*
+             * Import in parent sass file
+             */
+            $content = "@import \"{$includeFile}\";\n";
+            if (!File::exists($parentSassPath)) {
+
+                $import = "{$parent}/{$parent}";
+                $this->importInMainSassFile($import);
+            }
+
+            File::append($parentSassPath, $content);
         }
-
-        File::append($parentSassPath, $content);
     }
 
     /**
      * Import in main sass file
-     * @param string $parent
+     * @param string $import
      */
-    private function importInMainSassFile(string $parent): void
+    private function importInMainSassFile(string $import): void
     {
         File::append(config('workshop.patternPath') . '/patterns.scss',
-            "@import \"{$parent}/{$parent}\";");
+            "@import \"{$import}\";\n");
     }
 
     /**

@@ -27,7 +27,7 @@ trait TestStubs
     public function prepareViewConfigStub()
     {
         $fs = new Filesystem();
-        $sourcePath = realpath(__DIR__ . '/../stubs/view.php');
+        $sourcePath = realpath(__DIR__ . '/../Stubs/view.php');
         $this->viewConfigPath = "{$this->tempDir}/view.php";
         $fs->copy($sourcePath, $this->viewConfigPath);
     }
@@ -35,9 +35,8 @@ trait TestStubs
     public function preparePatternStub()
     {
         $fs = new Filesystem();
-        $sourcePath = realpath(__DIR__ . '/../stubs/patterns');
+        $sourcePath = realpath(__DIR__ . '/../Stubs/patterns');
         $targetPath = "{$this->tempDir}/patterns";
         $fs->copyDirectory($sourcePath, $targetPath);
     }
-
 }

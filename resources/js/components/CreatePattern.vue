@@ -1,16 +1,16 @@
 <template>
 
   <div class="dashboard">
-    
+
     <form method="post" class="form form--create">
 
       <div class="form-group">
 
         <label for="name">
-        
+
           <span class="label-name">Name</span>
           <span class="label-hint">E.g. atoms.buttons.button</span>
-          <small class="error">{{ errors.first('name') }}</small>
+          <small class="error" v-if="errors.has('name')">{{ errors.first('name') }}</small>
 
         </label>
 
@@ -19,52 +19,48 @@
                type="text"
                name="name"
                v-model="pattern.name"
-               aria-describedby="nameHelp"               
+               aria-describedby="nameHelp"
                v-validate.disable="'required'"
         />
 
-        
 
       </div>
 
-        <div class="form-group">
-          
-          <label for="description">
+      <div class="form-group">
+
+        <label for="description">
             
             <span class="label-name">
-              Description <span>(optional)</span>
+              Description
             </span>
 
-            <span class="label-hint">E.g. atoms.buttons.button</span>    
+          <small class="error" v-if="errors.has('description')">{{ errors.first('description') }}</small>
 
-            <small class="error">{{ errors.first('description') }}</small>      
+        </label>
 
-          </label>
-
-          <textarea id="description"
-                    class="form-control"
-                    name="description"
-                    v-model="pattern.description"
-                    v-validate.disable="'required'">
+        <textarea id="description"
+                  class="form-control"
+                  name="description"
+                  v-model="pattern.description"
+                  v-validate.disable="'required'">
                     
-          </textarea>          
+          </textarea>
 
-        </div>
+      </div>
 
-        <div class="form-group form-group--end">
+      <div class="form-group form-group--end">
 
-          <router-link :to="{ name: 'dashboard' }">
-            <span>Cancel</span>
-          </router-link>
-          
-          <button @click.prevent="store" class="btn btn--primary btn--sm">
-            <span>Create pattern</span>  
-          </button>
+        <router-link :to="{ name: 'dashboard' }">
+          <span>Cancel</span>
+        </router-link>
 
-          
+        <button @click.prevent="store" class="btn btn--primary btn--sm">
+          <span>Create pattern</span>
+        </button>
 
-        </div>
-        
+
+      </div>
+
     </form>
 
   </div>
@@ -97,6 +93,7 @@
                   'description': this.pattern.description
                 });
                 if (response.status === 201) {
+                  this.$store.commit('reloadNavi', true);
                   this.$router.push('/preview/' + this.pattern.name);
                 }
               } catch (e) {

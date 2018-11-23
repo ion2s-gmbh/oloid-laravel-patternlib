@@ -9,9 +9,10 @@ export default new Vuex.Store({
   state: {
     config,
     appInfo: {},
-    menu: {
+    navi: {
       activeMain: '',
-      activeSub: ''
+      activeSub: '',
+      reload: false
     }
   },
 
@@ -22,7 +23,7 @@ export default new Vuex.Store({
      * @param state
      * @param info
      */
-    appInfo (state, info) {
+    appInfo(state, info) {
       state.appInfo = info.data;
     },
 
@@ -31,9 +32,9 @@ export default new Vuex.Store({
      * @param state
      * @param menu
      */
-    toggleMainMenu (state, menu) {
-      state.menu.activeMain = menu;
-      state.menu.activeSub = '';
+    toggleMainMenu(state, menu) {
+      state.navi.activeMain = menu;
+      state.navi.activeSub = '';
     },
 
     /**
@@ -41,24 +42,33 @@ export default new Vuex.Store({
      * @param state
      * @param subMenu
      */
-    toggleSubMenu (state, subMenu) {
-      state.menu.activeSub = subMenu;
+    toggleSubMenu(state, subMenu) {
+      state.navi.activeSub = subMenu;
     },
 
     /**
      * Reset the active main menu item.
      * @param state
      */
-    resetMainMenu (state) {
-      state.menu.activeMain = '';
+    resetMainMenu(state) {
+      state.navi.activeMain = '';
     },
 
     /**
      * Reset the active sub menu item.
      * @param state
      */
-    resetSubMenu (state) {
-      state.menu.activeSub = '';
+    resetSubMenu(state) {
+      state.navi.activeSub = '';
+    },
+
+    /**
+     * Start/stop a reload of the navi.
+     * @param state
+     * @param reload
+     */
+    reloadNavi(state, reload) {
+      state.navi.reload = reload;
     }
   }
 });

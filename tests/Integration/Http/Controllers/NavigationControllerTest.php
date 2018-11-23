@@ -39,7 +39,12 @@ class NavigationControllerTest extends BaseTestCase
                                 ]
                             ]
                         ]
-                    ]
+                    ],
+                ],
+                [
+                    'name' => 'homepage',
+                    'path' => 'homepage',
+                    'items' => []
                 ]
             ]
         ];

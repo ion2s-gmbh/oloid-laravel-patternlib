@@ -150,8 +150,14 @@
        * Delete the pattern
        * @param pattern
        */
-      deletePattern: function (pattern) {
-        alert('Deleting ' + pattern);
+      deletePattern: async function (pattern) {
+        try {
+          let response = await API.delete(pattern);
+          this.$store.commit('reloadNavi', true);
+          this.$router.push('/');
+        } catch (e) {
+          LOG.error(e);
+        }
       }
     },
 

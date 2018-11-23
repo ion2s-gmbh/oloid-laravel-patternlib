@@ -29,11 +29,18 @@ class NavigationController extends Controller
     {
         $data = [];
         $fs = new Filesystem();
-        $directories = $fs->directories($path);
+
+        /*
+         * If the given path does not exist, we return immediately
+         */
+        if (!$fs->exists($path)) {
+            return $data;
+        }
 
         /*
          * Check every nested directory for files.
          */
+        $directories = $fs->directories($path);
         foreach ($directories as $directory) {
             $data[] = [
                 'name' => str_after($directory, $path . '/'),

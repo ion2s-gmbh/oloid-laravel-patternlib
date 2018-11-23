@@ -331,4 +331,17 @@ class PatternServiceTest extends BaseTestCase
     {
         $this->assertEquals("/* atoms.text.headline1 */\nh1 {\n  color: red;\n}", $sass);
     }
+
+    /**
+     * @test
+     * @covers \Laratomics\Services\PatternService
+     */
+    public function it_should_remove_all_pattern_files()
+    {
+        // arrange
+        $this->preparePatternStub();
+
+        // act
+        $this->assertTrue($this->cut->remove($this->name));
+    }
 }

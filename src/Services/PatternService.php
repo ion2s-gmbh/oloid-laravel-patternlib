@@ -229,4 +229,46 @@ class PatternService
         }
     }
 
+    /**
+     * Remove the given Pattern.
+     *
+     * @param string $pattern
+     * @return bool
+     * @todo this feature is still incomplete
+     */
+    public function remove(string $pattern): bool
+    {
+        $templateSuccess = File::delete($this->getFileLocation($pattern, self::BLADE_EXTENSION));
+        $markdownSuccess = File::delete($this->getFileLocation($pattern, self::MARKDOWN_EXTENSION));
+        $sassSuccess = File::delete($this->getFileLocation($pattern, self::SASS_EXTENSION));
+
+        /*
+         * TODO: remove directory, if no blade file exist in it
+         */
+//        $this->removeDirectoryIfEmpty($location['path']);
+
+
+        /*
+         * TODO: remove parent sass file if empty
+         * or remove import if not empty
+         */
+
+        /*
+         * TODO: remove import in main sass file, if parent sass file was deleted
+         */
+
+        return $templateSuccess && $markdownSuccess && $sassSuccess;
+    }
+
+    private function removeDirectoryIfEmpty($directory)
+    {
+        $files = File::files($directory);
+        foreach ($files as $file) {
+            if (ends_with($file, 'blade.php')) {
+                return false;
+            }
+        }
+
+        return File::deleteDirectory($directory);
+    }
 }

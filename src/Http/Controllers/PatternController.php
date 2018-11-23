@@ -83,6 +83,7 @@ class PatternController extends Controller
      */
     public function remove(string $pattern): JsonResponse
     {
+        $this->patternService->remove($pattern);
         return JsonResponse::create([]);
     }
 }

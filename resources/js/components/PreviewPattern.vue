@@ -24,9 +24,7 @@
 
           <div class="tab" id="html-view" role="tabpanel" aria-labelledby="html-view">
 
-            <pre>
-              <code class="language-html">{{ pattern.html }}</code>
-            </pre>
+            <pre><code class="language-html">{{ pattern.html }}</code></pre>
 
           </div>
 
@@ -46,10 +44,7 @@
 
           <div class="tab" id="markup-view" role="tabpanel" aria-labelledby="markup-view">
 
-              <pre><code class="language-css">.class {
-                border: none;
-              }
-              </code></pre>
+              <pre><code>{{ pattern.sass }}</code></pre>
 
           </div>
 

@@ -6,16 +6,16 @@
 
       <h2 class="headline--one">
         Welcome!
-        <small>This is our temporary dashboard!</small>
+        <small>Start building something awesome!</small>
       </h2> 
 
-      <router-link to="/preview/atoms.text.headline1">
-        <button class="btn btn--secondary">        
-          <span>
-            Preview Pattern
-          </span>
-        </button>
-      </router-link>
+      <!--<router-link to="/preview/atoms.text.headline1">-->
+        <!--<button class="btn btn&#45;&#45;secondary">        -->
+          <!--<span>-->
+            <!--Preview Pattern-->
+          <!--</span>-->
+        <!--</button>-->
+      <!--</router-link>-->
 
       <router-link :to="{ name: 'create' }">
         <button class="btn btn--primary btn--cta">

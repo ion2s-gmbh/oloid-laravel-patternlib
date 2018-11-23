@@ -93,7 +93,7 @@
                   'description': this.pattern.description
                 });
                 if (response.status === 201) {
-                  this.$store.commit('reloadMenu', true);
+                  this.$store.commit('reloadNavi', true);
                   this.$router.push('/preview/' + this.pattern.name);
                 }
               } catch (e) {

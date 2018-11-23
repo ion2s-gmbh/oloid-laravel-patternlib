@@ -53,7 +53,7 @@
     },
 
     watch: {
-      '$store.state.menu.reload': 'reloadMenu'
+      '$store.state.navi.reload': 'reloadNavi'
     },
 
     methods: {
@@ -73,10 +73,10 @@
       /**
        * Reload the menu if requested.
        */
-      reloadMenu: function () {
-        if (this.$store.state.menu.reload === true) {
+      reloadNavi: function () {
+        if (this.$store.state.navi.reload === true) {
           this.fetchNavi();
-          this.$store.commit('reloadMenu', false);
+          this.$store.commit('reloadNavi', false);
         }
       }
     },

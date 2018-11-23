@@ -10,7 +10,7 @@
         
           <span class="label-name">Name</span>
           <span class="label-hint">E.g. atoms.buttons.button</span>
-          <small class="error">{{ errors.first('name') }}</small>
+          <small class="error" v-if="errors.has('name')">{{ errors.first('name') }}</small>
 
         </label>
 
@@ -32,12 +32,10 @@
           <label for="description">
             
             <span class="label-name">
-              Description <span>(optional)</span>
+              Description
             </span>
 
-            <span class="label-hint">E.g. atoms.buttons.button</span>    
-
-            <small class="error">{{ errors.first('description') }}</small>      
+            <small class="error" v-if="errors.has('description')">{{ errors.first('description') }}</small>
 
           </label>
 

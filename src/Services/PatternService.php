@@ -238,30 +238,37 @@ class PatternService
      */
     public function remove(string $pattern): bool
     {
-        $templateFile = $this->getFileLocation($pattern, self::BLADE_EXTENSION);
-        $templateSuccess = File::delete($templateFile);
+        /*
+         * Gathering path information
+         */
+        $mainSassFile = pattern_path('patterns.scss');
+        $patternRoot = root_dir($pattern);
+        $parentSassFile = pattern_path("{$patternRoot}.scss");
+        $sassFile = $this->getFileLocation($pattern, self::SASS_EXTENSION);
+
+        /*
+         * Delete base files
+         */
+        $templateSuccess = File::delete($this->getFileLocation($pattern, self::BLADE_EXTENSION));
         $markdownSuccess = File::delete($this->getFileLocation($pattern, self::MARKDOWN_EXTENSION));
-        $sassSuccess = File::delete($this->getFileLocation($pattern, self::SASS_EXTENSION));
+        $sassSuccess = File::delete($sassFile);
 
-        $parentDir = parent_dir($templateFile);
 
+        $startDir = parent_dir($sassFile);
 
         /*
-         * remove directory, if no blade file exist in it
+         * Remove path recursevly if directory does not contain any blade files
+         * until blade files are found
+         * or pattern root is reached
          */
-        $remainingTemplateFiles = dir_contains_any($parentDir, self::BLADE_EXTENSION);
-        if (!$remainingTemplateFiles) {
-            File::deleteDirectory($parentDir);
-        }
+        // TODO: remove_path($startDir, $patternRoot) // recursively
 
         /*
-         * TODO: remove parent sass file if empty
-         * or remove import if not empty
+         * TODO: if $parentSassFile still exists remove import of pattern's sass file in the parentSassFile
          */
 
-
         /*
-         * TODO: remove import in main sass file, if parent sass file was deleted
+         * TODO: Remove import in pattern.scss of $parentSassFile if it does not exist any more
          */
 
         return $templateSuccess && $markdownSuccess && $sassSuccess;

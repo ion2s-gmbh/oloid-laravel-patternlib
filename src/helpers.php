@@ -137,10 +137,10 @@ if (!function_exists('dir_contains_any')) {
     }
 }
 
-//if (!function_exists('root_dir')) {
-//    function root_dir($pattern) {
-//        $parts = explode('.', $pattern);
-//        $parentDir = array_shift($parts);
-//        return $parentDir;
-//    }
-//}
+if (!function_exists('root_dir')) {
+    function root_dir($pattern) {
+        $parts = explode('.', $pattern);
+        $parentDir = array_shift($parts);
+        return $parentDir;
+    }
+}

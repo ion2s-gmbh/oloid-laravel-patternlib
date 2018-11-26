@@ -167,16 +167,16 @@ class HelperMethodsTest extends BaseTestCase
         $this->assertEquals($expected, parent_dir($file));
     }
 
-//    /**
-//     * @test
-//     * @covers ::root_dir
-//     */
-//    public function it_should_return_the_patterns_root_dir()
-//    {
-//        // arrange
-//        $pattern = 'root.path.to.a.file.txt';
-//
-//        // assert
-//        $this->assertEquals('root', root_dir($pattern));
-//    }
+    /**
+     * @test
+     * @covers ::root_dir
+     */
+    public function it_should_return_the_patterns_root_dir()
+    {
+        // arrange
+        $pattern = 'root.path.to.a.file.txt';
+
+        // assert
+        $this->assertEquals('root', root_dir($pattern));
+    }
 }

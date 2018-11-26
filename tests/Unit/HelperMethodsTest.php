@@ -5,6 +5,7 @@ namespace Unit;
 
 
 use Exception;
+use Illuminate\Filesystem\Filesystem;
 use Laratomics\Tests\BaseTestCase;
 use Laratomics\Tests\Traits\TestStubs;
 
@@ -59,16 +60,73 @@ class HelperMethodsTest extends BaseTestCase
 
     /**
      * @test
-     * @covers ::directory_is_empty
+     * @covers ::dir_is_empty
      */
     public function it_should_check_if_a_given_directory_is_empty()
     {
         // arrange
-
-        // act
+        $testDirectory = "{$this->tempDir}/empty/subdirectory";
+        $fs = new Filesystem();
+        $fs->makeDirectory($testDirectory, 0755, true);
 
         // assert
-        $this->markTestIncomplete('Not yet implemented!');
+        $this->assertTrue(dir_is_empty($testDirectory));
+    }
+
+    /**
+     * @test
+     * @covers ::dir_is_empty
+     */
+    public function it_should_check_if_a_given_directory_is_not_empty()
+    {
+        // arrange
+        $testDirectory = "{$this->tempDir}/empty/subdirectory";
+        $fs = new Filesystem();
+        $fs->makeDirectory($testDirectory, 0755, true);
+
+        // assert
+        $this->assertFalse(dir_is_empty("{$this->tempDir}/empty"));
+    }
+
+    /**
+     * @test
+     * @covers ::dir_is_empty
+     */
+    public function it_should_check_if_a_given_directory_contains_files()
+    {
+        // arrange
+        $this->preparePatternStub();
+
+        // assert
+        $this->assertFalse(dir_is_empty("{$this->tempDir}/patterns"));
+    }
+
+    /**
+     * @test
+     * @covers ::dir_contains_any
+     */
+    public function it_should_check_that_a_directory_contains_any_files_of_a_given_extension()
+    {
+        // arrange
+        $this->preparePatternStub();
+        $directory = "{$this->tempDir}/patterns/atoms/text";
+
+        // assert
+        $this->assertTrue(dir_contains_any($directory, 'blade.php'));
+    }
+
+    /**
+     * @test
+     * @covers ::dir_contains_any
+     */
+    public function it_should_check_if_a_directory_not_contains_any_files_of_a_given_extension()
+    {
+        // arrange
+        $this->preparePatternStub();
+        $directory = "{$this->tempDir}/patterns/atoms/text";
+
+        // assert
+        $this->assertFalse(dir_contains_any($directory, 'txt'));
     }
 
     /**

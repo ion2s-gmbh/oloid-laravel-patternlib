@@ -1,6 +1,7 @@
 <?php
 
 
+use Illuminate\Filesystem\Filesystem;
 use Laratomics\Exceptions\RenderingException;
 
 if (!function_exists('compile_blade_string')) {
@@ -100,5 +101,38 @@ if (!function_exists('parent_dir')) {
         $parts = explode('/', $filePath);
         array_pop($parts);
         return implode('/', $parts);
+    }
+}
+
+if (!function_exists('dir_is_empty')) {
+    function dir_is_empty($path) {
+        $fs = new Filesystem();
+        $files = $fs->files($path);
+        $directories = $fs->directories($path);
+
+        return count($files) === 0
+            && count($directories) === 0;
+    }
+}
+
+if (!function_exists('dir_contains_any')) {
+    /**
+     * Check if the given directory contains files with a specific extension.
+     *
+     * @param $directory
+     * @param $extension
+     * @return bool
+     */
+    function dir_contains_any($directory, $extension): bool {
+        $fs = new Filesystem();
+        $files = $fs->files($directory);
+        if (is_array($files)) {
+            foreach ($files as $file) {
+                if (ends_with($file, $extension)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

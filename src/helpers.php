@@ -94,11 +94,11 @@ if (!function_exists('parent_dir')) {
      * part.
      * E.g. /some/path/to/a/file.txt => /some/path/to/a
      *
-     * @param $filePath
+     * @param $path
      * @return string
      */
-    function parent_dir($filePath): string {
-        $parts = explode('/', $filePath);
+    function parent_dir($path): string {
+        $parts = explode('/', $path);
         array_pop($parts);
         return implode('/', $parts);
     }
@@ -136,3 +136,11 @@ if (!function_exists('dir_contains_any')) {
         return false;
     }
 }
+
+//if (!function_exists('root_dir')) {
+//    function root_dir($pattern) {
+//        $parts = explode('.', $pattern);
+//        $parentDir = array_shift($parts);
+//        return $parentDir;
+//    }
+//}

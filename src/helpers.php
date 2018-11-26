@@ -5,12 +5,14 @@ use Laratomics\Exceptions\RenderingException;
 
 if (! function_exists('compileBladeString')) {
     /**
+     * Compiles a string containing Blade content to shippable HTML.
+     *
      * @param $value
      * @param array $args
      * @return false|string
      * @throws RenderingException
      */
-    function compileBladeString($value, array $args = array())
+    function compileBladeString($value, array $args = array()): string
     {
         $generated = Blade::compileString($value);
 
@@ -36,5 +38,22 @@ if (! function_exists('compileBladeString')) {
         $content = ob_get_clean();
 
         return $content;
+    }
+}
+
+if (! function_exists('pattern_path')) {
+    /**
+     * Returns the absolute path to the patterns directory.
+     *
+     * @param string $subpath
+     * @return \Illuminate\Config\Repository|mixed
+     */
+    function pattern_path(string $subpath = ''): string {
+        $path = config('workshop.patternPath');
+        if (! empty($subpath)) {
+            $path = config('workshop.patternPath') . "/{$subpath}";
+        }
+
+        return $path;
     }
 }

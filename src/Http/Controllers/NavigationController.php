@@ -16,7 +16,7 @@ class NavigationController extends Controller
     public function get(): JsonResponse
     {
         return JsonResponse::create([
-            'data' => $this->getNavi(config('workshop.patternPath'))
+            'data' => $this->getNavi(pattern_path())
         ]);
     }
 
@@ -45,7 +45,7 @@ class NavigationController extends Controller
         foreach ($directories as $directory) {
             $data[] = [
                 'name' => str_after($directory, $path . '/'),
-                'path' => str_replace('/', '.', str_after($directory, config('workshop.patternPath') . '/')),
+                'path' => str_replace('/', '.', str_after($directory, pattern_path() . '/')),
                 'items' => $this->getNavi($directory)
             ];
         }
@@ -57,7 +57,7 @@ class NavigationController extends Controller
         foreach ($files as $pattern) {
             if (ends_with($pattern, '.blade.php')) {
                 $name = str_after(str_before($pattern, '.blade.php'), $path . '/');
-                $patternPath = str_replace('/', '.', str_after(str_before($pattern, '.blade.php'), config('workshop.patternPath') . '/'));
+                $patternPath = str_replace('/', '.', str_after(str_before($pattern, '.blade.php'), pattern_path() . '/'));
                 $data[] = [
                     'name' => $name,
                     'path' => $patternPath,

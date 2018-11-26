@@ -56,4 +56,56 @@ class HelperMethodsTest extends BaseTestCase
         $expectedPatternPath = realpath(__DIR__ . '/../tmp/patterns/atoms');
         $this->assertEquals($expectedPatternPath, pattern_path('atoms'));
     }
+
+    /**
+     * @test
+     * @covers ::directory_is_empty
+     */
+    public function it_should_check_if_a_given_directory_is_empty()
+    {
+        // arrange
+
+        // act
+
+        // assert
+        $this->markTestIncomplete('Not yet implemented!');
+    }
+
+    /**
+     * @test
+     * @covers ::dotted_path
+     */
+    public function it_should_convert_a_slash_separated_path_to_dotted_notation()
+    {
+        // arrange
+        $path = '/var/some/test/path/';
+        $expected = 'var.some.test.path';
+        $this->assertEquals($expected, dotted_path($path));
+    }
+
+    /**
+     * @test
+     * @covers ::slash_path
+     */
+    public function it_should_convert_a_dot_separated_path_to_slash_notation()
+    {
+        // arrange
+        $dottedPath = 'var.some.test.path';
+        $expected = 'var/some/test/path';
+        $this->assertEquals($expected, slash_path($dottedPath));
+    }
+
+    /**
+     * @test
+     * @covers ::dir_of
+     */
+    public function it_should_return_the_directory_where_the_given_file_is_contained()
+    {
+        // arrange
+
+        // act
+
+        // assert
+        $this->markTestIncomplete('Not yet implemented!');
+    }
 }

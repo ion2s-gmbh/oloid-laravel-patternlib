@@ -14,7 +14,7 @@ class HelperMethodsTest extends BaseTestCase
 
     /**
      * @test
-     * @covers ::compileBladeString
+     * @covers ::compile_blade_string
      */
     public function it_should_parse_a_php_template_to_html()
     {
@@ -23,7 +23,7 @@ class HelperMethodsTest extends BaseTestCase
 
         // act
         try {
-            $html = compileBladeString($template, ['text' => 'TEST']);
+            $html = compile_blade_string($template, ['text' => 'TEST']);
             $this->assertEquals('<h1>TEST</h1>', $html);
         } catch (Exception $e) {
             $this->fail();

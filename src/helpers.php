@@ -3,7 +3,7 @@
 
 use Laratomics\Exceptions\RenderingException;
 
-if (! function_exists('compileBladeString')) {
+if (! function_exists('compile_blade_string')) {
     /**
      * Compiles a string containing Blade content to shippable HTML.
      *
@@ -12,7 +12,7 @@ if (! function_exists('compileBladeString')) {
      * @return false|string
      * @throws RenderingException
      */
-    function compileBladeString($value, array $args = array()): string
+    function compile_blade_string($value, array $args = array()): string
     {
         $generated = Blade::compileString($value);
 

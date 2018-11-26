@@ -86,3 +86,19 @@ if (!function_exists('slash_path')) {
         return str_replace('.', '/', $path);
     }
 }
+
+if (!function_exists('parent_dir')) {
+    /**
+     * Given a path to a file, this method returns the path, without the filename
+     * part.
+     * E.g. /some/path/to/a/file.txt => /some/path/to/a
+     *
+     * @param $filePath
+     * @return string
+     */
+    function parent_dir($filePath): string {
+        $parts = explode('/', $filePath);
+        array_pop($parts);
+        return implode('/', $parts);
+    }
+}

@@ -97,15 +97,15 @@ class HelperMethodsTest extends BaseTestCase
 
     /**
      * @test
-     * @covers ::dir_of
+     * @covers ::parent_dir
      */
     public function it_should_return_the_directory_where_the_given_file_is_contained()
     {
         // arrange
-
-        // act
+        $file = '/some/path/to/a/file.txt';
+        $expected = '/some/path/to/a';
 
         // assert
-        $this->markTestIncomplete('Not yet implemented!');
+        $this->assertEquals($expected, parent_dir($file));
     }
 }

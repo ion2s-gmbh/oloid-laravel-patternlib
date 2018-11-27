@@ -6,7 +6,7 @@
 
       <div class="code-el">
 
-        <h2>
+        <h2 class="code-lang">
 
           <span>Markup</span> / <span>HTML</span>
 
@@ -32,7 +32,7 @@
 
       <div class="code-el">
 
-        <h2>
+        <h2 class="code-lang">
 
           <span>SASS</span> / <span>CSS</span>
 
@@ -54,13 +54,20 @@
 
     <div class="preview">
 
-      <div class="">
+      <div class="preview-infos">
+
+        {{ pattern.name }}
+
+        <status-bar :status="pattern.status"></status-bar>
+        
+      </div>
+
+      <div class="preview-inner">
 
         <iframe height="1500" width="1100"
                 frameBorder="0"
                 :src="`workshop/preview/${pattern.name}`"></iframe>
 
-        <div style="background: transparent; height: 5000px; width: 5002px;"></div>
 
       </div>
 
@@ -113,6 +120,7 @@
 <script>
   import {API} from '../httpClient';
   import LOG from '../logger';
+  import StatusBar from './StatusBar';
 
   export default {
     name: "PreviewPattern",
@@ -123,6 +131,10 @@
         },
         loading: false,
       }
+    },
+
+    components: {
+      StatusBar
     },
 
     watch: {

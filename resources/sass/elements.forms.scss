@@ -73,7 +73,6 @@ textarea {
 // Validation --------- //
 
 .error {
-	@include a-fadeIn;	
 	color: var(--alert, $c-alert);
 	display: inline-block;
 }

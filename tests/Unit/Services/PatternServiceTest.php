@@ -331,4 +331,25 @@ class PatternServiceTest extends BaseTestCase
     {
         $this->assertEquals("/* atoms.text.headline1 */\nh1 {\n  color: red;\n}", $sass);
     }
+
+    /**
+     * @test
+     * @covers \Laratomics\Services\PatternService
+     */
+    public function it_should_remove_all_pattern_files_and_empty_folders()
+    {
+        // arrange
+        $this->preparePatternStub();
+
+        // act
+        $this->assertTrue($this->cut->remove($this->name));
+
+        $fs = new Filesystem();
+        $this->assertFalse($fs->exists(pattern_path('/atoms/text/headline1.blade.php')));
+        $this->assertFalse($fs->exists(pattern_path('/atoms/text/headline1.md')));
+        $this->assertFalse($fs->exists(pattern_path('/atoms/text/headline1.scss')));
+        $this->assertFalse($fs->exists(pattern_path('/atoms/text')));
+        $this->assertFalse($fs->exists(pattern_path('/atoms')));
+        $this->assertTrue($fs->exists(pattern_path()));
+    }
 }

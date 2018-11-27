@@ -151,7 +151,7 @@ class PatternService
          * Create the preview
          */
         $values = !is_null($pattern->metadata->values) ? $pattern->metadata->values : array_merge($values, []);
-        $pattern->html = compileBladeString($pattern->template, $values);
+        $pattern->html = compile_blade_string($pattern->template, $values);
 
         return $pattern;
     }
@@ -229,4 +229,48 @@ class PatternService
         }
     }
 
+    /**
+     * Remove the given Pattern.
+     *
+     * @param string $pattern
+     * @return bool
+     * @todo this feature is still incomplete
+     */
+    public function remove(string $pattern): bool
+    {
+        /*
+         * Gathering path information
+         */
+        $mainSassFile = pattern_path('patterns.scss');
+        $patternRoot = pattern_root($pattern);
+        $rootSassFile = pattern_path("{$patternRoot}.scss");
+        $sassFile = $this->getFileLocation($pattern, self::SASS_EXTENSION);
+
+        /*
+         * Delete base files
+         */
+        $templateSuccess = File::delete($this->getFileLocation($pattern, self::BLADE_EXTENSION));
+        $markdownSuccess = File::delete($this->getFileLocation($pattern, self::MARKDOWN_EXTENSION));
+        $sassSuccess = File::delete($sassFile);
+
+
+        $startDir = parent_dir($sassFile);
+
+        /*
+         * Remove path recursevly if directory does not contain any blade files
+         * until blade files are found
+         * or pattern root is reached
+         */
+        // TODO: remove_path($startDir, $patternRoot) // recursively
+
+        /*
+         * TODO: if $parentSassFile still exists remove import of pattern's sass file in the parentSassFile
+         */
+
+        /*
+         * TODO: Remove import in pattern.scss of $parentSassFile if it does not exist any more
+         */
+
+        return $templateSuccess && $markdownSuccess && $sassSuccess;
+    }
 }

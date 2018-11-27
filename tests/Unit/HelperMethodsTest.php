@@ -184,9 +184,8 @@ class HelperMethodsTest extends BaseTestCase
      * @test
      * @covers ::remove_empty_branch
      */
-    public function it_should_remove_a_path_branch_that_does_not_contain_any_template_files()
+    public function it_should_remove_a_path_branch_that_contains_empty_directories()
     {
-        $this->markTestIncomplete();
         // arrange
         $testDirectory = "{$this->tempDir}/root/ab/cd";
         $fs = new Filesystem();
@@ -196,12 +195,37 @@ class HelperMethodsTest extends BaseTestCase
         $branch = $testDirectory;
 
         // act
-        remove_empty_branch($patternRoot, $branch);
+        remove_empty_branch($branch, $patternRoot);
 
         // assert
         $this->assertFalse($fs->exists("{$this->tempDir}/root/ab/cd"));
         $this->assertFalse($fs->exists("{$this->tempDir}/root/ab"));
         $this->assertFalse($fs->exists("{$this->tempDir}/root"));
         $this->assertTrue($fs->exists($this->tempDir));
+    }
+
+    /**
+     * @test
+     * @covers ::remove_empty_branch
+     */
+    public function it_should_remove_a_path_branch_until_template_files_are_found()
+    {
+        // arrange
+        $this->preparePatternStub();
+        $testDirectory = "{$this->tempDir}/patterns/atoms/text/root/ab/cd";
+        $fs = new Filesystem();
+        $fs->makeDirectory($testDirectory, 0755, true);
+
+        $patternRoot = "{$this->tempDir}/patterns/atoms";
+        $branch = $testDirectory;
+
+        // act
+        remove_empty_branch($branch, $patternRoot);
+
+        // assert
+        $this->assertFalse($fs->exists("{$this->tempDir}/patterns/atoms/text/root/ab/cd"));
+        $this->assertFalse($fs->exists("{$this->tempDir}/patterns/atoms/text/root/ab"));
+        $this->assertFalse($fs->exists("{$this->tempDir}/patterns/atoms/text/root"));
+        $this->assertTrue($fs->exists("{$this->tempDir}/patterns/atoms/text"));
     }
 }

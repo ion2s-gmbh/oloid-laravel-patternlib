@@ -160,10 +160,12 @@ if (!function_exists('root_dir')) {
 if (!function_exists('remove_empty_branch')) {
     function remove_empty_branch($branch, $rootDir)
     {
-//        $fs = new Filesystem();
-//        if ($rootDir !== parent_dir($branch)) {
-//            $fs->deleteDirectory($branch);
-//            remove_empty_branch($rootDir, parent_dir($branch));
-//        }
+        $fs = new Filesystem();
+        if (str_contains($branch, $rootDir)
+            && !dir_contains_any($branch, 'blade.php')) {
+
+            $fs->deleteDirectory($branch);
+            remove_empty_branch(parent_dir($branch), $rootDir);
+        }
     }
 }

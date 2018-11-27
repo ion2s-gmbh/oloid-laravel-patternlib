@@ -142,4 +142,20 @@ class PatternControllerTest extends BaseTestCase
         $response->assertSee('Testing');
         $response->assertViewHas('preview', "<!-- atoms.text.headline1 -->\n<h1>Testing</h1>");
     }
+
+    /**
+     * @test
+     * @covers \Laratomics\Http\Controllers\PatternController
+     */
+    public function it_should_remove_a_pattern()
+    {
+        // arrange
+        $this->preparePatternStub();
+
+        // act
+        $response = $this->deleteJson('workshop/api/v1/atoms.text.headline1');
+
+        // assert
+        $response->assertSuccessful();
+    }
 }

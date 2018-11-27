@@ -338,6 +338,7 @@ class PatternServiceTest extends BaseTestCase
      */
     public function it_should_remove_all_pattern_files_and_empty_folders()
     {
+        $this->markTestIncomplete();
         // arrange
         $this->preparePatternStub();
 

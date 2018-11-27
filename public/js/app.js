@@ -12533,7 +12533,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /* unused harmony export ValidationObserver */
 /* unused harmony export withValidation */
 /**
-  * vee-validate v2.1.2
+  * vee-validate v2.1.3
   * (c) 2018 Abdelrahman Awad
   * @license MIT
   */
@@ -13849,6 +13849,24 @@ function normalizeSlots (slots, ctx) {
   }, []);
 }
 
+function createRenderless (h, vnode) {
+  // a single-root slot yay!
+  if (!Array.isArray(vnode)) {
+    return vnode;
+  }
+
+  if (vnode.length === 1) {
+    return vnode[0];
+  }
+
+  if (true) {
+    warn('Your slot should have one root element. Rendering a span as the root.');
+  }
+
+  // Renders a multi-root node, should throw a Vue error.
+  return vnode;
+}
+
 /**
  * Generates the options required to construct a field.
  */
@@ -14194,7 +14212,7 @@ Object.defineProperties( RuleContainer, staticAccessors );
 // 
 
 var isEvent = function (evt) {
-  return (isCallable(Event) && evt instanceof Event) || (evt && evt.srcElement);
+  return (typeof Event !== 'undefined' && isCallable(Event) && evt instanceof Event) || (evt && evt.srcElement);
 };
 
 var normalizeEvents = function (evts) {
@@ -15461,6 +15479,8 @@ Validator.localize = function localize (lang, dictionary) {
  * Registers a field to be validated.
  */
 Validator.prototype.attach = function attach (fieldOpts) {
+    var this$1 = this;
+
   // fixes initial value detection with v-model and select elements.
   var value = fieldOpts.initialValue;
   var field = new Field(fieldOpts);
@@ -15468,7 +15488,7 @@ Validator.prototype.attach = function attach (fieldOpts) {
 
   // validate the field initially
   if (field.immediate) {
-    this.validate(("#" + (field.id)), value || field.value, { vmId: fieldOpts.vmId });
+    VeeValidate$1.instance._vm.$nextTick(function () { return this$1.validate(("#" + (field.id)), value || field.value, { vmId: fieldOpts.vmId }); });
   } else {
     this._validate(field, value || field.value, { initial: true }).then(function (result) {
       field.flags.valid = result.valid;
@@ -16249,7 +16269,7 @@ function onRenderUpdate (model) {
       });
     };
 
-    this.syncValue(model.value);
+    this.value = model.value;
     this.validate().then(this.immediate || shouldRevalidate ? this.applyResult : silentHandler);
   }
 
@@ -16313,11 +16333,16 @@ function createValuesLookup (ctx) {
   var providers = ctx.$_veeObserver.refs;
 
   return ctx.fieldDeps.reduce(function (acc, depName) {
-    if (providers[depName]) {
-      acc[depName] = providers[depName].value;
-      var unwatch = providers[depName].$watch('value', function () {
+    if (!providers[depName]) {
+      return acc;
+    }
+
+    acc[depName] = providers[depName].value;
+    var watcherName = "$__" + depName;
+    if (!isCallable(ctx[watcherName])) {
+      ctx[watcherName] = providers[depName].$watch('value', function () {
         ctx.validate(ctx.value).then(ctx.applyResult);
-        unwatch();
+        ctx[watcherName]();
       });
     }
 
@@ -16394,10 +16419,6 @@ var ValidationProvider = {
     immediate: {
       type: Boolean,
       default: false
-    },
-    tag: {
-      type: String,
-      default: 'span'
     },
     bails: {
       type: Boolean,
@@ -16537,22 +16558,19 @@ var ValidationProvider = {
     var slot = this.$scopedSlots.default;
     if (!isCallable(slot)) {
       if (true) {
-        warn('Did you forget to add a scoped slot to the ValidationProvider?');
+        warn('ValidationProvider expects a scoped slot. Did you forget to add "slot-scope" to your slot?');
       }
 
-      slot = function () { return normalizeSlots(this$1.$slots, this$1.$vnode.context); };
+      return createRenderless(h, this.$slots.default);
     }
 
     var nodes = slot(ctx);
     // Handle single-root slot.
-    nodes = Array.isArray(nodes) ? nodes : [nodes];
-    extractVNodes({ children: nodes }).forEach(function (input) {
+    extractVNodes(nodes).forEach(function (input) {
       addListeners.call(this$1, input);
     });
 
-    return h(this.tag, {
-      attrs: this.$attrs
-    }, nodes);
+    return createRenderless(h, nodes);
   },
   beforeDestroy: function beforeDestroy () {
     // cleanup reference.
@@ -16583,12 +16601,6 @@ var ValidationObserver = {
     return {
       $_veeObserver: this
     };
-  },
-  props: {
-    tag: {
-      type: String,
-      default: 'span'
-    }
   },
   data: function () { return ({
     refs: {}
@@ -16639,19 +16651,16 @@ var ValidationObserver = {
     }
   },
   render: function render (h) {
-    var this$1 = this;
-
     var slots = this.$scopedSlots.default;
     if (!isCallable(slots)) {
-      slots = function () { return normalizeSlots(this$1.$slots, this$1.$vnode.context); };
+      if (true) {
+        warn('ValidationObserver expects a scoped slot. Did you forget to add "slot-scope" to your slot?');
+      }
+
+      return createRenderless(h, this.$slots.default);
     }
 
-    var nodes = slots(this.ctx);
-
-    return h(this.tag, {
-      attrs: this.$attrs,
-      on: this.$listeners
-    }, Array.isArray(nodes) ? nodes : [nodes]);
+    return createRenderless(h, slots(this.ctx));
   }
 };
 
@@ -17009,7 +17018,7 @@ VeeValidate$1.prototype.resolveConfig = function resolveConfig (ctx) {
 Object.defineProperties( VeeValidate$1.prototype, prototypeAccessors$6 );
 Object.defineProperties( VeeValidate$1, staticAccessors$2 );
 
-VeeValidate$1.version = '2.1.2';
+VeeValidate$1.version = '2.1.3';
 VeeValidate$1.mixin = mixin;
 VeeValidate$1.directive = directive;
 VeeValidate$1.Validator = Validator;
@@ -21198,7 +21207,7 @@ var Rules = /*#__PURE__*/Object.freeze({
   url: url
 });
 
-var version = '2.1.2';
+var version = '2.1.3';
 
 Object.keys(Rules).forEach(function (rule) {
   Validator.extend(rule, Rules[rule].validate, assign({}, Rules[rule].options, { paramNames: Rules[rule].paramNames }));
@@ -26497,9 +26506,45 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
      * Delete the pattern
      * @param pattern
      */
-    deletePattern: function deletePattern(pattern) {
-      alert('Deleting ' + pattern);
-    }
+    deletePattern: function () {
+      var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2(pattern) {
+        var response;
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.prev = 0;
+                _context2.next = 3;
+                return __WEBPACK_IMPORTED_MODULE_1__httpClient__["a" /* API */].delete(pattern);
+
+              case 3:
+                response = _context2.sent;
+
+                this.$store.commit('reloadNavi', true);
+                this.$router.push('/');
+                _context2.next = 11;
+                break;
+
+              case 8:
+                _context2.prev = 8;
+                _context2.t0 = _context2['catch'](0);
+
+                __WEBPACK_IMPORTED_MODULE_2__logger__["a" /* default */].error(_context2.t0);
+
+              case 11:
+              case 'end':
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this, [[0, 8]]);
+      }));
+
+      function deletePattern(_x) {
+        return _ref2.apply(this, arguments);
+      }
+
+      return deletePattern;
+    }()
   },
 
   /**

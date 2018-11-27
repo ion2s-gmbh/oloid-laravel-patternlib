@@ -103,7 +103,7 @@ class PatternService
 
         } elseif (count($parts) >= 1) {
 
-            $parentSassPath = config('workshop.patternPath') . "/{$parent}/{$parent}.scss";
+            $parentSassPath = pattern_path() . "/{$parent}/{$parent}.scss";
             $includeFile = implode('/', $parts);
 
             /*
@@ -126,7 +126,7 @@ class PatternService
      */
     private function importInMainSassFile(string $import): void
     {
-        File::append(config('workshop.patternPath') . '/patterns.scss',
+        File::append(pattern_path() . '/patterns.scss',
             "@import \"{$import}\";\n");
     }
 
@@ -207,7 +207,7 @@ class PatternService
         $parts = explode('.', $pattern);
         $filename = array_pop($parts);
         $subpath = implode('/', $parts);
-        $directory = config('workshop.patternPath') . "/{$subpath}";
+        $directory = pattern_path($subpath);
 
         $this->createIfMissing($directory);
 

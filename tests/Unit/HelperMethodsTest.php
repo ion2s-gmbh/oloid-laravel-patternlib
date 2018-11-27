@@ -228,4 +228,23 @@ class HelperMethodsTest extends BaseTestCase
         $this->assertFalse($fs->exists("{$this->tempDir}/patterns/atoms/text/root"));
         $this->assertTrue($fs->exists("{$this->tempDir}/patterns/atoms/text"));
     }
+
+    /**
+     * @test
+     * @covers ::remove_from_file
+     */
+    public function it_should_remove_a_line_of_text_from_a_file()
+    {
+        // arrange
+        $this->preparePatternStub();
+        $needle = '@import "homepage";';
+
+        // act
+        $file = "{$this->tempDir}/patterns/patterns.scss";
+        remove_from_file($needle, $file);
+
+        // assert
+        $content = file_get_contents($file);
+        $this->assertFalse(str_contains($content, $needle));
+    }
 }

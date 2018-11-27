@@ -242,8 +242,8 @@ class PatternService
          * Gathering path information
          */
         $mainSassFile = pattern_path('patterns.scss');
-        $patternRoot = pattern_root($pattern);
-        $rootSassFile = pattern_path("{$patternRoot}.scss");
+        $branchRoot = pattern_root($pattern);
+        $rootSassFile = pattern_path("{$branchRoot}/{$branchRoot}.scss");
         $sassFile = $this->getFileLocation($pattern, self::SASS_EXTENSION);
 
         /*
@@ -253,23 +253,31 @@ class PatternService
         $markdownSuccess = File::delete($this->getFileLocation($pattern, self::MARKDOWN_EXTENSION));
         $sassSuccess = File::delete($sassFile);
 
-
-        $startDir = parent_dir($sassFile);
-
         /*
          * Remove path recursevly if directory does not contain any blade files
          * until blade files are found
          * or pattern root is reached
          */
-        // TODO: remove_path($startDir, $patternRoot) // recursively
+        $branchDir = parent_dir($sassFile);
+        $rootDir = pattern_path($branchRoot);
+        remove_empty_branch($branchDir, $rootDir);
 
         /*
-         * TODO: if $parentSassFile still exists remove import of pattern's sass file in the parentSassFile
+         * if $rootSassFile still exists remove import of pattern's sass file in the $rootSassFile
          */
-
-        /*
-         * TODO: Remove import in pattern.scss of $parentSassFile if it does not exist any more
-         */
+        $parts = explode('/', slash_path($pattern));
+        array_shift($parts);
+        $include = implode('/', $parts);
+        if (File::exists($rootSassFile)) {
+            $import = "@import \"{$include}\";\n";
+            remove_from_file($import, $rootSassFile);
+        } else {
+            $import = "@import \"{$branchRoot}/{$branchRoot}\";\n";
+            if (count($parts) === 0) {
+                $import = "@import \"{$branchRoot}\";\n";
+            }
+            remove_from_file($import, $mainSassFile);
+        }
 
         return $templateSuccess && $markdownSuccess && $sassSuccess;
     }

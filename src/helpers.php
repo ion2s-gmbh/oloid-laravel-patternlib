@@ -141,7 +141,7 @@ if (!function_exists('dir_contains_any')) {
     }
 }
 
-if (!function_exists('root_dir')) {
+if (!function_exists('pattern_root')) {
     /**
      * Get the root of a Pattern.
      * E.g. atoms.buttons.submit => atoms
@@ -167,5 +167,13 @@ if (!function_exists('remove_empty_branch')) {
             $fs->deleteDirectory($branch);
             remove_empty_branch(parent_dir($branch), $rootDir);
         }
+    }
+}
+
+if (!function_exists('remove_from_file')) {
+    function remove_from_file($needle, $file) {
+        $content = file_get_contents($file);
+        $newContent = str_replace("{$needle}", "", $content);
+        file_put_contents($file, $newContent);
     }
 }

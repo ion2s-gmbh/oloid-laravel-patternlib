@@ -26426,6 +26426,18 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -26437,7 +26449,8 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
       pattern: {
         'name': 'undefined'
       },
-      loading: false
+      loading: false,
+      isToggled: false
     };
   },
 
@@ -26521,41 +26534,108 @@ var render = function() {
   return _c("div", { staticClass: "view--inner" }, [
     _c("div", { staticClass: "code" }, [
       _c("div", { staticClass: "code-el" }, [
-        _vm._m(0),
+        _c("div", { staticClass: "code-header" }, [
+          !_vm.isToggled
+            ? _c("span", { staticClass: "code-type a-fadeIn" }, [
+                _vm._v("HTML")
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.isToggled
+            ? _c("span", { staticClass: "code-type a-fadeIn" }, [
+                _vm._v("Blade")
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _c("label", { staticClass: "toggle-wrap" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.isToggled,
+                  expression: "isToggled"
+                }
+              ],
+              staticClass: "toggle",
+              attrs: { type: "checkbox" },
+              domProps: {
+                checked: Array.isArray(_vm.isToggled)
+                  ? _vm._i(_vm.isToggled, null) > -1
+                  : _vm.isToggled
+              },
+              on: {
+                change: function($event) {
+                  var $$a = _vm.isToggled,
+                    $$el = $event.target,
+                    $$c = $$el.checked ? true : false
+                  if (Array.isArray($$a)) {
+                    var $$v = null,
+                      $$i = _vm._i($$a, $$v)
+                    if ($$el.checked) {
+                      $$i < 0 && (_vm.isToggled = $$a.concat([$$v]))
+                    } else {
+                      $$i > -1 &&
+                        (_vm.isToggled = $$a
+                          .slice(0, $$i)
+                          .concat($$a.slice($$i + 1)))
+                    }
+                  } else {
+                    _vm.isToggled = $$c
+                  }
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("div"),
+            _vm._v(" "),
+            _c("span", [_vm._v("Show Blade")])
+          ])
+        ]),
         _vm._v(" "),
         _c("div", { staticClass: "code-tabs" }, [
-          _c(
-            "div",
-            {
-              staticClass: "tab",
-              attrs: {
-                id: "markup-view",
-                role: "tabpanel",
-                "aria-labelledby": "markup-view"
-              }
-            },
-            [
-              _c("pre", [
-                _c("code", { staticClass: "language-html" }, [
-                  _vm._v(_vm._s(_vm.pattern.template))
-                ])
-              ])
-            ]
-          ),
+          _vm.isToggled
+            ? _c(
+                "div",
+                {
+                  staticClass: "tab a-fadeIn",
+                  attrs: { role: "tabpanel", "aria-labelledby": "markup-view" }
+                },
+                [
+                  _c("pre", [
+                    _c("code", { staticClass: "language-html" }, [
+                      _vm._v(_vm._s(_vm.pattern.template))
+                    ])
+                  ])
+                ]
+              )
+            : _vm._e(),
           _vm._v(" "),
-          _c("div", {
-            staticClass: "tab",
-            attrs: {
-              id: "html-view",
-              role: "tabpanel",
-              "aria-labelledby": "html-view"
-            }
-          })
+          !_vm.isToggled
+            ? _c(
+                "div",
+                {
+                  staticClass: "tab a-fadeIn",
+                  attrs: {
+                    id: "html-view",
+                    role: "tabpanel",
+                    "aria-labelledby": "html-view"
+                  }
+                },
+                [
+                  _c("pre", [
+                    _c("code", { staticClass: "language-html" }, [
+                      _vm._v(_vm._s(_vm.pattern.html))
+                    ])
+                  ])
+                ]
+              )
+            : _vm._e()
         ])
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "code-el" }, [
-        _vm._m(1),
+        _vm._m(0),
         _vm._v(" "),
         _c("div", { staticClass: "code-tabs" }, [
           _c(
@@ -26615,7 +26695,7 @@ var render = function() {
               }
             }
           },
-          [_vm._m(2)]
+          [_vm._m(1)]
         ),
         _vm._v(" "),
         _c("router-link", { attrs: { to: { name: "update" } } }, [
@@ -26636,20 +26716,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("h2", [
-      _c("span", [_vm._v("Markup")]),
-      _vm._v(" / "),
-      _c("span", [_vm._v("HTML")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("h2", [
-      _c("span", [_vm._v("SASS")]),
-      _vm._v(" / "),
-      _c("span", [_vm._v("CSS")])
+    return _c("div", { staticClass: "code-header" }, [
+      _c("span", [_vm._v("CSS/SCSS")])
     ])
   },
   function() {

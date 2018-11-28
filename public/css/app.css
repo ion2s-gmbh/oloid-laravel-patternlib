@@ -369,6 +369,8 @@ this would then look like this
 
 /* for colors*/
 
+/* for animation timings*/
+
 html {
   /* for colors*/
   --brandMain: #03314B;
@@ -409,6 +411,12 @@ body {
   background: var(--brandMain, #03314B);
 }
 
+:focus {
+  outline-color: var(--positive, #10E2AB);
+  outline-style: dashed;
+  outline-width: 1px;
+}
+
 *::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -434,7 +442,7 @@ containing the header and the so called view, containing most of the UI.
   height: 100vh;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: var(--headerheight) auto;
-  grid-template-areas: "header header header header" "main main main main";
+  grid-template-areas: "header header header header" "main main main main";
   overflow: hidden;
 }
 
@@ -450,21 +458,21 @@ containing the header and the so called view, containing most of the UI.
 @media (max-width: 599px) {
   .view,
   .view--inner {
-    grid-template-areas: "code code code code" "view view view view" "view view view view" "footer footer footer footer";
+    grid-template-areas: "code code code code" "view view view view" "view view view view" "footer footer footer footer";
   }
 }
 
 @media (min-width: 600px) {
   .view,
   .view--inner {
-    grid-template-areas: "code code code code" "view view view view" "view view view view" "footer footer footer footer";
+    grid-template-areas: "code code code code" "view view view view" "view view view view" "footer footer footer footer";
   }
 }
 
 @media (min-width: 1200px) {
   .view,
   .view--inner {
-    grid-template-areas: "code view view view" "code view view view" "code view view view" ".... footer footer footer";
+    grid-template-areas: "code view view view" "code view view view" "code view view view" ".... footer footer footer";
   }
 }
 
@@ -621,6 +629,67 @@ These are the styles for every interactive element that is clickable but no link
   color: var(--brandMain, #03314B);
 }
 
+.toggle-wrap {
+  width: 1rem;
+  height: 1rem;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border: 2px solid white;
+  border-radius: 1rem;
+  -webkit-box-shadow: 0 0 0px 0px var(--positive, #10E2AB);
+          box-shadow: 0 0 0px 0px var(--positive, #10E2AB);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 0 0.5rem;
+  position: relative;
+  -webkit-transition: 150ms ease-in box-shadow;
+  transition: 150ms ease-in box-shadow;
+  width: 2rem;
+}
+
+.toggle-wrap:focus-within {
+  -webkit-box-shadow: 0 0 20px 2px var(--positive, #10E2AB);
+          box-shadow: 0 0 20px 2px var(--positive, #10E2AB);
+}
+
+.toggle-wrap .toggle {
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  position: relative;
+  z-index: auto;
+}
+
+.toggle-wrap .toggle + div {
+  width: 13px;
+  height: 13px;
+  background: white;
+  border: 1px solid var(--brandMain);
+  border-radius: 100%;
+  content: '';
+  display: block;
+  left: 1px;
+  top: 50%;
+  -webkit-transform: translate(0, -50%);
+          transform: translate(0, -50%);
+  -webkit-transition: 150ms cubic-bezier(0.19, 1, 0.22, 1) -webkit-transform;
+  transition: 150ms cubic-bezier(0.19, 1, 0.22, 1) -webkit-transform;
+  transition: 150ms cubic-bezier(0.19, 1, 0.22, 1) transform;
+  transition: 150ms cubic-bezier(0.19, 1, 0.22, 1) transform, 150ms cubic-bezier(0.19, 1, 0.22, 1) -webkit-transform;
+  position: absolute;
+}
+
+.toggle-wrap .toggle:checked + div {
+  -webkit-transform: translate(14px, -50%);
+          transform: translate(14px, -50%);
+}
+
+.toggle-wrap span {
+  display: none;
+}
+
 /* 
 These are the styles for the form elements like inputs, fieldsets & labels etc.
 More special Forms might be a component. 
@@ -676,7 +745,7 @@ label > span {
   font-size: 0.8rem;
 }
 
-input,
+input:not([type="checkbox"]),
 textarea {
   background: transparent;
   border: 1px solid white;
@@ -807,6 +876,19 @@ These are the styles that are needed to render our welcome dashboard.
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+}
+
+.code-header {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.code-type {
+  display: inline-block;
 }
 
 .code-tabs {

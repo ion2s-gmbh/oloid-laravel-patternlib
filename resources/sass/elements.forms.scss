@@ -56,7 +56,7 @@ label {
 	font-size: 0.8rem;
 }
 
-input, 
+input:not([type="checkbox"]), 
 textarea {
 	background: transparent;
 	border: 1px solid white;

@@ -29,12 +29,12 @@ class NavigationControllerTest extends BaseTestCase
                     'path' => 'atoms',
                     'items' => [
                         [
-                            'name' => 'text',
-                            'path' => 'atoms.text',
+                            'name' => 'buttons',
+                            'path' => 'atoms.buttons',
                             'items' => [
                                 [
-                                    'name' => 'headline1',
-                                    'path' => 'atoms.text.headline1',
+                                    'name' => 'button',
+                                    'path' => 'atoms.buttons.button',
                                     'items' => []
                                 ]
                             ]

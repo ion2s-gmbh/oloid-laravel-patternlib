@@ -36,4 +36,12 @@ Route::get('navi', 'NavigationController@get');
 */
 Route::get('{pattern}', 'PatternController@preview');
 
+/*
+|--------------------------------------------------------------------------
+| DELETE /{pattern}
+|--------------------------------------------------------------------------
+| Route to remove the given Pattern.
+*/
+Route::delete('{pattern}', 'PatternController@remove');
+
 

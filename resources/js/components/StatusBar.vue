@@ -52,6 +52,10 @@
     },
 
     methods: {
+      /**
+       * Change the status of the Pattern.
+       * @param status
+       */
       changeStatus: function (status) {
         this.$emit('update-status', status);
         this.isActive = false;

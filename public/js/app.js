@@ -26730,6 +26730,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
   methods: {
+    /**
+     * Change the status of the Pattern.
+     * @param status
+     */
     changeStatus: function changeStatus(status) {
       this.$emit('update-status', status);
       this.isActive = false;

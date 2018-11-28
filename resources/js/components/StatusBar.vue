@@ -1,66 +1,79 @@
 <template>
 
-	<div class="statusbar">
+  <div class="statusbar">
 
-	<!-- TODO: fill in real status please in title please. -->
+    <div class="status-current"
 
-	<div class="status-current"
+         @click="isActive = !isActive"
 
-		@click="isActive = !isActive"
+         title="status: status"
 
-	  	title="status: status" 
-	  
-	  	:class="{accepted: isAccepted,
+         :class="{accepted: isAccepted,
 	          toCheck: isToCheck,
 	          rejected: isRejected,
 	          wip: isTodo}">
 
-	</div>
+    </div>
 
-	<div class="status-menue a-dropIn" v-if="isActive">
+    <div class="status-menue a-dropIn" v-if="isActive">
 
-		<ul class="status-list">
-	  
-		  <li class="status-option toCheck" @click="isToCheck = !isToCheck">
-		    Unreviewed
-		  </li>
+      <ul class="status-list">
 
-		  <li class="status-option rejected" @click="isRejected = !isRejected">
-		    Rejected
-		  </li>
+        <li class="status-option toCheck" @click="changeStatus('REVIEW')">
+          Unreviewed
+        </li>
 
-		  <li class="status-option accepted" @click="isAccepted = !isAccepted">
-		    Accepted
-		  </li>
+        <li class="status-option rejected" @click="changeStatus('REJECTED')">
+          Rejected
+        </li>
 
-		 </ul>
+        <li class="status-option accepted" @click="changeStatus('DONE')">
+          Accepted
+        </li>
 
-	</div> 
+      </ul>
 
-	</div>
+    </div>
+
+  </div>
 
 </template>
 
 <script>
-	export default {
-	  name: "StatusBar",
-	  data() {
-	    return {
-	    	isTodo: true,
-	    	isToCheck: false,
-      		isAccepted: false,
-      		isRejected: false,
+  export default {
+    name: "StatusBar",
+    props: [
+      'status'
+    ],
+    data() {
+      return {
+        isActive: false
+      }
+    },
 
-      		isActive: false
+    methods: {
+      changeStatus: function (status) {
+        this.$emit('update-status', status);
+        this.isActive = false;
+      }
+    },
 
-	    }
-	  },
-	  methods: {
+    computed: {
+      isTodo: function () {
+        return this.status === 'TODO'
+      },
 
-	    
-	  },
-	  props: {
-	  	status
-	  }
-	}
+      isToCheck: function () {
+        return this.status === 'REVIEW'
+      },
+
+      isAccepted: function () {
+        return this.status === 'DONE'
+      },
+
+      isRejected: function () {
+        return this.status === 'REJECTED'
+      }
+    }
+  }
 </script>

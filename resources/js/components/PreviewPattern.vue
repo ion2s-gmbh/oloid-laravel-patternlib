@@ -42,7 +42,7 @@
 
           <div class="tab" id="markup-view" role="tabpanel" aria-labelledby="markup-view">
 
-              <pre><code>{{ pattern.sass }}</code></pre>
+            <pre><code>{{ pattern.sass }}</code></pre>
 
           </div>
 
@@ -58,8 +58,11 @@
 
         {{ pattern.name }}
 
-        <status-bar :status="pattern.status"></status-bar>
-        
+        <status-bar
+                v-on:update-status="updateStatus"
+                :status="pattern.status">
+        </status-bar>
+
       </div>
 
       <div class="preview-inner">
@@ -127,7 +130,7 @@
     data() {
       return {
         pattern: {
-          'name': 'undefined'
+          name: 'undefined'
         },
         loading: false,
       }
@@ -153,6 +156,19 @@
           let response = await API.get(this.$route.params.pattern);
           this.pattern = response.data.data;
           this.loading = false;
+        } catch (e) {
+          LOG.error(e);
+        }
+      },
+
+      /**
+       * Update status of the Pattern.
+       */
+      updateStatus: async function (status) {
+        try {
+          let response = await API.put(`pattern/status/${this.pattern.name}`, {
+            status
+          })
         } catch (e) {
           LOG.error(e);
         }

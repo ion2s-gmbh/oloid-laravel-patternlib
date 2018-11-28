@@ -31,7 +31,7 @@
         <label for="description">
             
             <span class="label-name">
-              Description
+              Description <span>(optional)</span>
             </span>
 
           <small class="error a-slideIn" v-if="errors.has('description')">{{ errors.first('description') }}</small>
@@ -41,8 +41,7 @@
         <textarea id="description"
                   class="form-control"
                   name="description"
-                  v-model="pattern.description"
-                  v-validate.disable="'required'">
+                  v-model="pattern.description">
                     
           </textarea>
 

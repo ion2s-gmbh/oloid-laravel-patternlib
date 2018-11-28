@@ -71,25 +71,6 @@ class PatternControllerTest extends BaseTestCase
      * @test
      * @covers \Laratomics\Http\Controllers\PatternController
      */
-    public function it_should_be_an_invalide_request_description_missing()
-    {
-        // arrange
-        $data = [
-            'name' => 'pages.testpage'
-        ];
-
-        // act
-        /** @var TestResponse $response */
-        $response = $this->postJson('workshop/api/v1/pattern', $data);
-
-        // assert
-        $this->assertEquals(JsonResponse::HTTP_UNPROCESSABLE_ENTITY, $response->getStatusCode());
-    }
-
-    /**
-     * @test
-     * @covers \Laratomics\Http\Controllers\PatternController
-     */
     public function it_should_load_all_pattern_information()
     {
         // arrange

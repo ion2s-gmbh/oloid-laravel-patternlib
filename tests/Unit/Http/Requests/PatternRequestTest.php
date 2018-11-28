@@ -36,8 +36,7 @@ class PatternRequestTest extends BaseTestCase
     {
         // arrange
         $rules = [
-            'name' => 'required',
-            'description' => 'required'
+            'name' => 'required'
         ];
 
         $this->assertEquals($rules, $this->cut->rules());

@@ -37,7 +37,7 @@ class PatternController extends Controller
     {
         // TODO: Check that pattern is unique
         $name = $request->get('name');
-        $description = $request->get('description');
+        $description = $request->get('description', '');
         $pattern = $this->patternService->createPattern($name, $description);
 
         return JsonResponse::create(new PatternResource($pattern), JsonResponse::HTTP_CREATED);

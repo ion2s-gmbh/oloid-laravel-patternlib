@@ -107,6 +107,13 @@ if (!function_exists('parent_dir')) {
 }
 
 if (!function_exists('dir_is_empty')) {
+    /**
+     * This method checks if the given path is empty. It is checked, that there are
+     * no files or folders under the given path.
+     *
+     * @param $path
+     * @return bool
+     */
     function dir_is_empty($path)
     {
         $fs = new Filesystem();
@@ -158,6 +165,13 @@ if (!function_exists('pattern_root')) {
 }
 
 if (!function_exists('remove_empty_branch')) {
+    /**
+     * Remove a folder branch, that does not contain any blade.php files.
+     * This method is implemented recursively.
+     *
+     * @param $branch
+     * @param $rootDir
+     */
     function remove_empty_branch($branch, $rootDir)
     {
         $fs = new Filesystem();
@@ -171,6 +185,12 @@ if (!function_exists('remove_empty_branch')) {
 }
 
 if (!function_exists('remove_from_file')) {
+    /**
+     * This method removed the given $needle from the content of the given $file.
+     *
+     * @param $needle
+     * @param $file
+     */
     function remove_from_file($needle, $file) {
         $content = file_get_contents($file);
         $newContent = str_replace("{$needle}", "", $content);

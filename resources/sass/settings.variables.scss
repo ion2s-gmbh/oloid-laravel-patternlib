@@ -32,6 +32,10 @@ $c-alert: #FF4F4F;
 $c-warning: #FFB421;
 $c-inactive: #B9C5C5;
 
+/* for animation timings*/
+
+$a-timing: cubic-bezier(0.19, 1, 0.22, 1);
+
 // CSS VARS
 
 :root {

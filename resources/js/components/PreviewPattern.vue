@@ -6,23 +6,35 @@
 
       <div class="code-el">
 
-        <h2 class="code-lang">
+        <div class="code-header">
 
-          <span>Markup</span> / <span>HTML</span>
+          <span v-if="!isToggled" class="code-type a-fadeIn">HTML</span>
 
-        </h2>
+          <span v-if="isToggled" class="code-type a-fadeIn">Blade</span>
+
+          <label class="toggle-wrap">
+
+            <input type="checkbox" class="toggle" v-model="isToggled"/>
+
+            <div></div>
+
+            <span>Show Blade</span>
+
+          </label>
+
+        </div>
 
         <div class="code-tabs">
 
-          <div class="tab" id="markup-view" role="tabpanel" aria-labelledby="markup-view">
+          <div class="tab a-fadeIn" role="tabpanel" aria-labelledby="markup-view" v-if="isToggled" >
 
             <pre><code class="language-html">{{ pattern.template }}</code></pre>
 
           </div>
 
-          <div class="tab" id="html-view" role="tabpanel" aria-labelledby="html-view">
+          <div class="tab a-fadeIn" id="html-view" role="tabpanel" aria-labelledby="html-view" v-if="!isToggled" >
 
-            <!--<pre><code class="language-html">{{ pattern.html }}</code></pre>-->
+            <pre><code class="language-html">{{ pattern.html }}</code></pre>
 
           </div>
 
@@ -32,11 +44,11 @@
 
       <div class="code-el">
 
-        <h2 class="code-lang">
+        <div class="code-header">
 
-          <span>SASS</span> / <span>CSS</span>
+          <span>CSS/SCSS</span>
 
-        </h2>
+        </div>
 
         <div class="code-tabs">
 
@@ -133,6 +145,7 @@
           name: 'undefined'
         },
         loading: false,
+        isToggled: false,
       }
     },
 

@@ -21260,9 +21260,9 @@ var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/**
-  * vue-router v3.0.1
-  * (c) 2017 Evan You
+/*!
+  * vue-router v3.0.2
+  * (c) 2018 Evan You
   * @license MIT
   */
 /*  */
@@ -21283,8 +21283,15 @@ function isError (err) {
   return Object.prototype.toString.call(err).indexOf('Error') > -1
 }
 
+function extend (a, b) {
+  for (var key in b) {
+    a[key] = b[key];
+  }
+  return a
+}
+
 var View = {
-  name: 'router-view',
+  name: 'RouterView',
   functional: true,
   props: {
     name: {
@@ -21298,6 +21305,7 @@ var View = {
     var parent = ref.parent;
     var data = ref.data;
 
+    // used by devtools to display a router-view badge
     data.routerView = true;
 
     // directly use parent context's createElement() function
@@ -21372,7 +21380,7 @@ var View = {
 
     return h(component, data, children)
   }
-};
+}
 
 function resolveProps (route, config) {
   switch (typeof config) {
@@ -21393,13 +21401,6 @@ function resolveProps (route, config) {
         );
       }
   }
-}
-
-function extend (to, from) {
-  for (var key in from) {
-    to[key] = from[key];
-  }
-  return to
 }
 
 /*  */
@@ -21499,7 +21500,6 @@ function stringifyQuery (obj) {
 }
 
 /*  */
-
 
 var trailingSlashRE = /\/?$/;
 
@@ -21643,7 +21643,7 @@ var toTypes = [String, Object];
 var eventTypes = [String, Array];
 
 var Link = {
-  name: 'router-link',
+  name: 'RouterLink',
   props: {
     to: {
       type: toTypes,
@@ -21678,17 +21678,17 @@ var Link = {
     var globalExactActiveClass = router.options.linkExactActiveClass;
     // Support global empty active class
     var activeClassFallback = globalActiveClass == null
-            ? 'router-link-active'
-            : globalActiveClass;
+      ? 'router-link-active'
+      : globalActiveClass;
     var exactActiveClassFallback = globalExactActiveClass == null
-            ? 'router-link-exact-active'
-            : globalExactActiveClass;
+      ? 'router-link-exact-active'
+      : globalExactActiveClass;
     var activeClass = this.activeClass == null
-            ? activeClassFallback
-            : this.activeClass;
+      ? activeClassFallback
+      : this.activeClass;
     var exactActiveClass = this.exactActiveClass == null
-            ? exactActiveClassFallback
-            : this.exactActiveClass;
+      ? exactActiveClassFallback
+      : this.exactActiveClass;
     var compareTarget = location.path
       ? createRoute(null, location, null, router)
       : route;
@@ -21728,7 +21728,6 @@ var Link = {
       if (a) {
         // in case the <a> is a static node
         a.isStatic = false;
-        var extend = _Vue.util.extend;
         var aData = a.data = extend({}, a.data);
         aData.on = on;
         var aAttrs = a.data.attrs = extend({}, a.data.attrs);
@@ -21741,7 +21740,7 @@ var Link = {
 
     return h(this.tag, data, this.$slots.default)
   }
-};
+}
 
 function guardEvent (e) {
   // don't redirect with control keys
@@ -21819,8 +21818,8 @@ function install (Vue) {
     get: function get () { return this._routerRoot._route }
   });
 
-  Vue.component('router-view', View);
-  Vue.component('router-link', Link);
+  Vue.component('RouterView', View);
+  Vue.component('RouterLink', Link);
 
   var strats = Vue.config.optionMergeStrategies;
   // use the same hook merging strategy for route hooks
@@ -22330,7 +22329,6 @@ function pathToRegexp (path, keys, options) {
 
   return stringToRegexp(/** @type {string} */ (path), /** @type {!Array} */ (keys), options)
 }
-
 pathToRegexp_1.parse = parse_1;
 pathToRegexp_1.compile = compile_1;
 pathToRegexp_1.tokensToFunction = tokensToFunction_1;
@@ -22526,7 +22524,6 @@ function normalizePath (path, parent, strict) {
 
 /*  */
 
-
 function normalizeLocation (
   raw,
   current,
@@ -22541,9 +22538,9 @@ function normalizeLocation (
 
   // relative params
   if (!next.path && next.params && current) {
-    next = assign({}, next);
+    next = extend({}, next);
     next._normalized = true;
-    var params = assign(assign({}, current.params), next.params);
+    var params = extend(extend({}, current.params), next.params);
     if (current.name) {
       next.name = current.name;
       next.params = params;
@@ -22581,14 +22578,8 @@ function normalizeLocation (
   }
 }
 
-function assign (a, b) {
-  for (var key in b) {
-    a[key] = b[key];
-  }
-  return a
-}
-
 /*  */
+
 
 
 function createMatcher (
@@ -22658,8 +22649,8 @@ function createMatcher (
   ) {
     var originalRedirect = record.redirect;
     var redirect = typeof originalRedirect === 'function'
-        ? originalRedirect(createRoute(record, location, null, router))
-        : originalRedirect;
+      ? originalRedirect(createRoute(record, location, null, router))
+      : originalRedirect;
 
     if (typeof redirect === 'string') {
       redirect = { path: redirect };
@@ -22773,7 +22764,8 @@ function matchRoute (
     var key = regex.keys[i - 1];
     var val = typeof m[i] === 'string' ? decodeURIComponent(m[i]) : m[i];
     if (key) {
-      params[key.name] = val;
+      // Fix #1994: using * with props: true generates a param named 0
+      params[key.name || 'pathMatch'] = val;
     }
   }
 
@@ -22786,12 +22778,12 @@ function resolveRecordPath (path, record) {
 
 /*  */
 
-
 var positionStore = Object.create(null);
 
 function setupScroll () {
   // Fix for #1585 for Firefox
-  window.history.replaceState({ key: getStateKey() }, '');
+  // Fix for #2195 Add optional third attribute to workaround a bug in safari https://bugs.webkit.org/show_bug.cgi?id=182678
+  window.history.replaceState({ key: getStateKey() }, '', window.location.href.replace(window.location.origin, ''));
   window.addEventListener('popstate', function (e) {
     saveScrollPosition();
     if (e.state && e.state.key) {
@@ -22822,7 +22814,7 @@ function handleScroll (
   // wait until re-render finishes before scrolling
   router.app.$nextTick(function () {
     var position = getScrollPosition();
-    var shouldScroll = behavior(to, from, isPop ? position : null);
+    var shouldScroll = behavior.call(router, to, from, isPop ? position : null);
 
     if (!shouldScroll) {
       return
@@ -23384,7 +23376,10 @@ function poll (
   key,
   isValid
 ) {
-  if (instances[key]) {
+  if (
+    instances[key] &&
+    !instances[key]._isBeingDestroyed // do not reuse being destroyed instance
+  ) {
     cb(instances[key]);
   } else if (isValid()) {
     setTimeout(function () {
@@ -23395,7 +23390,6 @@ function poll (
 
 /*  */
 
-
 var HTML5History = (function (History$$1) {
   function HTML5History (router, base) {
     var this$1 = this;
@@ -23403,8 +23397,9 @@ var HTML5History = (function (History$$1) {
     History$$1.call(this, router, base);
 
     var expectScroll = router.options.scrollBehavior;
+    var supportsScroll = supportsPushState && expectScroll;
 
-    if (expectScroll) {
+    if (supportsScroll) {
       setupScroll();
     }
 
@@ -23420,7 +23415,7 @@ var HTML5History = (function (History$$1) {
       }
 
       this$1.transitionTo(location, function (route) {
-        if (expectScroll) {
+        if (supportsScroll) {
           handleScroll(router, route, current, true);
         }
       });
@@ -23474,7 +23469,7 @@ var HTML5History = (function (History$$1) {
 }(History));
 
 function getLocation (base) {
-  var path = window.location.pathname;
+  var path = decodeURI(window.location.pathname);
   if (base && path.indexOf(base) === 0) {
     path = path.slice(base.length);
   }
@@ -23482,7 +23477,6 @@ function getLocation (base) {
 }
 
 /*  */
-
 
 var HashHistory = (function (History$$1) {
   function HashHistory (router, base, fallback) {
@@ -23593,7 +23587,7 @@ function getHash () {
   // consistent across browsers - Firefox will pre-decode it!
   var href = window.location.href;
   var index = href.indexOf('#');
-  return index === -1 ? '' : href.slice(index + 1)
+  return index === -1 ? '' : decodeURI(href.slice(index + 1))
 }
 
 function getUrl (path) {
@@ -23620,7 +23614,6 @@ function replaceHash (path) {
 }
 
 /*  */
-
 
 var AbstractHistory = (function (History$$1) {
   function AbstractHistory (router, base) {
@@ -23679,6 +23672,8 @@ var AbstractHistory = (function (History$$1) {
 }(History));
 
 /*  */
+
+
 
 var VueRouter = function VueRouter (options) {
   if ( options === void 0 ) options = {};
@@ -23876,7 +23871,7 @@ function createHref (base, fullPath, mode) {
 }
 
 VueRouter.install = install;
-VueRouter.version = '3.0.1';
+VueRouter.version = '3.0.2';
 
 if (inBrowser && window.Vue) {
   window.Vue.use(VueRouter);
@@ -26444,6 +26439,21 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -26454,9 +26464,10 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
   data: function data() {
     return {
       pattern: {
-        'name': 'undefined'
+        name: 'undefined'
       },
-      loading: false
+      loading: false,
+      isToggled: false
     };
   },
 
@@ -26517,11 +26528,10 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
     }(),
 
     /**
-     * Delete the pattern
-     * @param pattern
+     * Update status of the Pattern.
      */
-    deletePattern: function () {
-      var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2(pattern) {
+    updateStatus: function () {
+      var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2(status) {
         var response;
         return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee2$(_context2) {
           while (1) {
@@ -26529,32 +26539,77 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
               case 0:
                 _context2.prev = 0;
                 _context2.next = 3;
-                return __WEBPACK_IMPORTED_MODULE_1__httpClient__["a" /* API */].delete(pattern);
+                return __WEBPACK_IMPORTED_MODULE_1__httpClient__["a" /* API */].put('pattern/status/' + this.pattern.name, {
+                  status: status
+                });
 
               case 3:
                 response = _context2.sent;
 
-                this.$store.commit('reloadNavi', true);
-                this.$router.push('/');
-                _context2.next = 11;
+                this.pattern.status = status;
+                _context2.next = 10;
                 break;
 
-              case 8:
-                _context2.prev = 8;
+              case 7:
+                _context2.prev = 7;
                 _context2.t0 = _context2['catch'](0);
 
                 __WEBPACK_IMPORTED_MODULE_2__logger__["a" /* default */].error(_context2.t0);
 
-              case 11:
+              case 10:
               case 'end':
                 return _context2.stop();
             }
           }
-        }, _callee2, this, [[0, 8]]);
+        }, _callee2, this, [[0, 7]]);
       }));
 
-      function deletePattern(_x) {
+      function updateStatus(_x) {
         return _ref2.apply(this, arguments);
+      }
+
+      return updateStatus;
+    }(),
+
+    /**
+     * Delete the pattern
+     * @param pattern
+     */
+    deletePattern: function () {
+      var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee3(pattern) {
+        var response;
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.prev = 0;
+                _context3.next = 3;
+                return __WEBPACK_IMPORTED_MODULE_1__httpClient__["a" /* API */].delete(pattern);
+
+              case 3:
+                response = _context3.sent;
+
+                this.$store.commit('reloadNavi', true);
+                this.$router.push('/');
+                _context3.next = 11;
+                break;
+
+              case 8:
+                _context3.prev = 8;
+                _context3.t0 = _context3['catch'](0);
+
+                __WEBPACK_IMPORTED_MODULE_2__logger__["a" /* default */].error(_context3.t0);
+
+              case 11:
+              case 'end':
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this, [[0, 8]]);
+      }));
+
+      function deletePattern(_x2) {
+        return _ref3.apply(this, arguments);
       }
 
       return deletePattern;
@@ -26663,27 +26718,41 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-					name: "StatusBar",
-					data: function data() {
-										return {
-															isTodo: true,
-															isToCheck: false,
-															isAccepted: false,
-															isRejected: false,
+  name: "StatusBar",
+  props: ['status'],
+  data: function data() {
+    return {
+      isActive: false
+    };
+  },
 
-															isActive: false
 
-										};
-					},
+  methods: {
+    changeStatus: function changeStatus(status) {
+      this.$emit('update-status', status);
+      this.isActive = false;
+    }
+  },
 
-					methods: {},
-					props: {
-										status: status
-					}
+  computed: {
+    isTodo: function isTodo() {
+      return this.status === 'TODO';
+    },
+
+    isToCheck: function isToCheck() {
+      return this.status === 'REVIEW';
+    },
+
+    isAccepted: function isAccepted() {
+      return this.status === 'DONE';
+    },
+
+    isRejected: function isRejected() {
+      return this.status === 'REJECTED';
+    }
+  }
 });
 
 /***/ }),
@@ -26720,11 +26789,11 @@ var render = function() {
                 staticClass: "status-option toCheck",
                 on: {
                   click: function($event) {
-                    _vm.isToCheck = !_vm.isToCheck
+                    _vm.changeStatus("REVIEW")
                   }
                 }
               },
-              [_vm._v("\n\t    Unreviewed\n\t  ")]
+              [_vm._v("\n          Unreviewed\n        ")]
             ),
             _vm._v(" "),
             _c(
@@ -26733,11 +26802,11 @@ var render = function() {
                 staticClass: "status-option rejected",
                 on: {
                   click: function($event) {
-                    _vm.isRejected = !_vm.isRejected
+                    _vm.changeStatus("REJECTED")
                   }
                 }
               },
-              [_vm._v("\n\t    Rejected\n\t  ")]
+              [_vm._v("\n          Rejected\n        ")]
             ),
             _vm._v(" "),
             _c(
@@ -26746,11 +26815,11 @@ var render = function() {
                 staticClass: "status-option accepted",
                 on: {
                   click: function($event) {
-                    _vm.isAccepted = !_vm.isAccepted
+                    _vm.changeStatus("DONE")
                   }
                 }
               },
-              [_vm._v("\n\t    Accepted\n\t  ")]
+              [_vm._v("\n          Accepted\n        ")]
             )
           ])
         ])
@@ -26778,41 +26847,108 @@ var render = function() {
   return _c("div", { staticClass: "view--inner" }, [
     _c("div", { staticClass: "code" }, [
       _c("div", { staticClass: "code-el" }, [
-        _vm._m(0),
+        _c("div", { staticClass: "code-header" }, [
+          !_vm.isToggled
+            ? _c("span", { staticClass: "code-type a-fadeIn" }, [
+                _vm._v("HTML")
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.isToggled
+            ? _c("span", { staticClass: "code-type a-fadeIn" }, [
+                _vm._v("Blade")
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _c("label", { staticClass: "toggle-wrap" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.isToggled,
+                  expression: "isToggled"
+                }
+              ],
+              staticClass: "toggle",
+              attrs: { type: "checkbox" },
+              domProps: {
+                checked: Array.isArray(_vm.isToggled)
+                  ? _vm._i(_vm.isToggled, null) > -1
+                  : _vm.isToggled
+              },
+              on: {
+                change: function($event) {
+                  var $$a = _vm.isToggled,
+                    $$el = $event.target,
+                    $$c = $$el.checked ? true : false
+                  if (Array.isArray($$a)) {
+                    var $$v = null,
+                      $$i = _vm._i($$a, $$v)
+                    if ($$el.checked) {
+                      $$i < 0 && (_vm.isToggled = $$a.concat([$$v]))
+                    } else {
+                      $$i > -1 &&
+                        (_vm.isToggled = $$a
+                          .slice(0, $$i)
+                          .concat($$a.slice($$i + 1)))
+                    }
+                  } else {
+                    _vm.isToggled = $$c
+                  }
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("div"),
+            _vm._v(" "),
+            _c("span", [_vm._v("Show Blade")])
+          ])
+        ]),
         _vm._v(" "),
         _c("div", { staticClass: "code-tabs" }, [
-          _c(
-            "div",
-            {
-              staticClass: "tab",
-              attrs: {
-                id: "markup-view",
-                role: "tabpanel",
-                "aria-labelledby": "markup-view"
-              }
-            },
-            [
-              _c("pre", [
-                _c("code", { staticClass: "language-html" }, [
-                  _vm._v(_vm._s(_vm.pattern.template))
-                ])
-              ])
-            ]
-          ),
+          _vm.isToggled
+            ? _c(
+                "div",
+                {
+                  staticClass: "tab a-fadeIn",
+                  attrs: { role: "tabpanel", "aria-labelledby": "markup-view" }
+                },
+                [
+                  _c("pre", [
+                    _c("code", { staticClass: "language-html" }, [
+                      _vm._v(_vm._s(_vm.pattern.template))
+                    ])
+                  ])
+                ]
+              )
+            : _vm._e(),
           _vm._v(" "),
-          _c("div", {
-            staticClass: "tab",
-            attrs: {
-              id: "html-view",
-              role: "tabpanel",
-              "aria-labelledby": "html-view"
-            }
-          })
+          !_vm.isToggled
+            ? _c(
+                "div",
+                {
+                  staticClass: "tab a-fadeIn",
+                  attrs: {
+                    id: "html-view",
+                    role: "tabpanel",
+                    "aria-labelledby": "html-view"
+                  }
+                },
+                [
+                  _c("pre", [
+                    _c("code", { staticClass: "language-html" }, [
+                      _vm._v(_vm._s(_vm.pattern.html))
+                    ])
+                  ])
+                ]
+              )
+            : _vm._e()
         ])
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "code-el" }, [
-        _vm._m(1),
+        _vm._m(0),
         _vm._v(" "),
         _c("div", { staticClass: "code-tabs" }, [
           _c(
@@ -26837,7 +26973,10 @@ var render = function() {
         { staticClass: "preview-infos" },
         [
           _vm._v("\n\n      " + _vm._s(_vm.pattern.name) + "\n\n      "),
-          _c("status-bar", { attrs: { status: _vm.pattern.status } })
+          _c("status-bar", {
+            attrs: { status: _vm.pattern.status },
+            on: { "update-status": _vm.updateStatus }
+          })
         ],
         1
       ),
@@ -26874,7 +27013,7 @@ var render = function() {
               }
             }
           },
-          [_vm._m(2)]
+          [_vm._m(1)]
         ),
         _vm._v(" "),
         _c("router-link", { attrs: { to: { name: "update" } } }, [
@@ -26895,20 +27034,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("h2", { staticClass: "code-lang" }, [
-      _c("span", [_vm._v("Markup")]),
-      _vm._v(" / "),
-      _c("span", [_vm._v("HTML")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("h2", { staticClass: "code-lang" }, [
-      _c("span", [_vm._v("SASS")]),
-      _vm._v(" / "),
-      _c("span", [_vm._v("CSS")])
+    return _c("div", { staticClass: "code-header" }, [
+      _c("span", [_vm._v("CSS/SCSS")])
     ])
   },
   function() {

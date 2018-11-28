@@ -25,21 +25,26 @@ $l-headerheight: 66px;
 /* for colors*/
 
 $c-brandMain: #03314B;
+$c-brandDark: #02273C;
 $c-brandCon: #FFF621;
 $c-positive: #10E2AB;
-$c-alert: #FF7878;
+$c-alert: #FF4F4F;
+$c-warning: #FFB421;
+$c-inactive: #B9C5C5;
 
 // CSS VARS
 
-html {
+:root {
 
 	/* for colors*/
     
     --brandMain: #03314B;
-    --brandDark: #02273c;
+    --brandDark: #02273C;
     --brandCon: #FFF621;
     --positive: #10E2AB;
-    --alert: #FF7878;
+    --alert: #FF4F4F;
+    --warning: #FFB421;
+    --inactive: #B9C5C5;
 
     /* for layout*/
 

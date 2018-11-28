@@ -369,13 +369,15 @@ this would then look like this
 
 /* for colors*/
 
-html {
+:root {
   /* for colors*/
   --brandMain: #03314B;
-  --brandDark: #02273c;
+  --brandDark: #02273C;
   --brandCon: #FFF621;
   --positive: #10E2AB;
-  --alert: #FF7878;
+  --alert: #FF4F4F;
+  --warning: #FFB421;
+  --inactive: #B9C5C5;
   /* for layout*/
   --headerheight: 66px;
   --gap: 1rem;
@@ -434,7 +436,7 @@ containing the header and the so called view, containing most of the UI.
   height: 100vh;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: var(--headerheight) auto;
-  grid-template-areas: "header header header header" "main main main main";
+  grid-template-areas: "header header header header" "main main main main";
   overflow: hidden;
 }
 
@@ -450,21 +452,21 @@ containing the header and the so called view, containing most of the UI.
 @media (max-width: 599px) {
   .view,
   .view--inner {
-    grid-template-areas: "code code code code" "view view view view" "view view view view" "footer footer footer footer";
+    grid-template-areas: "code code code code" "view view view view" "view view view view" "footer footer footer footer";
   }
 }
 
 @media (min-width: 600px) {
   .view,
   .view--inner {
-    grid-template-areas: "code code code code" "view view view view" "view view view view" "footer footer footer footer";
+    grid-template-areas: "code code code code" "view view view view" "view view view view" "footer footer footer footer";
   }
 }
 
 @media (min-width: 1200px) {
   .view,
   .view--inner {
-    grid-template-areas: "code view view view" "code view view view" "code view view view" ".... footer footer footer";
+    grid-template-areas: "code view view view" "code view view view" "code view view view" ".... footer footer footer";
   }
 }
 
@@ -472,19 +474,12 @@ containing the header and the so called view, containing most of the UI.
   grid-area: code / code/ footer / footer;
 }
 
-.preview {
-  grid-area: view;
-  max-height: 100%;
-  max-width: 100%;
-  overflow: auto;
-}
-
-.preview iframe {
-  width: 100%;
-}
-
 .footer {
   grid-area: footer;
+}
+
+.u-hide {
+  display: none !important;
 }
 
 /* 
@@ -493,7 +488,7 @@ Here you can find the definition & mixins for our transitions and animations.
 These are the only ones that are allowed. 
 */
 
-@-webkit-keyframes fadeIn {
+@-webkit-keyframes slideIn {
   0% {
     opacity: 0;
     -webkit-transform: scaleX(0.5) translateX(-1000px);
@@ -510,7 +505,7 @@ These are the only ones that are allowed.
   }
 }
 
-@keyframes fadeIn {
+@keyframes slideIn {
   0% {
     opacity: 0;
     -webkit-transform: scaleX(0.5) translateX(-1000px);
@@ -525,6 +520,62 @@ These are the only ones that are allowed.
     -webkit-transform: scaleX(1) translateX(0px);
             transform: scaleX(1) translateX(0px);
   }
+}
+
+@-webkit-keyframes dropIn {
+  0% {
+    opacity: 0;
+    -webkit-transform: scaleY(0.5) translateY(-1000px);
+            transform: scaleY(0.5) translateY(-1000px);
+  }
+
+  75% {
+    opacity: 1;
+  }
+
+  100% {
+    -webkit-transform: scaleY(1) translateY(0px);
+            transform: scaleY(1) translateY(0px);
+  }
+}
+
+@keyframes dropIn {
+  0% {
+    opacity: 0;
+    -webkit-transform: scaleY(0.5) translateY(-1000px);
+            transform: scaleY(0.5) translateY(-1000px);
+  }
+
+  75% {
+    opacity: 1;
+  }
+
+  100% {
+    -webkit-transform: scaleY(1) translateY(0px);
+            transform: scaleY(1) translateY(0px);
+  }
+}
+
+.a-slideIn {
+  -webkit-animation-name: slideIn;
+          animation-name: slideIn;
+  -webkit-animation-duration: 300ms;
+          animation-duration: 300ms;
+  -webkit-animation-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+          animation-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+  -webkit-animation-iteration-count: 1;
+          animation-iteration-count: 1;
+}
+
+.a-dropIn {
+  -webkit-animation-name: dropIn;
+          animation-name: dropIn;
+  -webkit-animation-duration: 300ms;
+          animation-duration: 300ms;
+  -webkit-animation-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+          animation-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+  -webkit-animation-iteration-count: 1;
+          animation-iteration-count: 1;
 }
 
 /* 
@@ -691,15 +742,7 @@ textarea {
 }
 
 .error {
-  -webkit-animation-name: fadeIn;
-          animation-name: fadeIn;
-  -webkit-animation-duration: 900ms;
-          animation-duration: 900ms;
-  -webkit-animation-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
-          animation-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
-  -webkit-animation-iteration-count: 1;
-          animation-iteration-count: 1;
-  color: var(--alert, #FF7878);
+  color: var(--alert, #FF4F4F);
   display: inline-block;
 }
 
@@ -809,6 +852,10 @@ These are the styles that are needed to render our welcome dashboard.
           flex-direction: column;
 }
 
+.code-lang {
+  margin: 0;
+}
+
 .code-tabs {
   height: 100%;
   position: relative;
@@ -820,6 +867,109 @@ These are the styles that are needed to render our welcome dashboard.
   left: 0;
   position: absolute;
   top: 0;
+}
+
+/* 
+These are the styles that are needed to render the pattern preview. 
+*/
+
+.status-current,
+.status-option:before {
+  width: 1rem;
+  height: 1rem;
+  background: var(--inactive, #B9C5C5);
+  border-radius: 100%;
+  margin: 0 0.5rem 0 0;
+}
+
+.accepted.status-current,
+.accepted.status-option:before {
+  background: var(--positive, #10E2AB);
+}
+
+.rejected.status-current,
+.rejected.status-option:before {
+  background: var(--alert, #FF4F4F);
+}
+
+.toCheck.status-current,
+.toCheck.status-option:before {
+  background: var(--warning, #FFB421);
+}
+
+.wip.status-current,
+.wip.status-option:before {
+  background: white;
+}
+
+.preview {
+  grid-area: view;
+  max-height: 100%;
+  max-width: 100%;
+  position: relative;
+  overflow: auto;
+}
+
+.preview iframe {
+  width: 100%;
+}
+
+.preview-infos {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background: var(--brandMain, #03314B);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  font-family: Arial, sans-serif;
+  font-size: 0.75rem;
+  left: 0;
+  padding: var(--gap, 1rem);
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: auto;
+}
+
+.statusbar {
+  padding: 0 0.5rem;
+  position: relative;
+}
+
+.status-current {
+  cursor: pointer;
+}
+
+.status-menue {
+  background: var(--brandDark, #02273C);
+  left: -0.5rem;
+  padding: calc(var(--gap, $l-gap) / 2) 0;
+  position: absolute;
+  top: 1.2rem;
+  z-index: 500;
+}
+
+.status-option {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background: transparent;
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: calc(var(--gap, $l-gap) / 2) var(--gap, 1rem);
+}
+
+.status-option:before {
+  display: inline-block;
+  content: '';
+}
+
+.status-option:hover {
+  background: var(--brandMain, #03314B);
 }
 
 /* 
@@ -853,7 +1003,7 @@ These are the styles for the project pattern navigation.
 }
 
 .patterns--sub {
-  background: var(--brandDark);
+  background: var(--brandDark, #02273C);
   left: 0;
   position: absolute;
   top: 2rem;

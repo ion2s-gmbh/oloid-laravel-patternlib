@@ -1,0 +1,111 @@
+/* 
+These are the styles that are needed to render the pattern preview. 
+*/
+
+
+%status { // Styles for the status bubbles
+
+	@include size(1rem);
+	background: var(--inactive, $c-inactive);
+	border-radius: 100%;
+	margin: 0 0.5rem 0 0;
+
+	&.accepted {
+		background: var(--positive, $c-positive);
+	}
+
+	&.rejected {
+		background: var(--alert, $c-alert);
+	}
+
+	&.toCheck {
+		background: var(--warning, $c-warning);
+	}
+
+	&.wip {
+		background: white;
+	}
+}
+
+// Preview Base --------- //
+
+
+.preview { 
+
+  grid-area: view;
+  max-height: 100%;
+  max-width: 100%;
+  position: relative;
+  overflow: auto;
+  
+  iframe { //  THIS IS THE IFRAME CONTAINING THE PATTERN.
+    width: 100%;
+  } 
+
+}
+
+.preview-infos {
+
+	align-items: center;
+	background: var(--brandMain, $c-brandMain);
+	display: flex;
+	font-family: Arial, sans-serif;
+	font-size: 0.75rem;	
+	left: 0;
+	padding: var(--gap, $l-gap);
+	position: sticky;
+	top: 0;
+	width: 100%;
+	z-index: auto;
+
+}
+
+
+.statusbar {
+
+	padding: 0 0.5rem;
+	position: relative;
+
+}
+
+
+
+.status-current {
+	
+	@extend %status;
+	cursor: pointer;
+
+}
+
+
+
+.status-menue {
+	
+	background: var(--brandDark, $c-brandDark);
+	left: -0.5rem;
+	padding: calc(var(--gap, $l-gap) / 2) 0;
+	position: absolute;
+	top: 1.2rem;
+	z-index: 500;	
+
+}
+
+.status-option {
+	
+	align-items: center;
+	background: transparent;
+	cursor: pointer;
+	display: flex;	
+	padding: calc(var(--gap, $l-gap) / 2) var(--gap, $l-gap);
+
+	&:before {
+		display: inline-block;
+		content: '';
+		@extend %status;
+	}
+
+	&:hover {
+		background: var(--brandMain, $c-brandMain);
+	}
+
+}

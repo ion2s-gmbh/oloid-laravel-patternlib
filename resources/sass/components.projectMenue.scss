@@ -30,7 +30,7 @@ These are the styles for the project pattern navigation.
 
 	&--sub {
 
-		background: var(--brandDark);
+		background: var(--brandDark, $c-brandDark);
 		left: 0;
 		position: absolute;
 		top: 2rem;

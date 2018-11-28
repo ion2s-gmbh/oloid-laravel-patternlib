@@ -292,4 +292,24 @@ class PatternService
 
         return $templateSuccess && $markdownSuccess && $sassSuccess;
     }
+    /**
+     * Update the status of a Pattern.
+     *
+     * @param $newStatus
+     * @param string $name
+     * @throws FileNotFoundException
+     * @throws RenderingException
+     */
+    public function updateStatus($newStatus, string $name)
+    {
+        $pattern = $this->loadPattern($name);
+        $oldStatus = $pattern->metadata->status;
+        $file = $this->getFileLocation($name, self::MARKDOWN_EXTENSION);
+
+        $search = "status: {$oldStatus}";
+        $replacement = "status: {$newStatus}";
+        $mdContent = $this->loadMarkdownFile($name);
+        $newMdContent = str_replace($search, $replacement, $mdContent);
+        file_put_contents($file, $newMdContent);
+    }
 }

@@ -6,7 +6,7 @@
 
       <div class="code-el">
 
-        <h2>
+        <h2 class="code-lang">
 
           <span>Markup</span> / <span>HTML</span>
 
@@ -32,7 +32,7 @@
 
       <div class="code-el">
 
-        <h2>
+        <h2 class="code-lang">
 
           <span>SASS</span> / <span>CSS</span>
 
@@ -42,7 +42,7 @@
 
           <div class="tab" id="markup-view" role="tabpanel" aria-labelledby="markup-view">
 
-              <pre><code>{{ pattern.sass }}</code></pre>
+            <pre><code>{{ pattern.sass }}</code></pre>
 
           </div>
 
@@ -54,13 +54,23 @@
 
     <div class="preview">
 
-      <div class="">
+      <div class="preview-infos">
+
+        {{ pattern.name }}
+
+        <status-bar
+                v-on:update-status="updateStatus"
+                :status="pattern.status">
+        </status-bar>
+
+      </div>
+
+      <div class="preview-inner">
 
         <iframe height="1500" width="1100"
                 frameBorder="0"
                 :src="`workshop/preview/${pattern.name}`"></iframe>
 
-        <div style="background: transparent; height: 5000px; width: 5002px;"></div>
 
       </div>
 
@@ -113,16 +123,21 @@
 <script>
   import {API} from '../httpClient';
   import LOG from '../logger';
+  import StatusBar from './StatusBar';
 
   export default {
     name: "PreviewPattern",
     data() {
       return {
         pattern: {
-          'name': 'undefined'
+          name: 'undefined'
         },
         loading: false,
       }
+    },
+
+    components: {
+      StatusBar
     },
 
     watch: {
@@ -141,6 +156,20 @@
           let response = await API.get(this.$route.params.pattern);
           this.pattern = response.data.data;
           this.loading = false;
+        } catch (e) {
+          LOG.error(e);
+        }
+      },
+
+      /**
+       * Update status of the Pattern.
+       */
+      updateStatus: async function (status) {
+        try {
+          let response = await API.put(`pattern/status/${this.pattern.name}`, {
+            status
+          });
+          this.pattern.status = status;
         } catch (e) {
           LOG.error(e);
         }

@@ -486,4 +486,26 @@ class PatternServiceTest extends BaseTestCase
         $this->assertTrue($fs->exists(pattern_path('/atoms/buttons/a/b/c/delete.scss')));
         $this->assertContains('buttons/a/b/c/delete', $atomsScssContent);
     }
+
+    /**
+     * @test
+     * @covers \Laratomics\Services\PatternService
+     */
+    public function it_should_update_the_status_of_a_pattern()
+    {
+        // arrange
+        $this->preparePatternStub();
+        $pattern = $this->cut->loadPattern('atoms.text.headline1');
+        $this->assertEquals('TODO', $pattern->metadata->status);
+
+        $mdContent = file_get_contents("{$this->tempDir}/patterns/atoms/text/headline1.md");
+        $this->assertContains('status: TODO', $mdContent);
+
+        // act
+        $this->cut->updateStatus('TESTED', $pattern->name);
+
+        // assert
+        $mdContent = file_get_contents("{$this->tempDir}/patterns/atoms/text/headline1.md");
+        $this->assertContains('status: TESTED', $mdContent);
+    }
 }

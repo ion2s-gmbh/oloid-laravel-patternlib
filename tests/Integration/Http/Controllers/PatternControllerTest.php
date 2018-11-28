@@ -60,6 +60,7 @@ class PatternControllerTest extends BaseTestCase
         ];
 
         // act
+        /** @var TestResponse $response */
         $response = $this->postJson('workshop/api/v1/pattern', $data);
 
         // assert
@@ -78,6 +79,7 @@ class PatternControllerTest extends BaseTestCase
         ];
 
         // act
+        /** @var TestResponse $response */
         $response = $this->postJson('workshop/api/v1/pattern', $data);
 
         // assert
@@ -179,5 +181,26 @@ class PatternControllerTest extends BaseTestCase
 
         // assert
         $response->assertStatus(JsonResponse::HTTP_NOT_FOUND);
+    }
+
+    /**
+     * @test
+     * @covers \Laratomics\Http\Controllers\PatternController
+     */
+    public function it_should_update_the_status_of_a_pattern()
+    {
+        // arrange
+        $this->preparePatternStub();
+
+        $data = [
+            'status' => 'TESTED'
+        ];
+
+        // act
+        /** @var TestResponse $response */
+        $response = $this->putJson("workshop/api/v1/pattern/status/{$this->name}", $data);
+
+        // assert
+        $response->assertSuccessful();
     }
 }

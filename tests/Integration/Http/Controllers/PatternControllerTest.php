@@ -2,6 +2,7 @@
 
 namespace Tests\Integration\Http\Controllers;
 
+use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\Http\JsonResponse;
 use Laratomics\Tests\BaseTestCase;
 use Laratomics\Tests\Traits\TestStubs;
@@ -39,6 +40,7 @@ class PatternControllerTest extends BaseTestCase
         ];
 
         // act
+        /** @var TestResponse $response */
         $response = $this->post('workshop/api/v1/pattern', $data);
 
         // assert
@@ -58,6 +60,7 @@ class PatternControllerTest extends BaseTestCase
         ];
 
         // act
+        /** @var TestResponse $response */
         $response = $this->postJson('workshop/api/v1/pattern', $data);
 
         // assert
@@ -76,6 +79,7 @@ class PatternControllerTest extends BaseTestCase
         ];
 
         // act
+        /** @var TestResponse $response */
         $response = $this->postJson('workshop/api/v1/pattern', $data);
 
         // assert
@@ -92,6 +96,7 @@ class PatternControllerTest extends BaseTestCase
         $this->preparePatternStub();
 
         // act
+        /** @var TestResponse $response */
         $response = $this->getJson('workshop/api/v1/atoms.text.headline1');
 
         // assert
@@ -118,6 +123,7 @@ class PatternControllerTest extends BaseTestCase
     public function it_should_return_404_if_a_pattern_does_not_exist()
     {
         // act
+        /** @var TestResponse $response */
         $response = $this->getJson('workshop/api/v1/atoms.not.existing');
 
         // assert
@@ -134,6 +140,7 @@ class PatternControllerTest extends BaseTestCase
         $this->preparePatternStub();
 
         // act
+        /** @var TestResponse $response */
         $response = $this->get("/workshop/preview/{$this->name}");
 
         // assert
@@ -141,5 +148,26 @@ class PatternControllerTest extends BaseTestCase
         $response->assertViewIs('workshop::preview');
         $response->assertSee('Testing');
         $response->assertViewHas('preview', "<!-- atoms.text.headline1 -->\n<h1>Testing</h1>");
+    }
+
+    /**
+     * @test
+     * @covers \Laratomics\Http\Controllers\PatternController
+     */
+    public function it_should_update_the_status_of_a_pattern()
+    {
+        // arrange
+        $this->preparePatternStub();
+
+        $data = [
+            'status' => 'TESTED'
+        ];
+
+        // act
+        /** @var TestResponse $response */
+        $response = $this->putJson("workshop/api/v1/pattern/status/{$this->name}", $data);
+
+        // assert
+        $response->assertSuccessful();
     }
 }

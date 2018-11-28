@@ -354,7 +354,7 @@ class PatternServiceTest extends BaseTestCase
         $this->assertFalse($fs->exists(pattern_path('/atoms/buttons/button.md')));
         $this->assertFalse($fs->exists(pattern_path('/atoms/buttons/button.scss')));
         $this->assertFalse($fs->exists(pattern_path('/atoms/buttons')));
-        $this->assertFalse($fs->exists(pattern_path('/atoms')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms')));
         $this->assertTrue($fs->exists(pattern_path()));
         $this->assertTrue($fs->exists(pattern_path('patterns.scss')));
     }
@@ -452,10 +452,37 @@ class PatternServiceTest extends BaseTestCase
     public function it_should_remove_deeply_nested_pattern_and_keep_other_branches()
     {
         // arrange
+        $this->preparePatternStub();
+        $this->preparePattern('atoms.buttons.a.b.cancel', 'Cancel button');
+        $this->preparePattern('atoms.buttons.a.b.c.delete', 'Delete button');
+
+        $atomsScssContent = file_get_contents("{$this->tempDir}/patterns/atoms/atoms.scss");
+//        $mainScssContent = file_get_contents("{$this->tempDir}/patterns/patterns.scss");
+
+        $fs = new Filesystem();
+        $this->assertTrue($fs->exists(pattern_path('/atoms/buttons/a/b/cancel.blade.php')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms/buttons/a/b/cancel.md')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms/buttons/a/b/cancel.scss')));
+        $this->assertContains('buttons/a/b/cancel', $atomsScssContent);
+
+        $this->assertTrue($fs->exists(pattern_path('/atoms/buttons/a/b/c/delete.blade.php')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms/buttons/a/b/c/delete.md')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms/buttons/a/b/c/delete.scss')));
+        $this->assertContains('buttons/a/b/c/delete', $atomsScssContent);
 
         // act
+        $this->assertTrue($this->cut->remove('atoms.buttons.a.b.cancel'));
 
         // assert
-        $this->markTestIncomplete('Not yet implemented!');
+        $atomsScssContent = file_get_contents("{$this->tempDir}/patterns/atoms/atoms.scss");
+        $this->assertFalse($fs->exists(pattern_path('/atoms/buttons/a/b/cancel.blade.php')));
+        $this->assertFalse($fs->exists(pattern_path('/atoms/buttons/a/b/cancel.md')));
+        $this->assertFalse($fs->exists(pattern_path('/atoms/buttons/a/b/cancel.scss')));
+        $this->assertNotContains('buttons/a/b/cancel', $atomsScssContent);
+
+        $this->assertTrue($fs->exists(pattern_path('/atoms/buttons/a/b/c/delete.blade.php')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms/buttons/a/b/c/delete.md')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms/buttons/a/b/c/delete.scss')));
+        $this->assertContains('buttons/a/b/c/delete', $atomsScssContent);
     }
 }

@@ -129,7 +129,7 @@ if (!function_exists('dir_contains_any')) {
     function dir_contains_any($directory, $extension): bool
     {
         $fs = new Filesystem();
-        $files = $fs->files($directory);
+        $files = $fs->allFiles($directory);
         if (is_array($files)) {
             foreach ($files as $file) {
                 if (ends_with($file, $extension)) {

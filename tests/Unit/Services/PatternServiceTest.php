@@ -341,19 +341,19 @@ class PatternServiceTest extends BaseTestCase
         $this->preparePatternStub();
 
         $fs = new Filesystem();
-        $this->assertTrue($fs->exists(pattern_path('/atoms/text/headline1.blade.php')));
-        $this->assertTrue($fs->exists(pattern_path('/atoms/text/headline1.md')));
-        $this->assertTrue($fs->exists(pattern_path('/atoms/text/headline1.scss')));
-        $this->assertTrue($fs->exists(pattern_path('/atoms/text')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms/buttons/button.blade.php')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms/buttons/button.md')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms/buttons/button.scss')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms/buttons')));
         $this->assertTrue($fs->exists(pattern_path('/atoms')));
 
         // act
-        $this->assertTrue($this->cut->remove('atoms.text.headline1'));
+        $this->assertTrue($this->cut->remove('atoms.buttons.button'));
 
-        $this->assertFalse($fs->exists(pattern_path('/atoms/text/headline1.blade.php')));
-        $this->assertFalse($fs->exists(pattern_path('/atoms/text/headline1.md')));
-        $this->assertFalse($fs->exists(pattern_path('/atoms/text/headline1.scss')));
-        $this->assertFalse($fs->exists(pattern_path('/atoms/text')));
+        $this->assertFalse($fs->exists(pattern_path('/atoms/buttons/button.blade.php')));
+        $this->assertFalse($fs->exists(pattern_path('/atoms/buttons/button.md')));
+        $this->assertFalse($fs->exists(pattern_path('/atoms/buttons/button.scss')));
+        $this->assertFalse($fs->exists(pattern_path('/atoms/buttons')));
         $this->assertFalse($fs->exists(pattern_path('/atoms')));
         $this->assertTrue($fs->exists(pattern_path()));
         $this->assertTrue($fs->exists(pattern_path('patterns.scss')));
@@ -410,11 +410,39 @@ class PatternServiceTest extends BaseTestCase
     public function it_should_remove_a_pattern_and_keep_the_patterns_root_and_parallel_patterns()
     {
         // arrange
+        $this->preparePatternStub();
+        $atomsScssContent = file_get_contents("{$this->tempDir}/patterns/atoms/atoms.scss");
+        $mainScssContent = file_get_contents("{$this->tempDir}/patterns/patterns.scss");
+
+        $fs = new Filesystem();
+        $this->assertTrue($fs->exists(pattern_path('/atoms/text/headline1.blade.php')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms/text/headline1.md')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms/text/headline1.scss')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms/text/headline2.blade.php')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms/text/headline2.md')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms/text/headline2.scss')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms/text')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms')));
+        $this->assertContains('text/headline1', $atomsScssContent);
 
         // act
+        $this->assertTrue($this->cut->remove('atoms.text.headline1'));
 
-        // assert
-        $this->markTestIncomplete('Not yet implemented!');
+        $this->assertFalse($fs->exists(pattern_path('/atoms/text/headline1.blade.php')));
+        $this->assertFalse($fs->exists(pattern_path('/atoms/text/headline1.md')));
+        $this->assertFalse($fs->exists(pattern_path('/atoms/text/headline1.scss')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms/text/headline2.blade.php')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms/text/headline2.md')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms/text/headline2.scss')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms/atoms.scss')));
+        $this->assertTrue($fs->exists(pattern_path()));
+        $this->assertTrue($fs->exists(pattern_path('patterns.scss')));
+
+        $atomsScssContent = file_get_contents("{$this->tempDir}/patterns/atoms/atoms.scss");
+        $mainScssContent = file_get_contents("{$this->tempDir}/patterns/patterns.scss");
+        $this->assertNotContains('text/headline1', $atomsScssContent);
+        $this->assertContains('text/headline2', $atomsScssContent);
+        $this->assertContains('atoms/atoms', $mainScssContent);
     }
 
     /**

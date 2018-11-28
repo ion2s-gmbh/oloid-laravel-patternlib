@@ -21,6 +21,14 @@ Route::post('pattern', 'PatternController@store');
 
 /*
 |--------------------------------------------------------------------------
+| PUT /pattern/status/{pattern}
+|--------------------------------------------------------------------------
+| Update the status of the Pattern.
+*/
+Route::put('pattern/status/{pattern}', 'PatternController@status');
+
+/*
+|--------------------------------------------------------------------------
 | GET /navi
 |--------------------------------------------------------------------------
 | Get the navigation.

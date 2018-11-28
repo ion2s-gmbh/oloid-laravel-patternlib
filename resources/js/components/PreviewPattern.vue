@@ -168,7 +168,8 @@
         try {
           let response = await API.put(`pattern/status/${this.pattern.name}`, {
             status
-          })
+          });
+          this.pattern.status = status;
         } catch (e) {
           LOG.error(e);
         }

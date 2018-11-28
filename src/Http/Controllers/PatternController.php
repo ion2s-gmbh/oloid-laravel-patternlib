@@ -80,10 +80,15 @@ class PatternController extends Controller
      *
      * @param string $pattern
      * @return JsonResponse
+     * @throws FileNotFoundException
      */
     public function remove(string $pattern): JsonResponse
     {
-        $this->patternService->remove($pattern);
+        try {
+            $this->patternService->remove($pattern);
+        } catch (FileNotFoundException $e) {
+            return JsonResponse::create([], JsonResponse::HTTP_NOT_FOUND);
+        }
         return JsonResponse::create([]);
     }
 }

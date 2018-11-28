@@ -4,8 +4,8 @@
 namespace Laratomics\Services;
 
 
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Facades\File;
-use Laratomics\Exceptions\FileNotFoundException;
 use Laratomics\Exceptions\RenderingException;
 use Laratomics\Models\Pattern;
 use Spatie\YamlFrontMatter\YamlFrontMatter;
@@ -247,7 +247,7 @@ class PatternService
         if (!File::exists($templateFile)
             || !File::exists($markdownFile)
             || !File::exists($sassFile)) {
-            throw new FileNotFoundException();
+            throw new FileNotFoundException;
         }
 
         /*

@@ -238,6 +238,8 @@ class PatternService
      */
     public function remove(string $pattern): bool
     {
+
+
         /*
          * Gathering path information
          */

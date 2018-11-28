@@ -169,9 +169,9 @@ class HelperMethodsTest extends BaseTestCase
 
     /**
      * @test
-     * @covers ::root_dir
+     * @covers ::pattern_root
      */
-    public function it_should_return_the_patterns_root_dir()
+    public function it_should_return_the_patterns_root()
     {
         // arrange
         $pattern = 'root.path.to.a.file.txt';

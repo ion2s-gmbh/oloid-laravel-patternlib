@@ -61,17 +61,7 @@ These are the styles for the project pattern navigation.
 
 	&:not(:first-child) {
 
-		border: {
-
-			bottom: 0;
-			left: 1px;
-			left-color: rgba(255,255,255,0.1);			
-			right: 1px;
-			right-color: rgba(255,255,255,0.1);
-			style: solid;		
-			top: 0;			
-
-		}
+		border-left: 1px solid rgba(255, 255, 255, 0.1);
 
 	}
 

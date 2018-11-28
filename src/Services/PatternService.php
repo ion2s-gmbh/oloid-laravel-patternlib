@@ -4,8 +4,8 @@
 namespace Laratomics\Services;
 
 
-use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Facades\File;
+use Laratomics\Exceptions\FileNotFoundException;
 use Laratomics\Exceptions\RenderingException;
 use Laratomics\Models\Pattern;
 use Spatie\YamlFrontMatter\YamlFrontMatter;
@@ -234,25 +234,34 @@ class PatternService
      *
      * @param string $pattern
      * @return bool
-     * @todo this feature is still incomplete
+     * @throws FileNotFoundException
      */
     public function remove(string $pattern): bool
     {
-
+        /*
+         * First check if the pattern exists.
+         */
+        $templateFile = $this->getFileLocation($pattern, self::BLADE_EXTENSION);
+        $sassFile = $this->getFileLocation($pattern, self::SASS_EXTENSION);
+        $markdownFile = $this->getFileLocation($pattern, self::MARKDOWN_EXTENSION);
+        if (!File::exists($templateFile)
+            || !File::exists($markdownFile)
+            || !File::exists($sassFile)) {
+            throw new FileNotFoundException();
+        }
 
         /*
-         * Gathering path information
+         * Gathering general path information
          */
         $mainSassFile = pattern_path('patterns.scss');
         $branchRoot = pattern_root($pattern);
         $rootSassFile = pattern_path("{$branchRoot}/{$branchRoot}.scss");
-        $sassFile = $this->getFileLocation($pattern, self::SASS_EXTENSION);
 
         /*
          * Delete base files
          */
-        $templateSuccess = File::delete($this->getFileLocation($pattern, self::BLADE_EXTENSION));
-        $markdownSuccess = File::delete($this->getFileLocation($pattern, self::MARKDOWN_EXTENSION));
+        $templateSuccess = File::delete($templateFile);
+        $markdownSuccess = File::delete($markdownFile);
         $sassSuccess = File::delete($sassFile);
 
         /*

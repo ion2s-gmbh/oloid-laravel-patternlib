@@ -3,7 +3,6 @@
 namespace Tests\Unit\Services;
 
 use Exception;
-use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Filesystem\Filesystem;
 use Laratomics\Services\PatternService;
 use Laratomics\Tests\BaseTestCase;
@@ -393,10 +392,10 @@ class PatternServiceTest extends BaseTestCase
     /**
      * @test
      * @covers \Laratomics\Services\PatternService
+     * @expectedException \Laratomics\Exceptions\FileNotFoundException
      */
     public function it_should_throw_an_exception_if_an_unexisting_pattern_should_be_deleted()
     {
-        $this->markTestIncomplete('Not yet implemented!');
         // arrange
         $this->preparePatternStub();
 

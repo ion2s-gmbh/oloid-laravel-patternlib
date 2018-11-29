@@ -71,7 +71,7 @@
         {{ pattern.name }}
 
         <status-bar
-                v-on:update-status="updateStatus"
+                @update-status="updateStatus"
                 :status="pattern.status">
         </status-bar>
 
@@ -104,7 +104,7 @@
 
       </router-link>
 
-      <button class="btn btn--secondary btn--sm" @click="deletePattern(pattern.name)">
+      <button class="btn btn--secondary btn--sm" @click="confirmDelete">
 
         <span>
           <i class="fas fa-trash-alt"></i>
@@ -127,7 +127,12 @@
       </router-link>
 
     </div>
-
+    <confirmation-window
+            v-if="showDeleteConfirm"
+            @confirm-yes="deletePattern(pattern.name)"
+            @confirm-no="showDeleteConfirm = false"
+            :context="pattern">
+    </confirmation-window>
   </div>
 
 </template>
@@ -147,6 +152,7 @@
         },
         loading: false,
         isToggled: false,
+        showDeleteConfirm: false
       }
     },
 
@@ -188,6 +194,10 @@
         } catch (e) {
           LOG.error(e);
         }
+      },
+
+      confirmDelete: function () {
+        this.showDeleteConfirm = true;
       },
 
       /**

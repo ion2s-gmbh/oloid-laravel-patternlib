@@ -136,6 +136,7 @@
   import {API} from '../httpClient';
   import LOG from '../logger';
   import StatusBar from './StatusBar';
+  import ConfirmationWindow from "./ConfirmationWindow";
 
   export default {
     name: "PreviewPattern",
@@ -150,6 +151,7 @@
     },
 
     components: {
+      ConfirmationWindow,
       StatusBar
     },
 

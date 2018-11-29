@@ -71,7 +71,7 @@
         {{ pattern.name }}
 
         <status-bar
-                v-on:update-status="updateStatus"
+                @update-status="updateStatus"
                 :status="pattern.status">
         </status-bar>
 
@@ -104,7 +104,7 @@
 
       </router-link>
 
-      <button class="btn btn--secondary btn--sm" @click="deletePattern(pattern.name)">
+      <button class="btn btn--secondary btn--sm" @click="confirmDelete">
 
         <span>
           <i class="fas fa-trash-alt"></i>
@@ -127,7 +127,12 @@
       </router-link>
 
     </div>
-
+    <confirmation-window
+            v-if="showDeleteConfirm"
+            @confirm-yes="deletePattern(pattern.name)"
+            @confirm-no="showDeleteConfirm = false">
+      Do you really want to delete '{{ pattern.name }}'?
+    </confirmation-window>
   </div>
 
 </template>
@@ -136,6 +141,7 @@
   import {API} from '../httpClient';
   import LOG from '../logger';
   import StatusBar from './StatusBar';
+  import ConfirmationWindow from "./ConfirmationWindow";
 
   export default {
     name: "PreviewPattern",
@@ -146,10 +152,12 @@
         },
         loading: false,
         isToggled: false,
+        showDeleteConfirm: false
       }
     },
 
     components: {
+      ConfirmationWindow,
       StatusBar
     },
 
@@ -186,6 +194,10 @@
         } catch (e) {
           LOG.error(e);
         }
+      },
+
+      confirmDelete: function () {
+        this.showDeleteConfirm = true;
       },
 
       /**

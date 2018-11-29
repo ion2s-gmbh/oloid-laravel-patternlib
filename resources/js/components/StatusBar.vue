@@ -6,7 +6,7 @@
 
          @click="isActive = !isActive"
 
-         title="status: status"
+         :title="title"
 
          :class="{accepted: isAccepted,
 	          toCheck: isToCheck,
@@ -64,19 +64,23 @@
 
     computed: {
       isTodo: function () {
-        return this.status === 'todo'
+        return this.status === 'todo';
       },
 
       isToCheck: function () {
-        return this.status === 'review'
+        return this.status === 'review';
       },
 
       isAccepted: function () {
-        return this.status === 'done'
+        return this.status === 'done';
       },
 
       isRejected: function () {
-        return this.status === 'rejected'
+        return this.status === 'rejected';
+      },
+
+      title: function () {
+        return `status: ${this.status}`;
       }
     }
   }

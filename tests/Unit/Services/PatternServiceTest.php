@@ -204,7 +204,7 @@ class PatternServiceTest extends BaseTestCase
     {
         $markdownContent = str_replace('   ', '',
             "---
-            status: TODO
+            status: todo
             values:
             ---
             {$this->description}");

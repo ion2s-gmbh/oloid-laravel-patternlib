@@ -13,7 +13,7 @@ use Spatie\YamlFrontMatter\YamlFrontMatter;
 
 class PatternService
 {
-    const INITIAL_STATE = 'TODO';
+    const INITIAL_STATE = 'todo';
     const BLADE_EXTENSION = 'blade.php';
     const SASS_EXTENSION = 'scss';
     const MARKDOWN_EXTENSION = 'md';

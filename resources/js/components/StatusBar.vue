@@ -19,15 +19,15 @@
 
       <ul class="status-list">
 
-        <li class="status-option toCheck" @click="changeStatus('REVIEW')">
+        <li class="status-option toCheck" @click="changeStatus('review')">
           Unreviewed
         </li>
 
-        <li class="status-option rejected" @click="changeStatus('REJECTED')">
+        <li class="status-option rejected" @click="changeStatus('rejected')">
           Rejected
         </li>
 
-        <li class="status-option accepted" @click="changeStatus('DONE')">
+        <li class="status-option accepted" @click="changeStatus('done')">
           Accepted
         </li>
 
@@ -64,19 +64,19 @@
 
     computed: {
       isTodo: function () {
-        return this.status === 'TODO'
+        return this.status === 'todo'
       },
 
       isToCheck: function () {
-        return this.status === 'REVIEW'
+        return this.status === 'review'
       },
 
       isAccepted: function () {
-        return this.status === 'DONE'
+        return this.status === 'done'
       },
 
       isRejected: function () {
-        return this.status === 'REJECTED'
+        return this.status === 'rejected'
       }
     }
   }

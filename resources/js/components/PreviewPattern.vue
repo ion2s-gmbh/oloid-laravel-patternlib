@@ -130,8 +130,8 @@
     <confirmation-window
             v-if="showDeleteConfirm"
             @confirm-yes="deletePattern(pattern.name)"
-            @confirm-no="showDeleteConfirm = false"
-            :context="pattern">
+            @confirm-no="showDeleteConfirm = false">
+      Do you really want to delete '{{ pattern.name }}'?
     </confirmation-window>
   </div>
 

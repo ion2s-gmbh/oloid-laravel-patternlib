@@ -3,9 +3,9 @@
   <div class="popUp popUp--confirmation">
 
     <div class="popUp-inner a-dropIn">
-      
-      <p>Do you realy want to delete '{{ context.name }}'?</p>
-      
+
+      <p><slot></slot></p>
+
       <div class="popUp-controls">
         
         <button class="btn btn--sm btn--secondary" @click="confirmNo">
@@ -29,9 +29,6 @@
 <script>
   export default {
     name: "ConfirmationWindow",
-    props: [
-      'context'
-    ],
 
     methods: {
       confirmYes: function () {

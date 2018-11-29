@@ -12533,7 +12533,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /* unused harmony export ValidationObserver */
 /* unused harmony export withValidation */
 /**
-  * vee-validate v2.1.2
+  * vee-validate v2.1.3
   * (c) 2018 Abdelrahman Awad
   * @license MIT
   */
@@ -13849,6 +13849,24 @@ function normalizeSlots (slots, ctx) {
   }, []);
 }
 
+function createRenderless (h, vnode) {
+  // a single-root slot yay!
+  if (!Array.isArray(vnode)) {
+    return vnode;
+  }
+
+  if (vnode.length === 1) {
+    return vnode[0];
+  }
+
+  if (true) {
+    warn('Your slot should have one root element. Rendering a span as the root.');
+  }
+
+  // Renders a multi-root node, should throw a Vue error.
+  return vnode;
+}
+
 /**
  * Generates the options required to construct a field.
  */
@@ -14194,7 +14212,7 @@ Object.defineProperties( RuleContainer, staticAccessors );
 // 
 
 var isEvent = function (evt) {
-  return (isCallable(Event) && evt instanceof Event) || (evt && evt.srcElement);
+  return (typeof Event !== 'undefined' && isCallable(Event) && evt instanceof Event) || (evt && evt.srcElement);
 };
 
 var normalizeEvents = function (evts) {
@@ -15461,6 +15479,8 @@ Validator.localize = function localize (lang, dictionary) {
  * Registers a field to be validated.
  */
 Validator.prototype.attach = function attach (fieldOpts) {
+    var this$1 = this;
+
   // fixes initial value detection with v-model and select elements.
   var value = fieldOpts.initialValue;
   var field = new Field(fieldOpts);
@@ -15468,7 +15488,7 @@ Validator.prototype.attach = function attach (fieldOpts) {
 
   // validate the field initially
   if (field.immediate) {
-    this.validate(("#" + (field.id)), value || field.value, { vmId: fieldOpts.vmId });
+    VeeValidate$1.instance._vm.$nextTick(function () { return this$1.validate(("#" + (field.id)), value || field.value, { vmId: fieldOpts.vmId }); });
   } else {
     this._validate(field, value || field.value, { initial: true }).then(function (result) {
       field.flags.valid = result.valid;
@@ -16249,7 +16269,7 @@ function onRenderUpdate (model) {
       });
     };
 
-    this.syncValue(model.value);
+    this.value = model.value;
     this.validate().then(this.immediate || shouldRevalidate ? this.applyResult : silentHandler);
   }
 
@@ -16313,11 +16333,16 @@ function createValuesLookup (ctx) {
   var providers = ctx.$_veeObserver.refs;
 
   return ctx.fieldDeps.reduce(function (acc, depName) {
-    if (providers[depName]) {
-      acc[depName] = providers[depName].value;
-      var unwatch = providers[depName].$watch('value', function () {
+    if (!providers[depName]) {
+      return acc;
+    }
+
+    acc[depName] = providers[depName].value;
+    var watcherName = "$__" + depName;
+    if (!isCallable(ctx[watcherName])) {
+      ctx[watcherName] = providers[depName].$watch('value', function () {
         ctx.validate(ctx.value).then(ctx.applyResult);
-        unwatch();
+        ctx[watcherName]();
       });
     }
 
@@ -16394,10 +16419,6 @@ var ValidationProvider = {
     immediate: {
       type: Boolean,
       default: false
-    },
-    tag: {
-      type: String,
-      default: 'span'
     },
     bails: {
       type: Boolean,
@@ -16537,22 +16558,19 @@ var ValidationProvider = {
     var slot = this.$scopedSlots.default;
     if (!isCallable(slot)) {
       if (true) {
-        warn('Did you forget to add a scoped slot to the ValidationProvider?');
+        warn('ValidationProvider expects a scoped slot. Did you forget to add "slot-scope" to your slot?');
       }
 
-      slot = function () { return normalizeSlots(this$1.$slots, this$1.$vnode.context); };
+      return createRenderless(h, this.$slots.default);
     }
 
     var nodes = slot(ctx);
     // Handle single-root slot.
-    nodes = Array.isArray(nodes) ? nodes : [nodes];
-    extractVNodes({ children: nodes }).forEach(function (input) {
+    extractVNodes(nodes).forEach(function (input) {
       addListeners.call(this$1, input);
     });
 
-    return h(this.tag, {
-      attrs: this.$attrs
-    }, nodes);
+    return createRenderless(h, nodes);
   },
   beforeDestroy: function beforeDestroy () {
     // cleanup reference.
@@ -16583,12 +16601,6 @@ var ValidationObserver = {
     return {
       $_veeObserver: this
     };
-  },
-  props: {
-    tag: {
-      type: String,
-      default: 'span'
-    }
   },
   data: function () { return ({
     refs: {}
@@ -16639,19 +16651,16 @@ var ValidationObserver = {
     }
   },
   render: function render (h) {
-    var this$1 = this;
-
     var slots = this.$scopedSlots.default;
     if (!isCallable(slots)) {
-      slots = function () { return normalizeSlots(this$1.$slots, this$1.$vnode.context); };
+      if (true) {
+        warn('ValidationObserver expects a scoped slot. Did you forget to add "slot-scope" to your slot?');
+      }
+
+      return createRenderless(h, this.$slots.default);
     }
 
-    var nodes = slots(this.ctx);
-
-    return h(this.tag, {
-      attrs: this.$attrs,
-      on: this.$listeners
-    }, Array.isArray(nodes) ? nodes : [nodes]);
+    return createRenderless(h, slots(this.ctx));
   }
 };
 
@@ -17009,7 +17018,7 @@ VeeValidate$1.prototype.resolveConfig = function resolveConfig (ctx) {
 Object.defineProperties( VeeValidate$1.prototype, prototypeAccessors$6 );
 Object.defineProperties( VeeValidate$1, staticAccessors$2 );
 
-VeeValidate$1.version = '2.1.2';
+VeeValidate$1.version = '2.1.3';
 VeeValidate$1.mixin = mixin;
 VeeValidate$1.directive = directive;
 VeeValidate$1.Validator = Validator;
@@ -21198,7 +21207,7 @@ var Rules = /*#__PURE__*/Object.freeze({
   url: url
 });
 
-var version = '2.1.2';
+var version = '2.1.3';
 
 Object.keys(Rules).forEach(function (rule) {
   Validator.extend(rule, Rules[rule].validate, assign({}, Rules[rule].options, { paramNames: Rules[rule].paramNames }));
@@ -21251,9 +21260,9 @@ var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/**
-  * vue-router v3.0.1
-  * (c) 2017 Evan You
+/*!
+  * vue-router v3.0.2
+  * (c) 2018 Evan You
   * @license MIT
   */
 /*  */
@@ -21274,8 +21283,15 @@ function isError (err) {
   return Object.prototype.toString.call(err).indexOf('Error') > -1
 }
 
+function extend (a, b) {
+  for (var key in b) {
+    a[key] = b[key];
+  }
+  return a
+}
+
 var View = {
-  name: 'router-view',
+  name: 'RouterView',
   functional: true,
   props: {
     name: {
@@ -21289,6 +21305,7 @@ var View = {
     var parent = ref.parent;
     var data = ref.data;
 
+    // used by devtools to display a router-view badge
     data.routerView = true;
 
     // directly use parent context's createElement() function
@@ -21363,7 +21380,7 @@ var View = {
 
     return h(component, data, children)
   }
-};
+}
 
 function resolveProps (route, config) {
   switch (typeof config) {
@@ -21384,13 +21401,6 @@ function resolveProps (route, config) {
         );
       }
   }
-}
-
-function extend (to, from) {
-  for (var key in from) {
-    to[key] = from[key];
-  }
-  return to
 }
 
 /*  */
@@ -21490,7 +21500,6 @@ function stringifyQuery (obj) {
 }
 
 /*  */
-
 
 var trailingSlashRE = /\/?$/;
 
@@ -21634,7 +21643,7 @@ var toTypes = [String, Object];
 var eventTypes = [String, Array];
 
 var Link = {
-  name: 'router-link',
+  name: 'RouterLink',
   props: {
     to: {
       type: toTypes,
@@ -21669,17 +21678,17 @@ var Link = {
     var globalExactActiveClass = router.options.linkExactActiveClass;
     // Support global empty active class
     var activeClassFallback = globalActiveClass == null
-            ? 'router-link-active'
-            : globalActiveClass;
+      ? 'router-link-active'
+      : globalActiveClass;
     var exactActiveClassFallback = globalExactActiveClass == null
-            ? 'router-link-exact-active'
-            : globalExactActiveClass;
+      ? 'router-link-exact-active'
+      : globalExactActiveClass;
     var activeClass = this.activeClass == null
-            ? activeClassFallback
-            : this.activeClass;
+      ? activeClassFallback
+      : this.activeClass;
     var exactActiveClass = this.exactActiveClass == null
-            ? exactActiveClassFallback
-            : this.exactActiveClass;
+      ? exactActiveClassFallback
+      : this.exactActiveClass;
     var compareTarget = location.path
       ? createRoute(null, location, null, router)
       : route;
@@ -21719,7 +21728,6 @@ var Link = {
       if (a) {
         // in case the <a> is a static node
         a.isStatic = false;
-        var extend = _Vue.util.extend;
         var aData = a.data = extend({}, a.data);
         aData.on = on;
         var aAttrs = a.data.attrs = extend({}, a.data.attrs);
@@ -21732,7 +21740,7 @@ var Link = {
 
     return h(this.tag, data, this.$slots.default)
   }
-};
+}
 
 function guardEvent (e) {
   // don't redirect with control keys
@@ -21810,8 +21818,8 @@ function install (Vue) {
     get: function get () { return this._routerRoot._route }
   });
 
-  Vue.component('router-view', View);
-  Vue.component('router-link', Link);
+  Vue.component('RouterView', View);
+  Vue.component('RouterLink', Link);
 
   var strats = Vue.config.optionMergeStrategies;
   // use the same hook merging strategy for route hooks
@@ -22321,7 +22329,6 @@ function pathToRegexp (path, keys, options) {
 
   return stringToRegexp(/** @type {string} */ (path), /** @type {!Array} */ (keys), options)
 }
-
 pathToRegexp_1.parse = parse_1;
 pathToRegexp_1.compile = compile_1;
 pathToRegexp_1.tokensToFunction = tokensToFunction_1;
@@ -22517,7 +22524,6 @@ function normalizePath (path, parent, strict) {
 
 /*  */
 
-
 function normalizeLocation (
   raw,
   current,
@@ -22532,9 +22538,9 @@ function normalizeLocation (
 
   // relative params
   if (!next.path && next.params && current) {
-    next = assign({}, next);
+    next = extend({}, next);
     next._normalized = true;
-    var params = assign(assign({}, current.params), next.params);
+    var params = extend(extend({}, current.params), next.params);
     if (current.name) {
       next.name = current.name;
       next.params = params;
@@ -22572,14 +22578,8 @@ function normalizeLocation (
   }
 }
 
-function assign (a, b) {
-  for (var key in b) {
-    a[key] = b[key];
-  }
-  return a
-}
-
 /*  */
+
 
 
 function createMatcher (
@@ -22649,8 +22649,8 @@ function createMatcher (
   ) {
     var originalRedirect = record.redirect;
     var redirect = typeof originalRedirect === 'function'
-        ? originalRedirect(createRoute(record, location, null, router))
-        : originalRedirect;
+      ? originalRedirect(createRoute(record, location, null, router))
+      : originalRedirect;
 
     if (typeof redirect === 'string') {
       redirect = { path: redirect };
@@ -22764,7 +22764,8 @@ function matchRoute (
     var key = regex.keys[i - 1];
     var val = typeof m[i] === 'string' ? decodeURIComponent(m[i]) : m[i];
     if (key) {
-      params[key.name] = val;
+      // Fix #1994: using * with props: true generates a param named 0
+      params[key.name || 'pathMatch'] = val;
     }
   }
 
@@ -22777,12 +22778,12 @@ function resolveRecordPath (path, record) {
 
 /*  */
 
-
 var positionStore = Object.create(null);
 
 function setupScroll () {
   // Fix for #1585 for Firefox
-  window.history.replaceState({ key: getStateKey() }, '');
+  // Fix for #2195 Add optional third attribute to workaround a bug in safari https://bugs.webkit.org/show_bug.cgi?id=182678
+  window.history.replaceState({ key: getStateKey() }, '', window.location.href.replace(window.location.origin, ''));
   window.addEventListener('popstate', function (e) {
     saveScrollPosition();
     if (e.state && e.state.key) {
@@ -22813,7 +22814,7 @@ function handleScroll (
   // wait until re-render finishes before scrolling
   router.app.$nextTick(function () {
     var position = getScrollPosition();
-    var shouldScroll = behavior(to, from, isPop ? position : null);
+    var shouldScroll = behavior.call(router, to, from, isPop ? position : null);
 
     if (!shouldScroll) {
       return
@@ -23375,7 +23376,10 @@ function poll (
   key,
   isValid
 ) {
-  if (instances[key]) {
+  if (
+    instances[key] &&
+    !instances[key]._isBeingDestroyed // do not reuse being destroyed instance
+  ) {
     cb(instances[key]);
   } else if (isValid()) {
     setTimeout(function () {
@@ -23386,7 +23390,6 @@ function poll (
 
 /*  */
 
-
 var HTML5History = (function (History$$1) {
   function HTML5History (router, base) {
     var this$1 = this;
@@ -23394,8 +23397,9 @@ var HTML5History = (function (History$$1) {
     History$$1.call(this, router, base);
 
     var expectScroll = router.options.scrollBehavior;
+    var supportsScroll = supportsPushState && expectScroll;
 
-    if (expectScroll) {
+    if (supportsScroll) {
       setupScroll();
     }
 
@@ -23411,7 +23415,7 @@ var HTML5History = (function (History$$1) {
       }
 
       this$1.transitionTo(location, function (route) {
-        if (expectScroll) {
+        if (supportsScroll) {
           handleScroll(router, route, current, true);
         }
       });
@@ -23465,7 +23469,7 @@ var HTML5History = (function (History$$1) {
 }(History));
 
 function getLocation (base) {
-  var path = window.location.pathname;
+  var path = decodeURI(window.location.pathname);
   if (base && path.indexOf(base) === 0) {
     path = path.slice(base.length);
   }
@@ -23473,7 +23477,6 @@ function getLocation (base) {
 }
 
 /*  */
-
 
 var HashHistory = (function (History$$1) {
   function HashHistory (router, base, fallback) {
@@ -23584,7 +23587,7 @@ function getHash () {
   // consistent across browsers - Firefox will pre-decode it!
   var href = window.location.href;
   var index = href.indexOf('#');
-  return index === -1 ? '' : href.slice(index + 1)
+  return index === -1 ? '' : decodeURI(href.slice(index + 1))
 }
 
 function getUrl (path) {
@@ -23611,7 +23614,6 @@ function replaceHash (path) {
 }
 
 /*  */
-
 
 var AbstractHistory = (function (History$$1) {
   function AbstractHistory (router, base) {
@@ -23670,6 +23672,8 @@ var AbstractHistory = (function (History$$1) {
 }(History));
 
 /*  */
+
+
 
 var VueRouter = function VueRouter (options) {
   if ( options === void 0 ) options = {};
@@ -23867,7 +23871,7 @@ function createHref (base, fullPath, mode) {
 }
 
 VueRouter.install = install;
-VueRouter.version = '3.0.1';
+VueRouter.version = '3.0.2';
 
 if (inBrowser && window.Vue) {
   window.Vue.use(VueRouter);
@@ -26752,19 +26756,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
   computed: {
     isTodo: function isTodo() {
-      return this.status === 'TODO';
+      return this.status === 'todo';
     },
 
     isToCheck: function isToCheck() {
-      return this.status === 'REVIEW';
+      return this.status === 'review';
     },
 
     isAccepted: function isAccepted() {
-      return this.status === 'DONE';
+      return this.status === 'done';
     },
 
     isRejected: function isRejected() {
-      return this.status === 'REJECTED';
+      return this.status === 'rejected';
+    },
+
+    title: function title() {
+      return 'status: ' + this.status;
     }
   }
 });
@@ -26786,7 +26794,7 @@ var render = function() {
         rejected: _vm.isRejected,
         wip: _vm.isTodo
       },
-      attrs: { title: "status: status" },
+      attrs: { title: _vm.title },
       on: {
         click: function($event) {
           _vm.isActive = !_vm.isActive
@@ -26803,7 +26811,7 @@ var render = function() {
                 staticClass: "status-option toCheck",
                 on: {
                   click: function($event) {
-                    _vm.changeStatus("REVIEW")
+                    _vm.changeStatus("review")
                   }
                 }
               },
@@ -26816,7 +26824,7 @@ var render = function() {
                 staticClass: "status-option rejected",
                 on: {
                   click: function($event) {
-                    _vm.changeStatus("REJECTED")
+                    _vm.changeStatus("rejected")
                   }
                 }
               },
@@ -26829,7 +26837,7 @@ var render = function() {
                 staticClass: "status-option accepted",
                 on: {
                   click: function($event) {
-                    _vm.changeStatus("DONE")
+                    _vm.changeStatus("done")
                   }
                 }
               },
@@ -26934,7 +26942,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ConfirmationWindow",
-  props: ['context'],
 
   methods: {
     confirmYes: function confirmYes() {
@@ -26957,11 +26964,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "popUp popUp--confirmation" }, [
     _c("div", { staticClass: "popUp-inner a-dropIn" }, [
-      _c("p", [
-        _vm._v(
-          "Do you realy want to delete '" + _vm._s(_vm.context.name) + "'?"
-        )
-      ]),
+      _c("p", [_vm._t("default")], 2),
       _vm._v(" "),
       _c("div", { staticClass: "popUp-controls" }, [
         _c(
@@ -27192,17 +27195,26 @@ var render = function() {
       ),
       _vm._v(" "),
       _vm.showDeleteConfirm
-        ? _c("confirmation-window", {
-            attrs: { context: _vm.pattern },
-            on: {
-              "confirm-yes": function($event) {
-                _vm.deletePattern(_vm.pattern.name)
-              },
-              "confirm-no": function($event) {
-                _vm.showDeleteConfirm = false
+        ? _c(
+            "confirmation-window",
+            {
+              on: {
+                "confirm-yes": function($event) {
+                  _vm.deletePattern(_vm.pattern.name)
+                },
+                "confirm-no": function($event) {
+                  _vm.showDeleteConfirm = false
+                }
               }
-            }
-          })
+            },
+            [
+              _vm._v(
+                "\n    Do you really want to delete '" +
+                  _vm._s(_vm.pattern.name) +
+                  "'?\n  "
+              )
+            ]
+          )
         : _vm._e()
     ],
     1

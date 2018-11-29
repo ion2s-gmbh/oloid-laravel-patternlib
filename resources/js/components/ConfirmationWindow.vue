@@ -1,10 +1,29 @@
 <template>
-  <div>
-    <h1>Delete Pattern</h1>
-    <p>Do you realy want to delete '{{ context.name }}'?</p>
-    <button @click="confirmYes">yes</button>
-    <button @click="confirmNo">no</button>
+
+  <div class="popUp popUp--confirmation">
+
+    <div class="popUp-inner a-dropIn">
+      
+      <p>Do you realy want to delete '{{ context.name }}'?</p>
+      
+      <div class="popUp-controls">
+        
+        <button class="btn btn--sm btn--secondary" @click="confirmNo">
+          <span>no</span>
+        </button>
+
+        <button class="btn btn--sm btn--primary" @click="confirmYes">
+          <span>yes</span>
+        </button>
+
+      </div>
+
+    </div>
+
+    <div class="darken a-dropIn"></div>
+
   </div>
+
 </template>
 
 <script>

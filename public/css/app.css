@@ -444,7 +444,7 @@ containing the header and the so called view, containing most of the UI.
   height: 100vh;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: var(--headerheight) auto;
-  grid-template-areas: "header header header header" "main main main main";
+  grid-template-areas: "header header header header" "main main main main";
   overflow: hidden;
 }
 
@@ -460,21 +460,21 @@ containing the header and the so called view, containing most of the UI.
 @media (max-width: 599px) {
   .view,
   .view--inner {
-    grid-template-areas: "code code code code" "view view view view" "view view view view" "footer footer footer footer";
+    grid-template-areas: "code code code code" "view view view view" "view view view view" "footer footer footer footer";
   }
 }
 
 @media (min-width: 600px) {
   .view,
   .view--inner {
-    grid-template-areas: "code code code code" "view view view view" "view view view view" "footer footer footer footer";
+    grid-template-areas: "code code code code" "view view view view" "view view view view" "footer footer footer footer";
   }
 }
 
 @media (min-width: 1200px) {
   .view,
   .view--inner {
-    grid-template-areas: "code view view view" "code view view view" "code view view view" ".... footer footer footer";
+    grid-template-areas: "code view view view" "code view view view" "code view view view" ".... footer footer footer";
   }
 }
 
@@ -1155,6 +1155,57 @@ These are the styles for the project pattern navigation.
 .pattern.active > a > i {
   -webkit-transform: rotate(180deg);
           transform: rotate(180deg);
+}
+
+/* 
+These are the styles for the confirmation modal.
+*/
+
+.popUp {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 100%;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 999;
+}
+
+.popUp .popUp-inner {
+  background: var(--brandMain, #03314B);
+  padding: var(--gap, 1rem);
+}
+
+.darken {
+  background: var(--brandMain, #03314B);
+  height: 100%;
+  left: 0;
+  opacity: 0.95;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: -1;
+}
+
+.popUp-controls {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 /* 

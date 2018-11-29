@@ -21,6 +21,14 @@ Route::post('pattern', 'PatternController@store');
 
 /*
 |--------------------------------------------------------------------------
+| PUT /pattern/status/{pattern}
+|--------------------------------------------------------------------------
+| Update the status of the Pattern.
+*/
+Route::put('pattern/status/{pattern}', 'PatternController@status');
+
+/*
+|--------------------------------------------------------------------------
 | GET /navi
 |--------------------------------------------------------------------------
 | Get the navigation.
@@ -35,5 +43,13 @@ Route::get('navi', 'NavigationController@get');
 | Except the actual rendered preview, that will be loaded by an iframe.
 */
 Route::get('{pattern}', 'PatternController@preview');
+
+/*
+|--------------------------------------------------------------------------
+| DELETE /{pattern}
+|--------------------------------------------------------------------------
+| Route to remove the given Pattern.
+*/
+Route::delete('{pattern}', 'PatternController@remove');
 
 

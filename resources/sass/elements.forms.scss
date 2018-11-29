@@ -56,7 +56,7 @@ label {
 	font-size: 0.8rem;
 }
 
-input, 
+input:not([type="checkbox"]), 
 textarea {
 	background: transparent;
 	border: 1px solid white;
@@ -73,7 +73,6 @@ textarea {
 // Validation --------- //
 
 .error {
-	@include a-fadeIn;	
 	color: var(--alert, $c-alert);
 	display: inline-block;
 }

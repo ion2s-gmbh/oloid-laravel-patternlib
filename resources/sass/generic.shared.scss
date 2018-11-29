@@ -21,6 +21,15 @@ body {
   background: var(--brandMain, $c-brandMain);  
 }
 
+
+:focus {
+
+  outline-color: var(--positive,$c-positive);
+  outline-style: dashed;
+  outline-width: 1px;
+
+}
+
 // CUSTOM SCROLLBARS ----------------------------------------- //
 
 *::-webkit-scrollbar {
@@ -92,18 +101,15 @@ containing the header and the so called view, containing most of the UI.
   grid-area: code / code/ footer / footer;
 }
 
-.preview {  
-  grid-area: view;
-  max-height: 100%;
-  max-width: 100%;
-  overflow: auto;
-  iframe {
-    width: 100%;
-  } 
-}
-
 .footer {  
   grid-area: footer;
+}
+
+
+.u-hide {
+
+  display: none !important;
+  
 }
 
 

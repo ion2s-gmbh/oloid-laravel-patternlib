@@ -204,7 +204,7 @@ class PatternServiceTest extends BaseTestCase
     {
         $markdownContent = str_replace('   ', '',
             "---
-            status: TODO
+            status: todo
             values:
             ---
             {$this->description}");
@@ -330,5 +330,182 @@ class PatternServiceTest extends BaseTestCase
     private function assertSassContentUsingStub($sass)
     {
         $this->assertEquals("/* atoms.text.headline1 */\nh1 {\n  color: red;\n}", $sass);
+    }
+
+    /**
+     * @test
+     * @covers \Laratomics\Services\PatternService
+     */
+    public function it_should_remove_all_pattern_files_and_empty_folders_of_a_nested_pattern()
+    {
+        // arrange
+        $this->preparePatternStub();
+
+        $fs = new Filesystem();
+        $this->assertTrue($fs->exists(pattern_path('/atoms/buttons/button.blade.php')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms/buttons/button.md')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms/buttons/button.scss')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms/buttons')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms')));
+
+        // act
+        $this->assertTrue($this->cut->remove('atoms.buttons.button'));
+
+        $this->assertFalse($fs->exists(pattern_path('/atoms/buttons/button.blade.php')));
+        $this->assertFalse($fs->exists(pattern_path('/atoms/buttons/button.md')));
+        $this->assertFalse($fs->exists(pattern_path('/atoms/buttons/button.scss')));
+        $this->assertFalse($fs->exists(pattern_path('/atoms/buttons')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms')));
+        $this->assertTrue($fs->exists(pattern_path()));
+        $this->assertTrue($fs->exists(pattern_path('patterns.scss')));
+    }
+
+    /**
+     * @test
+     * @covers \Laratomics\Services\PatternService
+     */
+    public function it_should_remove_a_1_level_pattern()
+    {
+        // arrange
+        $this->preparePatternStub();
+
+        $fs = new Filesystem();
+        $this->assertTrue($fs->exists(pattern_path('homepage.blade.php')));
+        $this->assertTrue($fs->exists(pattern_path('homepage.md')));
+        $this->assertTrue($fs->exists(pattern_path('homepage.scss')));
+
+        // act
+        $this->assertTrue($this->cut->remove('homepage'));
+
+        $this->assertTrue($fs->exists(pattern_path('/atoms/text/headline1.blade.php')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms/text/headline1.md')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms/text/headline1.scss')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms/text')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms/atoms.scss')));
+        $this->assertTrue($fs->exists(pattern_path()));
+        $this->assertTrue($fs->exists(pattern_path('patterns.scss')));
+        $this->assertFalse($fs->exists(pattern_path('homepage.blade.php')));
+        $this->assertFalse($fs->exists(pattern_path('homepage.md')));
+        $this->assertFalse($fs->exists(pattern_path('homepage.scss')));
+    }
+
+    /**
+     * @test
+     * @covers \Laratomics\Services\PatternService
+     * @expectedException \Illuminate\Contracts\Filesystem\FileNotFoundException
+     */
+    public function it_should_throw_an_exception_if_an_unexisting_pattern_should_be_deleted()
+    {
+        // arrange
+        $this->preparePatternStub();
+
+        // act
+        $this->assertFalse($this->cut->remove('not.existing.pattern'));
+    }
+
+    /**
+     * @test
+     * @covers \Laratomics\Services\PatternService
+     */
+    public function it_should_remove_a_pattern_and_keep_the_patterns_root_and_parallel_patterns()
+    {
+        // arrange
+        $this->preparePatternStub();
+        $atomsScssContent = file_get_contents("{$this->tempDir}/patterns/atoms/atoms.scss");
+        $mainScssContent = file_get_contents("{$this->tempDir}/patterns/patterns.scss");
+
+        $fs = new Filesystem();
+        $this->assertTrue($fs->exists(pattern_path('/atoms/text/headline1.blade.php')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms/text/headline1.md')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms/text/headline1.scss')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms/text/headline2.blade.php')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms/text/headline2.md')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms/text/headline2.scss')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms/text')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms')));
+        $this->assertContains('text/headline1', $atomsScssContent);
+
+        // act
+        $this->assertTrue($this->cut->remove('atoms.text.headline1'));
+
+        $this->assertFalse($fs->exists(pattern_path('/atoms/text/headline1.blade.php')));
+        $this->assertFalse($fs->exists(pattern_path('/atoms/text/headline1.md')));
+        $this->assertFalse($fs->exists(pattern_path('/atoms/text/headline1.scss')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms/text/headline2.blade.php')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms/text/headline2.md')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms/text/headline2.scss')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms/atoms.scss')));
+        $this->assertTrue($fs->exists(pattern_path()));
+        $this->assertTrue($fs->exists(pattern_path('patterns.scss')));
+
+        $atomsScssContent = file_get_contents("{$this->tempDir}/patterns/atoms/atoms.scss");
+        $mainScssContent = file_get_contents("{$this->tempDir}/patterns/patterns.scss");
+        $this->assertNotContains('text/headline1', $atomsScssContent);
+        $this->assertContains('text/headline2', $atomsScssContent);
+        $this->assertContains('atoms/atoms', $mainScssContent);
+    }
+
+    /**
+     * @test
+     * @covers \Laratomics\Services\PatternService
+     */
+    public function it_should_remove_deeply_nested_pattern_and_keep_other_branches()
+    {
+        // arrange
+        $this->preparePatternStub();
+        $this->preparePattern('atoms.buttons.a.b.cancel', 'Cancel button');
+        $this->preparePattern('atoms.buttons.a.b.c.delete', 'Delete button');
+
+        $atomsScssContent = file_get_contents("{$this->tempDir}/patterns/atoms/atoms.scss");
+//        $mainScssContent = file_get_contents("{$this->tempDir}/patterns/patterns.scss");
+
+        $fs = new Filesystem();
+        $this->assertTrue($fs->exists(pattern_path('/atoms/buttons/a/b/cancel.blade.php')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms/buttons/a/b/cancel.md')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms/buttons/a/b/cancel.scss')));
+        $this->assertContains('buttons/a/b/cancel', $atomsScssContent);
+
+        $this->assertTrue($fs->exists(pattern_path('/atoms/buttons/a/b/c/delete.blade.php')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms/buttons/a/b/c/delete.md')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms/buttons/a/b/c/delete.scss')));
+        $this->assertContains('buttons/a/b/c/delete', $atomsScssContent);
+
+        // act
+        $this->assertTrue($this->cut->remove('atoms.buttons.a.b.cancel'));
+
+        // assert
+        $atomsScssContent = file_get_contents("{$this->tempDir}/patterns/atoms/atoms.scss");
+        $this->assertFalse($fs->exists(pattern_path('/atoms/buttons/a/b/cancel.blade.php')));
+        $this->assertFalse($fs->exists(pattern_path('/atoms/buttons/a/b/cancel.md')));
+        $this->assertFalse($fs->exists(pattern_path('/atoms/buttons/a/b/cancel.scss')));
+        $this->assertNotContains('buttons/a/b/cancel', $atomsScssContent);
+
+        $this->assertTrue($fs->exists(pattern_path('/atoms/buttons/a/b/c/delete.blade.php')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms/buttons/a/b/c/delete.md')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms/buttons/a/b/c/delete.scss')));
+        $this->assertContains('buttons/a/b/c/delete', $atomsScssContent);
+    }
+
+    /**
+     * @test
+     * @covers \Laratomics\Services\PatternService
+     */
+    public function it_should_update_the_status_of_a_pattern()
+    {
+        // arrange
+        $this->preparePatternStub();
+        $pattern = $this->cut->loadPattern('atoms.text.headline1');
+        $this->assertEquals('TODO', $pattern->metadata->status);
+
+        $mdContent = file_get_contents("{$this->tempDir}/patterns/atoms/text/headline1.md");
+        $this->assertContains('status: TODO', $mdContent);
+
+        // act
+        $this->cut->updateStatus('TESTED', $pattern->name);
+
+        // assert
+        $mdContent = file_get_contents("{$this->tempDir}/patterns/atoms/text/headline1.md");
+        $this->assertContains('status: TESTED', $mdContent);
     }
 }

@@ -6,23 +6,35 @@
 
       <div class="code-el">
 
-        <h2>
+        <div class="code-header">
 
-          <span>Markup</span> / <span>HTML</span>
+          <span v-if="!isToggled" class="code-type a-fadeIn">HTML</span>
 
-        </h2>
+          <span v-if="isToggled" class="code-type a-fadeIn">Blade</span>
+
+          <label class="toggle-wrap">
+
+            <input type="checkbox" class="toggle" v-model="isToggled"/>
+
+            <div></div>
+
+            <span>Show Blade</span>
+
+          </label>
+
+        </div>
 
         <div class="code-tabs">
 
-          <div class="tab" id="markup-view" role="tabpanel" aria-labelledby="markup-view">
+          <div class="tab a-fadeIn" role="tabpanel" aria-labelledby="markup-view" v-if="isToggled" >
 
             <pre><code class="language-html">{{ pattern.template }}</code></pre>
 
           </div>
 
-          <div class="tab" id="html-view" role="tabpanel" aria-labelledby="html-view">
+          <div class="tab a-fadeIn" id="html-view" role="tabpanel" aria-labelledby="html-view" v-if="!isToggled" >
 
-            <!--<pre><code class="language-html">{{ pattern.html }}</code></pre>-->
+            <pre><code class="language-html">{{ pattern.html }}</code></pre>
 
           </div>
 
@@ -32,17 +44,17 @@
 
       <div class="code-el">
 
-        <h2>
+        <div class="code-header">
 
-          <span>SASS</span> / <span>CSS</span>
+          <span>CSS/SCSS</span>
 
-        </h2>
+        </div>
 
         <div class="code-tabs">
 
           <div class="tab" id="markup-view" role="tabpanel" aria-labelledby="markup-view">
 
-              <pre><code>{{ pattern.sass }}</code></pre>
+            <pre><code>{{ pattern.sass }}</code></pre>
 
           </div>
 
@@ -54,13 +66,23 @@
 
     <div class="preview">
 
-      <div class="">
+      <div class="preview-infos">
+
+        {{ pattern.name }}
+
+        <status-bar
+                @update-status="updateStatus"
+                :status="pattern.status">
+        </status-bar>
+
+      </div>
+
+      <div class="preview-inner">
 
         <iframe height="1500" width="1100"
                 frameBorder="0"
                 :src="`workshop/preview/${pattern.name}`"></iframe>
 
-        <div style="background: transparent; height: 5000px; width: 5002px;"></div>
 
       </div>
 
@@ -82,7 +104,7 @@
 
       </router-link>
 
-      <button class="btn btn--secondary btn--sm" @click="deletePattern(pattern.name)">
+      <button class="btn btn--secondary btn--sm" @click="confirmDelete">
 
         <span>
           <i class="fas fa-trash-alt"></i>
@@ -105,7 +127,12 @@
       </router-link>
 
     </div>
-
+    <confirmation-window
+            v-if="showDeleteConfirm"
+            @confirm-yes="deletePattern(pattern.name)"
+            @confirm-no="showDeleteConfirm = false">
+      Do you really want to delete '{{ pattern.name }}'?
+    </confirmation-window>
   </div>
 
 </template>
@@ -113,16 +140,25 @@
 <script>
   import {API} from '../httpClient';
   import LOG from '../logger';
+  import StatusBar from './StatusBar';
+  import ConfirmationWindow from "./ConfirmationWindow";
 
   export default {
     name: "PreviewPattern",
     data() {
       return {
         pattern: {
-          'name': 'undefined'
+          name: 'undefined'
         },
         loading: false,
+        isToggled: false,
+        showDeleteConfirm: false
       }
+    },
+
+    components: {
+      ConfirmationWindow,
+      StatusBar
     },
 
     watch: {
@@ -147,11 +183,35 @@
       },
 
       /**
+       * Update status of the Pattern.
+       */
+      updateStatus: async function (status) {
+        try {
+          let response = await API.put(`pattern/status/${this.pattern.name}`, {
+            status
+          });
+          this.pattern.status = status;
+        } catch (e) {
+          LOG.error(e);
+        }
+      },
+
+      confirmDelete: function () {
+        this.showDeleteConfirm = true;
+      },
+
+      /**
        * Delete the pattern
        * @param pattern
        */
-      deletePattern: function (pattern) {
-        alert('Deleting ' + pattern);
+      deletePattern: async function (pattern) {
+        try {
+          let response = await API.delete(pattern);
+          this.$store.commit('reloadNavi', true);
+          this.$router.push('/');
+        } catch (e) {
+          LOG.error(e);
+        }
       }
     },
 

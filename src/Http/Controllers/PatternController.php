@@ -4,6 +4,7 @@ namespace Laratomics\Http\Controllers;
 
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Laratomics\Exceptions\RenderingException;
 use Laratomics\Http\Requests\PatternRequest;
@@ -36,7 +37,7 @@ class PatternController extends Controller
     {
         // TODO: Check that pattern is unique
         $name = $request->get('name');
-        $description = $request->get('description');
+        $description = $request->get('description', '');
         $pattern = $this->patternService->createPattern($name, $description);
 
         return JsonResponse::create(new PatternResource($pattern), JsonResponse::HTTP_CREATED);
@@ -73,5 +74,29 @@ class PatternController extends Controller
         return view('workshop::preview', [
             'preview' => $pattern->html
         ]);
+    }
+
+    /**
+     * Remove the given Pattern.
+     *
+     * @param string $pattern
+     * @return JsonResponse
+     * @throws FileNotFoundException
+     */
+    public function remove(string $pattern): JsonResponse
+    {
+        try {
+            $this->patternService->remove($pattern);
+        } catch (FileNotFoundException $e) {
+            return JsonResponse::create([], JsonResponse::HTTP_NOT_FOUND);
+        }
+        return JsonResponse::create([]);
+    }
+
+    public function status(Request $request, string $pattern)
+    {
+        $newStatus = $request->get('status');
+        $this->patternService->updateStatus($newStatus, $pattern);
+        return JsonResponse::create([]);
     }
 }

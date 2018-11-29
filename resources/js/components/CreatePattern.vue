@@ -10,7 +10,7 @@
 
           <span class="label-name">Name</span>
           <span class="label-hint">E.g. atoms.buttons.button</span>
-          <small class="error" v-if="errors.has('name')">{{ errors.first('name') }}</small>
+          <small class="error a-slideIn" v-if="errors.has('name')">{{ errors.first('name') }}</small>
 
         </label>
 
@@ -31,18 +31,17 @@
         <label for="description">
             
             <span class="label-name">
-              Description
+              Description <span>(optional)</span>
             </span>
 
-          <small class="error" v-if="errors.has('description')">{{ errors.first('description') }}</small>
+          <small class="error a-slideIn" v-if="errors.has('description')">{{ errors.first('description') }}</small>
 
         </label>
 
         <textarea id="description"
                   class="form-control"
                   name="description"
-                  v-model="pattern.description"
-                  v-validate.disable="'required'">
+                  v-model="pattern.description">
                     
           </textarea>
 

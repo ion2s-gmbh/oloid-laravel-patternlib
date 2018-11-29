@@ -8,16 +8,15 @@ These are the only ones that are allowed.
 
 // Fade-In Animation --- //
 
-
-@mixin a-fadeIn {
-	animation-name: fadeIn;	
-	animation-duration: 900ms;
+@mixin a-slideIn {
+	animation-name: slideIn;	
+	animation-duration: 300ms;
 	animation-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
 	animation-iteration-count: 1;
 }
 
 
-@keyframes fadeIn {
+@keyframes slideIn {
 	
 	0% {		
 		opacity: 0;
@@ -35,4 +34,42 @@ These are the only ones that are allowed.
 
 }
 
-// next Animation --- //
+// DropIn Animation --- //
+
+@mixin a-dropIn {
+	animation-name: dropIn;	
+	animation-duration: 300ms;
+	animation-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+	animation-iteration-count: 1;
+}
+
+
+@keyframes dropIn {
+	
+	0% {		
+		opacity: 0;
+		transform: scaleY(0.5) ()translateY(-1000px);
+
+	}
+
+	75% {
+		opacity: 1;
+	}
+
+	100% {		
+		transform: scaleY(1) translateY(0px);
+	}
+
+}
+
+
+// Utility-Classes for Anims
+
+.a-slideIn {
+	@include a-slideIn;
+}
+
+.a-dropIn {
+	@include a-dropIn;
+}
+

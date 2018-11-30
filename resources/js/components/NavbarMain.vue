@@ -7,13 +7,14 @@
     </navbar-link>
 
     <!-- We have a menu with multiple items -->
-    <span v-if="menu.items.length > 0"
-          @click="toggleMainMenu(menu.name)">{{ menu.path }}</span>
-    <navbar-group
-            v-if="menu.items.length > 0"
-            :name="menu.name"
-            :items="menu.items">
-    </navbar-group>
+    <template v-if="menu.items.length > 0">
+      <span @click="toggleMainMenu(menu.name)">{{ menu.path }}</span>
+      <navbar-group
+              :name="menu.name"
+              :items="menu.items">
+      </navbar-group>
+    </template>
+
   </li>
 </template>
 

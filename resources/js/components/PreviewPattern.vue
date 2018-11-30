@@ -215,6 +215,18 @@
       }
     },
 
+    mounted() {
+
+      /*
+       * Trigger delete confirmation on DEL key.
+       */
+      window.addEventListener('keyup', (event) => {
+        if (event.keyCode === 46) {
+          this.confirmDelete();
+        }
+      });
+    },
+
     /**
      * Load all Pattern information from API.
      */

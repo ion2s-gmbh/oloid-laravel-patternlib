@@ -1,6 +1,12 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import config from './config';
+import es6Promise from 'es6-promise';
+
+/*
+ * Polyfill for ie compatibility.
+ */
+es6Promise.polyfill();
 
 Vue.use(Vuex);
 

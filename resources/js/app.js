@@ -1,11 +1,11 @@
 /**
  * Import of Vue and Vue-Plugins
  */
+import 'es6-promise/auto'
 import Vue from 'vue';
 import VeeValidate from 'vee-validate';
 import router from './router';
 import store from './store';
-import 'es6-promise/auto'
 /**
  * Import of main components
  */

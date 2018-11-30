@@ -45,7 +45,7 @@ class PatternService
     public function createBladeFile(string $pattern): string
     {
         $file = $this->getFileLocation($pattern, self::BLADE_EXTENSION);
-        $content = "<!-- {$pattern} -->";
+        $content = '';
         File::put($file, $content);
         return $content;
     }
@@ -80,7 +80,7 @@ class PatternService
     public function createSassFile(string $pattern): string
     {
         $file = $this->getFileLocation($pattern, self::SASS_EXTENSION);
-        $content = "/* {$pattern} */";
+        $content = '';
         File::put($file, $content);
 
         $this->importInParentSassFile($pattern);

@@ -9,7 +9,7 @@ class PatternServiceProvider extends ServiceProvider
 {
     private $components = [
         'atom' => 'atoms',
-        'molecule' => 'moleculess',
+        'molecule' => 'molecules',
         'organism' => 'organisms',
         'template' => 'templates',
         'page' => 'pages',

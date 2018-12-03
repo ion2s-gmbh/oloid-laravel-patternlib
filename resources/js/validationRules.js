@@ -1,5 +1,6 @@
 import {Validator} from 'vee-validate';
 import {API} from './httpClient';
+import LOG from './logger';
 
 /**
  * UniquePattern validator.
@@ -11,16 +12,18 @@ Validator.extend('uniquePattern', {
    * @param patternName
    * @returns {*}
    */
-  validate: (patternName) => {
-    return API.get(`pattern/exists/${patternName}`)
-      .then((response) => {
-        return {
-          valid: !response.data.data.exists,
-          data: {
-            message: `Pattern '${patternName}' already exists!`
-          }
-        };
-      });
+  validate: async (patternName) => {
+    try {
+      let response = await API.get(`pattern/exists/${patternName}`);
+      return {
+        valid: !response.data.data.exists,
+        data: {
+          message: `Pattern '${patternName}' already exists!`
+        }
+      };
+    } catch (e) {
+      LOG.error(e);
+    }
   },
 
   /**

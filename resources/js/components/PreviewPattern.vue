@@ -148,7 +148,7 @@
     data() {
       return {
         pattern: {
-          name: 'undefined'
+          name: this.$route.params.pattern
         },
         loading: false,
         isToggled: false,

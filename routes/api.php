@@ -21,6 +21,14 @@ Route::post('pattern', 'PatternController@store');
 
 /*
 |--------------------------------------------------------------------------
+| PUT /pattern/{pattern}
+|--------------------------------------------------------------------------
+| Update an existing Pattern.
+*/
+Route::put('pattern/{pattern}', 'PatternController@update');
+
+/*
+|--------------------------------------------------------------------------
 | PUT /pattern/status/{pattern}
 |--------------------------------------------------------------------------
 | Update the status of the Pattern.

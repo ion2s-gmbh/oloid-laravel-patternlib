@@ -4,6 +4,7 @@ namespace Tests\Unit\Http\Requests;
 
 
 use Laratomics\Http\Requests\PatternRequest;
+use Laratomics\Rules\UniquePattern;
 use Laratomics\Tests\BaseTestCase;
 
 class PatternRequestTest extends BaseTestCase
@@ -36,7 +37,7 @@ class PatternRequestTest extends BaseTestCase
     {
         // arrange
         $rules = [
-            'name' => 'required'
+            'name' => ['required', new UniquePattern]
         ];
 
         $this->assertEquals($rules, $this->cut->rules());

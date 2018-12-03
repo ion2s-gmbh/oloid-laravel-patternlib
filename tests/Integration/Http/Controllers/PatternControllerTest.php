@@ -71,6 +71,28 @@ class PatternControllerTest extends BaseTestCase
      * @test
      * @covers \Laratomics\Http\Controllers\PatternController
      */
+    public function it_should_not_create_pattern_if_it_already_exists()
+    {
+        // arrange
+        $this->preparePatternStub();
+
+        // act
+        $data = [
+            'name' => 'atoms.text.headline1',
+            'description' => 'Our h1 headline'
+        ];
+
+        /** @var TestResponse $response */
+        $response = $this->postJson('workshop/api/v1/pattern', $data);
+
+        // assert
+        $response->assertStatus(JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
+    /**
+     * @test
+     * @covers \Laratomics\Http\Controllers\PatternController
+     */
     public function it_should_load_all_pattern_information()
     {
         // arrange

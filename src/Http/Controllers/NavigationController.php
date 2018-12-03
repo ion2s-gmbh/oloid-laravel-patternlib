@@ -5,6 +5,7 @@ namespace Laratomics\Http\Controllers;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
+use Laratomics\Services\PatternService;
 
 class NavigationController extends Controller
 {
@@ -43,11 +44,16 @@ class NavigationController extends Controller
          */
         $directories = $fs->directories($path);
         foreach ($directories as $directory) {
-            $data[] = [
-                'name' => str_after($directory, $path . '/'),
-                'path' => dotted_path(str_after($directory, pattern_path() . '/')),
-                'items' => $this->getNavi($directory)
-            ];
+            /*
+             * Only take directories with blade template files into the navi
+             */
+            if (dir_contains_any($directory, PatternService::BLADE_EXTENSION)) {
+                $data[] = [
+                    'name' => str_after($directory, $path . '/'),
+                    'path' => dotted_path(str_after($directory, pattern_path() . '/')),
+                    'items' => $this->getNavi($directory)
+                ];
+            }
         }
 
         /*

@@ -77,7 +77,7 @@ class PatternServiceTest extends BaseTestCase
 
         // assert
         $this->assertSassFileCreation();
-        $this->assertEquals("/* {$this->name} */", $content);
+        $this->assertEquals('', $content);
     }
 
     /**
@@ -90,9 +90,9 @@ class PatternServiceTest extends BaseTestCase
         $pattern = $this->cut->createPattern($this->name, $this->description);
 
         $this->assertEquals($this->name, $pattern->name);
-        $this->assertEquals("<!-- {$this->name} -->", $pattern->template);
+        $this->assertEquals('', $pattern->template);
         $this->assertMarkdownContent($pattern->markdown);
-        $this->assertEquals("/* {$this->name} */", $pattern->sass);
+        $this->assertEquals('', $pattern->sass);
 
         // assert
         $this->assertBladeFileCreation();
@@ -115,9 +115,9 @@ class PatternServiceTest extends BaseTestCase
 
         // assert
         $this->assertEquals($name, $pattern->name);
-        $this->assertEquals("<!-- {$name} -->", $pattern->template);
+        $this->assertEquals('', $pattern->template);
 //        $this->assertMarkdownContent($pattern->markdown);
-        $this->assertEquals("/* {$name} */", $pattern->sass);
+        $this->assertEquals('', $pattern->sass);
 //
         // assert
 //        $this->assertBladeFileCreation();
@@ -194,7 +194,7 @@ class PatternServiceTest extends BaseTestCase
      */
     protected function assertTemplateContent($template): void
     {
-        $this->assertEquals("<!-- {$this->name} -->", $template);
+        $this->assertEquals('', $template);
     }
 
     /**
@@ -216,7 +216,7 @@ class PatternServiceTest extends BaseTestCase
      */
     protected function assertSassContent($sass): void
     {
-        $this->assertEquals("/* {$this->name} */", $sass);
+        $this->assertEquals('', $sass);
     }
 
     /**

@@ -90,19 +90,7 @@
 
     <div class="footer">
 
-      <router-link :to="{ name: 'create' }">
-
-        <button class="btn btn--primary btn--sm">
-
-          <span>
-
-            New Pattern
-
-          </span>
-
-        </button>
-
-      </router-link>
+      
 
       <button class="btn btn--secondary btn--sm" @click="confirmDelete">
 

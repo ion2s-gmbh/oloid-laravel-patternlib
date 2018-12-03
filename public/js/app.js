@@ -27648,18 +27648,6 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -28393,12 +28381,6 @@ var render = function() {
         "div",
         { staticClass: "footer" },
         [
-          _c("router-link", { attrs: { to: { name: "create" } } }, [
-            _c("button", { staticClass: "btn btn--primary btn--sm" }, [
-              _c("span", [_vm._v("\n\n          New Pattern\n\n        ")])
-            ])
-          ]),
-          _vm._v(" "),
           _c(
             "button",
             {
@@ -29753,6 +29735,19 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -30199,6 +30194,20 @@ var render = function() {
           _vm._l(_vm.navi, function(menu, index) {
             return _c("navbar-main", { key: index, attrs: { menu: menu } })
           })
+        ),
+        _vm._v(" "),
+        _c(
+          "router-link",
+          {
+            staticClass: "btn btn--primary btn--sm",
+            attrs: { to: { name: "create" }, title: "Create new Pattern" }
+          },
+          [
+            _c("span", [
+              _c("i", { staticClass: "fas fa-plus" }),
+              _vm._v("\n\n        Add Pattern\n\n      ")
+            ])
+          ]
         )
       ],
       1

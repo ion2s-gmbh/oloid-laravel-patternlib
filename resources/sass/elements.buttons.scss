@@ -1,7 +1,7 @@
 //-------------------   BUTTONS    -----------------------//
 
 /* 
-These are the styles for every interactive element that is clickable but no link.
+These are the styles for every interactive element that is clickable but no link or doesn't look like a link.
 */
 
 %btn {
@@ -11,6 +11,7 @@ These are the styles for every interactive element that is clickable but no link
     margin: 0 1rem 1rem 0;
     padding: 0;    
     position: relative;
+    white-space: nowrap;
 
     > span {
     	align-items: center;
@@ -71,7 +72,7 @@ These are the styles for every interactive element that is clickable but no link
   height: auto;
 
   > span {
-    padding: 0.5rem 1rem;
+    padding: 0.25rem 0.5rem;
     transform: translate(3px, -3px);
   }
 

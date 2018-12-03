@@ -600,7 +600,7 @@ a {
 }
 
 /* 
-These are the styles for every interactive element that is clickable but no link.
+These are the styles for every interactive element that is clickable but no link or doesn't look like a link.
 */
 
 .btn--primary,
@@ -611,6 +611,7 @@ These are the styles for every interactive element that is clickable but no link
   margin: 0 1rem 1rem 0;
   padding: 0;
   position: relative;
+  white-space: nowrap;
 }
 
 .btn--primary > span,
@@ -665,7 +666,7 @@ These are the styles for every interactive element that is clickable but no link
 }
 
 .btn--sm > span {
-  padding: 0.5rem 1rem;
+  padding: 0.25rem 0.5rem;
   -webkit-transform: translate(3px, -3px);
           transform: translate(3px, -3px);
 }
@@ -1105,6 +1106,8 @@ These are the styles for the project pattern navigation.
   -webkit-box-pack: start;
       -ms-flex-pack: start;
           justify-content: flex-start;
+  overflow-x: auto;
+  width: 100%;
 }
 
 .patterns--sub {
@@ -1124,7 +1127,7 @@ These are the styles for the project pattern navigation.
   text-align: center;
   -webkit-transition: opacity 250ms;
   transition: opacity 250ms;
-  width: 10rem;
+  min-width: 10rem;
 }
 
 .pattern a,

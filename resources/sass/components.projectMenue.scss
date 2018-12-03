@@ -27,6 +27,8 @@ These are the styles for the project pattern navigation.
 	align-items: center;
 	display: flex;
 	justify-content: flex-start;
+	overflow-x: auto;
+	width: 100%;
 
 	&--sub {
 
@@ -52,7 +54,7 @@ These are the styles for the project pattern navigation.
 	position: relative;	
 	text-align: center;
 	transition: opacity 250ms;
-	width: 10rem;
+	min-width: 10rem;
 
 	a, span {
 		display: block;

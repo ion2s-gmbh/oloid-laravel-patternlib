@@ -444,7 +444,7 @@ containing the header and the so called view, containing most of the UI.
   height: 100vh;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: var(--headerheight) auto;
-  grid-template-areas: "header header header header" "main main main main";
+  grid-template-areas: "header header header header" "main main main main";
   overflow: hidden;
 }
 
@@ -460,21 +460,21 @@ containing the header and the so called view, containing most of the UI.
 @media (max-width: 599px) {
   .view,
   .view--inner {
-    grid-template-areas: "code code code code" "view view view view" "view view view view" "footer footer footer footer";
+    grid-template-areas: "code code code code" "view view view view" "view view view view" "footer footer footer footer";
   }
 }
 
 @media (min-width: 600px) {
   .view,
   .view--inner {
-    grid-template-areas: "code code code code" "view view view view" "view view view view" "footer footer footer footer";
+    grid-template-areas: "code code code code" "view view view view" "view view view view" "footer footer footer footer";
   }
 }
 
 @media (min-width: 1200px) {
   .view,
   .view--inner {
-    grid-template-areas: "code view view view" "code view view view" "code view view view" ".... footer footer footer";
+    grid-template-areas: "code view view view" "code view view view" "code view view view" ".... footer footer footer";
   }
 }
 
@@ -924,6 +924,7 @@ These are the styles that are needed to render our welcome dashboard.
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  margin-bottom: 2rem;
 }
 
 .code-lang {
@@ -937,6 +938,20 @@ These are the styles that are needed to render our welcome dashboard.
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  position: relative;
+}
+
+.code-header:after {
+  background: -webkit-gradient(linear, left top, left bottom, from(#03314B), to(rgba(3, 49, 75, 0)));
+  background: linear-gradient(to bottom, #03314B, rgba(3, 49, 75, 0));
+  bottom: -1rem;
+  content: '';
+  display: block;
+  height: 1rem;
+  left: 0;
+  position: absolute;
+  width: calc(100% - 8px);
+  z-index: 1;
 }
 
 .code-type {
@@ -945,6 +960,8 @@ These are the styles that are needed to render our welcome dashboard.
 
 .code-tabs {
   height: 100%;
+  overflow: auto;
+  padding-bottom: 1rem;
   position: relative;
 }
 

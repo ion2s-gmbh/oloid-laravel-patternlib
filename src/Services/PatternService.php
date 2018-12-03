@@ -312,4 +312,10 @@ class PatternService
         $newMdContent = str_replace($search, $replacement, $mdContent);
         file_put_contents($file, $newMdContent);
     }
+
+    public function exists(string $pattern)
+    {
+        $patternFile = $this->getFileLocation($pattern, self::BLADE_EXTENSION);
+        return File::exists($patternFile);
+    }
 }

@@ -508,4 +508,30 @@ class PatternServiceTest extends BaseTestCase
         $mdContent = file_get_contents("{$this->tempDir}/patterns/atoms/text/headline1.md");
         $this->assertContains('status: TESTED', $mdContent);
     }
+
+    /**
+     * @test
+     * @covers \Laratomics\Services\PatternService
+     */
+    public function it_should_check_that_a_pattern_exists()
+    {
+        // arrange
+        $this->preparePatternStub();
+
+        // assert
+        $this->assertTrue($this->cut->exists($this->name));
+    }
+
+    /**
+     * @test
+     * @covers \Laratomics\Http\Controllers\PatternController
+     */
+    public function it_should_check_that_a_patter_does_not_exist()
+    {
+        // arrange
+        $this->preparePatternStub();
+
+        // assert
+        $this->assertFalse($this->cut->exists('not.existing.pattern'));
+    }
 }

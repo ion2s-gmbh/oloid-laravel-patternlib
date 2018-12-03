@@ -111,4 +111,19 @@ class PatternController extends Controller
     {
         return JsonResponse::create([]);
     }
+
+    /**
+     * Check if a Pattern already exists.
+     *
+     * @param string $pattern
+     * @return JsonResponse
+     */
+    public function exists(string $pattern): JsonResponse
+    {
+        return JsonResponse::create([
+            'data' => [
+                'exists' => $this->patternService->exists($pattern)
+            ]
+        ]);
+    }
 }

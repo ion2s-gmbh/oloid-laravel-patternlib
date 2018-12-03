@@ -222,4 +222,49 @@ class PatternControllerTest extends BaseTestCase
         // assert
         $this->markTestIncomplete('Not yet implemented!');
     }
+
+    /**
+     * @test
+     * @covers \Laratomics\Http\Controllers\PatternController
+     */
+    public function it_should_check_that_a_pattern_exists()
+    {
+        // arrange
+        $this->preparePatternStub();
+
+        // act
+        /** @var TestResponse $response */
+        $response = $this->getJson("workshop/api/v1/pattern/exists/{$this->name}");
+
+        // assert
+        $response->assertSuccessful();
+        $expectedJson = [
+            'data' => [
+                'exists' => true
+            ]
+        ];
+        $response->assertJson($expectedJson);
+    }
+
+    /**
+     * @test
+     * @covers \Laratomics\Http\Controllers\PatternController
+     */
+    public function it_should_check_that_a_pattern_does_not_exists()
+    {
+        // arrange
+        $this->preparePatternStub();
+
+        /** @var TestResponse $response */
+        $response = $this->getJson("workshop/api/v1/pattern/exists/not.existing.pattern");
+
+        // assert
+        $response->assertSuccessful();
+        $expectedJson = [
+            'data' => [
+                'exists' => false
+            ]
+        ];
+        $response->assertJson($expectedJson);
+    }
 }

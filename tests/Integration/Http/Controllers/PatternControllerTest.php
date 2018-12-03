@@ -184,4 +184,42 @@ class PatternControllerTest extends BaseTestCase
         // assert
         $response->assertSuccessful();
     }
+
+    /**
+     * @test
+     * @covers \Laratomics\Http\Controllers\PatternController
+     */
+    public function it_should_change_the_description_of_a_pattern()
+    {
+        // arrange
+        $this->preparePatternStub();
+
+        $data = [
+            'description' => 'A new description'
+        ];
+
+        $oldContent = file_get_contents("{$this->tempDir}/patterns/atoms/text/headline1.md");
+        $this->assertContains('Our h1 for testing', $oldContent);
+
+        // act
+        /** @var TestResponse $response */
+        $response = $this->putJson("workshop/api/v1/pattern/{$this->name}", $data);
+
+        // assert
+        $response->assertSuccessful();
+    }
+
+    /**
+     * @test
+     * @covers \Laratomics\Http\Controllers\PatternController
+     */
+    public function it_should_rename_a_pattern_and_update_the_pattern_structure()
+    {
+        // arrange
+
+        // act
+
+        // assert
+        $this->markTestIncomplete('Not yet implemented!');
+    }
 }

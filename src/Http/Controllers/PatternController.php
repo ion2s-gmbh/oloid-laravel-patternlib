@@ -99,4 +99,16 @@ class PatternController extends Controller
         $this->patternService->updateStatus($newStatus, $pattern);
         return JsonResponse::create([]);
     }
+
+    /**
+     * Update an existing Pattern.
+     *
+     * @param Request $request
+     * @param string $pattern
+     * @return JsonResponse
+     */
+    public function update(Request $request, string $pattern): JsonResponse
+    {
+        return JsonResponse::create([]);
+    }
 }

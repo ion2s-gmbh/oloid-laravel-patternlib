@@ -3,9 +3,10 @@
  */
 import 'es6-promise/auto'
 import Vue from 'vue';
-import VeeValidate from 'vee-validate';
 import router from './router';
 import store from './store';
+import VeeValidate from 'vee-validate';
+import './validationRules';
 /**
  * Import of main components
  */

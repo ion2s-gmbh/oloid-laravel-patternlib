@@ -20,7 +20,7 @@
                name="name"
                v-model="pattern.name"
                aria-describedby="nameHelp"
-               v-validate.disable="'required'"
+               v-validate.disable="'required|uniquePattern'"
         />
 
 
@@ -101,6 +101,16 @@
             }
           });
       }
+    },
+
+    mounted() {
+      // Validator.extend('uniquePattern', {
+      //   validate: isUniquePattern,
+      //   getMessage: (field, params, data) => {
+      //     LOG.debug('getMessage');
+      //     return data.message;
+      //   }
+      // });
     }
   }
 </script>

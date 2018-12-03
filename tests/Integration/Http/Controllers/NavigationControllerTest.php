@@ -2,6 +2,7 @@
 
 namespace Tests\Integration\Http\Controllers;
 
+use Illuminate\Foundation\Testing\TestResponse;
 use Laratomics\Tests\BaseTestCase;
 use Laratomics\Tests\Traits\TestStubs;
 
@@ -19,6 +20,7 @@ class NavigationControllerTest extends BaseTestCase
         $this->preparePatternStub();
 
         // act
+        /** @var TestResponse $response */
         $response = $this->getJson('workshop/api/v1/navi');
 
         // assert
@@ -58,6 +60,7 @@ class NavigationControllerTest extends BaseTestCase
      */
     public function it_should_return_empty_navi_if_no_patterns_exist()
     {
+        /** @var TestResponse $response */
         $response = $this->getJson('workshop/api/v1/navi');
 
         // assert

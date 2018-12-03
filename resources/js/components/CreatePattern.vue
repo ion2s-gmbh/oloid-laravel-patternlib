@@ -82,35 +82,35 @@
       /**
        * Store a new Pattern
        */
-      store: function () {
-        this.$validator.validate()
-          .then(async result => {
-            if (result) {
-              try {
-                let response = await API.post('pattern', {
-                  'name': this.pattern.name,
-                  'description': this.pattern.description
-                });
-                if (response.status === 201) {
-                  this.$store.commit('reloadNavi', true);
-                  this.$router.push('/preview/' + this.pattern.name);
-                }
-              } catch (e) {
-                LOG.error(e.status);
-              }
-            }
-          });
-      }
-    },
+      store: async function () {
+        /*
+         * Validate the form
+         */
+        let valid = false;
+        try {
+          valid = await this.$validator.validate();
+        } catch (e) {
+          LOG.error(e);
+        }
 
-    mounted() {
-      // Validator.extend('uniquePattern', {
-      //   validate: isUniquePattern,
-      //   getMessage: (field, params, data) => {
-      //     LOG.debug('getMessage');
-      //     return data.message;
-      //   }
-      // });
+        /*
+        * API request
+        */
+        if (valid) {
+          try {
+            let response = await API.post('pattern', {
+              'name': this.pattern.name,
+              'description': this.pattern.description
+            });
+            if (response.status === 201) {
+              this.$store.commit('reloadNavi', true);
+              this.$router.push('/preview/' + this.pattern.name);
+            }
+          } catch (e) {
+            LOG.error(e.status);
+          }
+        }
+      }
     }
   }
 </script>

@@ -938,6 +938,7 @@ These are the styles that are needed to render our welcome dashboard.
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  padding: 0 0 1rem 0;
   position: relative;
 }
 

@@ -13,7 +13,7 @@ class NavigationControllerTest extends BaseTestCase
      * @test
      * @covers \Laratomics\Http\Controllers\NavigationController
      */
-    public function it_should_get_a_html_preview_of_a_pattern()
+    public function it_should_return_the_navigation_structure()
     {
         // arrange
         $this->preparePatternStub();

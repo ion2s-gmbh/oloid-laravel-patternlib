@@ -167,4 +167,10 @@ These are the styles for every interactive element that is clickable but no link
   color: white;
   font-size: 1rem;
 
+  &.active,
+  &:hover {
+    color: $c-positive;
+    color: var(--positive, $c-positive);
+  }
+
 }

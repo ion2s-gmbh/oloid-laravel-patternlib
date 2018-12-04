@@ -77,13 +77,23 @@
                   :status="pattern.status">
           </status-bar>
 
-        </div>
+          <button class="toggle--more" @click="showDescription = !showDescription" :class="{ active: showDescription }" title="Show Pattern description">
+
+            <i class="fas fa-align-left"></i>
+
+          </button>          
+
+        </div>        
+
+        <p class="preview-description a-dropIn" v-if="showDescription">
+          {{ pattern.description }}
+        </p>
 
         <div class="preview-optionsWrap">
 
           <!-- MENUE TOGGLE -->
 
-          <button class="toggle--more" @click="showOptions = !showOptions">
+          <button class="toggle--more" @click="showOptions = !showOptions" :class="{ active: showOptions }">
             
             <i class="fas fa-ellipsis-v"></i>
             
@@ -164,6 +174,7 @@
         loading: false,
         isToggled: false,
         showOptions: false,
+        showDescription: false,
         showDeleteConfirm: false
       }
     },

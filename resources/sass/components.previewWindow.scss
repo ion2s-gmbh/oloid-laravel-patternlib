@@ -83,6 +83,8 @@ These are the styles that are needed to render the pattern preview.
 	position: absolute;
 	right: 0;	
 	top: 1.2rem;
+	z-index: 1;
+
 }
 
 .preview-option {
@@ -103,6 +105,19 @@ These are the styles that are needed to render the pattern preview.
 
 }
 
+.preview-description {
+
+	background: rgba( $c-brandMain, .9 );
+	left: 0;
+	margin: 0;
+	padding: 1rem;
+	position: absolute;
+	top: 100%;
+	width: 100%;
+	z-index: 1;
+
+}
+
 .statusbar {
 
 	padding: 0 0.5rem;
@@ -116,6 +131,7 @@ These are the styles that are needed to render the pattern preview.
 	
 	@extend %status;
 	cursor: pointer;
+	margin-right: 0;
 
 }
 

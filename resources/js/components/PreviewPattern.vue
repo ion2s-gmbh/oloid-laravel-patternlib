@@ -66,14 +66,74 @@
 
     <div class="preview">
 
-      <div class="preview-infos">
+      <div class="preview-infosWrap">
 
-        {{ pattern.name }}
+        <div class="preview-infos">
 
-        <status-bar
-                @update-status="updateStatus"
-                :status="pattern.status">
-        </status-bar>
+          {{ pattern.name }}
+
+          <status-bar
+                  @update-status="updateStatus"
+                  :status="pattern.status">
+          </status-bar>
+
+          <button class="toggle--more" @click="showDescription = !showDescription" :class="{ active: showDescription }" title="Show Pattern description">
+
+            <i class="fas fa-align-left"></i>
+
+          </button>          
+
+        </div>        
+
+        <p class="preview-description a-dropIn" v-if="showDescription">
+          {{ pattern.description }}
+        </p>
+
+        <div class="preview-optionsWrap">
+
+          <!-- MENUE TOGGLE -->
+
+          <button class="toggle--more" @click="showOptions = !showOptions" :class="{ active: showOptions }">
+            
+            <i class="fas fa-ellipsis-v"></i>
+            
+          </button>
+
+          <!-- ACTUAL MENUE -->
+
+          <div class="preview-options a-dropIn" v-if="showOptions">
+
+            <ul>              
+
+              <li>
+
+                <router-link :to="{ name: 'update' }" class="preview-option">
+
+                  <span>
+                    Edit Pattern
+                  </span>
+
+                </router-link>
+
+              </li>
+
+              <li>
+
+                <button class="preview-option" @click="confirmDelete">
+
+                  <span>                    
+                    Delete
+                  </span>
+
+                </button>
+
+              </li>
+
+            </ul>            
+
+          </div>
+
+        </div>
 
       </div>
 
@@ -88,45 +148,6 @@
 
     </div>
 
-    <div class="footer">
-
-      <router-link :to="{ name: 'create' }">
-
-        <button class="btn btn--primary btn--sm">
-
-          <span>
-
-            New Pattern
-
-          </span>
-
-        </button>
-
-      </router-link>
-
-      <button class="btn btn--secondary btn--sm" @click="confirmDelete">
-
-        <span>
-          <i class="fas fa-trash-alt"></i>
-          Delete
-        </span>
-
-      </button>
-
-      <router-link :to="{ name: 'update' }">
-
-        <button class="btn btn--primary btn--sm">
-
-          <span>
-            <i class="fas fa-pen"></i>
-            Edit
-          </span>
-
-        </button>
-
-      </router-link>
-
-    </div>
     <confirmation-window
             v-if="showDeleteConfirm"
             @confirm-yes="deletePattern(pattern.name)"
@@ -152,6 +173,8 @@
         },
         loading: false,
         isToggled: false,
+        showOptions: false,
+        showDescription: false,
         showDeleteConfirm: false
       }
     },

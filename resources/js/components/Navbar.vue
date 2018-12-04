@@ -22,7 +22,20 @@
                 v-for="(menu, index) in navi"
                 :menu="menu" :key="index">
         </navbar-main>
+        
       </ul>
+
+      <router-link :to="{ name: 'create' }"  class="btn btn--primary btn--sm" title="Create new Pattern">
+
+        <span>
+
+          <i class="fas fa-plus"></i>
+
+          Add Pattern
+
+        </span>
+
+      </router-link>
 
     </nav>
 

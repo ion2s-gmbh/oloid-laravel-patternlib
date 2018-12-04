@@ -25,6 +25,7 @@ body {
 :focus {
 
   outline-color: var(--positive,$c-positive);
+  outline-offset: -2px;
   outline-style: dashed;
   outline-width: 1px;
 

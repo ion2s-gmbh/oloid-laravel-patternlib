@@ -85,9 +85,7 @@
 
         </div>        
 
-        <p class="preview-description a-dropIn" v-if="showDescription">
-          {{ pattern.description }}
-        </p>
+        <p class="preview-description a-dropIn" v-if="showDescription" v-html="markdownDescription"></p>
 
         <div class="preview-optionsWrap">
 
@@ -163,13 +161,20 @@
   import LOG from '../logger';
   import StatusBar from './StatusBar';
   import ConfirmationWindow from "./ConfirmationWindow";
+  import marked from 'marked';
 
   export default {
     name: "PreviewPattern",
+    components: {
+      ConfirmationWindow,
+      StatusBar
+    },
+
     data() {
       return {
         pattern: {
-          name: this.$route.params.pattern
+          name: this.$route.params.pattern,
+          description: ''
         },
         loading: false,
         isToggled: false,
@@ -179,9 +184,13 @@
       }
     },
 
-    components: {
-      ConfirmationWindow,
-      StatusBar
+    computed: {
+      /**
+       * Parse the given description markdown to html.
+       */
+      markdownDescription: function () {
+        return marked(this.pattern.description);
+      }
     },
 
     watch: {
@@ -248,6 +257,10 @@
           this.confirmDelete();
         }
       });
+
+      // document.getElementById('description').innerHTML =
+      //   marked('# Marked in browser\n\nRendered by **marked**.');
+
     },
 
     /**

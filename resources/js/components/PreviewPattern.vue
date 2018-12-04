@@ -83,9 +83,50 @@
 
           </button>          
 
-        </div>        
+        </div>
 
-        <p class="preview-description a-dropIn" v-if="showDescription" v-html="markdownDescription"></p>
+
+        <template v-if="showDescription">
+
+          <div class="preview-description a-dropIn"
+               v-html="markdownDescription"
+               @click="editDescription">
+          </div>
+
+          <form method="post" class="preview-description" v-if="editModeDescription">
+
+            <label for="description">
+
+              <span class="label-name">
+                Description <span>(optional)</span>
+              </span>
+
+            </label>
+
+            <textarea id="description"
+                      class="form-control"
+                      name="description"
+                      v-model="pattern.description" autofocus>{{ pattern.description }}</textarea>
+
+            <div class="form-group form-group--end">
+
+              <button type="button"
+                      class="btn btn--primary btn--sm"
+                      @click="cancelDescription">
+                <span>Cancel</span>
+              </button>
+
+              <button type="button"
+                      class="btn btn--primary btn--sm"
+                      @click="saveDescription">
+                <span>Save</span>
+              </button>
+
+            </div>
+
+          </form>
+
+        </template>
 
         <div class="preview-optionsWrap">
 
@@ -180,7 +221,9 @@
         isToggled: false,
         showOptions: false,
         showDescription: false,
-        showDeleteConfirm: false
+        showDeleteConfirm: false,
+        editModeDescription: false,
+        oldDescription: ''
       }
     },
 
@@ -198,6 +241,21 @@
     },
 
     methods: {
+
+      editDescription: function () {
+        this.editModeDescription = true;
+        this.oldDescription = this.pattern.description
+      },
+
+      cancelDescription: function () {
+        this.editModeDescription = false;
+        this.pattern.description = this.oldDescription;
+      },
+
+      saveDescription: function () {
+        this.editModeDescription = false;
+        // TODO: make API call
+      },
 
       /**
        * Fetch the Pattern's data from the API.

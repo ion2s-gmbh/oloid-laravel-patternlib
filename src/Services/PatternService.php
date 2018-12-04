@@ -318,4 +318,25 @@ class PatternService
         $patternFile = $this->getFileLocation($pattern, self::BLADE_EXTENSION);
         return File::exists($patternFile);
     }
+
+    /**
+     * @param string $pattern
+     * @param $description
+     * @throws FileNotFoundException
+     */
+    public function updateDescription(string $pattern, $description)
+    {
+        $markdownContent = $this->loadMarkdownFile($pattern);
+        $markdown = YamlFrontMatter::parse($markdownContent);
+        $currentDescription = trim($markdown->body());
+
+        if (empty($currentDescription)) {
+            $newContent = $markdownContent . $description;
+        } else {
+            $search = "${currentDescription}";
+            $newContent = str_replace($search, $description, $markdownContent);
+        }
+
+        File::put($this->getFileLocation($pattern, self::MARKDOWN_EXTENSION), $newContent);
+    }
 }

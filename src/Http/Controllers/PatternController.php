@@ -105,9 +105,11 @@ class PatternController extends Controller
      * @param Request $request
      * @param string $pattern
      * @return JsonResponse
+     * @throws FileNotFoundException
      */
     public function update(Request $request, string $pattern): JsonResponse
     {
+        $this->patternService->updateDescription($pattern, $request->get('description'));
         return JsonResponse::create([]);
     }
 

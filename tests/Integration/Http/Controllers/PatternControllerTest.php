@@ -229,6 +229,9 @@ class PatternControllerTest extends BaseTestCase
 
         // assert
         $response->assertSuccessful();
+
+        $newContent = file_get_contents("{$this->tempDir}/patterns/atoms/text/headline1.md");
+        $this->assertContains('A new description', $newContent);
     }
 
     /**

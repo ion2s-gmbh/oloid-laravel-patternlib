@@ -118,7 +118,7 @@
 
               <button type="button"
                       class="btn btn--primary btn--sm"
-                      @click="saveDescription">
+                      @click="updatePattern">
                 <span>Save</span>
               </button>
 
@@ -220,9 +220,9 @@
         loading: false,
         isToggled: false,
         showOptions: false,
-        showDescription: true,
+        showDescription: false,
         showDeleteConfirm: false,
-        editModeDescription: true,
+        editModeDescription: false,
         oldDescription: ''
       }
     },
@@ -242,23 +242,37 @@
 
     methods: {
 
+      /**
+       * Enable the edit mode for the description field.
+       */
       editDescription: function () {
         this.editModeDescription = true;
         this.oldDescription = this.pattern.description
       },
 
+      /**
+       * Cancel the editing of the description and reset to old value.
+       */
       cancelDescription: function () {
         this.editModeDescription = false;
         this.pattern.description = this.oldDescription;
       },
 
-      saveDescription: function () {
+      /**
+       * Update the Pattern with the new description.
+       */
+      updatePattern: async function () {
         this.editModeDescription = false;
         try {
-          let response = API.put('pattern', {
+          let response = await API.put(`pattern/${this.pattern.name}`, {
+            name: this.pattern.name,
             description: this.pattern.description
-          })
+          });
         } catch (e) {
+          /*
+           * Reset the value on error.
+           */
+          this.pattern.description = this.oldDescription;
           LOG.error(e);
         }
       },

@@ -220,9 +220,9 @@
         loading: false,
         isToggled: false,
         showOptions: false,
-        showDescription: false,
+        showDescription: true,
         showDeleteConfirm: false,
-        editModeDescription: false,
+        editModeDescription: true,
         oldDescription: ''
       }
     },
@@ -254,7 +254,13 @@
 
       saveDescription: function () {
         this.editModeDescription = false;
-        // TODO: make API call
+        try {
+          let response = API.put('pattern', {
+            description: this.pattern.description
+          })
+        } catch (e) {
+          LOG.error(e);
+        }
       },
 
       /**

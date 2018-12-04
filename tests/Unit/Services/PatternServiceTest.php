@@ -524,7 +524,7 @@ class PatternServiceTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Http\Controllers\PatternController
+     * @covers \Laratomics\Services\PatternService
      */
     public function it_should_check_that_a_patter_does_not_exist()
     {
@@ -533,5 +533,47 @@ class PatternServiceTest extends BaseTestCase
 
         // assert
         $this->assertFalse($this->cut->exists('not.existing.pattern'));
+    }
+
+    /**
+     * @test
+     * @covers \Laratomics\Services\PatternService
+     */
+    public function it_should_update_an_existing_description_of_a_pattern()
+    {
+        // arrange
+        $this->preparePatternStub();
+
+        $markdownContent = file_get_contents("{$this->tempDir}/patterns/atoms/text/headline1.md");
+        $this->assertContains('Our h1 for testing', $markdownContent);
+
+        // act
+        $description = 'A new description';
+        $this->cut->updateDescription('atoms.text.headline1', $description);
+
+        // assert
+        $markdownContent = file_get_contents("{$this->tempDir}/patterns/atoms/text/headline1.md");
+        $this->assertContains($description, $markdownContent);
+    }
+
+    /**
+     * @test
+     * @covers \Laratomics\Services\PatternService
+     */
+    public function it_should_add_a_description_to_a_pattern()
+    {
+        // arrange
+        $this->preparePatternStub();
+
+        $markdownContent = file_get_contents("{$this->tempDir}/patterns/atoms/buttons/button.md");
+        $this->assertTrue(ends_with($markdownContent, "---\n"));
+
+        // act
+        $description = 'A description';
+        $this->cut->updateDescription('atoms.buttons.button', $description);
+
+        // assert
+        $markdownContent = file_get_contents("{$this->tempDir}/patterns/atoms/buttons/button.md");
+        $this->assertContains($description, $markdownContent);
     }
 }

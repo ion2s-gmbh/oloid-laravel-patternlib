@@ -234,19 +234,19 @@ class PatternControllerTest extends BaseTestCase
         $this->assertContains('A new description', $newContent);
     }
 
-    /**
-     * @test
-     * @covers \Laratomics\Http\Controllers\PatternController
-     */
-    public function it_should_rename_a_pattern_and_update_the_pattern_structure()
-    {
-        // arrange
-
-        // act
-
-        // assert
-        $this->markTestIncomplete('Not yet implemented!');
-    }
+//    /**
+//     * @test
+//     * @covers \Laratomics\Http\Controllers\PatternController
+//     */
+//    public function it_should_rename_a_pattern_and_update_the_pattern_structure()
+//    {
+//        // arrange
+//
+//        // act
+//
+//        // assert
+//        $this->markTestIncomplete('Not yet implemented!');
+//    }
 
     /**
      * @test

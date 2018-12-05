@@ -106,6 +106,8 @@
             <textarea id="description"
                       class="form-control"
                       name="description"
+                      @keydown.ctrl.83.prevent="updatePattern"
+                      @keydown.esc="cancelDescription"
                       v-model="pattern.description" autofocus>{{ pattern.description }}</textarea>
 
             <div class="form-group form-group--end">

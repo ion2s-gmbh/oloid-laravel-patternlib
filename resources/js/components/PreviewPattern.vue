@@ -267,7 +267,6 @@
         this.editModeDescription = false;
         try {
           let response = await API.put(`pattern/${this.pattern.name}`, {
-            name: this.pattern.name,
             description: this.pattern.description
           });
         } catch (e) {

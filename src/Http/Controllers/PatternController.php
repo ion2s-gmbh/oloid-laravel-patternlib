@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Laratomics\Exceptions\RenderingException;
 use Laratomics\Http\Requests\CreatePattern;
+use Laratomics\Http\Requests\UpdatePattern;
 use Laratomics\Http\Resources\PatternResource;
 use Laratomics\Services\PatternService;
 
@@ -107,7 +108,7 @@ class PatternController extends Controller
      * @return JsonResponse
      * @throws FileNotFoundException
      */
-    public function update(Request $request, string $pattern): JsonResponse
+    public function update(UpdatePattern $request, string $pattern): JsonResponse
     {
         /*
          * Update the description

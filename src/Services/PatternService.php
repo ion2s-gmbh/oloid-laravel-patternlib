@@ -357,6 +357,8 @@ class PatternService
     }
 
     /**
+     * Update description of a Pattern.
+     *
      * @param string $pattern
      * @param $description
      * @throws FileNotFoundException

@@ -11,7 +11,7 @@
 
     <nav class="project-navigation">
 
-      <router-link :to="{ name: 'dashboard' }" class="back">
+      <router-link :to="{ name: 'dashboard' }" class="back a-dropIn" v-if="notDashboard">
         <i class="fas fa-arrow-circle-left"></i>
       </router-link>
 
@@ -62,6 +62,12 @@
     data() {
       return {
         navi: []
+      }
+    },
+
+    computed: {
+      notDashboard: function () {
+        return this.$route.name !== 'dashboard';
       }
     },
 

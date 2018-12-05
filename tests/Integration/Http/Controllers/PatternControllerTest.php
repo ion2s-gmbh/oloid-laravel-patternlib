@@ -261,6 +261,27 @@ class PatternControllerTest extends BaseTestCase
         $this->assertContains('Our h1 for testing', $newContent);
     }
 
+    /**
+     * @test
+     * @covers \Laratomics\Http\Controllers\PatternController
+     */
+    public function it_should_not_rename_a_pattern_if_name_already_exists()
+    {
+        // arrange
+        $this->preparePatternStub();
+
+        // act
+        $data = [
+            'name' => 'atoms.text.headline2'
+        ];
+
+        /** @var TestResponse $response */
+        $response = $this->putJson('workshop/api/v1/pattern/atoms.text.headline1', $data);
+
+        // assert
+        $response->assertStatus(JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
 //    /**
 //     * - Renaming files
 //     * - Changing import in parent sass file

@@ -109,7 +109,21 @@ class PatternController extends Controller
      */
     public function update(Request $request, string $pattern): JsonResponse
     {
-        $this->patternService->updateDescription($pattern, $request->get('description'));
+        /*
+         * Update the description
+         */
+        if ($request->has('description')) {
+            $this->patternService->updateDescription($pattern, $request->get('description'));
+        }
+
+        /*
+         * Rename the Pattern
+         */
+        if ($request->has('name')) {
+            $newName = $request->get('name');
+//            $this->patternService->rename($pattern, $newName);
+        }
+
         return JsonResponse::create([]);
     }
 

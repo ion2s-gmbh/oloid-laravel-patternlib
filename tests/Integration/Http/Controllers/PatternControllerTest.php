@@ -234,11 +234,44 @@ class PatternControllerTest extends BaseTestCase
         $this->assertContains('A new description', $newContent);
     }
 
+    /**
+     * @test
+     * @covers \Laratomics\Http\Controllers\PatternController
+     */
+    public function it_should_not_change_the_description_if_request_input_is_missing()
+    {
+        // arrange
+        $this->preparePatternStub();
+
+        $data = [
+            'name' => 'new.name.for.pattern'
+        ];
+
+        $oldContent = file_get_contents("{$this->tempDir}/patterns/atoms/text/headline1.md");
+        $this->assertContains('Our h1 for testing', $oldContent);
+
+        // act
+        /** @var TestResponse $response */
+        $response = $this->putJson("workshop/api/v1/pattern/{$this->name}", $data);
+
+        // assert
+        $response->assertSuccessful();
+
+        $newContent = file_get_contents("{$this->tempDir}/patterns/atoms/text/headline1.md");
+        $this->assertContains('Our h1 for testing', $newContent);
+    }
+
 //    /**
+//     * - Renaming files
+//     * - Changing import in parent sass file
+//     * - keep the structure
+//     * - keep import in main sass file
+//     * - do not touch the description
+//     *
 //     * @test
 //     * @covers \Laratomics\Http\Controllers\PatternController
 //     */
-//    public function it_should_rename_a_pattern_and_update_the_pattern_structure()
+//    public function it_should_rename_a_patterns_last_part_and_keep_the_pattern_structure()
 //    {
 //        // arrange
 //

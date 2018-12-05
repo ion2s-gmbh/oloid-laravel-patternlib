@@ -7,7 +7,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Laratomics\Exceptions\RenderingException;
-use Laratomics\Http\Requests\PatternRequest;
+use Laratomics\Http\Requests\CreatePattern;
 use Laratomics\Http\Resources\PatternResource;
 use Laratomics\Services\PatternService;
 
@@ -30,10 +30,10 @@ class PatternController extends Controller
     /**
      * Store the newly created pattern.
      *
-     * @param PatternRequest $request
+     * @param CreatePattern $request
      * @return JsonResponse
      */
-    public function store(PatternRequest $request): JsonResponse
+    public function store(CreatePattern $request): JsonResponse
     {
         $name = $request->get('name');
         $description = $request->get('description', '');
@@ -121,7 +121,7 @@ class PatternController extends Controller
          */
         if ($request->has('name')) {
             $newName = $request->get('name');
-//            $this->patternService->rename($pattern, $newName);
+            $this->patternService->rename($pattern, $newName);
         }
 
         return JsonResponse::create([]);

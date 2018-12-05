@@ -5,7 +5,7 @@ namespace Laratomics\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Laratomics\Rules\UniquePattern;
 
-class PatternRequest extends FormRequest
+class CreatePattern extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

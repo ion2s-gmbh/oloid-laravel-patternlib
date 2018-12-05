@@ -332,15 +332,14 @@
       /*
        * Trigger delete confirmation on DEL key.
        */
-      window.addEventListener('keyup', (event) => {
-        if (event.keyCode === 46) {
+      window.addEventListener('keydown', (event) => {
+        /*
+         * Trigger the delete confirmation by Ctrl+DEL
+         */
+        if (event.ctrlKey && event.keyCode === 46) {
           this.confirmDelete();
         }
       });
-
-      // document.getElementById('description').innerHTML =
-      //   marked('# Marked in browser\n\nRendered by **marked**.');
-
     },
 
     /**

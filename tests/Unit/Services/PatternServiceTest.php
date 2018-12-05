@@ -304,6 +304,11 @@ class PatternServiceTest extends BaseTestCase
         $this->assertSassContentUsingStub($pattern->sass);
         $this->assertInstanceOf(Document::class, $pattern->metadata);
         $this->assertEquals('TODO', $pattern->metadata->status);
+        $this->assertEquals("{$this->tempDir}/patterns/atoms/text/headline1.blade.php", $pattern->templateFile);
+        $this->assertEquals("{$this->tempDir}/patterns/atoms/text/headline1.scss", $pattern->sassFile);
+        $this->assertEquals("{$this->tempDir}/patterns/atoms/atoms.scss", $pattern->rootSassFile);
+        $this->assertEquals("{$this->tempDir}/patterns/patterns.scss", $pattern->mainSassFile);
+        $this->assertEquals("{$this->tempDir}/patterns/atoms/text/headline1.md", $pattern->markdownFile);
     }
 
     /**

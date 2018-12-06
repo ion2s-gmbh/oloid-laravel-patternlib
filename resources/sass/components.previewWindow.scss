@@ -44,13 +44,14 @@ These are the styles that are needed to render the pattern preview.
 
 }
 
-.preview-infos {
+.preview-infosWrap {
 
 	align-items: center;
 	background: var(--brandMain, $c-brandMain);
 	display: flex;
 	font-family: Arial, sans-serif;
 	font-size: 0.75rem;	
+	justify-content: space-between;
 	left: 0;
 	padding: var(--gap, $l-gap);
 	position: sticky;
@@ -60,6 +61,62 @@ These are the styles that are needed to render the pattern preview.
 
 }
 
+.preview-infos {
+	align-items: center;
+	display: flex;	
+}
+
+
+.preview-optionsWrap {
+
+	position: relative;
+	color: red;
+
+}
+
+.preview-options {
+
+	background: $c-brandDark;
+	background: var(--brandDark,$c-brandDark);
+	min-width: 10rem;
+	padding: 0;	
+	position: absolute;
+	right: 0;	
+	top: 1.2rem;
+	z-index: 1;
+
+}
+
+.preview-option {
+
+	background: transparent;
+	border: 0;
+	color: #fff;
+	cursor: pointer;
+	padding: calc(var(--gap, $l-gap) / 2) var(--gap, 1rem);
+	text-align: left;
+	text-decoration: none;
+	width: 100%;
+
+	&:hover {
+		background: $c-brandMain;
+		background: var(--brandMain,$c-brandMain);
+	}
+
+}
+
+.preview-description {
+
+	background: rgba( $c-brandMain, .9 );
+	left: 0;
+	margin: 0;
+	padding: 1rem;
+	position: absolute;
+	top: 100%;
+	width: 100%;
+	z-index: 1;
+
+}
 
 .statusbar {
 
@@ -74,6 +131,7 @@ These are the styles that are needed to render the pattern preview.
 	
 	@extend %status;
 	cursor: pointer;
+	margin-right: 0;
 
 }
 

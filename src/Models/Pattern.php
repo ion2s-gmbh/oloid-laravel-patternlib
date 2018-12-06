@@ -14,6 +14,10 @@ class Pattern extends Model
         'sass',
         'markdown',
         'preview',
-        'metadata'
+        'metadata',
+        'templateFile',
+        'sassFile',
+        'rootSassFile',
+        'markdownFile'
     ];
 }

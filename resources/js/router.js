@@ -13,7 +13,7 @@ const router = new VueRouter({
   routes: [
     { path: '/', component: Dashboard, name: 'dashboard' },
     { path: '/create', component: CreatePattern, name: 'create' },
-    { path: '/update/:pattern', component: UpdatePattern, name: 'update' },
+    { path: '/rename/:pattern', component: UpdatePattern, name: 'rename' },
     { path: '/preview/:pattern', component: PreviewPattern, name: 'preview' }
   ]
 });

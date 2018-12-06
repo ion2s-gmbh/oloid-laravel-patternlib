@@ -7,7 +7,8 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Laratomics\Exceptions\RenderingException;
-use Laratomics\Http\Requests\PatternRequest;
+use Laratomics\Http\Requests\CreatePattern;
+use Laratomics\Http\Requests\UpdatePattern;
 use Laratomics\Http\Resources\PatternResource;
 use Laratomics\Services\PatternService;
 
@@ -30,12 +31,11 @@ class PatternController extends Controller
     /**
      * Store the newly created pattern.
      *
-     * @param PatternRequest $request
+     * @param CreatePattern $request
      * @return JsonResponse
      */
-    public function store(PatternRequest $request): JsonResponse
+    public function store(CreatePattern $request): JsonResponse
     {
-        // TODO: Check that pattern is unique
         $name = $request->get('name');
         $description = $request->get('description', '');
         $pattern = $this->patternService->createPattern($name, $description);
@@ -98,5 +98,48 @@ class PatternController extends Controller
         $newStatus = $request->get('status');
         $this->patternService->updateStatus($newStatus, $pattern);
         return JsonResponse::create([]);
+    }
+
+    /**
+     * Update an existing Pattern.
+     *
+     * @param Request $request
+     * @param string $pattern
+     * @return JsonResponse
+     * @throws FileNotFoundException
+     */
+    public function update(UpdatePattern $request, string $pattern): JsonResponse
+    {
+        /*
+         * Update the description
+         */
+        if ($request->has('description')) {
+            $this->patternService->updateDescription($pattern, $request->get('description'));
+        }
+
+        /*
+         * Rename the Pattern
+         */
+        if ($request->has('name')) {
+            $newName = $request->get('name');
+            $this->patternService->rename($pattern, $newName);
+        }
+
+        return JsonResponse::create([]);
+    }
+
+    /**
+     * Check if a Pattern already exists.
+     *
+     * @param string $pattern
+     * @return JsonResponse
+     */
+    public function exists(string $pattern): JsonResponse
+    {
+        return JsonResponse::create([
+            'data' => [
+                'exists' => $this->patternService->exists($pattern)
+            ]
+        ]);
     }
 }

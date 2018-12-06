@@ -304,6 +304,11 @@ class PatternServiceTest extends BaseTestCase
         $this->assertSassContentUsingStub($pattern->sass);
         $this->assertInstanceOf(Document::class, $pattern->metadata);
         $this->assertEquals('TODO', $pattern->metadata->status);
+        $this->assertEquals("{$this->tempDir}/patterns/atoms/text/headline1.blade.php", $pattern->templateFile);
+        $this->assertEquals("{$this->tempDir}/patterns/atoms/text/headline1.scss", $pattern->sassFile);
+        $this->assertEquals("{$this->tempDir}/patterns/atoms/atoms.scss", $pattern->rootSassFile);
+        $this->assertEquals("{$this->tempDir}/patterns/patterns.scss", $pattern->mainSassFile);
+        $this->assertEquals("{$this->tempDir}/patterns/atoms/text/headline1.md", $pattern->markdownFile);
     }
 
     /**
@@ -311,7 +316,7 @@ class PatternServiceTest extends BaseTestCase
      */
     private function assertTemplateContentUsingStub($template)
     {
-        $templateContent = "<!-- atoms.text.headline1 -->\n<h1>{{ \$text }}</h1>";
+        $templateContent = "<h1>{{ \$text }}</h1>";
         $this->assertEquals($templateContent, $template);
     }
 
@@ -329,7 +334,7 @@ class PatternServiceTest extends BaseTestCase
      */
     private function assertSassContentUsingStub($sass)
     {
-        $this->assertEquals("/* atoms.text.headline1 */\nh1 {\n  color: red;\n}", $sass);
+        $this->assertEquals("h1 {\n  color: red;\n}", $sass);
     }
 
     /**
@@ -507,5 +512,275 @@ class PatternServiceTest extends BaseTestCase
         // assert
         $mdContent = file_get_contents("{$this->tempDir}/patterns/atoms/text/headline1.md");
         $this->assertContains('status: TESTED', $mdContent);
+    }
+
+    /**
+     * @test
+     * @covers \Laratomics\Services\PatternService
+     */
+    public function it_should_check_that_a_pattern_exists()
+    {
+        // arrange
+        $this->preparePatternStub();
+
+        // assert
+        $this->assertTrue($this->cut->exists($this->name));
+    }
+
+    /**
+     * @test
+     * @covers \Laratomics\Services\PatternService
+     */
+    public function it_should_check_that_a_patter_does_not_exist()
+    {
+        // arrange
+        $this->preparePatternStub();
+
+        // assert
+        $this->assertFalse($this->cut->exists('not.existing.pattern'));
+    }
+
+    /**
+     * @test
+     * @covers \Laratomics\Services\PatternService
+     */
+    public function it_should_update_an_existing_description_of_a_pattern()
+    {
+        // arrange
+        $this->preparePatternStub();
+
+        $markdownContent = file_get_contents("{$this->tempDir}/patterns/atoms/text/headline1.md");
+        $this->assertContains('Our h1 for testing', $markdownContent);
+
+        // act
+        $description = 'A new description';
+        $this->cut->updateDescription('atoms.text.headline1', $description);
+
+        // assert
+        $markdownContent = file_get_contents("{$this->tempDir}/patterns/atoms/text/headline1.md");
+        $this->assertContains($description, $markdownContent);
+    }
+
+    /**
+     * @test
+     * @covers \Laratomics\Services\PatternService
+     */
+    public function it_should_add_a_description_to_a_pattern()
+    {
+        // arrange
+        $this->preparePatternStub();
+
+        $markdownContent = file_get_contents("{$this->tempDir}/patterns/atoms/buttons/button.md");
+        $this->assertTrue(ends_with($markdownContent, "---\n"));
+
+        // act
+        $description = 'A description';
+        $this->cut->updateDescription('atoms.buttons.button', $description);
+
+        // assert
+        $markdownContent = file_get_contents("{$this->tempDir}/patterns/atoms/buttons/button.md");
+        $this->assertContains($description, $markdownContent);
+    }
+
+    /**
+     * - Renaming files
+     * - Changing import in parent sass file
+     * - keep the structure
+     * - keep import in main sass file
+     * - do not touch the description
+     *
+     * @test
+     * @covers \Laratomics\Services\PatternService
+     */
+    public function it_should_rename_a_pattern_in_the_same_directory()
+    {
+        // arrange
+        $this->preparePatternStub();
+
+        $oldPattern = $this->cut->loadPattern('atoms.buttons.button');
+
+        // act
+        $pattern = $this->cut->rename('atoms.buttons.button', 'atoms.buttons.submit');
+
+        // assert files and structure
+        $fs = new Filesystem();
+        $this->assertTrue($fs->exists(pattern_path('/atoms/buttons/submit.blade.php')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms/buttons/submit.md')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms/buttons/submit.scss')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms/atoms.scss')));
+        $this->assertTrue($fs->exists(pattern_path('/patterns.scss')));
+
+        $this->assertFalse($fs->exists(pattern_path('/atoms/buttons/button.blade.php')));
+        $this->assertFalse($fs->exists(pattern_path('/atoms/buttons/button.md')));
+        $this->assertFalse($fs->exists(pattern_path('/atoms/buttons/button.scss')));
+
+        // assert Pattern instance
+        $this->assertEquals('atoms.buttons.submit', $pattern->name);
+        $this->assertInstanceOf(Document::class, $pattern->metadata);
+        $this->assertEquals('TODO', $pattern->metadata->status);
+        $this->assertEquals("{$this->tempDir}/patterns/atoms/buttons/submit.blade.php", $pattern->templateFile);
+        $this->assertEquals("{$this->tempDir}/patterns/atoms/buttons/submit.scss", $pattern->sassFile);
+        $this->assertEquals("{$this->tempDir}/patterns/atoms/atoms.scss", $pattern->rootSassFile);
+        $this->assertEquals("{$this->tempDir}/patterns/patterns.scss", $pattern->mainSassFile);
+        $this->assertEquals("{$this->tempDir}/patterns/atoms/buttons/submit.md", $pattern->markdownFile);
+
+        // assert file contents
+        $this->assertEquals($oldPattern->state, $pattern->state);
+        $this->assertEquals($oldPattern->template, $pattern->template);
+        $this->assertEquals($oldPattern->html, $pattern->html);
+        $this->assertEquals($oldPattern->sass, $pattern->sass);
+        $this->assertEquals($oldPattern->markdown, $pattern->markdown);
+        $this->assertEquals($oldPattern->preview, $pattern->preview);
+
+        $this->assertContains('buttons/submit', $fs->get("{$this->tempDir}/patterns/atoms/atoms.scss"));
+        $this->assertNotContains('buttons/button', $fs->get("{$this->tempDir}/patterns/atoms/atoms.scss"));
+        $this->assertContains('atoms/atoms', $fs->get("{$this->tempDir}/patterns/patterns.scss"));
+    }
+
+    /**
+     * @test
+     * @covers \Laratomics\Services\PatternService
+     */
+    public function it_should_move_a_pattern_in_a_subdirectory()
+    {
+        // arrange
+        $this->preparePatternStub();
+
+        $oldPattern = $this->cut->loadPattern('atoms.buttons.button');
+
+        // act
+        $pattern = $this->cut->rename('atoms.buttons.button', 'atoms.buttons.submit.button');
+
+        // assert files and structure
+        $fs = new Filesystem();
+        $this->assertTrue($fs->exists(pattern_path('/atoms/buttons/submit/button.blade.php')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms/buttons/submit/button.md')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms/buttons/submit/button.scss')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms/atoms.scss')));
+        $this->assertTrue($fs->exists(pattern_path('/patterns.scss')));
+
+        $this->assertFalse($fs->exists(pattern_path('/atoms/buttons/button.blade.php')));
+        $this->assertFalse($fs->exists(pattern_path('/atoms/buttons/button.md')));
+        $this->assertFalse($fs->exists(pattern_path('/atoms/buttons/button.scss')));
+
+        // assert Pattern instance
+        $this->assertEquals('atoms.buttons.submit.button', $pattern->name);
+        $this->assertInstanceOf(Document::class, $pattern->metadata);
+        $this->assertEquals('TODO', $pattern->metadata->status);
+        $this->assertEquals("{$this->tempDir}/patterns/atoms/buttons/submit/button.blade.php", $pattern->templateFile);
+        $this->assertEquals("{$this->tempDir}/patterns/atoms/buttons/submit/button.scss", $pattern->sassFile);
+        $this->assertEquals("{$this->tempDir}/patterns/atoms/atoms.scss", $pattern->rootSassFile);
+        $this->assertEquals("{$this->tempDir}/patterns/patterns.scss", $pattern->mainSassFile);
+        $this->assertEquals("{$this->tempDir}/patterns/atoms/buttons/submit/button.md", $pattern->markdownFile);
+
+        // assert file contents
+        $this->assertEquals($oldPattern->state, $pattern->state);
+        $this->assertEquals($oldPattern->template, $pattern->template);
+        $this->assertEquals($oldPattern->html, $pattern->html);
+        $this->assertEquals($oldPattern->sass, $pattern->sass);
+        $this->assertEquals($oldPattern->markdown, $pattern->markdown);
+        $this->assertEquals($oldPattern->preview, $pattern->preview);
+
+        $this->assertContains('buttons/submit/button', $fs->get("{$this->tempDir}/patterns/atoms/atoms.scss"));
+        $this->assertNotContains('buttons/button', $fs->get("{$this->tempDir}/patterns/atoms/atoms.scss"));
+        $this->assertContains('atoms/atoms', $fs->get("{$this->tempDir}/patterns/patterns.scss"));
+    }
+
+    /**
+     * @test
+     * @covers \Laratomics\Services\PatternService
+     */
+    public function it_should_move_a_pattern_into_another_branch_and_remove_the_old_directory()
+    {
+        // arrange
+        $this->preparePatternStub();
+
+        $oldPattern = $this->cut->loadPattern('atoms.buttons.button');
+
+        // act
+        $pattern = $this->cut->rename('atoms.buttons.button', 'molecules.buttons.submit');
+
+        // assert files and structure
+        $fs = new Filesystem();
+        $this->assertTrue($fs->exists(pattern_path('/molecules/buttons/submit.blade.php')));
+        $this->assertTrue($fs->exists(pattern_path('/molecules/buttons/submit.md')));
+        $this->assertTrue($fs->exists(pattern_path('/molecules/buttons/submit.scss')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms/atoms.scss')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms')));
+        $this->assertTrue($fs->exists(pattern_path('/patterns.scss')));
+
+        $this->assertFalse($fs->exists(pattern_path('/atoms/buttons')));
+        $this->assertFalse($fs->exists(pattern_path('/atoms/buttons/button.blade.php')));
+        $this->assertFalse($fs->exists(pattern_path('/atoms/buttons/button.md')));
+        $this->assertFalse($fs->exists(pattern_path('/atoms/buttons/button.scss')));
+
+        // assert Pattern instance
+        $this->assertEquals('molecules.buttons.submit', $pattern->name);
+        $this->assertInstanceOf(Document::class, $pattern->metadata);
+        $this->assertEquals('TODO', $pattern->metadata->status);
+        $this->assertEquals("{$this->tempDir}/patterns/molecules/buttons/submit.blade.php", $pattern->templateFile);
+        $this->assertEquals("{$this->tempDir}/patterns/molecules/buttons/submit.scss", $pattern->sassFile);
+        $this->assertEquals("{$this->tempDir}/patterns/molecules/molecules.scss", $pattern->rootSassFile);
+        $this->assertEquals("{$this->tempDir}/patterns/patterns.scss", $pattern->mainSassFile);
+        $this->assertEquals("{$this->tempDir}/patterns/molecules/buttons/submit.md", $pattern->markdownFile);
+
+        // assert file contents
+        $this->assertEquals($oldPattern->state, $pattern->state);
+        $this->assertEquals($oldPattern->template, $pattern->template);
+        $this->assertEquals($oldPattern->html, $pattern->html);
+        $this->assertEquals($oldPattern->sass, $pattern->sass);
+        $this->assertEquals($oldPattern->markdown, $pattern->markdown);
+        $this->assertEquals($oldPattern->preview, $pattern->preview);
+
+        $this->assertContains('buttons/submit', $fs->get("{$this->tempDir}/patterns/molecules/molecules.scss"));
+        $this->assertContains('atoms/atoms', $fs->get("{$this->tempDir}/patterns/patterns.scss"));
+        $this->assertContains('molecules/molecules', $fs->get("{$this->tempDir}/patterns/patterns.scss"));
+    }
+
+    /**
+     * @test
+     * @covers \Laratomics\Services\PatternService
+     */
+    public function it_should_move_a_pattern_from_level_one_into_a_sub_directory()
+    {
+        // arrange
+        $this->preparePatternStub();
+
+        $oldPattern = $this->cut->loadPattern('homepage');
+
+        // act
+        $pattern = $this->cut->rename('homepage', 'pages.homepage');
+
+        // assert files and structure
+        $fs = new Filesystem();
+        $this->assertTrue($fs->exists(pattern_path('/pages/homepage.blade.php')));
+        $this->assertTrue($fs->exists(pattern_path('/pages/homepage.md')));
+        $this->assertTrue($fs->exists(pattern_path('/pages/homepage.scss')));
+        $this->assertTrue($fs->exists(pattern_path('/patterns.scss')));
+
+        $this->assertFalse($fs->exists(pattern_path('/homepage.blade.php')));
+        $this->assertFalse($fs->exists(pattern_path('/homepage.md')));
+        $this->assertFalse($fs->exists(pattern_path('/homepage.scss')));
+
+        // assert Pattern instance
+        $this->assertEquals('pages.homepage', $pattern->name);
+        $this->assertInstanceOf(Document::class, $pattern->metadata);
+        $this->assertEquals('TODO', $pattern->metadata->status);
+        $this->assertEquals("{$this->tempDir}/patterns/pages/homepage.blade.php", $pattern->templateFile);
+        $this->assertEquals("{$this->tempDir}/patterns/pages/homepage.scss", $pattern->sassFile);
+        $this->assertEquals("{$this->tempDir}/patterns/pages/pages.scss", $pattern->rootSassFile);
+        $this->assertEquals("{$this->tempDir}/patterns/patterns.scss", $pattern->mainSassFile);
+        $this->assertEquals("{$this->tempDir}/patterns/pages/homepage.md", $pattern->markdownFile);
+
+        // assert file contents
+        $this->assertEquals($oldPattern->state, $pattern->state);
+        $this->assertEquals($oldPattern->template, $pattern->template);
+        $this->assertEquals($oldPattern->html, $pattern->html);
+        $this->assertEquals($oldPattern->sass, $pattern->sass);
+        $this->assertEquals($oldPattern->markdown, $pattern->markdown);
+        $this->assertEquals($oldPattern->preview, $pattern->preview);
+
+        $this->assertContains('homepage', $fs->get("{$this->tempDir}/patterns/pages/pages.scss"));
+        $this->assertContains('pages/pages', $fs->get("{$this->tempDir}/patterns/patterns.scss"));
     }
 }

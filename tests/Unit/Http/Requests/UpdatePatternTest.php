@@ -3,25 +3,26 @@
 namespace Tests\Unit\Http\Requests;
 
 
-use Laratomics\Http\Requests\PatternRequest;
+use Laratomics\Http\Requests\UpdatePattern;
+use Laratomics\Rules\UniquePattern;
 use Laratomics\Tests\BaseTestCase;
 
-class PatternRequestTest extends BaseTestCase
+class UpdatePatternTest extends BaseTestCase
 {
     /**
-     * @var PatternRequest
+     * @var UpdatePattern
      */
     private $cut;
 
     protected function setUp()
     {
         parent::setUp();
-        $this->cut = new PatternRequest();
+        $this->cut = new UpdatePattern();
     }
 
     /**
      * @test
-     * @covers \Laratomics\Http\Requests\PatternRequest
+     * @covers \Laratomics\Http\Requests\UpdatePattern
      */
     public function it_should_always_be_authorized()
     {
@@ -30,13 +31,13 @@ class PatternRequestTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Http\Requests\PatternRequest
+     * @covers \Laratomics\Http\Requests\UpdatePattern
      */
     public function it_should_contain_validation_rules()
     {
         // arrange
         $rules = [
-            'name' => 'required'
+            'name' => ['sometimes', 'required', new UniquePattern]
         ];
 
         $this->assertEquals($rules, $this->cut->rules());

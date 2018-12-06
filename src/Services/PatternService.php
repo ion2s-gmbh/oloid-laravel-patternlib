@@ -83,7 +83,7 @@ class PatternService
         $content = '';
         File::put($file, $content);
 
-        $this->importInParentSassFile($pattern);
+        $this->addSassImport($pattern);
         return $content;
     }
 
@@ -92,7 +92,7 @@ class PatternService
      *
      * @param string $pattern
      */
-    private function importInParentSassFile(string $pattern): void
+    private function addSassImport(string $pattern): void
     {
         $parts = explode('.', $pattern);
         $parent = array_shift($parts);
@@ -141,6 +141,30 @@ class PatternService
     {
         $pattern = new Pattern();
         $pattern->name = $name;
+
+        /*
+         * Get file paths and check the existens of the whole Pattern
+         */
+        $pattern->templateFile = $this->getFileLocation($name, self::BLADE_EXTENSION);
+        $pattern->sassFile = $this->getFileLocation($name, self::SASS_EXTENSION);
+        $pattern->markdownFile = $this->getFileLocation($name, self::MARKDOWN_EXTENSION);
+
+        if (!File::exists($pattern->templateFile)
+            || !File::exists($pattern->markdownFile)
+            || !File::exists($pattern->sassFile)) {
+            throw new FileNotFoundException;
+        }
+
+        /*
+         * Gathering general path information
+         */
+        $pattern->mainSassFile = pattern_path('patterns.scss');
+        $branchRoot = pattern_root($name);
+        $pattern->rootSassFile = pattern_path("{$branchRoot}/{$branchRoot}.scss");
+
+        /*
+         * Load Pattern content
+         */
         $pattern->template = $this->loadBladeFile($name);
         $markdown = $this->loadMarkdownFile($name);
         $pattern->markdown = $markdown;
@@ -232,66 +256,73 @@ class PatternService
     /**
      * Remove the given Pattern.
      *
-     * @param string $pattern
+     * @param string $name
      * @return bool
      * @throws FileNotFoundException
+     * @throws RenderingException
      */
-    public function remove(string $pattern): bool
+    public function remove(string $name): bool
     {
-        /*
-         * First check if the pattern exists.
-         */
-        $templateFile = $this->getFileLocation($pattern, self::BLADE_EXTENSION);
-        $sassFile = $this->getFileLocation($pattern, self::SASS_EXTENSION);
-        $markdownFile = $this->getFileLocation($pattern, self::MARKDOWN_EXTENSION);
-        if (!File::exists($templateFile)
-            || !File::exists($markdownFile)
-            || !File::exists($sassFile)) {
-            throw new FileNotFoundException;
-        }
-
-        /*
-         * Gathering general path information
-         */
-        $mainSassFile = pattern_path('patterns.scss');
-        $branchRoot = pattern_root($pattern);
-        $rootSassFile = pattern_path("{$branchRoot}/{$branchRoot}.scss");
+        $pattern = $this->loadPattern($name);
 
         /*
          * Delete base files
          */
-        $templateSuccess = File::delete($templateFile);
-        $markdownSuccess = File::delete($markdownFile);
-        $sassSuccess = File::delete($sassFile);
+        $templateSuccess = File::delete($pattern->templateFile);
+        $markdownSuccess = File::delete($pattern->markdownFile);
+        $sassSuccess = File::delete($pattern->sassFile);
 
         /*
-         * Remove path recursevly if directory does not contain any blade files
-         * until blade files are found
-         * or pattern root is reached
+         * Remove the path to the Pattern
          */
-        $branchDir = parent_dir($sassFile);
+        $this->removePatternBranch($pattern);
+
+        /*
+         * Remove sass import in parent and main sass files
+         */
+        $this->removeSassImport($pattern);
+
+        return $templateSuccess && $markdownSuccess && $sassSuccess;
+    }
+    /**
+     * Remove path recursevly if directory does not contain any blade files
+     * until blade files are found or the Pattern root is reached.
+     *
+     * @param Pattern $pattern
+     */
+    private function removePatternBranch(Pattern $pattern): void
+    {
+        $branchDir = parent_dir($pattern->templateFile);
+        $branchRoot = pattern_root($pattern->name);
         $rootDir = pattern_path($branchRoot);
         remove_empty_branch($branchDir, $rootDir);
+    }
 
-        /*
-         * if $rootSassFile still exists remove import of pattern's sass file in the $rootSassFile
-         */
-        $parts = explode('/', slash_path($pattern));
+    /**
+     * Remove the import of the Pattern's sass file in the root sass file.
+     * If the root sass file was removed, because it is not required any more, than the root
+     * sass file must be removed from the main sass file.
+     *
+     * @param Pattern $pattern
+     */
+    private function removeSassImport(Pattern $pattern): void
+    {
+        $branchRoot = pattern_root($pattern->name);
+        $parts = explode('/', slash_path($pattern->name));
         array_shift($parts);
         $include = implode('/', $parts);
-        if (File::exists($rootSassFile)) {
+        if (File::exists($pattern->rootSassFile)) {
             $import = "@import \"{$include}\";\n";
-            remove_from_file($import, $rootSassFile);
+            remove_from_file($import, $pattern->rootSassFile);
         } else {
             $import = "@import \"{$branchRoot}/{$branchRoot}\";\n";
             if (count($parts) === 0) {
                 $import = "@import \"{$branchRoot}\";\n";
             }
-            remove_from_file($import, $mainSassFile);
+            remove_from_file($import, $pattern->mainSassFile);
         }
-
-        return $templateSuccess && $markdownSuccess && $sassSuccess;
     }
+
     /**
      * Update the status of a Pattern.
      *
@@ -311,5 +342,63 @@ class PatternService
         $mdContent = $this->loadMarkdownFile($name);
         $newMdContent = str_replace($search, $replacement, $mdContent);
         file_put_contents($file, $newMdContent);
+    }
+
+    /**
+     * Check if the Pattern exists.
+     *
+     * @param string $pattern
+     * @return bool
+     */
+    public function exists(string $pattern)
+    {
+        $patternFile = $this->getFileLocation($pattern, self::BLADE_EXTENSION);
+        return File::exists($patternFile);
+    }
+
+    /**
+     * Update description of a Pattern.
+     *
+     * @param string $pattern
+     * @param $description
+     * @throws FileNotFoundException
+     */
+    public function updateDescription(string $pattern, $description)
+    {
+        $markdownContent = $this->loadMarkdownFile($pattern);
+        $markdown = YamlFrontMatter::parse($markdownContent);
+        $currentDescription = trim($markdown->body());
+
+        if (empty($currentDescription)) {
+            $newContent = $markdownContent . $description;
+        } else {
+            $search = "${currentDescription}";
+            $newContent = str_replace($search, $description, $markdownContent);
+        }
+
+        File::put($this->getFileLocation($pattern, self::MARKDOWN_EXTENSION), $newContent);
+    }
+
+    public function rename(string $currentName, $newName): Pattern
+    {
+        $oldPattern = $this->loadPattern($currentName);
+
+        /*
+         * Copy existing pattern files to the new location
+         */
+        File::move($oldPattern->templateFile, $this->getFileLocation($newName, self::BLADE_EXTENSION));
+        File::move($oldPattern->markdownFile, $this->getFileLocation($newName, self::MARKDOWN_EXTENSION));
+        File::move($oldPattern->sassFile, $this->getFileLocation($newName, self::SASS_EXTENSION));
+
+        /*
+         * Change sass import & pattern structure
+         */
+        $this->addSassImport($newName);
+
+        $this->removePatternBranch($oldPattern);
+
+        $this->removeSassImport($oldPattern);
+
+        return $this->loadPattern($newName);
     }
 }

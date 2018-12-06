@@ -11,7 +11,7 @@
 
     <nav class="project-navigation">
 
-      <router-link :to="{ name: 'dashboard' }" class="back">
+      <router-link :to="{ name: 'dashboard' }" class="back a-slideIn" v-if="notDashboard">
         <i class="fas fa-arrow-circle-left"></i>
       </router-link>
 
@@ -22,7 +22,20 @@
                 v-for="(menu, index) in navi"
                 :menu="menu" :key="index">
         </navbar-main>
+        
       </ul>
+
+      <router-link :to="{ name: 'create' }"  class="btn btn--primary btn--sm" title="Create new Pattern">
+
+        <span>
+
+          <i class="fas fa-plus"></i>
+
+          Add Pattern
+
+        </span>
+
+      </router-link>
 
     </nav>
 
@@ -49,6 +62,12 @@
     data() {
       return {
         navi: []
+      }
+    },
+
+    computed: {
+      notDashboard: function () {
+        return this.$route.name !== 'dashboard';
       }
     },
 

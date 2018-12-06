@@ -20,7 +20,10 @@
                name="name"
                v-model="pattern.name"
                aria-describedby="nameHelp"
-               v-validate.disable="'required'"
+               @keydown.ctrl.83.prevent="save"
+               @keydown.esc="cancel"
+               v-validate.disable="'required|uniquePattern'"
+               autofocus
         />
 
 
@@ -41,6 +44,8 @@
         <textarea id="description"
                   class="form-control"
                   name="description"
+                  @keydown.ctrl.83.prevent="save"
+                  @keydown.esc="cancel"
                   v-model="pattern.description">
                     
           </textarea>
@@ -53,7 +58,8 @@
           <span>Cancel</span>
         </router-link>
 
-        <button @click.prevent="store" class="btn btn--primary btn--sm">
+        <button class="btn btn--primary btn--sm"
+                @click.prevent="save">
           <span>Create pattern</span>
         </button>
 
@@ -79,27 +85,43 @@
     },
     methods: {
 
+      cancel: function () {
+        this.$router.push({
+          name: 'dashboard'
+        });
+      },
+
       /**
-       * Store a new Pattern
+       * Save a new Pattern
        */
-      store: function () {
-        this.$validator.validate()
-          .then(async result => {
-            if (result) {
-              try {
-                let response = await API.post('pattern', {
-                  'name': this.pattern.name,
-                  'description': this.pattern.description
-                });
-                if (response.status === 201) {
-                  this.$store.commit('reloadNavi', true);
-                  this.$router.push('/preview/' + this.pattern.name);
-                }
-              } catch (e) {
-                LOG.error(e.status);
-              }
+      save: async function () {
+        /*
+         * Validate the form
+         */
+        let valid = false;
+        try {
+          valid = await this.$validator.validate();
+        } catch (e) {
+          LOG.error(e);
+        }
+
+        /*
+        * API request
+        */
+        if (valid) {
+          try {
+            let response = await API.post('pattern', {
+              'name': this.pattern.name,
+              'description': this.pattern.description
+            });
+            if (response.status === 201) {
+              this.$store.commit('reloadNavi', true);
+              this.$router.push('/preview/' + this.pattern.name);
             }
-          });
+          } catch (e) {
+            LOG.error(e.status);
+          }
+        }
       }
     }
   }

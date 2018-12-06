@@ -28,6 +28,7 @@
 	@include size(100%);
 	display: flex;	
 	flex-direction: column;
+	margin-bottom: 2rem;
 
 }
 
@@ -38,6 +39,23 @@
 .code-header {
 	align-items: center;
 	display: flex;
+	padding: 0 0 1rem 0;
+	position: relative;
+
+	&:after {
+
+		background: linear-gradient(to bottom, $c-brandMain, rgba($c-brandMain,0));
+		bottom: -1rem;
+		content: '';
+		display: block;
+		height: 1rem;
+		left: 0;
+		position: absolute;
+		width: calc(100% - 8px);
+		z-index: 1;
+
+	}
+
 }
 
 .code-type {
@@ -47,6 +65,8 @@
 .code-tabs {
 
 	height: 100%;
+	overflow: auto;
+	padding-bottom: 1rem;
 	position: relative;
 
 	.tab {

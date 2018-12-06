@@ -33,7 +33,7 @@
           <span>Cancel</span>
         </router-link>
 
-        <button @click.prevent="update" class="btn btn--primary btn--sm">
+        <button @click.prevent="save" class="btn btn--primary btn--sm">
           <span>Save</span>
         </button>
 
@@ -87,6 +87,7 @@
               name: this.pattern.name
             });
 
+            this.$store.commit('reloadNavi', true);
             this.$router.push({
               name: 'preview',
               params: { pattern: this.pattern.name }

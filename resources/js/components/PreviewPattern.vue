@@ -148,7 +148,7 @@
 
               <li>
 
-                <router-link :to="{ name: 'rename' }" class="preview-option">
+                <router-link :to="{ name: 'rename', params: { pattern: `${pattern.name}` } }" class="preview-option">
 
                   <span>
                     Rename Pattern
@@ -340,10 +340,13 @@
        */
       window.addEventListener('keydown', (event) => {
 
+        const DEL = 46;
+        const E = 69;
+
         /*
          * Trigger the delete confirmation by Ctrl+DEL
          */
-        if (event.ctrlKey && event.keyCode === 46) {
+        if (event.ctrlKey && event.keyCode === DEL) {
           event.preventDefault();
           this.confirmDelete();
         }
@@ -351,12 +354,10 @@
         /*
          * Trigger renaming of the Pattern by Ctrl+E
          */
-        if (event.ctrlKey && event.keyCode === 69) {
+        if (event.ctrlKey && event.keyCode === E) {
           event.preventDefault();
           this.renamePattern();
         }
-
-        LOG.debug(event.keyCode);
       });
     },
 

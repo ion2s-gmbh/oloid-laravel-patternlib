@@ -22,7 +22,7 @@ class UpdatePatternTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Http\Requests\CreatePattern
+     * @covers \Laratomics\Http\Requests\UpdatePattern
      */
     public function it_should_always_be_authorized()
     {
@@ -31,7 +31,7 @@ class UpdatePatternTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Http\Requests\CreatePattern
+     * @covers \Laratomics\Http\Requests\UpdatePattern
      */
     public function it_should_contain_validation_rules()
     {

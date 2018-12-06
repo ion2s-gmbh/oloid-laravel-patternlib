@@ -110,9 +110,9 @@ class PatternControllerTest extends BaseTestCase
                 'description' => 'Our h1 for testing',
                 'status' => 'TODO',
                 'usage' => 'text.headline1',
-                'template' => "<!-- atoms.text.headline1 -->\n<h1>{{ \$text }}</h1>",
-                'html' => "<!-- atoms.text.headline1 -->\n<h1>Testing</h1>",
-                'sass' => "/* atoms.text.headline1 */\nh1 {\n  color: red;\n}",
+                'template' => "<h1>{{ \$text }}</h1>",
+                'html' => "<h1>Testing</h1>",
+                'sass' => "h1 {\n  color: red;\n}",
             ]
         ];
         $response->assertSuccessful();
@@ -150,7 +150,7 @@ class PatternControllerTest extends BaseTestCase
         $response->assertSuccessful(200);
         $response->assertViewIs('workshop::preview');
         $response->assertSee('Testing');
-        $response->assertViewHas('preview', "<!-- atoms.text.headline1 -->\n<h1>Testing</h1>");
+        $response->assertViewHas('preview', "<h1>Testing</h1>");
     }
 
     /**
@@ -281,26 +281,6 @@ class PatternControllerTest extends BaseTestCase
         // assert
         $response->assertStatus(JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
     }
-
-//    /**
-//     * - Renaming files
-//     * - Changing import in parent sass file
-//     * - keep the structure
-//     * - keep import in main sass file
-//     * - do not touch the description
-//     *
-//     * @test
-//     * @covers \Laratomics\Http\Controllers\PatternController
-//     */
-//    public function it_should_rename_a_patterns_last_part_and_keep_the_pattern_structure()
-//    {
-//        // arrange
-//
-//        // act
-//
-//        // assert
-//        $this->markTestIncomplete('Not yet implemented!');
-//    }
 
     /**
      * @test

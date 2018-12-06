@@ -751,4 +751,51 @@ class PatternServiceTest extends BaseTestCase
         $this->assertContains('atoms/atoms', $fs->get("{$this->tempDir}/patterns/patterns.scss"));
         $this->assertContains('molecules/molecules', $fs->get("{$this->tempDir}/patterns/patterns.scss"));
     }
+
+    /**
+     * @test
+     * @covers \Laratomics\Services\PatternService
+     */
+    public function it_should_move_a_pattern_from_level_one_into_a_sub_directory()
+    {
+        // arrange
+        $this->preparePatternStub();
+
+        $oldPattern = $this->cut->loadPattern('homepage');
+
+        // act
+        $pattern = $this->cut->rename('homepage', 'pages.homepage');
+
+        // assert files and structure
+        $fs = new Filesystem();
+        $this->assertTrue($fs->exists(pattern_path('/pages/homepage.blade.php')));
+        $this->assertTrue($fs->exists(pattern_path('/pages/homepage.md')));
+        $this->assertTrue($fs->exists(pattern_path('/pages/homepage.scss')));
+        $this->assertTrue($fs->exists(pattern_path('/patterns.scss')));
+
+        $this->assertFalse($fs->exists(pattern_path('/homepage.blade.php')));
+        $this->assertFalse($fs->exists(pattern_path('/homepage.md')));
+        $this->assertFalse($fs->exists(pattern_path('/homepage.scss')));
+
+        // assert Pattern instance
+        $this->assertEquals('pages.homepage', $pattern->name);
+        $this->assertInstanceOf(Document::class, $pattern->metadata);
+        $this->assertEquals('TODO', $pattern->metadata->status);
+        $this->assertEquals("{$this->tempDir}/patterns/pages/homepage.blade.php", $pattern->templateFile);
+        $this->assertEquals("{$this->tempDir}/patterns/pages/homepage.scss", $pattern->sassFile);
+        $this->assertEquals("{$this->tempDir}/patterns/pages/pages.scss", $pattern->rootSassFile);
+        $this->assertEquals("{$this->tempDir}/patterns/patterns.scss", $pattern->mainSassFile);
+        $this->assertEquals("{$this->tempDir}/patterns/pages/homepage.md", $pattern->markdownFile);
+
+        // assert file contents
+        $this->assertEquals($oldPattern->state, $pattern->state);
+        $this->assertEquals($oldPattern->template, $pattern->template);
+        $this->assertEquals($oldPattern->html, $pattern->html);
+        $this->assertEquals($oldPattern->sass, $pattern->sass);
+        $this->assertEquals($oldPattern->markdown, $pattern->markdown);
+        $this->assertEquals($oldPattern->preview, $pattern->preview);
+
+        $this->assertContains('homepage', $fs->get("{$this->tempDir}/patterns/pages/pages.scss"));
+        $this->assertContains('pages/pages', $fs->get("{$this->tempDir}/patterns/patterns.scss"));
+    }
 }

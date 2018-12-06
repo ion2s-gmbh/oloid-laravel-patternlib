@@ -379,8 +379,23 @@ class PatternService
         File::put($this->getFileLocation($pattern, self::MARKDOWN_EXTENSION), $newContent);
     }
 
-    public function rename(string $pattern, $newName)
+    public function rename(string $oldName, $newName): Pattern
     {
+        $oldPattern = $this->loadPattern($oldName);
 
+        /*
+         * Copy existing pattern files to the new location
+         */
+        File::move($oldPattern->templateFile, $this->getFileLocation($newName, self::BLADE_EXTENSION));
+        File::move($oldPattern->markdownFile, $this->getFileLocation($newName, self::MARKDOWN_EXTENSION));
+        File::move($oldPattern->sassFile, $this->getFileLocation($newName, self::SASS_EXTENSION));
+
+        /*
+         * Change sass import
+         */
+        $this->addSassImport($newName);
+        $this->removeSassImport($oldPattern);
+
+        return $this->loadPattern($newName);
     }
 }

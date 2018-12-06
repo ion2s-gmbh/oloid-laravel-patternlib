@@ -316,7 +316,7 @@ class PatternServiceTest extends BaseTestCase
      */
     private function assertTemplateContentUsingStub($template)
     {
-        $templateContent = "<!-- atoms.text.headline1 -->\n<h1>{{ \$text }}</h1>";
+        $templateContent = "<h1>{{ \$text }}</h1>";
         $this->assertEquals($templateContent, $template);
     }
 
@@ -334,7 +334,7 @@ class PatternServiceTest extends BaseTestCase
      */
     private function assertSassContentUsingStub($sass)
     {
-        $this->assertEquals("/* atoms.text.headline1 */\nh1 {\n  color: red;\n}", $sass);
+        $this->assertEquals("h1 {\n  color: red;\n}", $sass);
     }
 
     /**
@@ -580,5 +580,105 @@ class PatternServiceTest extends BaseTestCase
         // assert
         $markdownContent = file_get_contents("{$this->tempDir}/patterns/atoms/buttons/button.md");
         $this->assertContains($description, $markdownContent);
+    }
+
+    /**
+     * - Renaming files
+     * - Changing import in parent sass file
+     * - keep the structure
+     * - keep import in main sass file
+     * - do not touch the description
+     *
+     * @test
+     * @covers \Laratomics\Services\PatternService
+     */
+    public function it_should_rename_a_pattern_in_the_same_directory()
+    {
+        // arrange
+        $this->preparePatternStub();
+
+        $oldPattern = $this->cut->loadPattern('atoms.buttons.button');
+
+        // act
+        $pattern = $this->cut->rename('atoms.buttons.button', 'atoms.buttons.submit');
+
+        // assert files and structure
+        $fs = new Filesystem();
+        $this->assertTrue($fs->exists(pattern_path('/atoms/buttons/submit.blade.php')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms/buttons/submit.md')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms/buttons/submit.scss')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms/atoms.scss')));
+        $this->assertTrue($fs->exists(pattern_path('/patterns.scss')));
+
+        $this->assertFalse($fs->exists(pattern_path('/atoms/buttons/button.blade.php')));
+        $this->assertFalse($fs->exists(pattern_path('/atoms/buttons/button.md')));
+        $this->assertFalse($fs->exists(pattern_path('/atoms/buttons/button.scss')));
+
+        // assert Pattern instance
+        $this->assertEquals('atoms.buttons.submit', $pattern->name);
+        $this->assertInstanceOf(Document::class, $pattern->metadata);
+        $this->assertEquals('TODO', $pattern->metadata->status);
+        $this->assertEquals("{$this->tempDir}/patterns/atoms/buttons/submit.blade.php", $pattern->templateFile);
+        $this->assertEquals("{$this->tempDir}/patterns/atoms/buttons/submit.scss", $pattern->sassFile);
+        $this->assertEquals("{$this->tempDir}/patterns/atoms/atoms.scss", $pattern->rootSassFile);
+        $this->assertEquals("{$this->tempDir}/patterns/patterns.scss", $pattern->mainSassFile);
+        $this->assertEquals("{$this->tempDir}/patterns/atoms/buttons/submit.md", $pattern->markdownFile);
+
+        // assert file contents
+        $this->assertEquals($oldPattern->state, $pattern->state);
+        $this->assertEquals($oldPattern->template, $pattern->template);
+        $this->assertEquals($oldPattern->html, $pattern->html);
+        $this->assertEquals($oldPattern->sass, $pattern->sass);
+        $this->assertEquals($oldPattern->markdown, $pattern->markdown);
+        $this->assertEquals($oldPattern->preview, $pattern->preview);
+
+        $this->assertContains('buttons/submit', $fs->get("{$this->tempDir}/patterns/atoms/atoms.scss"));
+        $this->assertNotContains('buttons/button', $fs->get("{$this->tempDir}/patterns/atoms/atoms.scss"));
+        $this->assertContains('atoms/atoms', $fs->get("{$this->tempDir}/patterns/patterns.scss"));
+    }
+
+    /**
+     * @test
+     * @covers \Laratomics\Services\PatternService
+     */
+    public function it_should_move_a_pattern_in_a_subdirectory()
+    {
+        // arrange
+        $this->preparePatternStub();
+
+        // act
+
+        // assert
+        $this->markTestIncomplete('Not yet implemented!');
+    }
+
+    /**
+     * @test
+     * @covers \Laratomics\Services\PatternService
+     */
+    public function it_should_move_a_pattern_into_another_branch_and_keep_the_branch()
+    {
+        // arrange
+        $this->preparePatternStub();
+
+        // act
+
+        // assert
+        $this->markTestIncomplete('Not yet implemented!');
+    }
+
+    /**
+     * @test
+     * @covers \Laratomics\Services\PatternService
+     */
+    public function it_should_move_a_pattern_into_another_branch_and_remove_the_old_branch()
+    {
+        // arrange
+        $this->preparePatternStub();
+
+        // act
+
+        // assert
+        $this->markTestIncomplete('Not yet implemented!');
     }
 }

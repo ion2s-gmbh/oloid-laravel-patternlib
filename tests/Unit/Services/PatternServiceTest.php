@@ -690,21 +690,6 @@ class PatternServiceTest extends BaseTestCase
      * @test
      * @covers \Laratomics\Services\PatternService
      */
-    public function it_should_move_a_pattern_into_another_branch_and_keep_the_branch()
-    {
-        // arrange
-        $this->preparePatternStub();
-
-        // act
-
-        // assert
-        $this->markTestIncomplete('Not yet implemented!');
-    }
-
-    /**
-     * @test
-     * @covers \Laratomics\Services\PatternService
-     */
     public function it_should_move_a_pattern_into_another_branch_and_remove_the_old_directory()
     {
         // arrange

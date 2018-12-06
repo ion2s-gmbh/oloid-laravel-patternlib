@@ -391,15 +391,13 @@ class PatternService
         File::move($oldPattern->sassFile, $this->getFileLocation($newName, self::SASS_EXTENSION));
 
         /*
-         * Change sass import
+         * Change sass import & pattern structure
          */
         $this->addSassImport($newName);
 
         $this->removePatternBranch($oldPattern);
 
         $this->removeSassImport($oldPattern);
-
-
 
         return $this->loadPattern($newName);
     }

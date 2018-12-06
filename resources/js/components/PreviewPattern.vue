@@ -148,10 +148,10 @@
 
               <li>
 
-                <router-link :to="{ name: 'update' }" class="preview-option">
+                <router-link :to="{ name: 'rename' }" class="preview-option">
 
                   <span>
-                    Edit Pattern
+                    Rename Pattern
                   </span>
 
                 </router-link>
@@ -244,6 +244,13 @@
 
     methods: {
 
+      renamePattern: function () {
+        this.$router.push({
+          name: 'rename',
+          params: { pattern: this.pattern.name }
+        })
+      },
+
       /**
        * Enable the edit mode for the description field.
        */
@@ -332,12 +339,24 @@
        * Trigger delete confirmation on DEL key.
        */
       window.addEventListener('keydown', (event) => {
+
         /*
          * Trigger the delete confirmation by Ctrl+DEL
          */
         if (event.ctrlKey && event.keyCode === 46) {
+          event.preventDefault();
           this.confirmDelete();
         }
+
+        /*
+         * Trigger renaming of the Pattern by Ctrl+E
+         */
+        if (event.ctrlKey && event.keyCode === 69) {
+          event.preventDefault();
+          this.renamePattern();
+        }
+
+        LOG.debug(event.keyCode);
       });
     },
 

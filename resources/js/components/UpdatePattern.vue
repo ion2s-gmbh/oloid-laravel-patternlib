@@ -1,33 +1,4 @@
 <template>
-  <!--<div class="container">-->
-    <!--<div class="row justify-content-center">-->
-      <!--<div class="col-md-8">-->
-        <!--<div class="card">-->
-          <!--<div class="card-header">Update pattern {{ patternName }}</div>-->
-
-          <!--<div class="card-body">-->
-            <!--<form method="post">-->
-              <!--<div class="form-group">-->
-                <!--<label for="name">Name</label>-->
-                <!--<input id="name" class="form-control" type="text" name="name"-->
-                       <!--aria-describedby="nameHelp"-->
-                       <!--placeholder="nested.pattern.name"/>-->
-                <!--<small id="nameHelp" class="form-text text-muted">E.g. atoms.buttons.button</small>-->
-              <!--</div>-->
-
-              <!--<div class="form-group">-->
-                <!--<button @click.prevent="update" class="btn btn-primary">-->
-                  <!--<i class="fas fa-pen-alt"></i>-->
-                  <!--Save-->
-                <!--</button>-->
-                <!--<router-link :to="{ name: 'preview', params: { pattern: patternName }}">Cancel</router-link>-->
-              <!--</div>-->
-            <!--</form>-->
-          <!--</div>-->
-        <!--</div>-->
-      <!--</div>-->
-    <!--</div>-->
-  <!--</div>-->
   <div class="dashboard">
 
     <form method="post" class="form form--create">
@@ -48,9 +19,11 @@
                name="name"
                v-model="pattern.name"
                aria-describedby="nameHelp"
+               @keydown.ctrl.83.prevent="save"
+               @keydown.esc="cancel"
                v-validate.disable="'required|uniquePattern'"
+               autofocus
         />
-
 
       </div>
 
@@ -89,7 +62,15 @@
     },
 
     methods: {
-      update: async function() {
+
+      cancel: function () {
+        this.$router.push({
+          name: 'preview',
+          params: { pattern: this.currentName }
+        });
+      },
+
+      save: async function () {
         /*
          * Validate the name
          */

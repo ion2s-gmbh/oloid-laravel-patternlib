@@ -244,10 +244,13 @@
 
     methods: {
 
+      /**
+       * Navigate to the rename pattern view. This is triggered by a shortcut.
+       */
       renamePattern: function () {
         this.$router.push({
           name: 'rename',
-          params: { pattern: this.pattern.name }
+          params: { pattern: this.$route.params.pattern }
         })
       },
 
@@ -336,7 +339,7 @@
     mounted() {
 
       /*
-       * Trigger delete confirmation on DEL key.
+       * Global shortcuts
        */
       window.addEventListener('keydown', (event) => {
 

@@ -63,6 +63,9 @@
 
     methods: {
 
+      /**
+       * Cancel the renaming of the pattern by navigating back to the preview page.
+       */
       cancel: function () {
         this.$router.push({
           name: 'preview',
@@ -70,6 +73,10 @@
         });
       },
 
+      /**
+       * Save the new name of the pattern.
+       * @returns {Promise<void>}
+       */
       save: async function () {
         /*
          * Validate the name

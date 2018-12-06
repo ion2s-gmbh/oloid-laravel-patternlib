@@ -394,7 +394,12 @@ class PatternService
          * Change sass import
          */
         $this->addSassImport($newName);
+
+        $this->removePatternBranch($oldPattern);
+
         $this->removeSassImport($oldPattern);
+
+
 
         return $this->loadPattern($newName);
     }

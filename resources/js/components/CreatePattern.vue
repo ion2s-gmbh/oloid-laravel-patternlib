@@ -20,7 +20,10 @@
                name="name"
                v-model="pattern.name"
                aria-describedby="nameHelp"
+               @keydown.ctrl.83.prevent="save"
+               @keydown.esc="cancel"
                v-validate.disable="'required|uniquePattern'"
+               autofocus
         />
 
 
@@ -41,6 +44,8 @@
         <textarea id="description"
                   class="form-control"
                   name="description"
+                  @keydown.ctrl.83.prevent="save"
+                  @keydown.esc="cancel"
                   v-model="pattern.description">
                     
           </textarea>
@@ -53,7 +58,8 @@
           <span>Cancel</span>
         </router-link>
 
-        <button @click.prevent="store" class="btn btn--primary btn--sm">
+        <button class="btn btn--primary btn--sm"
+                @click.prevent="save">
           <span>Create pattern</span>
         </button>
 
@@ -79,10 +85,16 @@
     },
     methods: {
 
+      cancel: function () {
+        this.$router.push({
+          name: 'dashboard'
+        });
+      },
+
       /**
-       * Store a new Pattern
+       * Save a new Pattern
        */
-      store: async function () {
+      save: async function () {
         /*
          * Validate the form
          */

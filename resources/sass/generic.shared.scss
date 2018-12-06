@@ -25,6 +25,7 @@ body {
 :focus {
 
   outline-color: var(--positive,$c-positive);
+  outline-offset: -2px;
   outline-style: dashed;
   outline-width: 1px;
 
@@ -110,6 +111,10 @@ containing the header and the so called view, containing most of the UI.
 
   display: none !important;
   
+}
+
+.u-right {
+  text-align: right;
 }
 
 

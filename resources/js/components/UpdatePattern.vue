@@ -1,58 +1,108 @@
 <template>
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-8">
-        <div class="card">
-          <div class="card-header">Update pattern {{ patternName }}</div>
+  <div class="dashboard">
 
-          <div class="card-body">
-            <form method="post">
-              <div class="form-group">
-                <label for="name">Name</label>
-                <input id="name" class="form-control" type="text" name="name"
-                       aria-describedby="nameHelp"
-                       placeholder="nested.pattern.name"/>
-                <small id="nameHelp" class="form-text text-muted">E.g. atoms.buttons.button</small>
-              </div>
+    <form method="post" class="form form--create">
 
-              <div class="form-group">
-                <label for="description">Description</label>
-                <textarea id="description" class="form-control" name="description"
-                          placeholder="Describe your pattern ..."></textarea>
-              </div>
+      <div class="form-group">
 
-              <div class="form-group">
-                <button @click.prevent="update" class="btn btn-primary">
-                  <i class="fas fa-pen-alt"></i>
-                  SAVE
-                </button>
-                <router-link :to="{ name: 'preview', params: { pattern: patternName }}">CANCEL</router-link>
-              </div>
-            </form>
-          </div>
-        </div>
+        <label for="name">
+
+          <span class="label-name">Name</span>
+          <span class="label-hint">E.g. atoms.buttons.button</span>
+          <small class="error a-slideIn" v-if="errors.has('name')">{{ errors.first('name') }}</small>
+
+        </label>
+
+        <input id="name"
+               class="form-control"
+               type="text"
+               name="name"
+               v-model="pattern.name"
+               aria-describedby="nameHelp"
+               @keydown.ctrl.83.prevent="save"
+               @keydown.esc="cancel"
+               v-validate.disable="'required|uniquePattern'"
+               autofocus
+        />
+
       </div>
-    </div>
+
+      <div class="form-group form-group--end">
+
+        <router-link :to="{ name: 'preview', params: { pattern: currentName }}">
+          <span>Cancel</span>
+        </router-link>
+
+        <button @click.prevent="save" class="btn btn--primary btn--sm">
+          <span>Save</span>
+        </button>
+
+
+      </div>
+
+    </form>
+
   </div>
 </template>
 
 <script>
+  import LOG from '../logger';
+  import {API} from '../httpClient';
+
   export default {
     name: "UpdatePattern",
 
     data() {
       return {
-        patternName: this.$route.params.pattern
+        pattern: {
+          name: this.$route.params.pattern
+        },
+        currentName: this.$route.params.pattern
       }
     },
 
     methods: {
-      update: function() {
-        alert('update pattern');
+
+      /**
+       * Cancel the renaming of the pattern by navigating back to the preview page.
+       */
+      cancel: function () {
         this.$router.push({
           name: 'preview',
-          params: { pattern: this.patternName }
+          params: { pattern: this.currentName }
         });
+      },
+
+      /**
+       * Save the new name of the pattern.
+       * @returns {Promise<void>}
+       */
+      save: async function () {
+        /*
+         * Validate the name
+         */
+        let valid = false;
+        try {
+          valid = await this.$validator.validate();
+        } catch (e) {
+          LOG.error(e);
+        }
+
+        if (valid) {
+          try {
+            let response = await API.put(`pattern/${this.currentName}`, {
+              name: this.pattern.name
+            });
+
+            this.$store.commit('reloadNavi', true);
+            this.$router.push({
+              name: 'preview',
+              params: { pattern: this.pattern.name }
+            });
+          } catch (e) {
+            LOG.error(e);
+          }
+        }
       }
     }
   }

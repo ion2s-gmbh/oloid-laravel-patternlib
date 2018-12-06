@@ -29,6 +29,12 @@
 
     methods: {
 
+      createPattern: function () {
+        this.$router.push({
+          name: 'create'
+        });
+      },
+
       /**
        * Reset the main menu state.
        */
@@ -48,6 +54,26 @@
       } catch (e) {
         LOG.error(e);
       }
+    },
+
+    mounted() {
+
+      /*
+       * Global shortcuts
+       */
+      window.addEventListener('keydown', (event) => {
+
+        const C = 67;
+
+        /*
+         * Trigger the delete confirmation by Ctrl+DEL
+         */
+        if (event.ctrlKey && event.keyCode === C) {
+          this.createPattern();
+          event.preventDefault();
+        }
+
+      });
     }
   }
 </script>

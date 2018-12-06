@@ -71,6 +71,28 @@ class PatternControllerTest extends BaseTestCase
      * @test
      * @covers \Laratomics\Http\Controllers\PatternController
      */
+    public function it_should_not_create_pattern_if_it_already_exists()
+    {
+        // arrange
+        $this->preparePatternStub();
+
+        // act
+        $data = [
+            'name' => 'atoms.text.headline1',
+            'description' => 'Our h1 headline'
+        ];
+
+        /** @var TestResponse $response */
+        $response = $this->postJson('workshop/api/v1/pattern', $data);
+
+        // assert
+        $response->assertStatus(JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
+    /**
+     * @test
+     * @covers \Laratomics\Http\Controllers\PatternController
+     */
     public function it_should_load_all_pattern_information()
     {
         // arrange
@@ -88,9 +110,9 @@ class PatternControllerTest extends BaseTestCase
                 'description' => 'Our h1 for testing',
                 'status' => 'TODO',
                 'usage' => 'text.headline1',
-                'template' => "<!-- atoms.text.headline1 -->\n<h1>{{ \$text }}</h1>",
-                'html' => "<!-- atoms.text.headline1 -->\n<h1>Testing</h1>",
-                'sass' => "/* atoms.text.headline1 */\nh1 {\n  color: red;\n}",
+                'template' => "<h1>{{ \$text }}</h1>",
+                'html' => "<h1>Testing</h1>",
+                'sass' => "h1 {\n  color: red;\n}",
             ]
         ];
         $response->assertSuccessful();
@@ -128,7 +150,7 @@ class PatternControllerTest extends BaseTestCase
         $response->assertSuccessful(200);
         $response->assertViewIs('workshop::preview');
         $response->assertSee('Testing');
-        $response->assertViewHas('preview', "<!-- atoms.text.headline1 -->\n<h1>Testing</h1>");
+        $response->assertViewHas('preview', "<h1>Testing</h1>");
     }
 
     /**
@@ -183,5 +205,125 @@ class PatternControllerTest extends BaseTestCase
 
         // assert
         $response->assertSuccessful();
+    }
+
+    /**
+     * @test
+     * @covers \Laratomics\Http\Controllers\PatternController
+     */
+    public function it_should_change_the_description_of_a_pattern()
+    {
+        // arrange
+        $this->preparePatternStub();
+
+        $data = [
+            'description' => 'A new description'
+        ];
+
+        $oldContent = file_get_contents("{$this->tempDir}/patterns/atoms/text/headline1.md");
+        $this->assertContains('Our h1 for testing', $oldContent);
+
+        // act
+        /** @var TestResponse $response */
+        $response = $this->putJson("workshop/api/v1/pattern/{$this->name}", $data);
+
+        // assert
+        $response->assertSuccessful();
+
+        $newContent = file_get_contents("{$this->tempDir}/patterns/atoms/text/headline1.md");
+        $this->assertContains('A new description', $newContent);
+    }
+
+    /**
+     * @test
+     * @covers \Laratomics\Http\Controllers\PatternController
+     */
+    public function it_should_not_change_the_description_if_request_input_is_missing()
+    {
+        // arrange
+        $this->preparePatternStub();
+
+        $data = [
+            'name' => 'new.name.for.pattern'
+        ];
+
+        $oldContent = file_get_contents("{$this->tempDir}/patterns/atoms/text/headline1.md");
+        $this->assertContains('Our h1 for testing', $oldContent);
+
+        // act
+        /** @var TestResponse $response */
+        $response = $this->putJson("workshop/api/v1/pattern/{$this->name}", $data);
+
+        // assert
+        $response->assertSuccessful();
+
+        $newContent = file_get_contents("{$this->tempDir}/patterns/new/name/for/pattern.md");
+        $this->assertContains('Our h1 for testing', $newContent);
+    }
+
+    /**
+     * @test
+     * @covers \Laratomics\Http\Controllers\PatternController
+     */
+    public function it_should_not_rename_a_pattern_if_name_already_exists()
+    {
+        // arrange
+        $this->preparePatternStub();
+
+        // act
+        $data = [
+            'name' => 'atoms.text.headline2'
+        ];
+
+        /** @var TestResponse $response */
+        $response = $this->putJson('workshop/api/v1/pattern/atoms.text.headline1', $data);
+
+        // assert
+        $response->assertStatus(JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
+    /**
+     * @test
+     * @covers \Laratomics\Http\Controllers\PatternController
+     */
+    public function it_should_check_that_a_pattern_exists()
+    {
+        // arrange
+        $this->preparePatternStub();
+
+        // act
+        /** @var TestResponse $response */
+        $response = $this->getJson("workshop/api/v1/pattern/exists/{$this->name}");
+
+        // assert
+        $response->assertSuccessful();
+        $expectedJson = [
+            'data' => [
+                'exists' => true
+            ]
+        ];
+        $response->assertJson($expectedJson);
+    }
+
+    /**
+     * @test
+     * @covers \Laratomics\Http\Controllers\PatternController
+     */
+    public function it_should_check_that_a_pattern_does_not_exists()
+    {
+        // arrange
+        $this->preparePatternStub();
+
+        /** @var TestResponse $response */
+        $response = $this->getJson("workshop/api/v1/pattern/exists/not.existing.pattern");
+
+        // assert
+        $response->assertSuccessful();
+        $expectedJson = [
+            'data' => [
+                'exists' => false
+            ]
+        ];
+        $response->assertJson($expectedJson);
     }
 }

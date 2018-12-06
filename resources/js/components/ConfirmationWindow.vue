@@ -38,6 +38,17 @@
       confirmNo: function () {
         this.$emit('confirm-no')
       }
+    },
+
+    mounted() {
+      /*
+       * Close the confirmation modal on ESC
+       */
+      window.addEventListener('keyup', (event) => {
+        if (event.keyCode === 27) {
+          this.confirmNo();
+        }
+      });
     }
   }
 </script>

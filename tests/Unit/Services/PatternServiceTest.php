@@ -646,10 +646,44 @@ class PatternServiceTest extends BaseTestCase
         // arrange
         $this->preparePatternStub();
 
-        // act
+        $oldPattern = $this->cut->loadPattern('atoms.buttons.button');
 
-        // assert
-        $this->markTestIncomplete('Not yet implemented!');
+        // act
+        $pattern = $this->cut->rename('atoms.buttons.button', 'atoms.buttons.submit.button');
+
+        // assert files and structure
+        $fs = new Filesystem();
+        $this->assertTrue($fs->exists(pattern_path('/atoms/buttons/submit/button.blade.php')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms/buttons/submit/button.md')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms/buttons/submit/button.scss')));
+        $this->assertTrue($fs->exists(pattern_path('/atoms/atoms.scss')));
+        $this->assertTrue($fs->exists(pattern_path('/patterns.scss')));
+
+        $this->assertFalse($fs->exists(pattern_path('/atoms/buttons/button.blade.php')));
+        $this->assertFalse($fs->exists(pattern_path('/atoms/buttons/button.md')));
+        $this->assertFalse($fs->exists(pattern_path('/atoms/buttons/button.scss')));
+
+        // assert Pattern instance
+        $this->assertEquals('atoms.buttons.submit.button', $pattern->name);
+        $this->assertInstanceOf(Document::class, $pattern->metadata);
+        $this->assertEquals('TODO', $pattern->metadata->status);
+        $this->assertEquals("{$this->tempDir}/patterns/atoms/buttons/submit/button.blade.php", $pattern->templateFile);
+        $this->assertEquals("{$this->tempDir}/patterns/atoms/buttons/submit/button.scss", $pattern->sassFile);
+        $this->assertEquals("{$this->tempDir}/patterns/atoms/atoms.scss", $pattern->rootSassFile);
+        $this->assertEquals("{$this->tempDir}/patterns/patterns.scss", $pattern->mainSassFile);
+        $this->assertEquals("{$this->tempDir}/patterns/atoms/buttons/submit/button.md", $pattern->markdownFile);
+
+        // assert file contents
+        $this->assertEquals($oldPattern->state, $pattern->state);
+        $this->assertEquals($oldPattern->template, $pattern->template);
+        $this->assertEquals($oldPattern->html, $pattern->html);
+        $this->assertEquals($oldPattern->sass, $pattern->sass);
+        $this->assertEquals($oldPattern->markdown, $pattern->markdown);
+        $this->assertEquals($oldPattern->preview, $pattern->preview);
+
+        $this->assertContains('buttons/submit/button', $fs->get("{$this->tempDir}/patterns/atoms/atoms.scss"));
+        $this->assertNotContains('buttons/button', $fs->get("{$this->tempDir}/patterns/atoms/atoms.scss"));
+        $this->assertContains('atoms/atoms', $fs->get("{$this->tempDir}/patterns/patterns.scss"));
     }
 
     /**

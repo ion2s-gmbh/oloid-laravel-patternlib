@@ -379,9 +379,9 @@ class PatternService
         File::put($this->getFileLocation($pattern, self::MARKDOWN_EXTENSION), $newContent);
     }
 
-    public function rename(string $oldName, $newName): Pattern
+    public function rename(string $currentName, $newName): Pattern
     {
-        $oldPattern = $this->loadPattern($oldName);
+        $oldPattern = $this->loadPattern($currentName);
 
         /*
          * Copy existing pattern files to the new location

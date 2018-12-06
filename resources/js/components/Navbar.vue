@@ -11,7 +11,7 @@
 
     <nav class="project-navigation">
 
-      <router-link :to="{ name: 'dashboard' }" class="back a-dropIn" v-if="notDashboard">
+      <router-link :to="{ name: 'dashboard' }" class="back a-slideIn" v-if="notDashboard">
         <i class="fas fa-arrow-circle-left"></i>
       </router-link>
 

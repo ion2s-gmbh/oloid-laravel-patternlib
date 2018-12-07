@@ -6,6 +6,8 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
 
+  strict: config.environment !== 'production',
+
   state: {
     config,
     appInfo: {},

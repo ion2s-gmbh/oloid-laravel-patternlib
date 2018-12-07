@@ -5,7 +5,7 @@
 
     <div class="project-info">
 
-      <h1 class="project-name">{{ $store.state.appInfo.appName }}</h1>
+      <h1 class="project-name">{{ $store.getters.appName }}</h1>
 
     </div>
 
@@ -95,7 +95,7 @@
        * Reload the menu if requested.
        */
       reloadNavi: function () {
-        if (this.$store.state.navi.reload === true) {
+        if (this.$store.getters.reloadNavi) {
           this.fetchNavi();
           this.$store.commit('reloadNavi', false);
         }

@@ -78,13 +78,18 @@
 
   export default {
     name: "CreatePattern",
+
     data() {
       return {
         pattern: {}
       }
     },
+
     methods: {
 
+      /**
+       * Cancel the create action by navigating to the dashboard.
+       */
       cancel: function () {
         this.$router.push({
           name: 'dashboard'
@@ -92,7 +97,7 @@
       },
 
       /**
-       * Save a new Pattern
+       * Save a new Pattern.
        */
       save: async function () {
         /*
@@ -106,8 +111,8 @@
         }
 
         /*
-        * API request
-        */
+         * API request
+         */
         if (valid) {
           try {
             let response = await API.post('pattern', {

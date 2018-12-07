@@ -14,9 +14,16 @@
   export default {
 
     /**
-     * Name of the Component in PascalCase
+     * Name of the Component in PascalCase.
      */
     name: "ExampleComponent",
+
+    /**
+     * Used sub components.
+     */
+    components: {
+      //
+    },
 
     /**
      * Properties that are passed to this component.
@@ -41,16 +48,16 @@
     },
 
     /**
-     * Methods (actions)
+     * Watchers to trigger actions, if a watched variable changes.
      */
-    methods: {
+    watch: {
       //
     },
 
     /**
-     * Watchers to trigger actions, if a watched variable changes.
+     * Methods (actions)
      */
-    watch: {
+    methods: {
       //
     },
 

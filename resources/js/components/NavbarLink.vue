@@ -7,11 +7,8 @@
 <script>
   export default {
     name: "NavbarLink",
+
     props: {
-      parent: {
-        type: String,
-        default: ''
-      },
       item: Object
     }
   }

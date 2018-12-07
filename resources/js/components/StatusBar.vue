@@ -42,23 +42,14 @@
 <script>
   export default {
     name: "StatusBar",
+
     props: [
       'status'
     ],
+
     data() {
       return {
         isActive: false
-      }
-    },
-
-    methods: {
-      /**
-       * Change the status of the Pattern.
-       * @param status
-       */
-      changeStatus: function (status) {
-        this.$emit('update-status', status);
-        this.isActive = false;
       }
     },
 
@@ -81,6 +72,17 @@
 
       title: function () {
         return `status: ${this.status}`;
+      }
+    },
+
+    methods: {
+      /**
+       * Change the status of the Pattern.
+       * @param status
+       */
+      changeStatus: function (status) {
+        this.$emit('update-status', status);
+        this.isActive = false;
       }
     }
   }

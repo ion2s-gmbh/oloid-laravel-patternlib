@@ -53,6 +53,7 @@
 
   export default {
     name: "Navbar",
+
     components: {
       NavbarMain,
       NavbarLink,
@@ -66,16 +67,17 @@
     },
 
     computed: {
+
+      /**
+       * Value that indicates, if the dashboard is not shown.
+       */
       notDashboard: function () {
         return this.$route.name !== 'dashboard';
       }
     },
 
-    watch: {
-      '$store.state.navi.reload': 'reloadNavi'
-    },
-
     methods: {
+
       /**
        * Fetch the workshop navigation.
        * @returns {Promise<void>}
@@ -98,6 +100,10 @@
           this.$store.commit('reloadNavi', false);
         }
       }
+    },
+
+    watch: {
+      '$store.state.navi.reload': 'reloadNavi'
     },
 
     /**

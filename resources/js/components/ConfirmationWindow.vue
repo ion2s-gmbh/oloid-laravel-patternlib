@@ -31,21 +31,30 @@
     name: "ConfirmationWindow",
 
     methods: {
+
+      /**
+       * Confirm YES action.
+       */
       confirmYes: function () {
         this.$emit('confirm-yes')
       },
 
+      /**
+       * Confirm NO action
+       */
       confirmNo: function () {
         this.$emit('confirm-no')
       }
     },
 
     mounted() {
+      const ESC = 27;
+
       /*
        * Close the confirmation modal on ESC
        */
-      window.addEventListener('keyup', (event) => {
-        if (event.keyCode === 27) {
+      window.addEventListener('keydown', (event) => {
+        if (event.keyCode === ESC) {
           this.confirmNo();
         }
       });

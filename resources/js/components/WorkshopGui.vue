@@ -4,7 +4,7 @@
     
     <!-- NAVIGATION -->
     <navbar class="header"></navbar>
-    
+
     <!-- MAIN VIEW SECTION -->
     <section class="view" @click="resetMenu()">
 

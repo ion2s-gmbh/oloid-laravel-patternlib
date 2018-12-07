@@ -26,12 +26,20 @@
       </router-link>    
       </div>
 
+    <example-component></example-component>
+
   </div>
 
 </template>
 
 <script>
+
+  import ExampleComponent from './ExampleComponent.vue';
+
   export default {
-    name: "Dashboard"
+    name: "Dashboard",
+    components: {
+      ExampleComponent
+    }
   }
 </script>

@@ -208,6 +208,7 @@
 
   export default {
     name: "PreviewPattern",
+
     components: {
       ConfirmationWindow,
       StatusBar
@@ -230,6 +231,7 @@
     },
 
     computed: {
+
       /**
        * Parse the given description markdown to html.
        */
@@ -317,6 +319,9 @@
         }
       },
 
+      /**
+       * Show the delete confirmation window (modal).
+       */
       confirmDelete: function () {
         this.showDeleteConfirm = true;
       },
@@ -334,6 +339,10 @@
           LOG.error(e);
         }
       }
+    },
+
+    created() {
+      this.fetchPattern();
     },
 
     mounted() {
@@ -362,13 +371,6 @@
           this.renamePattern();
         }
       });
-    },
-
-    /**
-     * Load all Pattern information from API.
-     */
-    created() {
-      this.fetchPattern();
     }
   }
 </script>

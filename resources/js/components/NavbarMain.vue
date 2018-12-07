@@ -24,10 +24,12 @@
 
   export default {
     name: "NavbarMain",
+
     components: {
       NavbarGroup,
       NavbarLink
     },
+
     props: [
       'menu'
     ],

@@ -26,15 +26,18 @@
 
   export default {
     name: "NavbarGroup",
+
     components: {
       NavbarLink
     },
+
     props: [
       'name',
       'items'
     ],
 
     methods: {
+
       /**
        * Set the active sub menu.
        * @param subMenu

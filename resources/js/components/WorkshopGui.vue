@@ -4,7 +4,7 @@
     
     <!-- NAVIGATION -->
     <navbar class="header"></navbar>
-    
+
     <!-- MAIN VIEW SECTION -->
     <section class="view" @click="resetMenu()">
 
@@ -23,12 +23,16 @@
 
   export default {
     name: "WorkshopGui",
+
     components: {
       Navbar
     },
 
     methods: {
 
+      /**
+       * Navigate to the create page.
+       */
       createPattern: function () {
         this.$router.push({
           name: 'create'
@@ -58,7 +62,7 @@
 
     mounted() {
 
-      /*
+      /**
        * Global shortcuts
        */
       window.addEventListener('keydown', (event) => {

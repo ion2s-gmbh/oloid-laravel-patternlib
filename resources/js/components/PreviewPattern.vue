@@ -12,9 +12,9 @@
 
           <span v-if="isToggled" class="code-type a-fadeIn">Blade</span>
 
-          <label class="toggle-wrap">
+          <label class="toggle-wrap"  v-tooltip.top-center="'Switch between HTML and Blade'">
 
-            <input type="checkbox" class="toggle" v-model="isToggled"/>
+            <input type="checkbox" class="toggle" v-model="isToggled" />
 
             <div></div>
 
@@ -77,9 +77,15 @@
                   :status="pattern.status">
           </status-bar>
 
-          <button class="toggle--more" @click="showDescription = !showDescription" :class="{ active: showDescription }" title="Show Pattern description">
+          <button class="toggle--more" @click="showDescription = !showDescription" :class="{ active: showDescription }" v-tooltip.top-center="'Show pattern description'">
 
             <i class="fas fa-align-left"></i>
+
+          </button> 
+
+          <button class="toggle--more" v-tooltip.top-center="'Copy to clipboard'">
+
+            <i class="far fa-clipboard"></i>
 
           </button>          
 

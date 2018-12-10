@@ -81,13 +81,15 @@
 
             <i class="fas fa-align-left"></i>
 
-          </button> 
+          </button>
 
-          <button class="toggle--more" v-tooltip.top-center="'Copy to clipboard'">
+          <button class="toggle--more clipboard" v-tooltip.top-center="usageTooltip" data-clipboard-target="#usage">
 
             <i class="far fa-clipboard"></i>
 
-          </button>          
+          </button>
+
+          <span id="usage" class="u-transparent">{{ patternUsage }}</span>
 
         </div>
 
@@ -108,6 +110,7 @@
               </span>
 
             </label>
+
 
             <textarea id="description"
                       class="form-control"
@@ -211,6 +214,7 @@
   import StatusBar from './StatusBar';
   import ConfirmationWindow from "./ConfirmationWindow";
   import marked from 'marked';
+  import ClipboardJS from 'clipboard';
 
   export default {
     name: "PreviewPattern",
@@ -236,7 +240,15 @@
         showDescription: false,
         showDeleteConfirm: false,
         editModeDescription: false,
-        oldDescription: ''
+        oldDescription: '',
+        usageTooltip: {
+          content: 'Copy usage to clipboard',
+          hideOnTargetClick: false,
+          delay: {
+            show: 100,
+            hide: 600
+          }
+        },
       }
     },
 
@@ -247,6 +259,10 @@
        */
       markdownDescription: function () {
         return marked(this.pattern.description);
+      },
+
+      patternUsage: function () {
+        return `@${this.pattern.type}('${this.pattern.usage}', [])`;
       }
     },
 
@@ -366,6 +382,11 @@
     },
 
     mounted() {
+
+      let clipboard = new ClipboardJS('.clipboard');
+      clipboard.on('success', (e) => {
+        this.usageTooltip.content = 'Copied to clipboard';
+      });
 
       /**
        * Global shortcuts

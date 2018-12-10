@@ -25,7 +25,7 @@
         
       </ul>
 
-      <router-link :to="{ name: 'create' }"  class="btn btn--primary btn--sm" title="Create new Pattern">
+      <router-link :to="{ name: 'create' }"  class="btn btn--primary btn--sm" v-tooltip.top-center="'Create new Pattern'">
 
         <span>
 

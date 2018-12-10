@@ -2,20 +2,12 @@
 
 namespace Laratomics\Providers;
 
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
 class PatternServiceProvider extends ServiceProvider
 {
-    private $components = [
-        'atom' => 'atoms',
-        'molecule' => 'molecules',
-        'organism' => 'organisms',
-        'template' => 'templates',
-        'page' => 'pages',
-        'element' => '',
-    ];
-
     /**
      * Bootstrap services.
      *
@@ -23,41 +15,39 @@ class PatternServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        foreach ($this->components as $component => $path) {
+        $components = $this->getComponents();
+        foreach ($components as $component => $path) {
             Blade::directive($component, function ($expression) use ($path) {
                 $extExpression = $this->parse($expression, $path);
                 return "<?php echo view({$extExpression}, array_except(get_defined_vars(), array('__data', '__path')))->render() ?>";
             });
         }
-//        Blade::directive('atom', function ($expression) {
-//            $extExpression = $this->parse($expression, 'atoms');
-/*            return "<?php echo view({$extExpression}, array_except(get_defined_vars(), array('__data', '__path')))->render() ?>";*/
-//        });
-//
-//        Blade::directive('molecule', function ($expression) {
-//            $extExpression = $this->parse($expression, 'molecules');
-/*            return "<?php echo view({$extExpression}, array_except(get_defined_vars(), array('__data', '__path')))->render() ?>";*/
-//        });
-//
-//        Blade::directive('organism', function ($expression) {
-//            $extExpression = $this->parse($expression, 'molecules');
-/*            return "<?php echo view({$extExpression}, array_except(get_defined_vars(), array('__data', '__path')))->render() ?>";*/
-//        });
-//
-//        Blade::directive('template', function ($expression) {
-//            $extExpression = $this->parse($expression, 'templates');
-/*            return "<?php echo view({$extExpression}, array_except(get_defined_vars(), array('__data', '__path')))->render() ?>";*/
-//        });
-//
-//        Blade::directive('page', function ($expression) {
-//            $extExpression = $this->parse($expression, 'pages');
-/*            return "<?php echo view({$extExpression}, array_except(get_defined_vars(), array('__data', '__path')))->render() ?>";*/
-//        });
-//
-//        Blade::directive('element', function ($expression) {
-//            $extExpression = $this->parse($expression);
-/*            return "<?php echo view({$extExpression}, array_except(get_defined_vars(), array('__data', '__path')))->render() ?>";*/
-//        });
+    }
+
+    /**
+     * Get available components for registering custom directives.
+     *
+     * @return array
+     */
+    private function getComponents(): array
+    {
+        $fs = new Filesystem();
+
+        if (!$fs->exists(pattern_path())) {
+            return [];
+        }
+
+        $directories = $fs->directories(pattern_path());
+        $components = [];
+        foreach ($directories as $directory) {
+            if (dir_contains_any($directory, 'blade.php')) {
+                $componentParts = explode('/', $directory);
+                $component = array_pop($componentParts);
+                $components[str_singular($component)] = $component;
+            }
+        }
+
+        return $components;
     }
 
     /**
@@ -78,7 +68,6 @@ class PatternServiceProvider extends ServiceProvider
         $extExpression = str_replace($strippedComponent, "{$extComponent}", $expression);
         return $extExpression;
     }
-
 //    /**
 //     * Parse a link expression.
 //     *
@@ -100,6 +89,7 @@ class PatternServiceProvider extends ServiceProvider
 //    {
 //        unset($parsed[0]);
 //        return array_values($parsed);
+
 //    }
 
     /**

@@ -83,12 +83,15 @@
 
           </button>
 
-          <button class="toggle--more clipboard" v-tooltip.top-center="usageTooltip" data-clipboard-target="#usage">
+          <button class="toggle--more clipboard"
+                  v-tooltip.top-center="usageTooltip"
+                  data-clipboard-target="#usage"
+                  @mouseleave="resetTooltip">
 
             <i class="far fa-clipboard"></i>
 
           </button>
-
+          <!-- Hidden usage for copy to clipboard -->
           <span id="usage" class="u-transparent">{{ patternUsage }}</span>
 
         </div>
@@ -243,11 +246,7 @@
         oldDescription: '',
         usageTooltip: {
           content: 'Copy usage to clipboard',
-          hideOnTargetClick: false,
-          delay: {
-            show: 100,
-            hide: 600
-          }
+          hideOnTargetClick: false
         },
       }
     },
@@ -261,12 +260,23 @@
         return marked(this.pattern.description);
       },
 
+      /**
+       * Concatenate the usage string.
+       */
       patternUsage: function () {
         return `@${this.pattern.type}('${this.pattern.usage}', [])`;
       }
     },
 
     methods: {
+
+      /**
+       * Reset the tooltip to the initial content.
+       * @todo Improve this in the future.
+       */
+      resetTooltip: function () {
+        this.usageTooltip.content = 'Copy usage to clipboard';
+      },
 
       /**
        * Navigate to the rename pattern view. This is triggered by a shortcut.
@@ -383,6 +393,9 @@
 
     mounted() {
 
+      /**
+       * Clipboard initialization.
+       */
       let clipboard = new ClipboardJS('.clipboard');
       clipboard.on('success', (e) => {
         this.usageTooltip.content = 'Copied to clipboard';

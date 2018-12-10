@@ -22,14 +22,16 @@ const router = new VueRouter({
       name: 'create'
     },
     {
-      path: '/rename/:pattern',
+      path: '/rename/:patternName',
       component: UpdatePattern,
       name: 'rename',
+      props: true,
     },
     {
-      path: '/preview/:pattern',
+      path: '/preview/:patternName',
       component: PreviewPattern,
       name: 'preview',
+      props: true,
     }
   ]
 });

@@ -29,7 +29,7 @@
 
       <div class="form-group form-group--end">
 
-        <router-link :to="{ name: 'preview', params: { pattern: currentName }}">
+        <router-link :to="{ name: 'preview', params: { patternName: currentName }}">
           <span>Cancel</span>
         </router-link>
 
@@ -52,12 +52,16 @@
   export default {
     name: "UpdatePattern",
 
+    props: [
+      'patternName'
+    ],
+
     data() {
       return {
         pattern: {
-          name: this.$route.params.pattern
+          name: this.patternName
         },
-        currentName: this.$route.params.pattern
+        currentName: this.patternName
       }
     },
 

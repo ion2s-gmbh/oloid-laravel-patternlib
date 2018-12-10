@@ -214,10 +214,14 @@
       StatusBar
     },
 
+    props: [
+      'patternName'
+    ],
+
     data() {
       return {
         pattern: {
-          name: this.$route.params.pattern,
+          name: this.patternName,
           description: ''
         },
         loading: false,
@@ -248,7 +252,7 @@
       renamePattern: function () {
         this.$router.push({
           name: 'rename',
-          params: { pattern: this.$route.params.pattern }
+          params: { pattern: this.pattern.name }
         })
       },
 
@@ -337,18 +341,27 @@
       }
     },
 
-    created() {
-      this.fetchPattern(this.$route.params.pattern);
+    /**
+     * Fetch Pattern on route change.
+     * @param to
+     * @param from
+     * @param next
+     */
+    beforeRouteUpdate (to, from, next) {
+      this.fetchPattern(to.params.patternName);
+      next();
     },
 
-    beforeRouteUpdate (to, from, next) {
-      this.fetchPattern(to.params.pattern);
-      next();
+    /**
+     * Fetch Pattern on created hook.
+     */
+    created() {
+      this.fetchPattern(this.patternName);
     },
 
     mounted() {
 
-      /*
+      /**
        * Global shortcuts
        */
       window.addEventListener('keydown', (event) => {

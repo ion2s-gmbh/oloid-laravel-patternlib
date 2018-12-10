@@ -240,10 +240,6 @@
       }
     },
 
-    watch: {
-      '$route': 'fetchPattern',
-    },
-
     methods: {
 
       /**
@@ -293,11 +289,11 @@
       /**
        * Fetch the Pattern's data from the API.
        */
-      fetchPattern: async function () {
+      fetchPattern: async function (patternName) {
         // set to true, if we have to show a loading spinner
         this.loading = true;
         try {
-          let response = await API.get(this.$route.params.pattern);
+          let response = await API.get(patternName);
           this.pattern = response.data.data;
           this.loading = false;
         } catch (e) {
@@ -342,7 +338,12 @@
     },
 
     created() {
-      this.fetchPattern();
+      this.fetchPattern(this.$route.params.pattern);
+    },
+
+    beforeRouteUpdate (to, from, next) {
+      this.fetchPattern(to.params.pattern);
+      next();
     },
 
     mounted() {

@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\Integration\Http\Controllers;
+namespace Integration\Http\Controllers;
 
 use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\Http\JsonResponse;
-use Laratomics\Tests\BaseTestCase;
-use Laratomics\Tests\Traits\TestStubs;
+use Tests\BaseTestCase;
+use Tests\Traits\TestStubs;
 
 class PatternControllerTest extends BaseTestCase
 {

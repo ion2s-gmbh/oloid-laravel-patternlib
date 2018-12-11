@@ -1,9 +1,9 @@
 <?php
 
-namespace Tests\Unit;
+namespace Unit;
 
 use Illuminate\Filesystem\Filesystem;
-use Laratomics\Tests\BaseTestCase;
+use Tests\BaseTestCase;
 
 class SetupTest extends BaseTestCase
 {

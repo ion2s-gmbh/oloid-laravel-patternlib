@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests\Integration\Http\Controllers;
+namespace Integration\Http\Controllers;
 
-use Laratomics\Tests\BaseTestCase;
+use Tests\BaseTestCase;
 
 class ApplicationControllerTest extends BaseTestCase
 {

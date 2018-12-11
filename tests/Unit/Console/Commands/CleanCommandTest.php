@@ -3,7 +3,7 @@
 namespace Unit\Console\Commands;
 
 use Illuminate\Filesystem\Filesystem;
-use Laratomics\Tests\BaseTestCase;
+use Tests\BaseTestCase;
 
 class CleanCommandTest extends BaseTestCase
 {

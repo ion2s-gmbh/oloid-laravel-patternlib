@@ -1,10 +1,10 @@
 <?php
 
-namespace Tests\Unit\Exceptions;
+namespace Unit\Exceptions;
 
 use Exception;
 use Laratomics\Exceptions\RenderingException;
-use Laratomics\Tests\BaseTestCase;
+use Tests\BaseTestCase;
 
 class RenderingExceptionTest extends BaseTestCase
 {

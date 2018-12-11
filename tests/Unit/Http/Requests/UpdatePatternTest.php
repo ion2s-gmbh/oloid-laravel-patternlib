@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\Unit\Http\Requests;
+namespace Unit\Http\Requests;
 
 
 use Laratomics\Http\Requests\UpdatePattern;
 use Laratomics\Rules\UniquePattern;
-use Laratomics\Tests\BaseTestCase;
+use Tests\BaseTestCase;
 
 class UpdatePatternTest extends BaseTestCase
 {

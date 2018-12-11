@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\Unit\Services;
+namespace Unit\Services;
 
 use Illuminate\Support\Str;
 use Laratomics\Services\ConfigurationService;
-use Laratomics\Tests\BaseTestCase;
-use Laratomics\Tests\Traits\TestStubs;
+use Tests\BaseTestCase;
+use Tests\Traits\TestStubs;
 
 class ConfigurationServiceTest extends BaseTestCase
 {

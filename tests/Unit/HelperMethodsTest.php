@@ -6,8 +6,8 @@ namespace Unit;
 
 use Exception;
 use Illuminate\Filesystem\Filesystem;
-use Laratomics\Tests\BaseTestCase;
-use Laratomics\Tests\Traits\TestStubs;
+use Tests\BaseTestCase;
+use Tests\Traits\TestStubs;
 
 class HelperMethodsTest extends BaseTestCase
 {
@@ -29,6 +29,20 @@ class HelperMethodsTest extends BaseTestCase
         } catch (Exception $e) {
             $this->fail();
         }
+    }
+
+    /**
+     * @test
+     * @covers ::compile_blade_string
+     * @expectedException \Laratomics\Exceptions\RenderingException
+     */
+    public function it_should_parse_a_php_template_to_html_with_rendering_exception()
+    {
+        // arrange
+        $template = '<?php throw new Exception("TEST"); ?>';
+
+        // act
+        $html = compile_blade_string($template, ['text' => 'TEST']);
     }
 
     /**

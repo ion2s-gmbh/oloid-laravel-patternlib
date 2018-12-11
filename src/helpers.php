@@ -13,7 +13,7 @@ if (!function_exists('compile_blade_string')) {
      * @return false|string
      * @throws RenderingException
      */
-    function compile_blade_string($value, array $args = array()): string
+    function compile_blade_string($value, array $args = []): string
     {
         $generated = Blade::compileString($value);
 

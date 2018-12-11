@@ -1,14 +1,14 @@
 <?php
 
-namespace Tests\Unit\Services;
+namespace Unit\Services;
 
 use Exception;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Filesystem\Filesystem;
 use Laratomics\Services\PatternService;
-use Laratomics\Tests\BaseTestCase;
-use Laratomics\Tests\Traits\TestStubs;
 use Spatie\YamlFrontMatter\Document;
+use Tests\BaseTestCase;
+use Tests\Traits\TestStubs;
 
 class PatternServiceTest extends BaseTestCase
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace Tests\Unit\Rules;
+namespace Unit\Rules;
 
 use Laratomics\Rules\UniquePattern;
-use Laratomics\Tests\BaseTestCase;
-use Laratomics\Tests\Traits\TestStubs;
+use Tests\BaseTestCase;
+use Tests\Traits\TestStubs;
 
 class UniquePatternTest extends BaseTestCase
 {

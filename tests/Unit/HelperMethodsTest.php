@@ -6,8 +6,8 @@ namespace Unit;
 
 use Exception;
 use Illuminate\Filesystem\Filesystem;
-use Laratomics\Tests\BaseTestCase;
-use Laratomics\Tests\Traits\TestStubs;
+use Tests\BaseTestCase;
+use Tests\Traits\TestStubs;
 
 class HelperMethodsTest extends BaseTestCase
 {

@@ -1,12 +1,12 @@
 <?php
 
-namespace Tests\Integration\Http\Resources;
+namespace Integration\Http\Resources;
 
 use Laratomics\Http\Resources\PatternResource;
 use Laratomics\Models\Pattern;
-use Laratomics\Tests\BaseTestCase;
 use Mockery;
 use Spatie\YamlFrontMatter\YamlFrontMatter;
+use Tests\BaseTestCase;
 
 class PatternResourceTest extends BaseTestCase
 {

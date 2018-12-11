@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Laratomics\Tests\Traits;
+namespace Tests\Traits;
 
 use Illuminate\Filesystem\Filesystem;
 use Laratomics\Models\Pattern;

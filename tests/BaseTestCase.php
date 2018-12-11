@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Laratomics\Tests;
+namespace Tests;
 
 use Illuminate\Filesystem\Filesystem;
 use Laratomics\Providers\PatternServiceProvider;

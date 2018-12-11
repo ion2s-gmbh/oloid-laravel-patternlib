@@ -1,12 +1,12 @@
 <?php
 
-namespace Tests\Integration\Providers;
+namespace Integration\Providers;
 
 use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\Support\Facades\Blade;
 use Laratomics\Providers\PatternServiceProvider;
-use Laratomics\Tests\BaseTestCase;
-use Laratomics\Tests\Traits\TestStubs;
+use Tests\BaseTestCase;
+use Tests\Traits\TestStubs;
 
 class PatternServiceProviderTest extends BaseTestCase
 {

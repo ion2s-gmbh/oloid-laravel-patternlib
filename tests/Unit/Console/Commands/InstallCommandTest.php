@@ -3,8 +3,8 @@
 namespace Unit\Console\Commands;
 
 use Laratomics\Services\ConfigurationService;
-use Laratomics\Tests\BaseTestCase;
 use Mockery;
+use Tests\BaseTestCase;
 
 class InstallCommandTest extends BaseTestCase
 {

@@ -83,4 +83,23 @@ class PatternServiceProviderTest extends BaseTestCase
         $this->assertCount(0, Blade::getCustomDirectives());
     }
 
+    /**
+     * @test
+     * @covers \Laratomics\Providers\PatternServiceProvider
+     */
+    public function it_should_return_the_callable_handler_for_blade_directive()
+    {
+        // arrange
+        $patternServiceProvider = new PatternServiceProvider(app());
+        $closure = $patternServiceProvider->directiveResolution('atoms');
+        $expected = "<?php echo view('patterns.atoms.headline.one', ['text' => 'Heading 1'], array_except(get_defined_vars(), array('__data', '__path')))->render() ?>";
+
+        // act
+        $parsed = $closure->call($patternServiceProvider, "'headline.one', ['text' => 'Heading 1']");
+
+        // assert
+        $this->assertTrue(is_callable($closure));
+        $this->assertEquals($expected, $parsed);
+
+    }
 }

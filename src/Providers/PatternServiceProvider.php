@@ -2,6 +2,7 @@
 
 namespace Laratomics\Providers;
 
+use Closure;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
@@ -17,10 +18,7 @@ class PatternServiceProvider extends ServiceProvider
     {
         $components = $this->getComponents();
         foreach ($components as $component => $path) {
-            Blade::directive($component, function ($expression) use ($path) {
-                $extExpression = $this->parse($expression, $path);
-                return "<?php echo view({$extExpression}, array_except(get_defined_vars(), array('__data', '__path')))->render() ?>";
-            });
+            Blade::directive($component, $this->directiveResolution($path));
         }
     }
 
@@ -68,29 +66,6 @@ class PatternServiceProvider extends ServiceProvider
         $extExpression = str_replace($strippedComponent, "{$extComponent}", $expression);
         return $extExpression;
     }
-//    /**
-//     * Parse a link expression.
-//     *
-//     * @param $expression
-//     * @return array
-//     */
-//    private function parseLink($expression)
-//    {
-//        $parsed = [];
-//        preg_match('/{(.*)\|(.*)}/', $expression, $parsed);
-//        return $this->withoutFirst($parsed);
-//    }
-//
-//    /**
-//     * @param $parsed
-//     * @return array
-//     */
-//    private function withoutFirst($parsed): array
-//    {
-//        unset($parsed[0]);
-//        return array_values($parsed);
-
-//    }
 
     /**
      * Register services.
@@ -100,5 +75,17 @@ class PatternServiceProvider extends ServiceProvider
     public function register()
     {
         //
+    }
+
+    /**
+     * @param $path
+     * @return Closure
+     */
+    public function directiveResolution($path): Closure
+    {
+        return function ($expression) use ($path) {
+            $extExpression = $this->parse($expression, $path);
+            return "<?php echo view({$extExpression}, array_except(get_defined_vars(), array('__data', '__path')))->render() ?>";
+        };
     }
 }

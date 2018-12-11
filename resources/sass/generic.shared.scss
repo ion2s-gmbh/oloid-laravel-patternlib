@@ -113,6 +113,13 @@ containing the header and the so called view, containing most of the UI.
   
 }
 
+.u-transparent {
+
+  opacity: 0;
+  pointer-events: none;
+
+}
+
 .u-right {
   text-align: right;
 }

@@ -2,7 +2,7 @@
   <ul class="patterns--sub">
 
     <li class="pattern" v-for="item in items"
-        :class="{ active: $store.state.navi.activeSub.includes(item.path) }">
+        :class="{ active: $store.getters.isActiveSubmenu(item.path) }">
       <navbar-link v-if="item.items.length === 0"
                    :parent="name"
                    :item="item">
@@ -43,7 +43,7 @@
        * @param subMenu
        */
       toggleSubMenu: function (subMenu) {
-        if (this.$store.state.navi.activeSub.includes(subMenu)) {
+        if (this.$store.getters.isActiveSubmenu(subMenu)) {
           let pathComponents = subMenu.split('.');
           pathComponents.pop();
           subMenu = pathComponents.join('.');

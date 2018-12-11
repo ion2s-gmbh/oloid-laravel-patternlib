@@ -1,6 +1,6 @@
 <template>
 
-  <div class="dashboard" v-if="$store.state.config.devMode">
+  <div class="dashboard" v-if="$store.getters.isDevMode">
 
     <div class="u-center">
 
@@ -18,7 +18,7 @@
       </router-link>    
       </div>
 
-    <example-component></example-component>
+    <!--<example-component></example-component>-->
 
   </div>
 

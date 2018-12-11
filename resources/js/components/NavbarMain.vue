@@ -1,5 +1,5 @@
 <template>
-  <li class="pattern u-center" :class="{ active: $store.state.navi.activeMain === menu.path }">
+  <li class="pattern u-center" :class="{ active: $store.getters.isActiveMainMenu(menu.path) }">
 
     <!-- Single stupid link to a pattern -->
     <navbar-link v-if="menu.items.length === 0"
@@ -41,7 +41,7 @@
        */
       toggleMainMenu: function (menu) {
 
-        if (this.$store.state.navi.activeMain === menu) {
+        if (this.$store.getters.isActiveMainMenu(menu)) {
           this.$store.commit('resetMainMenu');
         } else {
           this.$store.commit('toggleMainMenu', menu);

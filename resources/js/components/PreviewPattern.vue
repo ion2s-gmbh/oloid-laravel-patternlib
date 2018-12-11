@@ -12,9 +12,9 @@
 
           <span v-if="isToggled" class="code-type a-fadeIn">Blade</span>
 
-          <label class="toggle-wrap">
+          <label class="toggle-wrap"  v-tooltip.top-center="'Switch between HTML and Blade'">
 
-            <input type="checkbox" class="toggle" v-model="isToggled"/>
+            <input type="checkbox" class="toggle" v-model="isToggled" />
 
             <div></div>
 
@@ -77,11 +77,22 @@
                   :status="pattern.status">
           </status-bar>
 
-          <button class="toggle--more" @click="showDescription = !showDescription" :class="{ active: showDescription }" title="Show Pattern description">
+          <button class="toggle--more" @click="showDescription = !showDescription" :class="{ active: showDescription }" v-tooltip.top-center="'Show pattern description'">
 
             <i class="fas fa-align-left"></i>
 
-          </button>          
+          </button>
+
+          <button class="toggle--more clipboard"
+                  v-tooltip.top-center="usageTooltip"
+                  data-clipboard-target="#usage"
+                  @mouseleave="resetTooltip">
+
+            <i class="far fa-clipboard"></i>
+
+          </button>
+          <!-- Hidden usage for copy to clipboard -->
+          <span id="usage" class="u-transparent">{{ patternUsage }}</span>
 
         </div>
 
@@ -102,6 +113,7 @@
               </span>
 
             </label>
+
 
             <textarea id="description"
                       class="form-control"
@@ -205,6 +217,7 @@
   import StatusBar from './StatusBar';
   import ConfirmationWindow from "./ConfirmationWindow";
   import marked from 'marked';
+  import ClipboardJS from 'clipboard';
 
   export default {
     name: "PreviewPattern",
@@ -214,10 +227,14 @@
       StatusBar
     },
 
+    props: [
+      'patternName'
+    ],
+
     data() {
       return {
         pattern: {
-          name: this.$route.params.pattern,
+          name: this.patternName,
           description: ''
         },
         loading: false,
@@ -226,7 +243,11 @@
         showDescription: false,
         showDeleteConfirm: false,
         editModeDescription: false,
-        oldDescription: ''
+        oldDescription: '',
+        usageTooltip: {
+          content: 'Copy usage to clipboard',
+          hideOnTargetClick: false
+        },
       }
     },
 
@@ -237,14 +258,25 @@
        */
       markdownDescription: function () {
         return marked(this.pattern.description);
+      },
+
+      /**
+       * Concatenate the usage string.
+       */
+      patternUsage: function () {
+        return `@${this.pattern.type}('${this.pattern.usage}', [])`;
       }
     },
 
-    watch: {
-      '$route': 'fetchPattern',
-    },
-
     methods: {
+
+      /**
+       * Reset the tooltip to the initial content.
+       * @todo Improve this in the future.
+       */
+      resetTooltip: function () {
+        this.usageTooltip.content = 'Copy usage to clipboard';
+      },
 
       /**
        * Navigate to the rename pattern view. This is triggered by a shortcut.
@@ -252,7 +284,7 @@
       renamePattern: function () {
         this.$router.push({
           name: 'rename',
-          params: { pattern: this.$route.params.pattern }
+          params: { pattern: this.pattern.name }
         })
       },
 
@@ -293,11 +325,11 @@
       /**
        * Fetch the Pattern's data from the API.
        */
-      fetchPattern: async function () {
+      fetchPattern: async function (patternName) {
         // set to true, if we have to show a loading spinner
         this.loading = true;
         try {
-          let response = await API.get(this.$route.params.pattern);
+          let response = await API.get(patternName);
           this.pattern = response.data.data;
           this.loading = false;
         } catch (e) {
@@ -341,13 +373,35 @@
       }
     },
 
+    /**
+     * Fetch Pattern on route change.
+     * @param to
+     * @param from
+     * @param next
+     */
+    beforeRouteUpdate (to, from, next) {
+      this.fetchPattern(to.params.patternName);
+      next();
+    },
+
+    /**
+     * Fetch Pattern on created hook.
+     */
     created() {
-      this.fetchPattern();
+      this.fetchPattern(this.patternName);
     },
 
     mounted() {
 
-      /*
+      /**
+       * Clipboard initialization.
+       */
+      let clipboard = new ClipboardJS('.clipboard');
+      clipboard.on('success', (e) => {
+        this.usageTooltip.content = 'Copied to clipboard';
+      });
+
+      /**
        * Global shortcuts
        */
       window.addEventListener('keydown', (event) => {

@@ -11,10 +11,28 @@ Vue.use(VueRouter);
 const router = new VueRouter({
   mode: 'hash',
   routes: [
-    { path: '/', component: Dashboard, name: 'dashboard' },
-    { path: '/create', component: CreatePattern, name: 'create' },
-    { path: '/rename/:pattern', component: UpdatePattern, name: 'rename' },
-    { path: '/preview/:pattern', component: PreviewPattern, name: 'preview' }
+    {
+      path: '/',
+      component: Dashboard,
+      name: 'dashboard'
+    },
+    {
+      path: '/create',
+      component: CreatePattern,
+      name: 'create'
+    },
+    {
+      path: '/rename/:patternName',
+      component: UpdatePattern,
+      name: 'rename',
+      props: true,
+    },
+    {
+      path: '/preview/:patternName',
+      component: PreviewPattern,
+      name: 'preview',
+      props: true,
+    }
   ]
 });
 

@@ -4,11 +4,11 @@
 
     <div class="status-current"
 
-         @click="isActive = !isActive"
+        @click="isActive = !isActive"        
 
-         :title="title"
+        v-tooltip.top-center="`${title}`"
 
-         :class="{accepted: isAccepted,
+        :class="{accepted: isAccepted,
 	          toCheck: isToCheck,
 	          rejected: isRejected,
 	          wip: isTodo}">

@@ -13,5 +13,13 @@ export default {
   |--------------------------------------------------------------------------
   | Enable/disable development mode.
   */
-  devMode: true
+  devMode: true,
+
+  /*
+  |--------------------------------------------------------------------------
+  | Environment
+  |--------------------------------------------------------------------------
+  | Either it is 'development' or 'production'.
+  */
+  environment: process.env.NODE_ENV
 }

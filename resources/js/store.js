@@ -6,6 +6,8 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
 
+  strict: config.environment !== 'production',
+
   state: {
     config,
     appInfo: {},
@@ -16,6 +18,49 @@ export default new Vuex.Store({
     }
   },
 
+  getters: {
+
+    /**
+     * Return the devMode.
+     * @param state
+     * @returns {boolean}
+     */
+    isDevMode: state => {
+      return state.config.devMode;
+    },
+
+    /**
+     * Get the Laravel app name.
+     * @param state
+     * @returns {string}
+     */
+    appName: state => {
+      return state.appInfo.appName;
+    },
+
+    /**
+     * Determine if the navi should be reloaded.
+     * @param state
+     * @returns {boolean}
+     */
+    reloadNavi: state => {
+      return state.navi.reload === true;
+    },
+
+    isActiveMainMenu: (state) => (menu) => {
+      return state.navi.activeMain === menu;
+    },
+
+    /**
+     * Determine if the given sub menu is currently active.
+     * @param state
+     * @returns {function(*=): boolean}
+     */
+    isActiveSubmenu: (state) => (menu) => {
+      return state.navi.activeSub.includes(menu);
+    }
+  },
+
   mutations: {
 
     /**
@@ -23,7 +68,7 @@ export default new Vuex.Store({
      * @param state
      * @param info
      */
-    appInfo(state, info) {
+    appInfo: (state, info) => {
       state.appInfo = info.data;
     },
 
@@ -32,7 +77,7 @@ export default new Vuex.Store({
      * @param state
      * @param menu
      */
-    toggleMainMenu(state, menu) {
+    toggleMainMenu: (state, menu) => {
       state.navi.activeMain = menu;
       state.navi.activeSub = '';
     },
@@ -42,7 +87,7 @@ export default new Vuex.Store({
      * @param state
      * @param subMenu
      */
-    toggleSubMenu(state, subMenu) {
+    toggleSubMenu: (state, subMenu) => {
       state.navi.activeSub = subMenu;
     },
 
@@ -50,7 +95,7 @@ export default new Vuex.Store({
      * Reset the active main menu item.
      * @param state
      */
-    resetMainMenu(state) {
+    resetMainMenu: state => {
       state.navi.activeMain = '';
     },
 
@@ -58,7 +103,7 @@ export default new Vuex.Store({
      * Reset the active sub menu item.
      * @param state
      */
-    resetSubMenu(state) {
+    resetSubMenu: state => {
       state.navi.activeSub = '';
     },
 
@@ -67,8 +112,12 @@ export default new Vuex.Store({
      * @param state
      * @param reload
      */
-    reloadNavi(state, reload) {
+    reloadNavi: (state, reload) => {
       state.navi.reload = reload;
     }
+  },
+
+  actions: {
+    //
   }
 });

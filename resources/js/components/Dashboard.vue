@@ -4,7 +4,7 @@
 
     <div class="u-center">
 
-      <template v-if="!loading">
+      <template v-if="!loadingStatusList">
 
       <div class="a-dropIn">
 
@@ -25,7 +25,7 @@
 
       </template>
 
-      <template v-else-if="loading">
+      <template v-else-if="loadingStatusList">
         <img src="vendor/workshop/images/loader.gif">
       </template>
     </div>
@@ -49,27 +49,31 @@
 
     data() {
       return {
-        loading: true
+        loadingStatusList: false,
+        statusList: {}
       }
     },
 
     methods: {
-      loadStatusList: async function () {
+
+      /**
+       * Fetch the status list.
+       * @returns {Promise<void>}
+       */
+      fetchStatusList: async function () {
         try {
+          this.loadingStatusList = true;
           let response = await API.get('status-list');
-          this.loading = false;
+          this.statusList = response.data.data;
+          this.loadingStatusList = false;
         } catch (e) {
           LOG.error(e);
         }
-
-        // setTimeout(() => {
-        //   this.loading = false;
-        // }, 3000);
       }
     },
 
     mounted() {
-      this.loadStatusList();
+      this.fetchStatusList();
     }
   }
 </script>

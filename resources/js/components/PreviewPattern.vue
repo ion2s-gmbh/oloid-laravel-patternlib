@@ -329,7 +329,7 @@
         // set to true, if we have to show a loading spinner
         this.loading = true;
         try {
-          let response = await API.get(patternName);
+          let response = await API.get(`pattern/preview/${patternName}`);
           this.pattern = response.data.data;
           this.loading = false;
         } catch (e) {
@@ -364,7 +364,7 @@
        */
       deletePattern: async function (pattern) {
         try {
-          let response = await API.delete(pattern);
+          let response = await API.delete(`pattern/${pattern}`);
           this.$store.commit('reloadNavi', true);
           this.$router.push('/');
         } catch (e) {

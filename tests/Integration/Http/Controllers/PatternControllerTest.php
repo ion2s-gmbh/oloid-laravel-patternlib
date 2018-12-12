@@ -100,7 +100,7 @@ class PatternControllerTest extends BaseTestCase
 
         // act
         /** @var TestResponse $response */
-        $response = $this->getJson('workshop/api/v1/atoms.text.headline1');
+        $response = $this->getJson('workshop/api/v1/pattern/preview/atoms.text.headline1');
 
         // assert
         $expected = [
@@ -164,7 +164,7 @@ class PatternControllerTest extends BaseTestCase
 
         // act
         /** @var TestResponse $response */
-        $response = $this->deleteJson('workshop/api/v1/atoms.text.headline1');
+        $response = $this->deleteJson('workshop/api/v1/pattern/atoms.text.headline1');
 
         // assert
         $response->assertSuccessful();

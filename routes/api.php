@@ -29,6 +29,14 @@ Route::put('pattern/{pattern}', 'PatternController@update');
 
 /*
 |--------------------------------------------------------------------------
+| DELETE /pattern/{pattern}
+|--------------------------------------------------------------------------
+| Route to remove the given Pattern.
+*/
+Route::delete('pattern/{pattern}', 'PatternController@remove');
+
+/*
+|--------------------------------------------------------------------------
 | PUT /pattern/status/{pattern}
 |--------------------------------------------------------------------------
 | Update the status of the Pattern.
@@ -39,9 +47,18 @@ Route::put('pattern/status/{pattern}', 'PatternController@status');
 |--------------------------------------------------------------------------
 | GET /pattern/exists/{pattern}
 |--------------------------------------------------------------------------
-|
+| Check if a Pattern with this name already exists.
 */
 Route::get('pattern/exists/{pattern}', 'PatternController@exists');
+
+/*
+|--------------------------------------------------------------------------
+| GET /pattern/preview/{pattern}
+|--------------------------------------------------------------------------
+| Get all all information for the preview screen.
+| Except the actual rendered preview, that will be loaded by an iframe.
+*/
+Route::get('pattern/preview/{pattern}', 'PatternController@preview');
 
 /*
 |--------------------------------------------------------------------------
@@ -55,22 +72,5 @@ Route::get('status-list', function () {
     sleep(5);
     return \Illuminate\Http\JsonResponse::create([]);
 });
-
-/*
-|--------------------------------------------------------------------------
-| GET /{pattern}
-|--------------------------------------------------------------------------
-| Get all all information for the preview screen.
-| Except the actual rendered preview, that will be loaded by an iframe.
-*/
-Route::get('{pattern}', 'PatternController@preview');
-
-/*
-|--------------------------------------------------------------------------
-| DELETE /{pattern}
-|--------------------------------------------------------------------------
-| Route to remove the given Pattern.
-*/
-Route::delete('{pattern}', 'PatternController@remove');
 
 

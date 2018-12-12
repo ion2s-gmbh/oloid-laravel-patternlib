@@ -68,9 +68,10 @@ Route::get('pattern/preview/{pattern}', 'PatternController@preview');
 */
 Route::get('navi', 'NavigationController@get');
 
-Route::get('status-list', function () {
-    sleep(5);
-    return \Illuminate\Http\JsonResponse::create([]);
-});
-
-
+/*
+|--------------------------------------------------------------------------
+| GET /status-list
+|--------------------------------------------------------------------------
+| Get a list with all Patterns grouped by their status.
+*/
+Route::get('status-list', 'StatusListController@get');

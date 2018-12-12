@@ -51,6 +51,11 @@ Route::get('pattern/exists/{pattern}', 'PatternController@exists');
 */
 Route::get('navi', 'NavigationController@get');
 
+Route::get('status-list', function () {
+    sleep(5);
+    return \Illuminate\Http\JsonResponse::create([]);
+});
+
 /*
 |--------------------------------------------------------------------------
 | GET /{pattern}

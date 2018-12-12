@@ -127,7 +127,7 @@ class PatternControllerTest extends BaseTestCase
     {
         // act
         /** @var TestResponse $response */
-        $response = $this->getJson('workshop/api/v1/atoms.not.existing');
+        $response = $this->getJson('workshop/api/v1/pattern/preview/atoms.not.existing');
 
         // assert
         $response->assertStatus(404);
@@ -180,7 +180,7 @@ class PatternControllerTest extends BaseTestCase
 
         // act
         /** @var TestResponse $response */
-        $response = $this->deleteJson('workshop/api/v1/not.existing.pattern');
+        $response = $this->deleteJson('workshop/api/v1/pattern/not.existing.pattern');
 
         // assert
         $response->assertStatus(JsonResponse::HTTP_NOT_FOUND);

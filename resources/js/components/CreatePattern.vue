@@ -68,6 +68,10 @@
 
     </form>
 
+    <shortcuts v-if="showShortcuts">
+
+    </shortcuts>
+
   </div>
 
 </template>
@@ -75,13 +79,18 @@
 <script>
   import {API} from '../httpClient';
   import LOG from '../logger';
+  import Shortcuts from './Shortcuts';
+  import {createShortcuts} from '../shortcuts';
 
   export default {
     name: "CreatePattern",
-
+    components: {
+      Shortcuts
+    },
     data() {
       return {
-        pattern: {}
+        pattern: {},
+        showShortcuts: false
       }
     },
 
@@ -128,6 +137,11 @@
           }
         }
       }
+    },
+
+    mounted() {
+      console.log(createShortcuts[0].key);
+      console.log(createShortcuts[0].description);
     }
   }
 </script>

@@ -108,7 +108,7 @@ class PatternControllerTest extends BaseTestCase
                 'name' => 'atoms.text.headline1',
                 'type' => 'atom',
                 'description' => 'Our h1 for testing',
-                'status' => 'TODO',
+                'status' => 'review',
                 'usage' => 'text.headline1',
                 'template' => "<h1>{{ \$text }}</h1>",
                 'html' => "<h1>Testing</h1>",

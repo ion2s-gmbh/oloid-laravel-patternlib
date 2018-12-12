@@ -1,5 +1,5 @@
 ---
-status: TODO
+status: done
 values:
 ---
 The homepage

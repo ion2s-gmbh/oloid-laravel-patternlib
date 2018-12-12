@@ -303,7 +303,7 @@ class PatternServiceTest extends BaseTestCase
         $this->assertMarkdownContentUsingStub($pattern->markdown);
         $this->assertSassContentUsingStub($pattern->sass);
         $this->assertInstanceOf(Document::class, $pattern->metadata);
-        $this->assertEquals('TODO', $pattern->metadata->status);
+        $this->assertEquals('review', $pattern->metadata->status);
         $this->assertEquals("{$this->tempDir}/patterns/atoms/text/headline1.blade.php", $pattern->templateFile);
         $this->assertEquals("{$this->tempDir}/patterns/atoms/text/headline1.scss", $pattern->sassFile);
         $this->assertEquals("{$this->tempDir}/patterns/atoms/atoms.scss", $pattern->rootSassFile);
@@ -325,7 +325,7 @@ class PatternServiceTest extends BaseTestCase
      */
     private function assertMarkdownContentUsingStub($markdown)
     {
-        $markdownContent = "---\nstatus: TODO\nvalues:\n    text: Testing\n---\n{$this->description}";
+        $markdownContent = "---\nstatus: review\nvalues:\n    text: Testing\n---\n{$this->description}";
         $this->assertEquals($markdownContent, $markdown);
     }
 
@@ -501,10 +501,10 @@ class PatternServiceTest extends BaseTestCase
         // arrange
         $this->preparePatternStub();
         $pattern = $this->cut->loadPattern('atoms.text.headline1');
-        $this->assertEquals('TODO', $pattern->metadata->status);
+        $this->assertEquals('review', $pattern->metadata->status);
 
         $mdContent = file_get_contents("{$this->tempDir}/patterns/atoms/text/headline1.md");
-        $this->assertContains('status: TODO', $mdContent);
+        $this->assertContains('status: review', $mdContent);
 
         // act
         $this->cut->updateStatus('TESTED', $pattern->name);
@@ -617,7 +617,7 @@ class PatternServiceTest extends BaseTestCase
         // assert Pattern instance
         $this->assertEquals('atoms.buttons.submit', $pattern->name);
         $this->assertInstanceOf(Document::class, $pattern->metadata);
-        $this->assertEquals('TODO', $pattern->metadata->status);
+        $this->assertEquals('todo', $pattern->metadata->status);
         $this->assertEquals("{$this->tempDir}/patterns/atoms/buttons/submit.blade.php", $pattern->templateFile);
         $this->assertEquals("{$this->tempDir}/patterns/atoms/buttons/submit.scss", $pattern->sassFile);
         $this->assertEquals("{$this->tempDir}/patterns/atoms/atoms.scss", $pattern->rootSassFile);
@@ -666,7 +666,7 @@ class PatternServiceTest extends BaseTestCase
         // assert Pattern instance
         $this->assertEquals('atoms.buttons.submit.button', $pattern->name);
         $this->assertInstanceOf(Document::class, $pattern->metadata);
-        $this->assertEquals('TODO', $pattern->metadata->status);
+        $this->assertEquals('todo', $pattern->metadata->status);
         $this->assertEquals("{$this->tempDir}/patterns/atoms/buttons/submit/button.blade.php", $pattern->templateFile);
         $this->assertEquals("{$this->tempDir}/patterns/atoms/buttons/submit/button.scss", $pattern->sassFile);
         $this->assertEquals("{$this->tempDir}/patterns/atoms/atoms.scss", $pattern->rootSassFile);
@@ -717,7 +717,7 @@ class PatternServiceTest extends BaseTestCase
         // assert Pattern instance
         $this->assertEquals('molecules.buttons.submit', $pattern->name);
         $this->assertInstanceOf(Document::class, $pattern->metadata);
-        $this->assertEquals('TODO', $pattern->metadata->status);
+        $this->assertEquals('todo', $pattern->metadata->status);
         $this->assertEquals("{$this->tempDir}/patterns/molecules/buttons/submit.blade.php", $pattern->templateFile);
         $this->assertEquals("{$this->tempDir}/patterns/molecules/buttons/submit.scss", $pattern->sassFile);
         $this->assertEquals("{$this->tempDir}/patterns/molecules/molecules.scss", $pattern->rootSassFile);
@@ -765,7 +765,7 @@ class PatternServiceTest extends BaseTestCase
         // assert Pattern instance
         $this->assertEquals('pages.homepage', $pattern->name);
         $this->assertInstanceOf(Document::class, $pattern->metadata);
-        $this->assertEquals('TODO', $pattern->metadata->status);
+        $this->assertEquals('done', $pattern->metadata->status);
         $this->assertEquals("{$this->tempDir}/patterns/pages/homepage.blade.php", $pattern->templateFile);
         $this->assertEquals("{$this->tempDir}/patterns/pages/homepage.scss", $pattern->sassFile);
         $this->assertEquals("{$this->tempDir}/patterns/pages/pages.scss", $pattern->rootSassFile);

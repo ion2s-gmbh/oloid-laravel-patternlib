@@ -1,5 +1,5 @@
 ---
-status: TODO
+status: rejected
 values:
     text: Testing
 ---

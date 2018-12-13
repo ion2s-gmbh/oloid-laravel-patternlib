@@ -1,3 +1,23 @@
+/**
+ * Global shortcuts.
+ * @type {*[]}
+ */
+const globalShortcuts = [
+  {
+    stroke: 'Ctrl + C',
+    description: 'Trigger creation of a new Pattern.'
+  },
+  {
+    stroke: 'Ctrl + K',
+    description: 'Show/hide the shortcuts on the current page.'
+  }
+];
+
+
+/**
+ * Keyboard shortcuts on the create component.
+ * @type {*[]}
+ */
 const createShortcuts = [
   {
     stroke: 'Ctrl + S',
@@ -9,16 +29,10 @@ const createShortcuts = [
   }
 ];
 
-const globalShortcuts = [
-  {
-    stroke: 'Ctrl + C',
-    description: 'Trigger creation of a new Pattern.'
-  },
-  {
-    stroke: 'Ctrl + K',
-    description: 'Show/hide the shortcuts on the current page.'
-  }
-];
+/**
+ * Keyboard shortcuts on the preview component.
+ * @type {*[]}
+ */
 const previewShortcuts = [
   {
     stroke: 'Ctrl + DEL',
@@ -38,6 +52,10 @@ const previewShortcuts = [
   }
 ];
 
+/**
+ * Keyboard shortcuts on the update component.
+ * @type {*[]}
+ */
 const updateShortcuts = [
   {
     stroke: 'Ctrl + S',

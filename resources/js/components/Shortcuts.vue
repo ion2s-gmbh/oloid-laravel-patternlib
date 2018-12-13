@@ -41,20 +41,6 @@
       close: function () {
         this.$store.commit('toggleKeyMap');
       }
-    },
-
-    // mounted() {
-    //   const ESC = 27;
-    //
-    //   /*
-    //    * Close the confirmation modal on ESC
-    //    */
-    //   window.addEventListener('keydown', (event) => {
-    //     if (event.keyCode === ESC) {
-    //       event.preventDefault();
-    //       this.close();
-    //     }
-    //   });
-    // }
+    }
   }
 </script>

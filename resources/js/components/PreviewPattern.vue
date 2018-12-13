@@ -26,13 +26,13 @@
 
         <div class="code-tabs">
 
-          <div class="tab a-fadeIn" role="tabpanel" aria-labelledby="markup-view" v-if="isToggled" >
+          <div class="tab a-fadeIn" role="tabpanel" aria-labelledby="markup-view" v-show="isToggled" >
 
             <pre><code class="code-template language-html">{{ pattern.template }}</code></pre>
 
           </div>
 
-          <div class="tab a-fadeIn" id="html-view" role="tabpanel" aria-labelledby="html-view" v-if="!isToggled" >
+          <div class="tab a-fadeIn" id="html-view" role="tabpanel" aria-labelledby="html-view" v-show="!isToggled" >
 
             <pre><code class="code-html language-html">{{ pattern.html }}</code></pre>
 
@@ -299,14 +299,14 @@
           Prism.highlightElement(codeBox);
         });
       },
-      // 'pattern.template': function (value) {
-      //   let codeBox = document.querySelector('.code-template');
-      //   console.log(codeBox);
-      //   codeBox.innerText = value;
-      //   this.$nextTick(() => {
-      //     Prism.highlightElement(codeBox);
-      //   });
-      // }
+      'pattern.template': function (value) {
+        let codeBox = document.querySelector('.code-template');
+        console.log(value);
+        codeBox.innerText = value;
+        this.$nextTick(() => {
+          Prism.highlightElement(codeBox);
+        });
+      }
     },
 
     methods: {
@@ -431,10 +431,6 @@
     created() {
       this.fetchPattern(this.patternName);
     },
-
-    // updated() {
-    //   Prism.highlightAll();
-    // },
 
     mounted() {
 

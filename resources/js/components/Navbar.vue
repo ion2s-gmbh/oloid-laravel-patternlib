@@ -31,7 +31,7 @@
 
           <i class="fas fa-plus"></i>
 
-          Add Pattern
+          New Pattern
 
         </span>
 

@@ -41,7 +41,7 @@
 <script>
 
   import ExampleComponent from './ExampleComponent.vue';
-  import {API} from '../httpClient';
+  import {API} from '../restClient';
   import LOG from '../logger';
   import {globalShortcuts, showKeyMap} from '../shortcuts';
   import Shortcuts from './Shortcuts';

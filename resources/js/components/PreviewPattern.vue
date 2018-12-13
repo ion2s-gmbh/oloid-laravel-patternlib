@@ -221,7 +221,7 @@
   import StatusBar from './StatusBar';
   import ConfirmationWindow from './ConfirmationWindow';
   import Shortcuts from './Shortcuts'
-  import {API} from '../httpClient';
+  import {API} from '../restClient';
   import LOG from '../logger';
   import marked from 'marked';
   import ClipboardJS from 'clipboard';

@@ -78,7 +78,7 @@
 </template>
 
 <script>
-  import {API} from '../httpClient';
+  import {API} from '../restClient';
   import LOG from '../logger';
   import Shortcuts from './Shortcuts';
   import {createShortcuts, globalShortcuts, showKeyMap} from '../shortcuts';

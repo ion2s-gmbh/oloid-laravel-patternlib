@@ -52,7 +52,7 @@
 
 <script>
   import LOG from '../logger';
-  import {API} from '../httpClient';
+  import {API} from '../restClient';
   import Shortcuts from './Shortcuts'
   import {globalShortcuts, showKeyMap, updateShortcuts} from "../shortcuts";
 

@@ -1,5 +1,5 @@
 import {Validator} from 'vee-validate';
-import {API} from './httpClient';
+import {API} from './restClient';
 import LOG from './logger';
 
 /**

@@ -48,7 +48,7 @@
   import NavbarMain from "./NavbarMain";
   import NavbarLink from "./NavbarLink";
   import NavbarGroup from "./NavbarGroup";
-  import {API} from '../httpClient';
+  import {API} from '../restClient';
   import LOG from '../logger';
 
   export default {

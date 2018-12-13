@@ -21,7 +21,7 @@
 
 <script>
   import Navbar from './Navbar';
-  import {API} from '../httpClient';
+  import {API} from '../restClient';
   import LOG from '../logger';
 
   export default {

@@ -207,24 +207,33 @@
             @confirm-no="showDeleteConfirm = false">
       Do you really want to delete '{{ pattern.name }}'?
     </confirmation-window>
+
+    <shortcuts v-if="showKeyMap"
+               :globalKeymap="globalShortcuts"
+               :pageKeymap="previewShortcuts">
+    </shortcuts>
+
   </div>
 
 </template>
 
 <script>
+  import StatusBar from './StatusBar';
+  import ConfirmationWindow from './ConfirmationWindow';
+  import Shortcuts from './Shortcuts'
   import {API} from '../httpClient';
   import LOG from '../logger';
-  import StatusBar from './StatusBar';
-  import ConfirmationWindow from "./ConfirmationWindow";
   import marked from 'marked';
   import ClipboardJS from 'clipboard';
+  import {globalShortcuts, previewShortcuts, showKeyMap} from "../shortcuts";
 
   export default {
     name: "PreviewPattern",
 
     components: {
       ConfirmationWindow,
-      StatusBar
+      StatusBar,
+      Shortcuts
     },
 
     props: [
@@ -248,10 +257,16 @@
           content: 'Copy usage to clipboard',
           hideOnTargetClick: false
         },
+        globalShortcuts,
+        previewShortcuts
       }
     },
 
     computed: {
+      /**
+       * Imported computed properties
+       */
+      showKeyMap,
 
       /**
        * Parse the given description markdown to html.

@@ -30,6 +30,10 @@
       </template>
     </div>
 
+    <shortcuts v-if="showKeyMap"
+               :globalKeymap="globalShortcuts">
+    </shortcuts>
+
   </div>
 
 </template>
@@ -39,19 +43,30 @@
   import ExampleComponent from './ExampleComponent.vue';
   import {API} from '../httpClient';
   import LOG from '../logger';
+  import {globalShortcuts, showKeyMap} from '../shortcuts';
+  import Shortcuts from './Shortcuts';
 
   export default {
     name: "Dashboard",
 
     components: {
-      ExampleComponent
+      ExampleComponent,
+      Shortcuts
     },
 
     data() {
       return {
         loadingStatusList: false,
-        statusList: {}
+        statusList: {},
+        globalShortcuts
       }
+    },
+
+    computed: {
+      /**
+       * Imported computed properties
+       */
+      showKeyMap
     },
 
     methods: {

@@ -68,8 +68,9 @@
 
     </form>
 
-    <shortcuts v-if="showShortcuts">
-
+    <shortcuts v-if="showKeyMap"
+               :globalKeymap="globalShortcuts"
+               :pageKeymap="createShortcuts">
     </shortcuts>
 
   </div>
@@ -80,18 +81,28 @@
   import {API} from '../httpClient';
   import LOG from '../logger';
   import Shortcuts from './Shortcuts';
-  import {createShortcuts} from '../shortcuts';
+  import {createShortcuts, globalShortcuts, showKeyMap} from '../shortcuts';
 
   export default {
     name: "CreatePattern",
+
     components: {
       Shortcuts
     },
+
     data() {
       return {
         pattern: {},
-        showShortcuts: false
+        globalShortcuts,
+        createShortcuts
       }
+    },
+
+    computed: {
+      /**
+       * Imported computed properties
+       */
+      showKeyMap
     },
 
     methods: {
@@ -137,11 +148,6 @@
           }
         }
       }
-    },
-
-    mounted() {
-      console.log(createShortcuts[0].key);
-      console.log(createShortcuts[0].description);
     }
   }
 </script>

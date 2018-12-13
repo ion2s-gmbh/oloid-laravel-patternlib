@@ -15,7 +15,8 @@ export default new Vuex.Store({
       activeMain: '',
       activeSub: '',
       reload: false
-    }
+    },
+    showKeyMap: false
   },
 
   getters: {
@@ -58,7 +59,16 @@ export default new Vuex.Store({
      */
     isActiveSubmenu: (state) => (menu) => {
       return state.navi.activeSub.includes(menu);
-    }
+    },
+
+    /**
+     * Determine if the keyMap is shown.
+     * @param state
+     * @returns {getters.showKeyMap|(function(*))|boolean}
+     */
+    showKeyMap: state => {
+      return state.showKeyMap;
+    },
   },
 
   mutations: {
@@ -114,6 +124,14 @@ export default new Vuex.Store({
      */
     reloadNavi: (state, reload) => {
       state.navi.reload = reload;
+    },
+
+    /**
+     * Toggle the keymap.
+     * @param state
+     */
+    toggleKeyMap: (state) => {
+      state.showKeyMap = !state.showKeyMap;
     }
   },
 

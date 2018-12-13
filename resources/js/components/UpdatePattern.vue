@@ -42,15 +42,26 @@
 
     </form>
 
+    <shortcuts v-if="showKeyMap"
+               :globalKeymap="globalShortcuts"
+               :pageKeymap="updateShortcuts">
+    </shortcuts>
+
   </div>
 </template>
 
 <script>
   import LOG from '../logger';
   import {API} from '../httpClient';
+  import Shortcuts from './Shortcuts'
+  import {globalShortcuts, showKeyMap, updateShortcuts} from "../shortcuts";
 
   export default {
     name: "UpdatePattern",
+
+    components: {
+      Shortcuts
+    },
 
     props: [
       'patternName'
@@ -61,8 +72,17 @@
         pattern: {
           name: this.patternName
         },
-        currentName: this.patternName
+        currentName: this.patternName,
+        globalShortcuts,
+        updateShortcuts
       }
+    },
+
+    computed: {
+      /**
+       * Imported computed properties
+       */
+      showKeyMap
     },
 
     methods: {

@@ -23,10 +23,6 @@
 @import 'components.footer';
 
 
-@import '~prismjs/themes/prism-okaidia.css';
-pre[class*="language-"] {
-  background: var(--brandMain, $c-brandMain);
-}
 
 
 .u-center {

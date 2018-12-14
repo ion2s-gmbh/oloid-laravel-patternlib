@@ -17,7 +17,8 @@ mix.sass('resources/sass/app.scss', 'public/css');
 
 /** @todo find a better solution */
 mix.copyDirectory('public/js', '../../laravel/application/public/vendor/workshop/js') // for development only
-  .copyDirectory('public/css', '../../laravel/application/public/vendor/workshop/css'); // for development only
+  .copyDirectory('public/css', '../../laravel/application/public/vendor/workshop/css') // for development only
+  .copyDirectory('public/images', '../../laravel/application/public/vendor/workshop/images'); // for development only
 
 
 /*

@@ -1,6 +1,11 @@
 
 // Code Window Base --------- //
 
+@import '~prismjs/themes/prism-okaidia.css';
+pre[class*="language-"] {
+  background: var(--brandMain, $c-brandMain);
+}
+
 .code {
 
 	display: flex;	

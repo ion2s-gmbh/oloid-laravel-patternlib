@@ -121,7 +121,7 @@
             this.$store.commit('reloadNavi', true);
             this.$router.push({
               name: 'preview',
-              params: { pattern: this.pattern.name }
+              params: { patternName: this.pattern.name }
             });
           } catch (e) {
             LOG.error(e);

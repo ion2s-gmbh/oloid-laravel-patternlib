@@ -26,15 +26,15 @@
 
         <div class="code-tabs">
 
-          <div class="tab a-fadeIn" role="tabpanel" aria-labelledby="markup-view" v-if="isToggled" >
+          <div class="tab a-fadeIn" role="tabpanel" aria-labelledby="markup-view" v-show="isToggled" >
 
-            <pre><code class="language-html">{{ pattern.template }}</code></pre>
+            <pre><code class="code-template language-html">{{ pattern.template }}</code></pre>
 
           </div>
 
-          <div class="tab a-fadeIn" id="html-view" role="tabpanel" aria-labelledby="html-view" v-if="!isToggled" >
+          <div class="tab a-fadeIn" id="html-view" role="tabpanel" aria-labelledby="html-view" v-show="!isToggled" >
 
-            <pre><code class="language-html">{{ pattern.html }}</code></pre>
+            <pre><code class="code-html language-html">{{ pattern.html }}</code></pre>
 
           </div>
 
@@ -54,7 +54,7 @@
 
           <div class="tab" id="markup-view" role="tabpanel" aria-labelledby="markup-view">
 
-            <pre><code>{{ pattern.sass }}</code></pre>
+            <pre><code class="code-sass language-css">{{ pattern.sass }}</code></pre>
 
           </div>
 
@@ -207,24 +207,34 @@
             @confirm-no="showDeleteConfirm = false">
       Do you really want to delete '{{ pattern.name }}'?
     </confirmation-window>
+
+    <shortcuts v-if="showKeyMap"
+               :globalKeymap="globalShortcuts"
+               :pageKeymap="previewShortcuts">
+    </shortcuts>
+
   </div>
 
 </template>
 
 <script>
-  import {API} from '../httpClient';
-  import LOG from '../logger';
   import StatusBar from './StatusBar';
-  import ConfirmationWindow from "./ConfirmationWindow";
+  import ConfirmationWindow from './ConfirmationWindow';
+  import Shortcuts from './Shortcuts'
+  import {API} from '../restClient';
+  import LOG from '../logger';
   import marked from 'marked';
   import ClipboardJS from 'clipboard';
+  import {globalShortcuts, previewShortcuts, showKeyMap} from '../shortcuts';
+  import Prism from 'prismjs';
 
   export default {
     name: "PreviewPattern",
 
     components: {
       ConfirmationWindow,
-      StatusBar
+      StatusBar,
+      Shortcuts
     },
 
     props: [
@@ -248,10 +258,16 @@
           content: 'Copy usage to clipboard',
           hideOnTargetClick: false
         },
+        globalShortcuts,
+        previewShortcuts
       }
     },
 
     computed: {
+      /**
+       * Imported computed properties
+       */
+      showKeyMap,
 
       /**
        * Parse the given description markdown to html.
@@ -265,6 +281,30 @@
        */
       patternUsage: function () {
         return `@${this.pattern.type}('${this.pattern.usage}', [])`;
+      }
+    },
+
+    watch: {
+      'pattern.sass': function (value) {
+          let codeBox = document.querySelector('.code-sass');
+          codeBox.textContent = value;
+          this.$nextTick(() => {
+            Prism.highlightElement(codeBox);
+          });
+      },
+      'pattern.html': function (value) {
+        let codeBox = document.querySelector('.code-html');
+        codeBox.textContent = value;
+        this.$nextTick(() => {
+          Prism.highlightElement(codeBox);
+        });
+      },
+      'pattern.template': function (value) {
+        let codeBox = document.querySelector('.code-template');
+        codeBox.textContent = value;
+        this.$nextTick(() => {
+          Prism.highlightElement(codeBox);
+        });
       }
     },
 

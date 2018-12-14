@@ -10,15 +10,18 @@
 
       <router-view></router-view>
 
-    </section>    
+    </section>
 
+    <i class="fas fa-keyboard"
+       @click="toggleKeyMap">
+    </i>
   </main>
 
 </template>
 
 <script>
   import Navbar from './Navbar';
-  import {API} from '../httpClient';
+  import {API} from '../restClient';
   import LOG from '../logger';
 
   export default {
@@ -44,6 +47,10 @@
        */
       resetMenu: function () {
         this.$store.commit('resetMainMenu');
+      },
+
+      toggleKeyMap: function () {
+        this.$store.commit('toggleKeyMap');
       }
     },
 
@@ -68,12 +75,21 @@
       window.addEventListener('keydown', (event) => {
 
         const C = 67;
+        const K = 75;
 
         /*
-         * Trigger the delete confirmation by Ctrl+DEL
+         * Trigger the creation of a new Pattern by Ctrl+C
          */
         if (event.ctrlKey && event.keyCode === C) {
           this.createPattern();
+          event.preventDefault();
+        }
+
+        /*
+         * Trigger the explanation of the shortcuts
+         */
+        if (event.ctrlKey && event.keyCode === K) {
+          this.toggleKeyMap();
           event.preventDefault();
         }
 

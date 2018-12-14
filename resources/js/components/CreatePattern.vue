@@ -68,21 +68,41 @@
 
     </form>
 
+    <shortcuts v-if="showKeyMap"
+               :globalKeymap="globalShortcuts"
+               :pageKeymap="createShortcuts">
+    </shortcuts>
+
   </div>
 
 </template>
 
 <script>
-  import {API} from '../httpClient';
+  import {API} from '../restClient';
   import LOG from '../logger';
+  import Shortcuts from './Shortcuts';
+  import {createShortcuts, globalShortcuts, showKeyMap} from '../shortcuts';
 
   export default {
     name: "CreatePattern",
 
+    components: {
+      Shortcuts
+    },
+
     data() {
       return {
-        pattern: {}
+        pattern: {},
+        globalShortcuts,
+        createShortcuts
       }
+    },
+
+    computed: {
+      /**
+       * Imported computed properties
+       */
+      showKeyMap
     },
 
     methods: {

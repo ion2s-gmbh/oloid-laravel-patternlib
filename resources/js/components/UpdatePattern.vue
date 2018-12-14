@@ -42,15 +42,26 @@
 
     </form>
 
+    <shortcuts v-if="showKeyMap"
+               :globalKeymap="globalShortcuts"
+               :pageKeymap="updateShortcuts">
+    </shortcuts>
+
   </div>
 </template>
 
 <script>
   import LOG from '../logger';
-  import {API} from '../httpClient';
+  import {API} from '../restClient';
+  import Shortcuts from './Shortcuts'
+  import {globalShortcuts, showKeyMap, updateShortcuts} from "../shortcuts";
 
   export default {
     name: "UpdatePattern",
+
+    components: {
+      Shortcuts
+    },
 
     props: [
       'patternName'
@@ -61,8 +72,17 @@
         pattern: {
           name: this.patternName
         },
-        currentName: this.patternName
+        currentName: this.patternName,
+        globalShortcuts,
+        updateShortcuts
       }
+    },
+
+    computed: {
+      /**
+       * Imported computed properties
+       */
+      showKeyMap
     },
 
     methods: {
@@ -101,7 +121,7 @@
             this.$store.commit('reloadNavi', true);
             this.$router.push({
               name: 'preview',
-              params: { pattern: this.pattern.name }
+              params: { patternName: this.pattern.name }
             });
           } catch (e) {
             LOG.error(e);

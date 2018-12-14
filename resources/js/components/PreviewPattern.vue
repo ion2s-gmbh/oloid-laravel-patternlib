@@ -287,22 +287,21 @@
     watch: {
       'pattern.sass': function (value) {
           let codeBox = document.querySelector('.code-sass');
-          codeBox.innerHTML = value;
+          codeBox.textContent = value;
           this.$nextTick(() => {
             Prism.highlightElement(codeBox);
           });
       },
       'pattern.html': function (value) {
         let codeBox = document.querySelector('.code-html');
-        codeBox.innerText = value;
+        codeBox.textContent = value;
         this.$nextTick(() => {
           Prism.highlightElement(codeBox);
         });
       },
       'pattern.template': function (value) {
         let codeBox = document.querySelector('.code-template');
-        console.log(value);
-        codeBox.innerText = value;
+        codeBox.textContent = value;
         this.$nextTick(() => {
           Prism.highlightElement(codeBox);
         });

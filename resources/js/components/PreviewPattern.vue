@@ -91,6 +91,16 @@
             <i class="far fa-clipboard"></i>
 
           </button>
+
+          <a class="toggle--more"
+             :href="`workshop/preview/${pattern.name}`"
+             target="_blank"
+             v-tooltip.top-center="'Open in fullscreen'">
+
+            <i class="fas fa-external-link-alt"></i>
+
+          </a>
+
           <!-- Hidden usage for copy to clipboard -->
           <span id="usage" class="u-transparent">{{ patternUsage }}</span>
 

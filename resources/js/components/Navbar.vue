@@ -46,8 +46,6 @@
 <script>
 
   import NavbarMain from "./NavbarMain";
-  import NavbarLink from "./NavbarLink";
-  import NavbarGroup from "./NavbarGroup";
   import {API} from '../restClient';
   import LOG from '../logger';
 
@@ -55,9 +53,7 @@
     name: "Navbar",
 
     components: {
-      NavbarMain,
-      NavbarLink,
-      NavbarGroup
+      NavbarMain
     },
 
     data() {

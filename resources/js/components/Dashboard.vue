@@ -80,9 +80,11 @@
           this.loadingStatusList = true;
           let response = await API.get('status-list');
           this.statusList = response.data.data;
-          this.loadingStatusList = false;
         } catch (e) {
+          // TODO: give some user feedback
           LOG.error(e);
+        } finally {
+          this.loadingStatusList = false;
         }
       }
     },

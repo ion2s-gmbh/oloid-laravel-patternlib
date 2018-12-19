@@ -2,12 +2,12 @@
   <li class="pattern u-center" :class="{ active: $store.getters.isActiveMainMenu(menu.path) }">
 
     <!-- Single stupid link to a pattern -->
-    <navbar-link v-if="menu.items.length === 0"
+    <navbar-link v-if="!menu.items.length"
                  :item="menu">
     </navbar-link>
 
     <!-- We have a menu with multiple items -->
-    <template v-if="menu.items.length > 0">
+    <template v-if="menu.items.length">
       <span @click="toggleMainMenu(menu.name)">{{ menu.path }}</span>
       <navbar-group
               :name="menu.name"

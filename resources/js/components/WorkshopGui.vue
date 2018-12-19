@@ -23,6 +23,7 @@
   import Navbar from './Navbar';
   import {API} from '../restClient';
   import LOG from '../logger';
+  import {keyPressed} from "../helpers";
 
   export default {
     name: "WorkshopGui",
@@ -77,10 +78,12 @@
         const C = 67;
         const K = 75;
 
+        const key = keyPressed(event);
+
         /*
          * Trigger the creation of a new Pattern by Ctrl+C
          */
-        if (event.ctrlKey && event.keyCode === C) {
+        if (event.ctrlKey && key === C) {
           this.createPattern();
           event.preventDefault();
         }
@@ -88,7 +91,7 @@
         /*
          * Trigger the explanation of the shortcuts
          */
-        if (event.ctrlKey && event.keyCode === K) {
+        if (event.ctrlKey && key === K) {
           this.toggleKeyMap();
           event.preventDefault();
         }

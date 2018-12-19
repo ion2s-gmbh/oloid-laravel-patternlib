@@ -27,6 +27,8 @@
 </template>
 
 <script>
+  import {keyPressed} from "../helpers";
+
   export default {
     name: "ConfirmationWindow",
 
@@ -48,13 +50,17 @@
     },
 
     mounted() {
+
       const ESC = 27;
 
       /*
        * Close the confirmation modal on ESC
        */
       window.addEventListener('keydown', (event) => {
-        if (event.keyCode === ESC) {
+
+        const key = keyPressed(event);
+
+        if (key === ESC) {
           this.confirmNo();
         }
       });

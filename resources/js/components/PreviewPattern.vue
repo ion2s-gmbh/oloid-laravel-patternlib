@@ -237,6 +237,7 @@
   import ClipboardJS from 'clipboard';
   import {globalShortcuts, previewShortcuts, showKeyMap} from '../shortcuts';
   import Prism from 'prismjs';
+  import {keyPressed} from "../helpers";
 
   export default {
     name: "PreviewPattern",
@@ -461,10 +462,12 @@
         const DEL = 46;
         const E = 69;
 
+        const key = keyPressed(event);
+
         /*
          * Trigger the delete confirmation by Ctrl+DEL
          */
-        if (event.ctrlKey && event.keyCode === DEL) {
+        if (event.ctrlKey && key === DEL) {
           event.preventDefault();
           this.confirmDelete();
         }
@@ -472,7 +475,7 @@
         /*
          * Trigger renaming of the Pattern by Ctrl+E
          */
-        if (event.ctrlKey && event.keyCode === E) {
+        if (event.ctrlKey && key === E) {
           event.preventDefault();
           this.renamePattern();
         }

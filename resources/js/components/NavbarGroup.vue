@@ -47,10 +47,8 @@
           let pathComponents = subMenu.split('.');
           pathComponents.pop();
           subMenu = pathComponents.join('.');
-          this.$store.commit('toggleSubMenu', subMenu);
-        } else {
-          this.$store.commit('toggleSubMenu', subMenu);
         }
+        this.$store.commit('toggleSubMenu', subMenu);
       }
     }
   }

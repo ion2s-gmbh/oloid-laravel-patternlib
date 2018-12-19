@@ -296,29 +296,31 @@
 
     watch: {
       'pattern.sass': function (value) {
-          let codeBox = document.querySelector('.code-sass');
-          codeBox.textContent = value;
-          this.$nextTick(() => {
-            Prism.highlightElement(codeBox);
-          });
+          const codeBox = document.querySelector('.code-sass');
+        this.resetCodeBox(value, codeBox);
       },
       'pattern.html': function (value) {
-        let codeBox = document.querySelector('.code-html');
-        codeBox.textContent = value;
-        this.$nextTick(() => {
-          Prism.highlightElement(codeBox);
-        });
+        const codeBox = document.querySelector('.code-html');
+        this.resetCodeBox(value, codeBox);
       },
       'pattern.template': function (value) {
-        let codeBox = document.querySelector('.code-template');
-        codeBox.textContent = value;
-        this.$nextTick(() => {
-          Prism.highlightElement(codeBox);
-        });
+        const codeBox = document.querySelector('.code-template');
+        this.resetCodeBox(value, codeBox);
       }
     },
 
     methods: {
+
+      /**
+       * Reset the textContent of the highlighted code element.
+       * In the next tick, this code is highlighted with Prismjs.
+       */
+      resetCodeBox: function (value, codeBox) {
+        codeBox.textContent = value;
+        this.$nextTick(() => {
+          Prism.highlightElement(codeBox);
+        });
+      },
 
       /**
        * Reset the tooltip to the initial content.

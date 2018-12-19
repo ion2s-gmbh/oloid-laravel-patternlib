@@ -26,49 +26,37 @@ export default new Vuex.Store({
      * @param state
      * @returns {boolean}
      */
-    isDevMode: state => {
-      return state.config.devMode;
-    },
+    isDevMode: state => state.config.devMode,
 
     /**
      * Get the Laravel app name.
      * @param state
      * @returns {string}
      */
-    appName: state => {
-      return state.appInfo.appName;
-    },
+    appName: state => state.appInfo.appName,
 
     /**
      * Determine if the navi should be reloaded.
      * @param state
      * @returns {boolean}
      */
-    reloadNavi: state => {
-      return state.navi.reload === true;
-    },
+    reloadNavi: state => state.navi.reload === true,
 
-    isActiveMainMenu: (state) => (menu) => {
-      return state.navi.activeMain === menu;
-    },
+    isActiveMainMenu: (state) => (menu) => state.navi.activeMain === menu,
 
     /**
      * Determine if the given sub menu is currently active.
      * @param state
      * @returns {function(*=): boolean}
      */
-    isActiveSubmenu: (state) => (menu) => {
-      return state.navi.activeSub.includes(menu);
-    },
+    isActiveSubmenu: (state) => (menu) => state.navi.activeSub.includes(menu),
 
     /**
      * Determine if the keyMap is shown.
      * @param state
      * @returns {getters.showKeyMap|(function(*))|boolean}
      */
-    showKeyMap: state => {
-      return state.showKeyMap;
-    },
+    showKeyMap: state => state.showKeyMap,
   },
 
   mutations: {

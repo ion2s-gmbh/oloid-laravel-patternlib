@@ -134,7 +134,6 @@ export default new Vuex.Store({
      */
     fetchAppInfo: async ({commit}) => {
       try {
-        console.log('fetching');
         let json = await API.get('info');
         commit('appInfo', json.data);
       } catch (e) {

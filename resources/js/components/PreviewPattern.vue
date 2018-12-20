@@ -74,6 +74,7 @@
 
           <status-bar
                   @update-status="updateStatus"
+                  v-on-clickaway="() => clickaway('status')"
                   :status="pattern.status">
           </status-bar>
 
@@ -238,9 +239,12 @@
   import {globalShortcuts, previewShortcuts, showKeyMap} from '../shortcuts';
   import Prism from 'prismjs';
   import {keyPressed} from "../helpers";
+  import {mixin as clickaway} from 'vue-clickaway'
 
   export default {
     name: "PreviewPattern",
+
+    mixins: [clickaway],
 
     components: {
       ConfirmationWindow,
@@ -311,6 +315,10 @@
     },
 
     methods: {
+
+      clickAway: function () {
+        console.log('clickAway');
+      },
 
       /**
        * Reset the textContent of the highlighted code element.

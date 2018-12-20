@@ -18,7 +18,8 @@ export default new Vuex.Store({
       activeSub: '',
       reload: false
     },
-    showKeyMap: false
+    showKeyMap: false,
+    activeDropdown: ''
   },
 
   getters: {
@@ -59,6 +60,8 @@ export default new Vuex.Store({
      * @returns {getters.showKeyMap|(function(*))|boolean}
      */
     showKeyMap: state => state.showKeyMap,
+
+    activeDropdown: state => state.activeDropdown,
   },
 
   mutations: {
@@ -122,6 +125,10 @@ export default new Vuex.Store({
      */
     toggleKeyMap: (state) => {
       state.showKeyMap = !state.showKeyMap;
+    },
+
+    toggleDropdown: (state, dropdown) => {
+      state.activeDropdown = dropdown;
     }
   },
 
@@ -138,6 +145,14 @@ export default new Vuex.Store({
         commit('appInfo', json.data);
       } catch (e) {
         LOG.error(e);
+      }
+    },
+
+    toggleDropdown: ({commit, state}, dropdown) => {
+      if (state.activeDropdown !== dropdown) {
+        commit('toggleDropdown', dropdown);
+      } else {
+        commit('toggleDropdown', '')
       }
     }
   }

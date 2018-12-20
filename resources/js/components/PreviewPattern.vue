@@ -156,7 +156,7 @@
 
           <!-- MENUE TOGGLE -->
 
-          <button class="toggle--more" @click="showOptions = !showOptions" :class="{ active: showOptions }">
+          <button class="toggle--more" @click="toggleOptions" :class="{ active: showOptions }">
             
             <i class="fas fa-ellipsis-v"></i>
             
@@ -260,7 +260,6 @@
         },
         loading: false,
         isToggled: false,
-        showOptions: false,
         showDescription: false,
         showDeleteConfirm: false,
         editModeDescription: false,
@@ -270,7 +269,8 @@
           hideOnTargetClick: false
         },
         globalShortcuts,
-        previewShortcuts
+        previewShortcuts,
+        optionsDropdown: 'PreviewPattern::optionsDropdown'
       }
     },
 
@@ -292,6 +292,10 @@
        */
       patternUsage: function () {
         return `@${this.pattern.type}('${this.pattern.usage}', [])`;
+      },
+
+      showOptions: function () {
+        return this.$store.getters.activeDropdown === this.optionsDropdown;
       }
     },
 
@@ -423,6 +427,10 @@
         } catch (e) {
           LOG.error(e);
         }
+      },
+
+      toggleOptions: function () {
+        this.$store.dispatch('toggleDropdown', this.optionsDropdown);
       }
     },
 

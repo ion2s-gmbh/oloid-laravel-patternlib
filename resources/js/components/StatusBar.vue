@@ -4,7 +4,7 @@
 
     <div class="status-current"
 
-        @click="isActive = !isActive"        
+        @click="toggleStatus"
 
         v-tooltip.top-center="`${title}`"
 
@@ -49,7 +49,7 @@
 
     data() {
       return {
-        isActive: false
+        'dropdownName': 'StatusBar::dropdown-status'
       }
     },
 
@@ -72,10 +72,19 @@
 
       title: function () {
         return `status: ${this.status}`;
+      },
+
+      isActive: function () {
+        return this.$store.getters.activeDropdown === this.dropdownName;
       }
     },
 
     methods: {
+
+      toggleStatus: function () {
+        this.$store.dispatch('toggleDropdown', this.dropdownName);
+      },
+
       /**
        * Change the status of the Pattern.
        * @param status

@@ -138,7 +138,7 @@
               this.$store.commit('reloadNavi', true);
               this.$router.push('/preview/' + this.pattern.name);
             } else {
-              // TODO: give some user feedback here
+              alert('Pattern could not be saved!');
             }
           }
         } catch (e) {

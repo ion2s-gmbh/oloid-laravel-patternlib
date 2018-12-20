@@ -105,15 +105,13 @@
         /*
          * Validate the name
          */
-        let valid = false;
         try {
-          valid = await this.$validator.validate();
-        } catch (e) {
-          LOG.error(e);
-        }
+          const valid = await this.$validator.validate();
 
-        if (valid) {
-          try {
+          /*
+           * API request
+           */
+          if (valid) {
             const response = await API.put(`pattern/${this.currentName}`, {
               name: this.pattern.name
             });
@@ -121,11 +119,11 @@
             this.$store.commit('reloadNavi', true);
             this.$router.push({
               name: 'preview',
-              params: { patternName: this.pattern.name }
+              params: {patternName: this.pattern.name}
             });
-          } catch (e) {
-            LOG.error(e);
           }
+        } catch (e) {
+          LOG.error(e);
         }
       }
     }

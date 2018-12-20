@@ -91,10 +91,7 @@
        * Cancel the renaming of the pattern by navigating back to the preview page.
        */
       cancel: function () {
-        this.$router.push({
-          name: 'preview',
-          params: { pattern: this.currentName }
-        });
+        this.$router.back();
       },
 
       /**

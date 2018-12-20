@@ -111,9 +111,7 @@
        * Cancel the create action by navigating to the dashboard.
        */
       cancel: function () {
-        this.$router.push({
-          name: 'dashboard'
-        });
+        this.$router.back();
       },
 
       /**

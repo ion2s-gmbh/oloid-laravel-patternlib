@@ -21,8 +21,7 @@
 
 <script>
   import Navbar from './Navbar';
-  import {API} from '../restClient';
-  import LOG from '../logger';
+  import {keyPressed} from "../helpers";
 
   export default {
     name: "WorkshopGui",
@@ -46,7 +45,7 @@
        * Reset the main menu state.
        */
       resetMenu: function () {
-        this.$store.commit('resetMainMenu');
+        this.$store.dispatch('resetMenu')
       },
 
       toggleKeyMap: function () {
@@ -58,13 +57,8 @@
      * Fetch application information before creating.
      * @returns {Promise<void>}
      */
-    async beforeCreate() {
-      try {
-        let json = await API.get('info');
-        this.$store.commit('appInfo', json.data);
-      } catch (e) {
-        LOG.error(e);
-      }
+    beforeCreate() {
+      this.$store.dispatch('fetchAppInfo')
     },
 
     mounted() {
@@ -77,10 +71,12 @@
         const C = 67;
         const K = 75;
 
+        const key = keyPressed(event);
+
         /*
          * Trigger the creation of a new Pattern by Ctrl+C
          */
-        if (event.ctrlKey && event.keyCode === C) {
+        if (event.ctrlKey && key === C) {
           this.createPattern();
           event.preventDefault();
         }
@@ -88,7 +84,7 @@
         /*
          * Trigger the explanation of the shortcuts
          */
-        if (event.ctrlKey && event.keyCode === K) {
+        if (event.ctrlKey && key === K) {
           this.toggleKeyMap();
           event.preventDefault();
         }

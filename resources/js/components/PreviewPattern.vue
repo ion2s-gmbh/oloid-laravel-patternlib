@@ -74,6 +74,7 @@
 
           <status-bar
                   @update-status="updateStatus"
+                  v-on-clickaway="resetDropdowns"
                   :status="pattern.status">
           </status-bar>
 
@@ -156,7 +157,9 @@
 
           <!-- MENUE TOGGLE -->
 
-          <button class="toggle--more" @click="showOptions = !showOptions" :class="{ active: showOptions }">
+          <button class="toggle--more"
+                  @click.prevent.stop="toggleOptions"
+                  :class="{ active: showOptions }">
             
             <i class="fas fa-ellipsis-v"></i>
             
@@ -237,9 +240,13 @@
   import ClipboardJS from 'clipboard';
   import {globalShortcuts, previewShortcuts, showKeyMap} from '../shortcuts';
   import Prism from 'prismjs';
+  import {keyPressed} from "../helpers";
+  import {mixin as clickaway} from 'vue-clickaway'
 
   export default {
     name: "PreviewPattern",
+
+    mixins: [clickaway],
 
     components: {
       ConfirmationWindow,
@@ -259,7 +266,6 @@
         },
         loading: false,
         isToggled: false,
-        showOptions: false,
         showDescription: false,
         showDeleteConfirm: false,
         editModeDescription: false,
@@ -269,7 +275,8 @@
           hideOnTargetClick: false
         },
         globalShortcuts,
-        previewShortcuts
+        previewShortcuts,
+        optionsDropdown: 'PreviewPattern::dropdown-options'
       }
     },
 
@@ -291,34 +298,43 @@
        */
       patternUsage: function () {
         return `@${this.pattern.type}('${this.pattern.usage}', [])`;
+      },
+
+      /**
+       * Determine if the options dropdown is active.
+       */
+      showOptions: function () {
+        return this.$store.getters.activeDropdown === this.optionsDropdown;
       }
     },
 
     watch: {
       'pattern.sass': function (value) {
-          let codeBox = document.querySelector('.code-sass');
-          codeBox.textContent = value;
-          this.$nextTick(() => {
-            Prism.highlightElement(codeBox);
-          });
+          const codeBox = document.querySelector('.code-sass');
+        this.resetCodeBox(value, codeBox);
       },
       'pattern.html': function (value) {
-        let codeBox = document.querySelector('.code-html');
-        codeBox.textContent = value;
-        this.$nextTick(() => {
-          Prism.highlightElement(codeBox);
-        });
+        const codeBox = document.querySelector('.code-html');
+        this.resetCodeBox(value, codeBox);
       },
       'pattern.template': function (value) {
-        let codeBox = document.querySelector('.code-template');
-        codeBox.textContent = value;
-        this.$nextTick(() => {
-          Prism.highlightElement(codeBox);
-        });
+        const codeBox = document.querySelector('.code-template');
+        this.resetCodeBox(value, codeBox);
       }
     },
 
     methods: {
+
+      /**
+       * Reset the textContent of the highlighted code element.
+       * In the next tick, this code is highlighted with Prismjs.
+       */
+      resetCodeBox: function (value, codeBox) {
+        codeBox.textContent = value;
+        this.$nextTick(() => {
+          Prism.highlightElement(codeBox);
+        });
+      },
 
       /**
        * Reset the tooltip to the initial content.
@@ -360,7 +376,7 @@
       updatePattern: async function () {
         this.editModeDescription = false;
         try {
-          let response = await API.put(`pattern/${this.pattern.name}`, {
+          const response = await API.put(`pattern/${this.pattern.name}`, {
             description: this.pattern.description
           });
         } catch (e) {
@@ -379,7 +395,7 @@
         // set to true, if we have to show a loading spinner
         this.loading = true;
         try {
-          let response = await API.get(`pattern/preview/${patternName}`);
+          const response = await API.get(`pattern/preview/${patternName}`);
           this.pattern = response.data.data;
           this.loading = false;
         } catch (e) {
@@ -392,7 +408,7 @@
        */
       updateStatus: async function (status) {
         try {
-          let response = await API.put(`pattern/status/${this.pattern.name}`, {
+          const response = await API.put(`pattern/status/${this.pattern.name}`, {
             status
           });
           this.pattern.status = status;
@@ -414,12 +430,26 @@
        */
       deletePattern: async function (pattern) {
         try {
-          let response = await API.delete(`pattern/${pattern}`);
+          const response = await API.delete(`pattern/${pattern}`);
           this.$store.commit('reloadNavi', true);
           this.$router.push('/');
         } catch (e) {
           LOG.error(e);
         }
+      },
+
+      /**
+       * Toggle the options dropdown
+       */
+      toggleOptions: function () {
+        this.$store.dispatch('toggleDropdown', this.optionsDropdown);
+      },
+
+      /**
+       * Reset dropdowns if clicked somewhere else.
+       */
+      resetDropdowns: function () {
+        this.$store.dispatch('resetDropdowns');
       }
     },
 
@@ -459,10 +489,12 @@
         const DEL = 46;
         const E = 69;
 
+        const key = keyPressed(event);
+
         /*
          * Trigger the delete confirmation by Ctrl+DEL
          */
-        if (event.ctrlKey && event.keyCode === DEL) {
+        if (event.ctrlKey && key === DEL) {
           event.preventDefault();
           this.confirmDelete();
         }
@@ -470,7 +502,7 @@
         /*
          * Trigger renaming of the Pattern by Ctrl+E
          */
-        if (event.ctrlKey && event.keyCode === E) {
+        if (event.ctrlKey && key === E) {
           event.preventDefault();
           this.renamePattern();
         }

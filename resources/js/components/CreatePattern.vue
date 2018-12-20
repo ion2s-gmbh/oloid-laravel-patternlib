@@ -111,9 +111,7 @@
        * Cancel the create action by navigating to the dashboard.
        */
       cancel: function () {
-        this.$router.push({
-          name: 'dashboard'
-        });
+        this.$router.back();
       },
 
       /**
@@ -123,29 +121,26 @@
         /*
          * Validate the form
          */
-        let valid = false;
         try {
-          valid = await this.$validator.validate();
-        } catch (e) {
-          LOG.error(e);
-        }
+          const valid = await this.$validator.validate();
 
-        /*
-         * API request
-         */
-        if (valid) {
-          try {
-            let response = await API.post('pattern', {
+          /*
+           * API request
+           */
+          if (valid) {
+            const response = await API.post('pattern', {
               'name': this.pattern.name,
               'description': this.pattern.description
             });
             if (response.status === 201) {
               this.$store.commit('reloadNavi', true);
               this.$router.push('/preview/' + this.pattern.name);
+            } else {
+              alert('Pattern could not be saved!');
             }
-          } catch (e) {
-            LOG.error(e.status);
           }
+        } catch (e) {
+          LOG.error(e);
         }
       }
     }

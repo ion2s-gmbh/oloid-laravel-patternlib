@@ -40,7 +40,6 @@
 
 <script>
 
-  import ExampleComponent from './ExampleComponent.vue';
   import {API} from '../restClient';
   import LOG from '../logger';
   import {globalShortcuts, showKeyMap} from '../shortcuts';
@@ -50,7 +49,6 @@
     name: "Dashboard",
 
     components: {
-      ExampleComponent,
       Shortcuts
     },
 
@@ -78,11 +76,13 @@
       fetchStatusList: async function () {
         try {
           this.loadingStatusList = true;
-          let response = await API.get('status-list');
+          const response = await API.get('status-list');
           this.statusList = response.data.data;
-          this.loadingStatusList = false;
         } catch (e) {
+          // TODO: give some user feedback
           LOG.error(e);
+        } finally {
+          this.loadingStatusList = false;
         }
       }
     },

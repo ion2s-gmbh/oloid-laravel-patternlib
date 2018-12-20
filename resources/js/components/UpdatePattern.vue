@@ -114,7 +114,7 @@
 
         if (valid) {
           try {
-            let response = await API.put(`pattern/${this.currentName}`, {
+            const response = await API.put(`pattern/${this.currentName}`, {
               name: this.pattern.name
             });
 

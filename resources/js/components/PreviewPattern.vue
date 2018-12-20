@@ -363,7 +363,7 @@
       updatePattern: async function () {
         this.editModeDescription = false;
         try {
-          let response = await API.put(`pattern/${this.pattern.name}`, {
+          const response = await API.put(`pattern/${this.pattern.name}`, {
             description: this.pattern.description
           });
         } catch (e) {
@@ -382,7 +382,7 @@
         // set to true, if we have to show a loading spinner
         this.loading = true;
         try {
-          let response = await API.get(`pattern/preview/${patternName}`);
+          const response = await API.get(`pattern/preview/${patternName}`);
           this.pattern = response.data.data;
           this.loading = false;
         } catch (e) {
@@ -395,7 +395,7 @@
        */
       updateStatus: async function (status) {
         try {
-          let response = await API.put(`pattern/status/${this.pattern.name}`, {
+          const response = await API.put(`pattern/status/${this.pattern.name}`, {
             status
           });
           this.pattern.status = status;
@@ -417,7 +417,7 @@
        */
       deletePattern: async function (pattern) {
         try {
-          let response = await API.delete(`pattern/${pattern}`);
+          const response = await API.delete(`pattern/${pattern}`);
           this.$store.commit('reloadNavi', true);
           this.$router.push('/');
         } catch (e) {

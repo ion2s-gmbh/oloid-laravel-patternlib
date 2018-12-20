@@ -78,7 +78,7 @@
       fetchStatusList: async function () {
         try {
           this.loadingStatusList = true;
-          let response = await API.get('status-list');
+          const response = await API.get('status-list');
           this.statusList = response.data.data;
         } catch (e) {
           // TODO: give some user feedback

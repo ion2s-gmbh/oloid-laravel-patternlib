@@ -74,6 +74,7 @@
 
           <status-bar
                   @update-status="updateStatus"
+                  v-on-clickaway="resetDropdowns"
                   :status="pattern.status">
           </status-bar>
 
@@ -156,7 +157,9 @@
 
           <!-- MENUE TOGGLE -->
 
-          <button class="toggle--more" @click="showOptions = !showOptions" :class="{ active: showOptions }">
+          <button class="toggle--more"
+                  @click.prevent.stop="toggleOptions"
+                  :class="{ active: showOptions }">
             
             <i class="fas fa-ellipsis-v"></i>
             
@@ -238,9 +241,12 @@
   import {globalShortcuts, previewShortcuts, showKeyMap} from '../shortcuts';
   import Prism from 'prismjs';
   import {keyPressed} from "../helpers";
+  import {mixin as clickaway} from 'vue-clickaway'
 
   export default {
     name: "PreviewPattern",
+
+    mixins: [clickaway],
 
     components: {
       ConfirmationWindow,
@@ -260,7 +266,6 @@
         },
         loading: false,
         isToggled: false,
-        showOptions: false,
         showDescription: false,
         showDeleteConfirm: false,
         editModeDescription: false,
@@ -270,7 +275,8 @@
           hideOnTargetClick: false
         },
         globalShortcuts,
-        previewShortcuts
+        previewShortcuts,
+        optionsDropdown: 'PreviewPattern::dropdown-options'
       }
     },
 
@@ -292,6 +298,13 @@
        */
       patternUsage: function () {
         return `@${this.pattern.type}('${this.pattern.usage}', [])`;
+      },
+
+      /**
+       * Determine if the options dropdown is active.
+       */
+      showOptions: function () {
+        return this.$store.getters.activeDropdown === this.optionsDropdown;
       }
     },
 
@@ -423,6 +436,20 @@
         } catch (e) {
           LOG.error(e);
         }
+      },
+
+      /**
+       * Toggle the options dropdown
+       */
+      toggleOptions: function () {
+        this.$store.dispatch('toggleDropdown', this.optionsDropdown);
+      },
+
+      /**
+       * Reset dropdowns if clicked somewhere else.
+       */
+      resetDropdowns: function () {
+        this.$store.dispatch('resetDropdowns');
       }
     },
 

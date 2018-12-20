@@ -45,7 +45,7 @@
        * Reset the main menu state.
        */
       resetMenu: function () {
-        this.$store.commit('resetMainMenu');
+        this.$store.dispatch('resetMenu')
       },
 
       toggleKeyMap: function () {

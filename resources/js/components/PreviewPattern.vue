@@ -74,7 +74,7 @@
 
           <status-bar
                   @update-status="updateStatus"
-                  v-on-clickaway="() => clickaway('status')"
+                  v-on-clickaway="resetDropdowns"
                   :status="pattern.status">
           </status-bar>
 
@@ -157,7 +157,9 @@
 
           <!-- MENUE TOGGLE -->
 
-          <button class="toggle--more" @click="toggleOptions" :class="{ active: showOptions }">
+          <button class="toggle--more"
+                  @click.prevent.stop="toggleOptions"
+                  :class="{ active: showOptions }">
             
             <i class="fas fa-ellipsis-v"></i>
             
@@ -323,10 +325,6 @@
 
     methods: {
 
-      clickAway: function () {
-        console.log('clickAway');
-      },
-
       /**
        * Reset the textContent of the highlighted code element.
        * In the next tick, this code is highlighted with Prismjs.
@@ -445,6 +443,13 @@
        */
       toggleOptions: function () {
         this.$store.dispatch('toggleDropdown', this.optionsDropdown);
+      },
+
+      /**
+       * Reset dropdowns if clicked somewhere else.
+       */
+      resetDropdowns: function () {
+        this.$store.dispatch('resetDropdowns');
       }
     },
 

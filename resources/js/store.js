@@ -129,6 +129,14 @@ export default new Vuex.Store({
 
     toggleDropdown: (state, dropdown) => {
       state.activeDropdown = dropdown;
+    },
+
+    /**
+     * Reset the activeDropdown.
+     * @param state
+     */
+    resetDropdown: (state) => {
+      state.activeDropdown = '';
     }
   },
 
@@ -159,7 +167,18 @@ export default new Vuex.Store({
       if (state.activeDropdown !== dropdown) {
         commit('toggleDropdown', dropdown);
       } else {
-        commit('toggleDropdown', '')
+        commit('resetDropdown');
+      }
+    },
+
+    /**
+     * Trigger reset of any active dropdown menu in the main window.
+     * @param commit
+     * @param state
+     */
+    resetDropdowns: ({commit, state}) => {
+      if (state.activeDropdown !== '') {
+        commit('resetDropdown');
       }
     },
 

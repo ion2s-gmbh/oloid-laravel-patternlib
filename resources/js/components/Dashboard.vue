@@ -40,7 +40,6 @@
 
 <script>
 
-  import ExampleComponent from './ExampleComponent.vue';
   import {API} from '../restClient';
   import LOG from '../logger';
   import {globalShortcuts, showKeyMap} from '../shortcuts';
@@ -50,7 +49,6 @@
     name: "Dashboard",
 
     components: {
-      ExampleComponent,
       Shortcuts
     },
 

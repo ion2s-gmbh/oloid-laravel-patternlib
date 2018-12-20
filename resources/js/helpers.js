@@ -1,3 +1,8 @@
+/**
+ * Deternmine the key that has been pressed in the given event.
+ * @param event
+ * @returns {*}
+ */
 const keyPressed = function (event) {
 
   let key;

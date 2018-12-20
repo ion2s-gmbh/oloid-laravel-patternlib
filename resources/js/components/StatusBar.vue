@@ -81,6 +81,9 @@
 
     methods: {
 
+      /**
+       * Toggle the status dropdown.
+       */
       toggleStatus: function () {
         this.$store.dispatch('toggleDropdown', this.dropdownName);
       },
@@ -91,7 +94,7 @@
        */
       changeStatus: function (status) {
         this.$emit('update-status', status);
-        this.isActive = false;
+        this.$store.dispatch('toggleDropdown', this.dropdownName);
       }
     }
   }

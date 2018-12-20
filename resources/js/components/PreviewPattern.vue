@@ -270,7 +270,7 @@
         },
         globalShortcuts,
         previewShortcuts,
-        optionsDropdown: 'PreviewPattern::optionsDropdown'
+        optionsDropdown: 'PreviewPattern::dropdown-options'
       }
     },
 
@@ -294,6 +294,9 @@
         return `@${this.pattern.type}('${this.pattern.usage}', [])`;
       },
 
+      /**
+       * Determine if the options dropdown is active.
+       */
       showOptions: function () {
         return this.$store.getters.activeDropdown === this.optionsDropdown;
       }
@@ -429,6 +432,9 @@
         }
       },
 
+      /**
+       * Toggle the options dropdown
+       */
       toggleOptions: function () {
         this.$store.dispatch('toggleDropdown', this.optionsDropdown);
       }

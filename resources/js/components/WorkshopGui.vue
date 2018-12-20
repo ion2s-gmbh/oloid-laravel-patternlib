@@ -21,8 +21,6 @@
 
 <script>
   import Navbar from './Navbar';
-  import {API} from '../restClient';
-  import LOG from '../logger';
   import {keyPressed} from "../helpers";
 
   export default {
@@ -59,13 +57,8 @@
      * Fetch application information before creating.
      * @returns {Promise<void>}
      */
-    async beforeCreate() {
-      try {
-        let json = await API.get('info');
-        this.$store.commit('appInfo', json.data);
-      } catch (e) {
-        LOG.error(e);
-      }
+    beforeCreate() {
+      this.$store.dispatch('fetchAppInfo')
     },
 
     mounted() {

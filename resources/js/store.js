@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import config from './config';
+import {API} from './restClient';
+import LOG from './logger';
 
 Vue.use(Vuex);
 
@@ -124,6 +126,20 @@ export default new Vuex.Store({
   },
 
   actions: {
-    //
+
+    /**
+     * Fetch the app information.
+     * @param commit
+     * @returns {Promise<void>}
+     */
+    fetchAppInfo: async ({commit}) => {
+      try {
+        console.log('fetching');
+        let json = await API.get('info');
+        commit('appInfo', json.data);
+      } catch (e) {
+        LOG.error(e);
+      }
+    }
   }
 });

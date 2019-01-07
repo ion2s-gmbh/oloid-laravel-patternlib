@@ -36,14 +36,39 @@ class PatternResource extends JsonResource
     private function getType()
     {
         $explode = explode('.', $this->name);
-        return $type = substr(array_first($explode), 0, -1);
+        return $type = array_first($explode);
     }
 
     private function getUsage()
     {
         $explode = explode('.', $this->name);
         array_shift($explode);
-        return implode('.', $explode);
+        $name = implode('.', $explode);
+        $type = $this->getType();
+
+        $valuesString = $this->getValuesAsString();
+
+        return "@{$type}('{$name}', {$valuesString})";
+    }
+
+    /**
+     * Convert the metadata values to an array string representation.
+     * @return string
+     */
+    private function getValuesAsString(): string
+    {
+        $valuesString = '[';
+        $values = [];
+
+        if (is_array($this->metadata->values)) {
+            foreach ($this->metadata->values as $key => $value) {
+                $values[] = "'{$key}' => '{$value}'";
+            }
+        }
+
+        $valuesString .= implode(', ', $values);
+        $valuesString .= ']';
+        return $valuesString;
     }
 
 

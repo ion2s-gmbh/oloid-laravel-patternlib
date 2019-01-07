@@ -103,7 +103,7 @@
           </a>
 
           <!-- Hidden usage for copy to clipboard -->
-          <span id="usage" class="u-transparent">{{ patternUsage }}</span>
+          <span id="usage" class="u-transparent">{{ pattern.usage }}</span>
 
         </div>
 
@@ -291,13 +291,6 @@
        */
       markdownDescription: function () {
         return marked(this.pattern.description);
-      },
-
-      /**
-       * Concatenate the usage string.
-       */
-      patternUsage: function () {
-        return `@${this.pattern.type}('${this.pattern.usage}', [])`;
       },
 
       /**

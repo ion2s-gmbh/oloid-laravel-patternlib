@@ -41,7 +41,7 @@ class PatternServiceProvider extends ServiceProvider
             if (dir_contains_any($directory, 'blade.php')) {
                 $componentParts = explode('/', $directory);
                 $component = array_pop($componentParts);
-                $components[str_singular($component)] = $component;
+                $components[$component] = $component;
             }
         }
 

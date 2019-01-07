@@ -106,10 +106,10 @@ class PatternControllerTest extends BaseTestCase
         $expected = [
             'data' => [
                 'name' => 'atoms.text.headline1',
-                'type' => 'atom',
+                'type' => 'atoms',
                 'description' => 'Our h1 for testing',
                 'status' => 'review',
-                'usage' => 'text.headline1',
+                'usage' => '@atoms(\'text.headline1\', [\'text\' => \'Testing\'])',
                 'template' => "<h1>{{ \$text }}</h1>",
                 'html' => "<h1>Testing</h1>",
                 'sass' => "h1 {\n  color: red;\n}",

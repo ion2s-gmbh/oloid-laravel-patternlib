@@ -20,7 +20,8 @@ class HelperMethodsTest extends BaseTestCase
     public function it_should_parse_a_php_template_to_html()
     {
         // arrange
-        $template = '<h1>{{ $text }}</h1>';
+        $this->preparePatternStub();
+        $template = 'atoms.text.headline1';
 
         // act
         try {
@@ -29,20 +30,6 @@ class HelperMethodsTest extends BaseTestCase
         } catch (Exception $e) {
             $this->fail();
         }
-    }
-
-    /**
-     * @test
-     * @covers ::compile_blade_string
-     * @expectedException \Laratomics\Exceptions\RenderingException
-     */
-    public function it_should_parse_a_php_template_to_html_with_rendering_exception()
-    {
-        // arrange
-        $template = '<?php throw new Exception("TEST"); ?>';
-
-        // act
-        $html = compile_blade_string($template, ['text' => 'TEST']);
     }
 
     /**

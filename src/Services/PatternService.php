@@ -174,8 +174,8 @@ class PatternService
         /*
          * Create the preview
          */
-        $values = !is_null($pattern->metadata->values) ? $pattern->metadata->values : array_merge($values, []);
-        $pattern->html = compile_blade_string($pattern->template, $values);
+        $pattern->values = !is_null($pattern->metadata->values) ? $pattern->metadata->values : array_merge($values, []);
+        $pattern->html = compile_blade_string($pattern->name, $pattern->values);
 
         return $pattern;
     }

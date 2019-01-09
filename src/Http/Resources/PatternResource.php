@@ -23,7 +23,8 @@ class PatternResource extends JsonResource
                 'usage' => $this->getUsage(),
                 'template' => $this->template,
                 'html' => $this->html,
-                'sass' => $this->sass
+                'sass' => $this->sass,
+                'values' => $this->values
             ]
         ];
     }
@@ -46,7 +47,7 @@ class PatternResource extends JsonResource
         $name = implode('.', $explode);
         $type = $this->getType();
 
-        $valuesString = $this->getValuesAsString();
+        $valuesString = $this->getValuesAsString($this->metadata->values);
 
         return "@{$type}('{$name}', {$valuesString})";
     }
@@ -55,21 +56,24 @@ class PatternResource extends JsonResource
      * Convert the metadata values to an array string representation.
      * @return string
      */
-    private function getValuesAsString(): string
+    private function getValuesAsString($values): string
     {
-        $valuesString = '[';
-        $values = [];
+        $argsString = '[';
+        $args = [];
 
-        if (is_array($this->metadata->values)) {
-            foreach ($this->metadata->values as $key => $value) {
-                $values[] = "'{$key}' => '{$value}'";
+        if (is_array($values)) {
+            foreach ($values as $key => $value) {
+                if (is_array($value)) {
+                    $value = $this->getValuesAsString($value);
+                    $args[] = "'{$key}' => {$value}";
+                } else {
+                    $args[] = "'{$key}' => '{$value}'";
+                }
             }
         }
 
-        $valuesString .= implode(', ', $values);
-        $valuesString .= ']';
-        return $valuesString;
+        $argsString .= implode(', ', $args);
+        $argsString .= ']';
+        return $argsString;
     }
-
-
 }

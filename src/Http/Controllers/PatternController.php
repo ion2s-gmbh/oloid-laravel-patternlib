@@ -81,7 +81,7 @@ class PatternController extends Controller
      *
      * @param string $pattern
      * @return JsonResponse
-     * @throws FileNotFoundException
+     * @throws RenderingException
      */
     public function remove(string $pattern): JsonResponse
     {

@@ -783,4 +783,22 @@ class PatternServiceTest extends BaseTestCase
         $this->assertContains('homepage', $fs->get("{$this->tempDir}/patterns/pages/pages.scss"));
         $this->assertContains('pages/pages', $fs->get("{$this->tempDir}/patterns/patterns.scss"));
     }
+
+    /**
+     * @test
+     * @covers \Laratomics\Services\PatternService
+     */
+    public function it_should_update_a_custom_directive_reference_of_a_renamed_pattern()
+    {
+        // arrange
+        $this->preparePatternStub();
+
+        $oldPattern = $this->cut->loadPattern('atoms.buttons.button');
+
+        // act
+        $pattern = $this->cut->rename('atoms.buttons.button', 'atoms.buttons.submit');
+
+        // assert
+        $this->markTestIncomplete('Not yet implemented!');
+    }
 }

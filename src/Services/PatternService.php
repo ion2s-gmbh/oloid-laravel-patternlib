@@ -399,6 +399,13 @@ class PatternService
 
         $this->removeSassImport($oldPattern);
 
+        $this->updatePatternReferences($oldPattern, $newName);
+
         return $this->loadPattern($newName);
+    }
+
+    private function updatePatternReferences(Pattern $oldPattern, $newName)
+    {
+
     }
 }

@@ -22,6 +22,9 @@
 
           </label>
 
+          <!-- Couter for patterns -->
+          <span>{{ totalCount }} | {{ reviewCount }} | {{ rejectedCount }} | {{ acceptedCount }} </span>
+
         </div>
 
         <div class="code-tabs">
@@ -264,6 +267,10 @@
           name: this.patternName,
           description: ''
         },
+        totalCount: 1000,
+        reviewCount: 100,
+        rejectedCount: 5,
+        acceptedCount: 500,
         loading: false,
         isToggled: false,
         showDescription: false,

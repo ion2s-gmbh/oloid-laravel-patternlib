@@ -6,6 +6,8 @@ use Closure;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use Laratomics\Services\PatternCounterService;
+use Laratomics\Services\PatternService;
 
 class PatternServiceProvider extends ServiceProvider
 {
@@ -16,6 +18,10 @@ class PatternServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->app->singleton(PatternCounterService::class, function ($app) {
+            return new PatternCounterService();
+        });
+
         $components = $this->getComponents();
         foreach ($components as $component => $path) {
             Blade::directive($component, $this->directiveResolution($path));
@@ -64,6 +70,9 @@ class PatternServiceProvider extends ServiceProvider
 
         $extComponent = "{$prefix}.{$path}.{$strippedComponent}";
         $extExpression = str_replace($strippedComponent, "{$extComponent}", $expression);
+
+        $this->trackPatternStatus("{$path}.{$strippedComponent}");
+
         return $extExpression;
     }
 
@@ -87,5 +96,13 @@ class PatternServiceProvider extends ServiceProvider
             $extExpression = $this->parse($expression, $path);
             return "<?php echo view({$extExpression}, array_except(get_defined_vars(), array('__data', '__path')))->render() ?>";
         };
+    }
+
+    private function trackPatternStatus(string $pattern)
+    {
+        $patternService = $this->app->make(PatternService::class);
+        $patternCounterService = $this->app->make(PatternCounterService::class);
+        $pattern = $patternService->loadPattern($pattern);
+        $patternCounterService->incrementCounter($pattern->metadata->status);
     }
 }

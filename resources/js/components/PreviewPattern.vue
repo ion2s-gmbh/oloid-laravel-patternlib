@@ -23,7 +23,7 @@
           </label>
 
           <!-- Couter for patterns -->
-          <span>{{ totalCount }} | {{ reviewCount }} | {{ rejectedCount }} | {{ acceptedCount }} </span>
+          <span>{{ totalPatternCount }} | {{ pattern.counter.todo }} | {{ pattern.counter.review }} | {{ pattern.counter.rejected }} | {{ pattern.counter.done }} </span>
 
         </div>
 
@@ -265,12 +265,14 @@
       return {
         pattern: {
           name: this.patternName,
-          description: ''
+          description: '',
+          counter: {
+            todo: 0,
+            review: 0,
+            rejected: 0,
+            done: 0
+          }
         },
-        totalCount: 1000,
-        reviewCount: 100,
-        rejectedCount: 5,
-        acceptedCount: 500,
         loading: false,
         isToggled: false,
         showDescription: false,
@@ -305,6 +307,10 @@
        */
       showOptions: function () {
         return this.$store.getters.activeDropdown === this.optionsDropdown;
+      },
+
+      totalPatternCount: function () {
+        return this.pattern.counter.todo + this.pattern.counter.review + this.pattern.counter.rejected + this.pattern.counter.done;
       }
     },
 

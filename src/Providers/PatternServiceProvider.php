@@ -6,8 +6,8 @@ use Closure;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
-use Laratomics\Services\PatternCounterService;
 use Laratomics\Services\PatternService;
+use Laratomics\Services\PatternStatusService;
 
 class PatternServiceProvider extends ServiceProvider
 {
@@ -18,8 +18,8 @@ class PatternServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->app->singleton(PatternCounterService::class, function ($app) {
-            return new PatternCounterService();
+        $this->app->singleton(PatternStatusService::class, function ($app) {
+            return new PatternStatusService();
         });
 
         $components = $this->getComponents();
@@ -71,7 +71,7 @@ class PatternServiceProvider extends ServiceProvider
         $extComponent = "{$prefix}.{$path}.{$strippedComponent}";
         $extExpression = str_replace($strippedComponent, "{$extComponent}", $expression);
 
-        $this->trackPatternStatus("{$path}.{$strippedComponent}");
+        $this->evaluatePatternStatus("{$path}.{$strippedComponent}");
 
         return $extExpression;
     }
@@ -87,6 +87,8 @@ class PatternServiceProvider extends ServiceProvider
     }
 
     /**
+     * Generate the Closure for the directive.
+     *
      * @param $path
      * @return Closure
      */
@@ -98,11 +100,17 @@ class PatternServiceProvider extends ServiceProvider
         };
     }
 
-    private function trackPatternStatus(string $pattern)
+    /**
+     * Evaluate the Patter's status that is defined in the Pattern's markdown file.
+     *
+     * @param string $pattern
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     */
+    private function evaluatePatternStatus(string $pattern)
     {
         $patternService = $this->app->make(PatternService::class);
-        $patternCounterService = $this->app->make(PatternCounterService::class);
+        $patternStatusService = $this->app->make(PatternStatusService::class);
         $pattern = $patternService->loadPattern($pattern);
-        $patternCounterService->incrementCounter($pattern->metadata->status);
+        $patternStatusService->evaluate($pattern);
     }
 }

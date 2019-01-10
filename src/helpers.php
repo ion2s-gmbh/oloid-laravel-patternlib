@@ -2,19 +2,28 @@
 
 
 use Illuminate\Filesystem\Filesystem;
+use Laratomics\Models\Pattern;
 
 if (!function_exists('compile_blade_string')) {
     /**
-     * Compiles a string containing Blade content to shippable HTML.
+     * Compiles a Pattern's Blade template content to shippable HTML.
      *
-     * @param $value
-     * @param array $args
+     * @param Pattern $pattern
      * @return false|string
      */
-    function compile_blade_string($value, array $args = []): string
+    function compile_blade_string(Pattern $pattern): string
     {
-        $path = "patterns.{$value}";
-        return view($path, $args);
+        /*
+         * For status evaluation the template is also compiled as String. Therefore we avoid
+         * the cache.
+         */
+        Blade::compileString($pattern->template);
+
+        /*
+         * Compile the view using the default Laravel View.
+         */
+        $path = "patterns.{$pattern->name}";
+        return view($path, $pattern->values);
     }
 }
 

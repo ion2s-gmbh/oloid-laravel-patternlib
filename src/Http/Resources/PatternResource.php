@@ -3,7 +3,7 @@
 namespace Laratomics\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use Laratomics\Services\PatternCounterService;
+use Laratomics\Services\PatternStatusService;
 
 class PatternResource extends JsonResource
 {
@@ -15,7 +15,10 @@ class PatternResource extends JsonResource
      */
     public function toArray($request)
     {
-        $patternCounterService = app()->make(PatternCounterService::class);
+        /*
+         * Get the PatternStatusService singleton from the IoC container.
+         */
+        $patternStatusService = app(PatternStatusService::class);
 
         return [
             'data' => [
@@ -28,7 +31,8 @@ class PatternResource extends JsonResource
                 'html' => $this->html,
                 'sass' => $this->sass,
                 'values' => $this->values,
-                'counter' => $patternCounterService->getCounters()
+//                'counter' => $patternStatusService->getCounters(),
+                'subPatterns' => $patternStatusService->getPatterns()
             ]
         ];
     }
@@ -44,6 +48,11 @@ class PatternResource extends JsonResource
         return $type = array_first($explode);
     }
 
+    /**
+     * Generate the usage string.
+     *
+     * @return string
+     */
     private function getUsage()
     {
         $explode = explode('.', $this->name);
@@ -58,6 +67,7 @@ class PatternResource extends JsonResource
 
     /**
      * Convert the metadata values to an array string representation.
+     *
      * @return string
      */
     private function getValuesAsString($values): string

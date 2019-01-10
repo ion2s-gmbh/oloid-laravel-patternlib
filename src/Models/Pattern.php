@@ -20,6 +20,7 @@ class Pattern extends Model
         'rootSassFile',
         'markdownFile',
         'values',
-//        'counter'
+        'status',
+        'counter'
     ];
 }

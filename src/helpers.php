@@ -2,7 +2,6 @@
 
 
 use Illuminate\Filesystem\Filesystem;
-use Laratomics\Exceptions\RenderingException;
 
 if (!function_exists('compile_blade_string')) {
     /**
@@ -11,7 +10,6 @@ if (!function_exists('compile_blade_string')) {
      * @param $value
      * @param array $args
      * @return false|string
-     * @throws RenderingException
      */
     function compile_blade_string($value, array $args = []): string
     {

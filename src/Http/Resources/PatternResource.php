@@ -3,6 +3,7 @@
 namespace Laratomics\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Laratomics\Services\PatternCounterService;
 
 class PatternResource extends JsonResource
 {
@@ -14,6 +15,8 @@ class PatternResource extends JsonResource
      */
     public function toArray($request)
     {
+        $patternCounterService = app()->make(PatternCounterService::class);
+
         return [
             'data' => [
                 'name' => $this->name,
@@ -24,7 +27,8 @@ class PatternResource extends JsonResource
                 'template' => $this->template,
                 'html' => $this->html,
                 'sass' => $this->sass,
-                'values' => $this->values
+                'values' => $this->values,
+                'counter' => $patternCounterService->getCounters()
             ]
         ];
     }

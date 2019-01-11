@@ -90,12 +90,13 @@ class PatternServiceProviderTest extends BaseTestCase
     public function it_should_return_the_callable_handler_for_blade_directive()
     {
         // arrange
+        $this->preparePatternStub();
         $patternServiceProvider = new PatternServiceProvider(app());
         $closure = $patternServiceProvider->directiveResolution('atoms');
-        $expected = "<?php echo view('patterns.atoms.headline.one', ['text' => 'Heading 1'], array_except(get_defined_vars(), array('__data', '__path')))->render() ?>";
+        $expected = "<?php echo view('patterns.atoms.text.headline1', ['text' => 'Heading 1'], array_except(get_defined_vars(), array('__data', '__path')))->render() ?>";
 
         // act
-        $parsed = $closure->call($patternServiceProvider, "'headline.one', ['text' => 'Heading 1']");
+        $parsed = $closure->call($patternServiceProvider, "'text.headline1', ['text' => 'Heading 1']");
 
         // assert
         $this->assertTrue(is_callable($closure));

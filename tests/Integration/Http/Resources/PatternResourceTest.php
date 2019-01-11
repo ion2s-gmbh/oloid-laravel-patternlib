@@ -29,6 +29,10 @@ class PatternResourceTest extends BaseTestCase
         $pattern->template = '<h1>{{ $text }}</h1>';
         $pattern->html = '<h1>Heading 1</h1>';
         $pattern->sass = 'h1 { color: red; }';
+        $pattern->values = [
+            'title' => 'Testing',
+            'todos' => ['a', 'b', 'c']
+        ];
 
         /*
          * Metadata Mock
@@ -38,7 +42,14 @@ class PatternResourceTest extends BaseTestCase
             ->andReturn('This is a test description')
             ->getMock();
         $pattern->metadata->status = 'TODO';
-        $pattern->metadata->values = [];
+        $pattern->metadata->values = [
+            'title' => 'Testing',
+            'todos' => [
+                'a',
+                'b',
+                'c'
+            ]
+        ];
 
         $this->cut = new PatternResource($pattern);
     }
@@ -55,10 +66,20 @@ class PatternResourceTest extends BaseTestCase
                 'type' => 'atoms',
                 'description' => 'This is a test description',
                 'status' => 'TODO',
-                'usage' => '@atoms(\'test.element\', [])',
+                'usage' => '@atoms(\'test.element\', [\'title\' => \'Testing\', \'todos\' => [\'0\' => \'a\', \'1\' => \'b\', \'2\' => \'c\']])',
                 'template' => '<h1>{{ $text }}</h1>',
                 'html' => '<h1>Heading 1</h1>',
-                'sass' => 'h1 { color: red; }'
+                'sass' => 'h1 { color: red; }',
+                'values' => [
+                    'title' => 'Testing',
+                    'todos' => ['a', 'b', 'c']
+                ],
+                'subPatterns' => [
+                    'todo' => [],
+                    'review' => [],
+                    'rejected' => [],
+                    'done' => []
+                ]
             ]
         ];
         $result = $this->cut->toArray($this->pattern);

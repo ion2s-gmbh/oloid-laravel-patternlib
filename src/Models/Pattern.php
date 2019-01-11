@@ -18,6 +18,9 @@ class Pattern extends Model
         'templateFile',
         'sassFile',
         'rootSassFile',
-        'markdownFile'
+        'markdownFile',
+        'values',
+        'status',
+        'counter'
     ];
 }

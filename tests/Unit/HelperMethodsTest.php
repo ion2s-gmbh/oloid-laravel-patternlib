@@ -6,6 +6,7 @@ namespace Unit;
 
 use Exception;
 use Illuminate\Filesystem\Filesystem;
+use Laratomics\Models\Pattern;
 use Tests\BaseTestCase;
 use Tests\Traits\TestStubs;
 
@@ -20,29 +21,20 @@ class HelperMethodsTest extends BaseTestCase
     public function it_should_parse_a_php_template_to_html()
     {
         // arrange
-        $template = '<h1>{{ $text }}</h1>';
+        $this->preparePatternStub();
+        $pattern = new Pattern();
+        $pattern->name = 'atoms.text.headline1';
+        $pattern->status = 'todo';
+        $pattern->values = ['text' => 'TEST'];
+        $pattern->template = '<h1>{{ $text }}</h1>';
 
         // act
         try {
-            $html = compile_blade_string($template, ['text' => 'TEST']);
+            $html = compile_blade_string($pattern);
             $this->assertEquals('<h1>TEST</h1>', $html);
         } catch (Exception $e) {
             $this->fail();
         }
-    }
-
-    /**
-     * @test
-     * @covers ::compile_blade_string
-     * @expectedException \Laratomics\Exceptions\RenderingException
-     */
-    public function it_should_parse_a_php_template_to_html_with_rendering_exception()
-    {
-        // arrange
-        $template = '<?php throw new Exception("TEST"); ?>';
-
-        // act
-        $html = compile_blade_string($template, ['text' => 'TEST']);
     }
 
     /**

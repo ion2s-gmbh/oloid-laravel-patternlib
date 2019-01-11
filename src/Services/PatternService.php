@@ -169,13 +169,14 @@ class PatternService
         $markdown = $this->loadMarkdownFile($name);
         $pattern->markdown = $markdown;
         $pattern->metadata = YamlFrontMatter::parse($markdown);
+        $pattern->status = $pattern->metadata->status;
         $pattern->sass = $this->loadSassFile($name);
 
         /*
          * Create the preview
          */
-        $values = !is_null($pattern->metadata->values) ? $pattern->metadata->values : array_merge($values, []);
-        $pattern->html = compile_blade_string($pattern->template, $values);
+        $pattern->values = !is_null($pattern->metadata->values) ? $pattern->metadata->values : array_merge($values, []);
+        $pattern->html = compile_blade_string($pattern);
 
         return $pattern;
     }

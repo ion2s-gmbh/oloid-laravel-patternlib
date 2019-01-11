@@ -2918,24 +2918,24 @@
     "packages-dev": [
         {
             "name": "clue/stdio-react",
-            "version": "v2.2.0",
+            "version": "v1.2.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/clue/reactphp-stdio.git",
-                "reference": "43d24e4617b2d001554ebbe78e3ae968e9114b21"
+                "url": "https://github.com/clue/php-stdio-react.git",
+                "reference": "f751e05a025ddf7bbad53f9dd54333bf3921bd2a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/clue/reactphp-stdio/zipball/43d24e4617b2d001554ebbe78e3ae968e9114b21",
-                "reference": "43d24e4617b2d001554ebbe78e3ae968e9114b21",
+                "url": "https://api.github.com/repos/clue/php-stdio-react/zipball/f751e05a025ddf7bbad53f9dd54333bf3921bd2a",
+                "reference": "f751e05a025ddf7bbad53f9dd54333bf3921bd2a",
                 "shasum": ""
             },
             "require": {
                 "clue/term-react": "^1.0 || ^0.1.1",
                 "clue/utf8-react": "^1.0 || ^0.1",
                 "php": ">=5.3",
-                "react/event-loop": "^1.0 || ^0.5 || ^0.4 || ^0.3",
-                "react/stream": "^1.0 || ^0.7 || ^0.6"
+                "react/event-loop": "0.3.*|0.4.*",
+                "react/stream": "^0.4.2"
             },
             "require-dev": {
                 "clue/arguments": "^2.0",
@@ -2961,44 +2961,43 @@
                     "email": "christian@lueck.tv"
                 }
             ],
-            "description": "Async, event-driven console input & output (STDIN, STDOUT) for truly interactive CLI applications, built on top of ReactPHP",
-            "homepage": "https://github.com/clue/reactphp-stdio",
+            "description": "Async, event-driven console input & output (STDIN, STDOUT), built on top of ReactPHP",
+            "homepage": "https://github.com/clue/php-stdio-react",
             "keywords": [
                 "async",
                 "autocomplete",
                 "autocompletion",
-                "cli",
                 "history",
-                "interactive",
                 "reactphp",
                 "readline",
                 "stdin",
                 "stdio",
                 "stdout"
             ],
-            "time": "2018-09-03T11:39:08+00:00"
+            "time": "2017-12-18T10:07:12+00:00"
         },
         {
             "name": "clue/term-react",
-            "version": "v1.2.0",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/clue/reactphp-term.git",
-                "reference": "3cec1164073455a85a3f2b3c3fe6db2170d21c2a"
+                "url": "https://github.com/clue/php-term-react.git",
+                "reference": "aad4ed988de3a7b66a04c2e73abd7ee5e8d1ff23"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/clue/reactphp-term/zipball/3cec1164073455a85a3f2b3c3fe6db2170d21c2a",
-                "reference": "3cec1164073455a85a3f2b3c3fe6db2170d21c2a",
+                "url": "https://api.github.com/repos/clue/php-term-react/zipball/aad4ed988de3a7b66a04c2e73abd7ee5e8d1ff23",
+                "reference": "aad4ed988de3a7b66a04c2e73abd7ee5e8d1ff23",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3",
-                "react/stream": "^1.0 || ^0.7"
+                "react/stream": "^1.0 || ^0.7 || ^0.6 || ^0.5 || ^0.4 || ^0.3"
             },
             "require-dev": {
                 "phpunit/phpunit": "^5.0 || ^4.8",
-                "react/event-loop": "^1.0 || ^0.5 || ^0.4 || ^0.3"
+                "react/event-loop": "^0.4 || ^0.3",
+                "react/stream": "^1.0 || ^0.7"
             },
             "type": "library",
             "autoload": {
@@ -3017,7 +3016,7 @@
                 }
             ],
             "description": "Streaming terminal emulator, built on top of ReactPHP",
-            "homepage": "https://github.com/clue/reactphp-term",
+            "homepage": "https://github.com/clue/php-term-react",
             "keywords": [
                 "C0",
                 "CSI",
@@ -3035,7 +3034,7 @@
                 "vt100",
                 "xterm"
             ],
-            "time": "2018-07-09T08:20:33+00:00"
+            "time": "2017-07-06T07:56:05+00:00"
         },
         {
             "name": "clue/utf8-react",
@@ -3142,25 +3141,30 @@
         },
         {
             "name": "evenement/evenement",
-            "version": "v3.0.1",
+            "version": "v2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/igorw/evenement.git",
-                "reference": "531bfb9d15f8aa57454f5f0285b18bec903b8fb7"
+                "reference": "6ba9a777870ab49f417e703229d53931ed40fd7a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/igorw/evenement/zipball/531bfb9d15f8aa57454f5f0285b18bec903b8fb7",
-                "reference": "531bfb9d15f8aa57454f5f0285b18bec903b8fb7",
+                "url": "https://api.github.com/repos/igorw/evenement/zipball/6ba9a777870ab49f417e703229d53931ed40fd7a",
+                "reference": "6ba9a777870ab49f417e703229d53931ed40fd7a",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.0"
+                "php": ">=5.4.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^6.0"
+                "phpunit/phpunit": "^6.0||^5.7||^4.8.35"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0-dev"
+                }
+            },
             "autoload": {
                 "psr-0": {
                     "Evenement": "src"
@@ -3181,7 +3185,7 @@
                 "event-dispatcher",
                 "event-emitter"
             ],
-            "time": "2017-07-23T21:35:13+00:00"
+            "time": "2017-07-17T17:39:19+00:00"
         },
         {
             "name": "fzaninotto/faker",
@@ -4332,27 +4336,28 @@
         },
         {
             "name": "react/event-loop",
-            "version": "v1.0.0",
+            "version": "v0.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/reactphp/event-loop.git",
-                "reference": "0266aff7aa7b0613b1f38a723e14a0ebc55cfca3"
+                "reference": "8bde03488ee897dc6bb3d91e4e17c353f9c5252f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/reactphp/event-loop/zipball/0266aff7aa7b0613b1f38a723e14a0ebc55cfca3",
-                "reference": "0266aff7aa7b0613b1f38a723e14a0ebc55cfca3",
+                "url": "https://api.github.com/repos/reactphp/event-loop/zipball/8bde03488ee897dc6bb3d91e4e17c353f9c5252f",
+                "reference": "8bde03488ee897dc6bb3d91e4e17c353f9c5252f",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.0"
+                "php": ">=5.4.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~4.8.35 || ^5.7 || ^6.4"
+                "phpunit/phpunit": "~4.8"
             },
             "suggest": {
-                "ext-event": "~1.0 for ExtEventLoop",
-                "ext-pcntl": "For signal handling support when using the StreamSelectLoop"
+                "ext-event": "~1.0",
+                "ext-libev": "*",
+                "ext-libevent": ">=0.1.0"
             },
             "type": "library",
             "autoload": {
@@ -4364,35 +4369,39 @@
             "license": [
                 "MIT"
             ],
-            "description": "ReactPHP's core reactor event loop that libraries can use for evented I/O.",
+            "description": "Event loop abstraction layer that libraries can use for evented I/O.",
             "keywords": [
                 "asynchronous",
                 "event-loop"
             ],
-            "time": "2018-07-11T14:37:46+00:00"
+            "time": "2017-04-27T10:56:23+00:00"
         },
         {
             "name": "react/stream",
-            "version": "v1.1.0",
+            "version": "v0.4.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/reactphp/stream.git",
-                "reference": "50426855f7a77ddf43b9266c22320df5bf6c6ce6"
+                "reference": "44dc7f51ea48624110136b535b9ba44fd7d0c1ee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/reactphp/stream/zipball/50426855f7a77ddf43b9266c22320df5bf6c6ce6",
-                "reference": "50426855f7a77ddf43b9266c22320df5bf6c6ce6",
+                "url": "https://api.github.com/repos/reactphp/stream/zipball/44dc7f51ea48624110136b535b9ba44fd7d0c1ee",
+                "reference": "44dc7f51ea48624110136b535b9ba44fd7d0c1ee",
                 "shasum": ""
             },
             "require": {
-                "evenement/evenement": "^3.0 || ^2.0 || ^1.0",
-                "php": ">=5.3.8",
-                "react/event-loop": "^1.0 || ^0.5 || ^0.4 || ^0.3.5"
+                "evenement/evenement": "^2.0|^1.0",
+                "php": ">=5.3.8"
             },
             "require-dev": {
                 "clue/stream-filter": "~1.2",
-                "phpunit/phpunit": "^6.4 || ^5.7 || ^4.8.35"
+                "react/event-loop": "^0.4|^0.3",
+                "react/promise": "^2.0|^1.0"
+            },
+            "suggest": {
+                "react/event-loop": "^0.4",
+                "react/promise": "^2.0"
             },
             "type": "library",
             "autoload": {
@@ -4404,18 +4413,12 @@
             "license": [
                 "MIT"
             ],
-            "description": "Event-driven readable and writable streams for non-blocking I/O in ReactPHP",
+            "description": "Basic readable and writable stream interfaces that support piping.",
             "keywords": [
-                "event-driven",
-                "io",
-                "non-blocking",
                 "pipe",
-                "reactphp",
-                "readable",
-                "stream",
-                "writable"
+                "stream"
             ],
-            "time": "2019-01-01T16:15:09+00:00"
+            "time": "2017-01-25T14:44:14+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
@@ -4982,26 +4985,26 @@
         },
         {
             "name": "spatie/phpunit-watcher",
-            "version": "1.8.1",
+            "version": "1.8.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/phpunit-watcher.git",
-                "reference": "2c43350bb9b18db85badce2f7f2eb9713f1c1b2b"
+                "reference": "45256ac3c3c49b7d4cef2c383132785fd45afc91"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/phpunit-watcher/zipball/2c43350bb9b18db85badce2f7f2eb9713f1c1b2b",
-                "reference": "2c43350bb9b18db85badce2f7f2eb9713f1c1b2b",
+                "url": "https://api.github.com/repos/spatie/phpunit-watcher/zipball/45256ac3c3c49b7d4cef2c383132785fd45afc91",
+                "reference": "45256ac3c3c49b7d4cef2c383132785fd45afc91",
                 "shasum": ""
             },
             "require": {
-                "clue/stdio-react": "^1.0|^2.0",
+                "clue/stdio-react": "^1.0",
                 "jolicode/jolinotif": "^2.0",
                 "php": "^7.0",
                 "symfony/console": "^3.0|^4.0",
                 "symfony/process": "^3.0|^4.0",
                 "symfony/yaml": "^3.0|^4.0",
-                "yosymfony/resource-watcher": "^1.2|^2.0"
+                "yosymfony/resource-watcher": "^1.2"
             },
             "require-dev": {
                 "phpunit/phpunit": "^6.0|^7.0"
@@ -5033,7 +5036,7 @@
                 "phpunit-watcher",
                 "spatie"
             ],
-            "time": "2019-01-09T08:01:13+00:00"
+            "time": "2019-01-10T22:47:54+00:00"
         },
         {
             "name": "theseer/tokenizer",
@@ -5128,30 +5131,30 @@
         },
         {
             "name": "yosymfony/resource-watcher",
-            "version": "v2.0.0",
+            "version": "v1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yosymfony/resource-watcher.git",
-                "reference": "937ec60269f9d6e092357a9e1948f97a738dc0dc"
+                "reference": "8a8c8c21515eaec0b3f8fc2b5aa15c6f8bd8ca98"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yosymfony/resource-watcher/zipball/937ec60269f9d6e092357a9e1948f97a738dc0dc",
-                "reference": "937ec60269f9d6e092357a9e1948f97a738dc0dc",
+                "url": "https://api.github.com/repos/yosymfony/resource-watcher/zipball/8a8c8c21515eaec0b3f8fc2b5aa15c6f8bd8ca98",
+                "reference": "8a8c8c21515eaec0b3f8fc2b5aa15c6f8bd8ca98",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.6",
+                "php": ">=5.5",
                 "symfony/finder": "^2.7|^3.0|^4.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^5.7",
+                "phpunit/phpunit": "^4.0",
                 "symfony/filesystem": "^2.7|^3.0|^4.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.0-dev"
+                    "dev-master": "1.2-dev"
                 }
             },
             "autoload": {
@@ -5177,7 +5180,7 @@
                 "symfony",
                 "watcher"
             ],
-            "time": "2018-05-12T22:34:25+00:00"
+            "time": "2018-02-18T08:28:25+00:00"
         }
     ],
     "aliases": [],

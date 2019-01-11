@@ -6,6 +6,20 @@
 
       <div class="code-el">
 
+        <template v-if="totalRejectedCount">
+          <p>
+            You are using rejected Patterns:
+          </p>
+          <ul>
+            <li v-for="rejected in pattern.subPatterns.rejected">
+              <router-link :to="{ name: 'preview', params: { patternName: `${rejected}` }}">
+                {{ rejected }}
+              </router-link>
+            </li>
+          </ul>
+          <br>
+        </template>
+
         <div class="code-header">
 
           <span v-if="!isToggled" class="code-type a-fadeIn">HTML</span>
@@ -21,6 +35,9 @@
             <span>Show Blade</span>
 
           </label>
+
+          <!-- Couter for patterns -->
+          <span>{{ totalPatternCount }} | {{ totalTodoCount }} | {{ totalReviewCount }} | {{ totalRejectedCount }} | {{ totalDoneCount }} </span>
 
         </div>
 
@@ -262,7 +279,13 @@
       return {
         pattern: {
           name: this.patternName,
-          description: ''
+          description: '',
+          subPatterns: {
+            todo: [],
+            review: [],
+            rejected: [],
+            done: []
+          }
         },
         loading: false,
         isToggled: false,
@@ -298,6 +321,44 @@
        */
       showOptions: function () {
         return this.$store.getters.activeDropdown === this.optionsDropdown;
+      },
+
+      /**
+       * Get the total of used Patterns in the current Pattern.
+       */
+      totalPatternCount: function () {
+        return this.pattern.subPatterns.todo.length
+          + this.pattern.subPatterns.review.length
+          + this.pattern.subPatterns.rejected.length
+          + this.pattern.subPatterns.done.length;
+      },
+
+      /**
+       * Get the total of used Patterns with status 'todo' in the current Pattern.
+       */
+      totalTodoCount: function () {
+        return this.pattern.subPatterns.todo.length;
+      },
+
+      /**
+       * Get the total of used Patterns with status 'review' in the current Pattern.
+       */
+      totalReviewCount: function () {
+        return this.pattern.subPatterns.review.length;
+      },
+
+      /**
+       * Get the total of used Patterns with status 'rejected' in the current Pattern.
+       */
+      totalRejectedCount: function () {
+        return this.pattern.subPatterns.rejected.length;
+      },
+
+      /**
+       * Get the total of used Patterns with status 'done' in the current Pattern.
+       */
+      totalDoneCount: function () {
+        return this.pattern.subPatterns.done.length;
       }
     },
 

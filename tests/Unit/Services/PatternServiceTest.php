@@ -807,6 +807,6 @@ class PatternServiceTest extends BaseTestCase
 
         // assert
         $this->assertContains("@atoms('buttons.submit', ['text' => 'Submit'])", $homepage);
-//        $this->assertContains("@include('patterns.atoms.buttons.submit', ['text' => 'Submit'])", $homepage);
+        $this->assertContains("@include('patterns.atoms.buttons.submit', ['text' => 'Submit'])", $homepage);
     }
 }

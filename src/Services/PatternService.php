@@ -438,6 +438,9 @@ class PatternService
             /*
              * Search and replace include reference
              */
+            $search = "/@include\('patterns.{$oldPattern->name}'/";
+            $replacement = "@include('patterns.{$newPattern->name}'";
+            $newContent = preg_replace($search, $replacement, $newContent);
 
             /*
              * Save contents back to file

@@ -31,21 +31,9 @@ class PatternResource extends JsonResource
                 'html' => $this->html,
                 'sass' => $this->sass,
                 'values' => $this->values,
-//                'counter' => $patternStatusService->getCounters(),
                 'subPatterns' => $patternStatusService->getPatterns()
             ]
         ];
-    }
-
-    /**
-     * Get the Pattern's type.
-     *
-     * @return bool|string
-     */
-    private function getType()
-    {
-        $explode = explode('.', $this->name);
-        return $type = array_first($explode);
     }
 
     /**

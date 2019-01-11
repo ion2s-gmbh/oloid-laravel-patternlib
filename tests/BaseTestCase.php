@@ -31,7 +31,7 @@ abstract class BaseTestCase extends TestCase
      */
     protected function tearDown()
     {
-//        $this->deleteTempDirectory();
+        $this->deleteTempDirectory();
         parent::tearDown();
     }
 

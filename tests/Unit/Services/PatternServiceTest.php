@@ -3,6 +3,7 @@
 namespace Unit\Services;
 
 use Exception;
+use File;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Filesystem\Filesystem;
 use Laratomics\Services\PatternService;
@@ -788,17 +789,24 @@ class PatternServiceTest extends BaseTestCase
      * @test
      * @covers \Laratomics\Services\PatternService
      */
-    public function it_should_update_a_custom_directive_reference_of_a_renamed_pattern()
+    public function it_should_update_a_reference_of_a_renamed_pattern()
     {
         // arrange
         $this->preparePatternStub();
 
         $oldPattern = $this->cut->loadPattern('atoms.buttons.button');
 
+        $homepage = File::get("{$this->tempDir}/patterns/homepage.blade.php");
+        $this->assertContains("@atoms('buttons.button', ['text' => 'Submit']", $homepage);
+        $this->assertContains("@include('patterns.atoms.buttons.button', ['text' => 'Submit'])", $homepage);
+
         // act
         $pattern = $this->cut->rename('atoms.buttons.button', 'atoms.buttons.submit');
 
+        $homepage = File::get("{$this->tempDir}/patterns/homepage.blade.php");
+
         // assert
-        $this->markTestIncomplete('Not yet implemented!');
+        $this->assertContains("@atoms('buttons.submit', ['text' => 'Submit'])", $homepage);
+//        $this->assertContains("@include('patterns.atoms.buttons.submit', ['text' => 'Submit'])", $homepage);
     }
 }

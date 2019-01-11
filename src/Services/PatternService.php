@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\File;
 use Laratomics\Exceptions\RenderingException;
 use Laratomics\Models\Pattern;
 use Spatie\YamlFrontMatter\YamlFrontMatter;
+use SplFileInfo;
 
 
 class PatternService
@@ -400,13 +401,50 @@ class PatternService
 
         $this->removeSassImport($oldPattern);
 
-        $this->updatePatternReferences($oldPattern, $newName);
+        $newPattern = $this->loadPattern($newName);
+        $this->updatePatternReferences($oldPattern, $newPattern);
 
-        return $this->loadPattern($newName);
+        return $newPattern;
     }
 
-    private function updatePatternReferences(Pattern $oldPattern, $newName)
+    private function updatePatternReferences(Pattern $oldPattern, Pattern $newPattern)
     {
+        $files = File::allFiles(pattern_path());
 
+        /*
+         * Get all the templates
+         */
+        $templates = [];
+        foreach ($files as $file) {
+            if (ends_with($file->getRelativePathname(), 'blade.php')) {
+                $templates[] = $file;
+            }
+        }
+
+        /*
+         * Replace reference in template files
+         */
+        /** @var SplFileInfo $template */
+        foreach ($templates as $template) {
+            $content = $template->getContents();
+
+            /*
+             * Search and replace directive reference
+             */
+            $search = "/@{$oldPattern->getType()}\('{$oldPattern->getNameWithoutType()}'/";
+            $replacement = "@{$newPattern->getType()}('{$newPattern->getNameWithoutType()}'";
+            $newContent = preg_replace($search, $replacement, $content);
+
+            /*
+             * Search and replace include reference
+             */
+
+            /*
+             * Save contents back to file
+             */
+            if ($content !== $newContent && !is_null($newContent)) {
+                File::put($template->getPathname(), $newContent);
+            }
+        }
     }
 }

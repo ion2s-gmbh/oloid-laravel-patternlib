@@ -19,15 +19,21 @@
 
       <h3>To Review:</h3>
 
-      <ul class="dashboard-list">
+      <template v-if="statusList['review'].length > 0">
+        <ul class="dashboard-list">
 
-        <li class="dashboard-listItem" v-for="pattern in statusList['review']">
-          <router-link :to="{ name: 'preview', params: { patternName: `${pattern}` }}">
-            {{ pattern }}
-          </router-link>
-        </li>
+          <li class="dashboard-listItem" v-for="pattern in statusList['review']">
+            <router-link :to="{ name: 'preview', params: { patternName: `${pattern}` }}">
+              {{ pattern }}
+            </router-link>
+          </li>
 
-      </ul>
+        </ul>
+      </template>
+
+      <template v-else-if="statusList['review'].length === 0">
+        <p class="dashboard-list--empty">Nothing to review</p>
+      </template>
 
     </div>
 
@@ -35,15 +41,21 @@
 
       <h3>Rejected <i class="fas fa-exclamation-triangle"></i> :</h3>
 
-      <ul class="dashboard-list">
+      <template v-if="statusList['rejected'].length > 0">
+        <ul class="dashboard-list">
 
-        <li class="dashboard-listItem" v-for="pattern in statusList['rejected']">
-          <router-link :to="{ name: 'preview', params: { patternName: `${pattern}` }}">
-            {{ pattern }}
-          </router-link>
-        </li>
+          <li class="dashboard-listItem" v-for="pattern in statusList['rejected']">
+            <router-link :to="{ name: 'preview', params: { patternName: `${pattern}` }}">
+              {{ pattern }}
+            </router-link>
+          </li>
 
-      </ul>
+        </ul>
+      </template>
+
+      <template v-else-if="statusList['rejected'].length === 0">
+        <p class="dashboard-list--empty">Nothing rejected</p>
+      </template>
 
     </div>
 

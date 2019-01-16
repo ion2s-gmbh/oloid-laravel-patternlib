@@ -31,13 +31,14 @@ class PatternStatusService
     }
 
     /**
-     * Evaluate the Pattern's status.
+     * Evaluate the Pattern's status. Only add the Pattern to the appropriate status once.
      *
      * @param Pattern $pattern
      */
     public function evaluate(Pattern $pattern)
     {
-        $this->patterns[$pattern->status][] = $pattern->name;
+        if (!in_array($pattern->name, $this->patterns[$pattern->status])) {
+            $this->patterns[$pattern->status][] = $pattern->name;
+        }
     }
-
 }

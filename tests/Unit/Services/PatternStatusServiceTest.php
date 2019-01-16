@@ -58,4 +58,37 @@ class PatternStatusServiceTest extends BaseTestCase
         $cut->evaluate($pattern);
         $this->assertEquals($expected, $cut->getPatterns());
     }
+
+    /**
+     * @test
+     * @covers \Laratomics\Services\PatternStatusService
+     */
+    public function it_should_only_list_a_pattern_once()
+    {
+        // arrange
+        $pattern = new Pattern();
+        $pattern->name = 'atoms.text.h1';
+        $pattern->status = 'rejected';
+
+        $cut = new PatternStatusService();
+
+        $expected = [
+            'todo' => [],
+            'review' => [],
+            'rejected' => ['atoms.text.h1'],
+            'done' => [],
+        ];
+
+        /*
+         * Evaluate first occurrence of the pattern in an other pattern
+         */
+        $cut->evaluate($pattern);
+
+        /*
+         * Evaluate second occurrence of the pattern in an other pattern
+         */
+        $cut->evaluate($pattern);
+
+        $this->assertEquals($expected, $cut->getPatterns());
+    }
 }

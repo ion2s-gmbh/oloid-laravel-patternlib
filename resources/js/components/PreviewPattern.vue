@@ -37,7 +37,7 @@
           </label>
 
           <!-- Couter for patterns -->
-          <span>{{ totalPatternCount }} | {{ totalTodoCount }} | {{ totalReviewCount }} | {{ totalRejectedCount }} | {{ totalDoneCount }} </span>
+          <span>{{ totalTodoCount }} | {{ totalReviewCount }} | {{ totalRejectedCount }} | {{ totalDoneCount }} </span>
 
         </div>
 
@@ -321,16 +321,6 @@
        */
       showOptions: function () {
         return this.$store.getters.activeDropdown === this.optionsDropdown;
-      },
-
-      /**
-       * Get the total of used Patterns in the current Pattern.
-       */
-      totalPatternCount: function () {
-        return this.pattern.subPatterns.todo.length
-          + this.pattern.subPatterns.review.length
-          + this.pattern.subPatterns.rejected.length
-          + this.pattern.subPatterns.done.length;
       },
 
       /**

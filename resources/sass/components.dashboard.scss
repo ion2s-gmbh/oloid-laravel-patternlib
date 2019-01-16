@@ -72,10 +72,14 @@ These are the styles that are needed to render our welcome dashboard.
 }
 
 .dashboard-list--empty {
-	margin-left: -$l-gap;	
-	opacity: 0.6;
+	margin-left: -$l-gap;		
 	padding: $l-gap;
 	padding: var(--gap, $l-gap);
+
+	span {
+		opacity: 0.6;
+	}
+
 }
 
 

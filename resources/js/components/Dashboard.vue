@@ -1,33 +1,50 @@
 <template>
 
-  <div class="dashboard">
+  <div class="view--inner" v-if="$store.getters.isDevMode">
 
-    <div class="u-center">
+    <div class="dashboard-container welcome">
 
-      <template v-if="!loadingStatusList">
+      <h2 class="headline--one">
+        Welcome!
+        <small>Let's build something awesome!</small>
+        <span class="dashboard-info" title="Current branch: Hajpoei">
+          <i class="fas fa-code-branch"></i> -
+          Hajopei
+        </span>
+      </h2>
 
-      <div class="a-dropIn">
+    </div>
 
-          <h2 class="headline--one">
-            Welcome!
-            <small>Start building something awesome!</small>
-          </h2>
+    <div class="dashboard-container toReview">
 
-          <router-link :to="{ name: 'create' }">
-            <button class="btn btn--primary btn--cta">
-              <span>
-                New Pattern
-              </span>
-            </button>
+      <h3>To Review:</h3>
+
+      <ul class="dashboard-list">
+
+        <li class="dashboard-listItem" v-for="pattern in statusList['review']">
+          <router-link :to="{ name: 'preview', params: { patternName: `${pattern}` }}">
+            {{ pattern }}
           </router-link>
+        </li>
 
-      </div>
+      </ul>
 
-      </template>
+    </div>
 
-      <template v-else-if="loadingStatusList">
-        <img src="vendor/workshop/images/loader.gif">
-      </template>
+    <div class="dashboard-container rejected">
+
+      <h3>Rejected <i class="fas fa-exclamation-triangle"></i> :</h3>
+
+      <ul class="dashboard-list">
+
+        <li class="dashboard-listItem" v-for="pattern in statusList['rejected']">
+          <router-link :to="{ name: 'preview', params: { patternName: `${pattern}` }}">
+            {{ pattern }}
+          </router-link>
+        </li>
+
+      </ul>
+
     </div>
 
     <shortcuts v-if="showKeyMap"

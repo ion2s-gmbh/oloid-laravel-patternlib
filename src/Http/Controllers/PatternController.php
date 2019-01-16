@@ -47,12 +47,11 @@ class PatternController extends Controller
      *
      * @param string $pattern
      * @return JsonResponse
-     * @throws RenderingException
      */
     public function preview(string $pattern): JsonResponse
     {
         try {
-            $patternInstance = $this->patternService->loadPattern($pattern);
+            $patternInstance = $this->patternService->loadPatternWithPreview($pattern);
         } catch (FileNotFoundException $exception) {
             return JsonResponse::create([], JsonResponse::HTTP_NOT_FOUND);
         }
@@ -65,11 +64,10 @@ class PatternController extends Controller
      * @param string $pattern
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @throws FileNotFoundException
-     * @throws RenderingException
      */
     public function getPreview(string $pattern)
     {
-        $pattern = $this->patternService->loadPattern($pattern);
+        $pattern = $this->patternService->loadPatternWithPreview($pattern);
         return view('workshop::preview', [
             'preview' => $pattern->html
         ]);

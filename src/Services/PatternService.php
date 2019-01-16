@@ -417,9 +417,17 @@ class PatternService
         return $newPattern;
     }
 
+    /**
+     * Update the reference of the Pattern in other Patterns and view files.
+     *
+     * @param Pattern $oldPattern
+     * @param Pattern $newPattern
+     */
     private function updatePatternReferences(Pattern $oldPattern, Pattern $newPattern)
     {
-        $files = File::allFiles(pattern_path());
+        $patternFiles = File::allFiles(pattern_path());
+        $viewFiles = File::allFiles(resource_path('views'));
+        $files = array_merge($patternFiles, $viewFiles);
 
         /*
          * Get all the templates

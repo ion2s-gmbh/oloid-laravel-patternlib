@@ -1,6 +1,6 @@
 <template>
 
-  <div class="dashboard">
+  <div class="popUp">
 
     <form method="post" class="form form--create">
 

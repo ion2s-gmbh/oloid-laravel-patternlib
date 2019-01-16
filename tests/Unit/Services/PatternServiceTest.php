@@ -305,11 +305,48 @@ class PatternServiceTest extends BaseTestCase
         $this->assertSassContentUsingStub($pattern->sass);
         $this->assertInstanceOf(Document::class, $pattern->metadata);
         $this->assertEquals('review', $pattern->metadata->status);
+        $this->assertEquals('review', $pattern->status);
         $this->assertEquals("{$this->tempDir}/patterns/atoms/text/headline1.blade.php", $pattern->templateFile);
         $this->assertEquals("{$this->tempDir}/patterns/atoms/text/headline1.scss", $pattern->sassFile);
         $this->assertEquals("{$this->tempDir}/patterns/atoms/atoms.scss", $pattern->rootSassFile);
         $this->assertEquals("{$this->tempDir}/patterns/patterns.scss", $pattern->mainSassFile);
         $this->assertEquals("{$this->tempDir}/patterns/atoms/text/headline1.md", $pattern->markdownFile);
+
+        $this->assertNull($pattern->html);
+        $this->assertNull($pattern->values);
+    }
+
+    /**
+     * @test
+     * @covers \Laratomics\Services\PatternService
+     */
+    public function it_should_load_a_whole_pattern_with_preview()
+    {
+        // arrange
+        $this->preparePatternStub();
+
+        // act
+        try {
+            $pattern = $this->cut->loadPatternWithPreview($this->name, []);
+        } catch (Exception $e) {
+            $this->fail($e->getMessage());
+        }
+
+        // assert
+        $this->assertTemplateContentUsingStub($pattern->template);
+        $this->assertMarkdownContentUsingStub($pattern->markdown);
+        $this->assertSassContentUsingStub($pattern->sass);
+        $this->assertInstanceOf(Document::class, $pattern->metadata);
+        $this->assertEquals('review', $pattern->metadata->status);
+        $this->assertEquals('review', $pattern->status);
+        $this->assertEquals("{$this->tempDir}/patterns/atoms/text/headline1.blade.php", $pattern->templateFile);
+        $this->assertEquals("{$this->tempDir}/patterns/atoms/text/headline1.scss", $pattern->sassFile);
+        $this->assertEquals("{$this->tempDir}/patterns/atoms/atoms.scss", $pattern->rootSassFile);
+        $this->assertEquals("{$this->tempDir}/patterns/patterns.scss", $pattern->mainSassFile);
+        $this->assertEquals("{$this->tempDir}/patterns/atoms/text/headline1.md", $pattern->markdownFile);
+
+        $this->assertNotNull($pattern->html);
+        $this->assertNotNull($pattern->values);
     }
 
     /**

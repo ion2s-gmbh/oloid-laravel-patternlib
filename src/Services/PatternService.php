@@ -133,12 +133,10 @@ class PatternService
 
     /**
      * @param $name
-     * @param array $values
      * @return Pattern
      * @throws FileNotFoundException
-     * @throws RenderingException
      */
-    public function loadPattern($name, $values = []): Pattern
+    public function loadPattern($name): Pattern
     {
         $pattern = new Pattern();
         $pattern->name = $name;
@@ -167,11 +165,23 @@ class PatternService
          * Load Pattern content
          */
         $pattern->template = $this->loadBladeFile($name);
-        $markdown = $this->loadMarkdownFile($name);
-        $pattern->markdown = $markdown;
-        $pattern->metadata = YamlFrontMatter::parse($markdown);
+        $pattern->markdown = $this->loadMarkdownFile($name);
+        $pattern->metadata = YamlFrontMatter::parse($pattern->markdown);
         $pattern->status = $pattern->metadata->status;
         $pattern->sass = $this->loadSassFile($name);
+
+        return $pattern;
+    }
+
+    /**
+     * @param $name
+     * @param array $values
+     * @return Pattern
+     * @throws FileNotFoundException
+     */
+    public function loadPatternWithPreview($name, $values = [])
+    {
+        $pattern = $this->loadPattern($name);
 
         /*
          * Create the preview
@@ -407,9 +417,17 @@ class PatternService
         return $newPattern;
     }
 
+    /**
+     * Update the reference of the Pattern in other Patterns and view files.
+     *
+     * @param Pattern $oldPattern
+     * @param Pattern $newPattern
+     */
     private function updatePatternReferences(Pattern $oldPattern, Pattern $newPattern)
     {
-        $files = File::allFiles(pattern_path());
+        $patternFiles = File::allFiles(pattern_path());
+        $viewFiles = File::allFiles(resource_path('views'));
+        $files = array_merge($patternFiles, $viewFiles);
 
         /*
          * Get all the templates

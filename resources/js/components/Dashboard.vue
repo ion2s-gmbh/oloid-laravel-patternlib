@@ -21,14 +21,11 @@
 
       <ul class="dashboard-list">
 
-        <li class="dashboard-listItem">
-          <a href="">organisms.forms.signUp</a>
+        <li class="dashboard-listItem" v-for="pattern in statusList['review']">
+          <router-link :to="{ name: 'preview', params: { patternName: `${pattern}` }}">
+            {{ pattern }}
+          </router-link>
         </li>
-
-        <li class="dashboard-listItem">
-          <a href="">atoms.buttons.cancel</a>
-        </li>
-
 
       </ul>
 
@@ -40,16 +37,10 @@
 
       <ul class="dashboard-list">
 
-        <li class="dashboard-listItem">
-          <a href="">pages.landingpage</a>
-        </li>
-
-        <li class="dashboard-listItem">
-          <a href="">pages.profile</a>
-        </li>
-
-        <li class="dashboard-listItem">
-          <a href="">pages.news</a>
+        <li class="dashboard-listItem" v-for="pattern in statusList['rejected']">
+          <router-link :to="{ name: 'preview', params: { patternName: `${pattern}` }}">
+            {{ pattern }}
+          </router-link>
         </li>
 
       </ul>

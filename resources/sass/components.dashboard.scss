@@ -5,16 +5,7 @@ These are the styles that are needed to render our welcome dashboard.
 
 // Dasboard Base --------- //
 
-.dashboard {
-  
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  grid-area: code / code / view / view;   
-  padding: $l-gap;
-  padding: var(--gap, $l-gap);
 
-}
 
 // Dasboard Content
 
@@ -78,6 +69,13 @@ These are the styles that are needed to render our welcome dashboard.
 
 	}		
 
+}
+
+.dashboard-list--empty {
+	margin-left: -$l-gap;	
+	opacity: 0.6;
+	padding: $l-gap;
+	padding: var(--gap, $l-gap);
 }
 
 

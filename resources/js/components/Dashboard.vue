@@ -56,7 +56,9 @@
 
     </div>
 
-    <!-- <example-component></example-component> -->
+    <shortcuts v-if="showKeyMap"
+               :globalKeymap="globalShortcuts">
+    </shortcuts>
 
   </div>
 

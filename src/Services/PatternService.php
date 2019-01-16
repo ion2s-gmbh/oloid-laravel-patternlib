@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\File;
 use Laratomics\Exceptions\RenderingException;
 use Laratomics\Models\Pattern;
 use Spatie\YamlFrontMatter\YamlFrontMatter;
+use SplFileInfo;
 
 
 class PatternService
@@ -169,13 +170,14 @@ class PatternService
         $markdown = $this->loadMarkdownFile($name);
         $pattern->markdown = $markdown;
         $pattern->metadata = YamlFrontMatter::parse($markdown);
+        $pattern->status = $pattern->metadata->status;
         $pattern->sass = $this->loadSassFile($name);
 
         /*
          * Create the preview
          */
         $pattern->values = !is_null($pattern->metadata->values) ? $pattern->metadata->values : array_merge($values, []);
-        $pattern->html = compile_blade_string($pattern->name, $pattern->values);
+        $pattern->html = compile_blade_string($pattern);
 
         return $pattern;
     }
@@ -399,6 +401,53 @@ class PatternService
 
         $this->removeSassImport($oldPattern);
 
-        return $this->loadPattern($newName);
+        $newPattern = $this->loadPattern($newName);
+        $this->updatePatternReferences($oldPattern, $newPattern);
+
+        return $newPattern;
+    }
+
+    private function updatePatternReferences(Pattern $oldPattern, Pattern $newPattern)
+    {
+        $files = File::allFiles(pattern_path());
+
+        /*
+         * Get all the templates
+         */
+        $templates = [];
+        foreach ($files as $file) {
+            if (ends_with($file->getRelativePathname(), 'blade.php')) {
+                $templates[] = $file;
+            }
+        }
+
+        /*
+         * Replace reference in template files
+         */
+        /** @var SplFileInfo $template */
+        foreach ($templates as $template) {
+            $content = $template->getContents();
+
+            /*
+             * Search and replace directive reference
+             */
+            $search = "/@{$oldPattern->getType()}\('{$oldPattern->getNameWithoutType()}'/";
+            $replacement = "@{$newPattern->getType()}('{$newPattern->getNameWithoutType()}'";
+            $newContent = preg_replace($search, $replacement, $content);
+
+            /*
+             * Search and replace include reference
+             */
+            $search = "/@include\('patterns.{$oldPattern->name}'/";
+            $replacement = "@include('patterns.{$newPattern->name}'";
+            $newContent = preg_replace($search, $replacement, $newContent);
+
+            /*
+             * Save contents back to file
+             */
+            if ($content !== $newContent && !is_null($newContent)) {
+                File::put($template->getPathname(), $newContent);
+            }
+        }
     }
 }

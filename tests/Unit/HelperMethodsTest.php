@@ -6,6 +6,7 @@ namespace Unit;
 
 use Exception;
 use Illuminate\Filesystem\Filesystem;
+use Laratomics\Models\Pattern;
 use Tests\BaseTestCase;
 use Tests\Traits\TestStubs;
 
@@ -21,11 +22,15 @@ class HelperMethodsTest extends BaseTestCase
     {
         // arrange
         $this->preparePatternStub();
-        $template = 'atoms.text.headline1';
+        $pattern = new Pattern();
+        $pattern->name = 'atoms.text.headline1';
+        $pattern->status = 'todo';
+        $pattern->values = ['text' => 'TEST'];
+        $pattern->template = '<h1>{{ $text }}</h1>';
 
         // act
         try {
-            $html = compile_blade_string($template, ['text' => 'TEST']);
+            $html = compile_blade_string($pattern);
             $this->assertEquals('<h1>TEST</h1>', $html);
         } catch (Exception $e) {
             $this->fail();

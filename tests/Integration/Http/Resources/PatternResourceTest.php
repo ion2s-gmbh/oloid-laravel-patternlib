@@ -73,6 +73,12 @@ class PatternResourceTest extends BaseTestCase
                 'values' => [
                     'title' => 'Testing',
                     'todos' => ['a', 'b', 'c']
+                ],
+                'subPatterns' => [
+                    'todo' => [],
+                    'review' => [],
+                    'rejected' => [],
+                    'done' => []
                 ]
             ]
         ];

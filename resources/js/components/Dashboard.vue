@@ -15,46 +15,63 @@
 
     </div>
 
-    <div class="dashboard-container toReview">
 
-      <h3>To Review:</h3>
 
-      <template v-if="statusList['review'].length > 0">
-        <ul class="dashboard-list">
+      <div class="dashboard-container toReview">
 
-          <li class="dashboard-listItem" v-for="pattern in statusList['review']">
-            <router-link :to="{ name: 'preview', params: { patternName: `${pattern}` }}">
-              {{ pattern }}
-            </router-link>
-          </li>
+        <h3>To Review:</h3>
 
-        </ul>
-      </template>
+        <template v-if="!loadingStatusList">
 
-      <template v-else-if="statusList['review'].length === 0">
-        <p class="dashboard-list--empty">Nothing to review</p>
-      </template>
+          <template v-if="statusList['review'].length > 0">
+            <ul class="dashboard-list">
 
-    </div>
+              <li class="dashboard-listItem" v-for="pattern in statusList['review']">
+                <router-link :to="{ name: 'preview', params: { patternName: `${pattern}` }}">
+                  {{ pattern }}
+                </router-link>
+              </li>
+
+            </ul>
+          </template>
+
+          <template v-else-if="statusList['review'].length === 0">
+            <p class="dashboard-list--empty">Nothing to review</p>
+          </template>
+        </template>
+
+        <template v-else-if="loadingStatusList">
+          <img src="vendor/workshop/images/loader.gif">
+        </template>
+
+      </div>
 
     <div class="dashboard-container rejected">
 
       <h3>Rejected <i class="fas fa-exclamation-triangle"></i> :</h3>
 
-      <template v-if="statusList['rejected'].length > 0">
-        <ul class="dashboard-list">
+      <template v-if="!loadingStatusList">
 
-          <li class="dashboard-listItem" v-for="pattern in statusList['rejected']">
-            <router-link :to="{ name: 'preview', params: { patternName: `${pattern}` }}">
-              {{ pattern }}
-            </router-link>
-          </li>
+        <template v-if="statusList['rejected'].length > 0">
+          <ul class="dashboard-list">
 
-        </ul>
+            <li class="dashboard-listItem" v-for="pattern in statusList['rejected']">
+              <router-link :to="{ name: 'preview', params: { patternName: `${pattern}` }}">
+                {{ pattern }}
+              </router-link>
+            </li>
+
+          </ul>
+        </template>
+
+        <template v-else-if="statusList['rejected'].length === 0">
+          <p class="dashboard-list--empty">Nothing rejected</p>
+        </template>
+
       </template>
 
-      <template v-else-if="statusList['rejected'].length === 0">
-        <p class="dashboard-list--empty">Nothing rejected</p>
+      <template v-else-if="loadingStatusList">
+        <img src="vendor/workshop/images/loader.gif">
       </template>
 
     </div>
@@ -108,7 +125,6 @@
           const response = await API.get('status-list');
           this.statusList = response.data.data;
         } catch (e) {
-          // TODO: give some user feedback
           LOG.error(e);
         } finally {
           this.loadingStatusList = false;

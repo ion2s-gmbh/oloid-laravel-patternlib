@@ -32,6 +32,9 @@ trait TestStubs
         $fs->copy($sourcePath, $this->viewConfigPath);
     }
 
+    /**
+     * Copy the patterns folder in place for testing.
+     */
     public function preparePatternStub()
     {
         $fs = new Filesystem();
@@ -40,7 +43,10 @@ trait TestStubs
         $fs->copyDirectory($sourcePath, $targetPath);
     }
 
-    public function prepareGlobalsStub()
+    /**
+     * Copy the dependencies.json file in place for testing.
+     */
+    public function prepareDependenciesStub()
     {
         $fs = new Filesystem();
         $sourcePath = realpath(__DIR__ . '/../Stubs/dependencies.json');

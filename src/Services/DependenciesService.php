@@ -53,4 +53,13 @@ class DependenciesService
             $this->globals = json_decode($json, true);
         }
     }
+
+    /**
+     * Get all global dependencies.
+     * @return array
+     */
+    public function getAllGlobals()
+    {
+        return $this->globals;
+    }
 }

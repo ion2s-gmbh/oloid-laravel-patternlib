@@ -32,7 +32,7 @@ class DependenciesServiceTest extends BaseTestCase
     public function it_should_load_globals_from_file()
     {
         // arrange
-        $this->prepareGlobalsStub();
+        $this->prepareDependenciesStub();
 
         // act
         $globalsService = new DependenciesService();
@@ -62,5 +62,42 @@ class DependenciesServiceTest extends BaseTestCase
                 'crossorigin' => 'anonymous'
             ]
         ], $globalsService->getGlobals('scripts'));
+    }
+
+    /**
+     * @test
+     * @covers \Laratomics\Services\DependenciesService
+     */
+    public function it_should_return_all_global_dependencies()
+    {
+        // arrange
+        $this->prepareDependenciesStub();
+        $expected = [
+            'fonts' => [
+                [
+                    'src' => 'https://fonts.googleapis.com/css?family=Nunito:200,600',
+                    'integrity' => null,
+                    'crossorigin' => null
+                ]
+            ],
+            'styles' => [
+                [
+                    'src' => 'https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css',
+                    'integrity' => 'sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=',
+                    'crossorigin' => 'anonymous'
+                ]
+            ],
+            'scripts' => [
+                [
+                    'src' => 'https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js',
+                    'integrity' => 'sha256-KsRuvuRtUVvobe66OFtOQfjP8WA2SzYsmm4VPfMnxms=',
+                    'crossorigin' => 'anonymous'
+                ]
+            ]
+        ];
+
+        // act
+        $globalsService = new DependenciesService();
+        $this->assertEquals($expected, $globalsService->getAllGlobals());
     }
 }

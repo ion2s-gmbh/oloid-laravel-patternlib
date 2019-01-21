@@ -12,9 +12,12 @@
 
     </section>
 
-    <i class="fas fa-keyboard"
+    <button class="toggle--more has-tooltip shortcuts">
+      <i class="fas fa-keyboard"
        @click="toggleKeyMap">
-    </i>
+      </i>
+    </button>
+
   </main>
 
 </template>

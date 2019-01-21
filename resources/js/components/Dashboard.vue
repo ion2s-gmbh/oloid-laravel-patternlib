@@ -36,7 +36,7 @@
           </template>
 
           <template v-else-if="statusList['review'].length === 0">
-            <p class="dashboard-list--empty">Nothing to review</p>
+            <p class="dashboard-list--empty">Nothing to review 😄 </p>
           </template>
         </template>
 
@@ -65,7 +65,7 @@
         </template>
 
         <template v-else-if="statusList['rejected'].length === 0">
-          <p class="dashboard-list--empty">Nothing rejected</p>
+          <p class="dashboard-list--empty">Nothing rejected 😰 </p>
         </template>
 
       </template>

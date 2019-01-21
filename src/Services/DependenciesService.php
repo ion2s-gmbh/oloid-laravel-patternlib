@@ -71,7 +71,7 @@ class DependenciesService
      */
     public function addDependency(string $dependency)
     {
-        list($type, $src, $integrity, $crossorigin) = $this->evaluate($dependency);
+        list($type, $src, $integrity, $crossorigin) = $this->extract($dependency);
         $this->globals[$type][] = [
             'src' => $src,
             'integrity' => $integrity,
@@ -81,16 +81,27 @@ class DependenciesService
         File::put($this->globalsPath, json_encode($this->globals));
     }
 
-    private function evaluate(string $dependency): array
+    /**
+     * Extract parts of the given dependency.
+     *
+     * @param string $dependency
+     * @return array
+     */
+    private function extract(string $dependency): array
     {
         if (starts_with($dependency, '<script')) {
-            return $this->evaluateScript($dependency);
+            return $this->extractScript($dependency);
         }
 
-        return $this->evaluateStyle($dependency);
+        return $this->extractStyle($dependency);
     }
 
-    private function evaluateScript(string $dependency): array
+    /**
+     * Extract parts of the given script dependency.
+     * @param string $dependency
+     * @return array
+     */
+    private function extractScript(string $dependency): array
     {
         $dom = new Dom();
         $dom->load($dependency, ['removeScripts' => false]);
@@ -107,7 +118,7 @@ class DependenciesService
      * @param string $dependency
      * @return array
      */
-    private function evaluateStyle(string $dependency): array
+    private function extractStyle(string $dependency): array
     {
         $dom = new Dom();
         $dom->load($dependency);

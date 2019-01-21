@@ -39,4 +39,12 @@ trait TestStubs
         $targetPath = "{$this->tempDir}/patterns";
         $fs->copyDirectory($sourcePath, $targetPath);
     }
+
+    public function prepareGlobalsStub()
+    {
+        $fs = new Filesystem();
+        $sourcePath = realpath(__DIR__ . '/../Stubs/dependencies.json');
+        $targetPath = "{$this->tempDir}/dependencies.json";
+        $fs->copy($sourcePath, $targetPath);
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace Services;
 
+use Illuminate\Support\Facades\File;
 use Laratomics\Services\DependenciesService;
 use Tests\BaseTestCase;
 use Tests\Traits\TestStubs;
@@ -11,25 +12,33 @@ class DependenciesServiceTest extends BaseTestCase
     use TestStubs;
 
     /**
-     * @test
-     * @covers \Laratomics\Services\DependenciesService
+     * @var DependenciesService
      */
-    public function it_should_have_empty_globals()
-    {
-        // act
-        $globalsService = new DependenciesService();
+    private $cut;
 
-        // assert
-        $this->assertEmpty($globalsService->getGlobals('fonts'));
-        $this->assertEmpty($globalsService->getGlobals('styles'));
-        $this->assertEmpty($globalsService->getGlobals('scripts'));
+    protected function setUp()
+    {
+        parent::setUp();
+        $this->cut = new DependenciesService();
     }
 
     /**
      * @test
      * @covers \Laratomics\Services\DependenciesService
      */
-    public function it_should_load_globals_from_file()
+    public function it_should_have_empty_globals()
+    {
+        // assert
+        $this->assertEmpty($this->cut->getGlobals('fonts'));
+        $this->assertEmpty($this->cut->getGlobals('styles'));
+        $this->assertEmpty($this->cut->getGlobals('scripts'));
+    }
+
+    /**
+     * @test
+     * @covers \Laratomics\Services\DependenciesService
+     */
+    public function it_should_load_global_dependencies_from_file()
     {
         // arrange
         $this->prepareDependenciesStub();
@@ -97,7 +106,104 @@ class DependenciesServiceTest extends BaseTestCase
         ];
 
         // act
-        $globalsService = new DependenciesService();
-        $this->assertEquals($expected, $globalsService->getAllGlobals());
+        $this->cut = new DependenciesService();
+        $this->assertEquals($expected, $this->cut->getAllGlobals());
+    }
+
+    /**
+     * @test
+     * @covers \Laratomics\Services\DependenciesService
+     */
+    public function it_should_add_a_style_dependency_with_multiple_attributes()
+    {
+        $dependencyPath = "{$this->tempDir}/dependencies.json";
+        $this->assertFalse(File::exists($dependencyPath));
+
+        // act
+        $this->cut->addDependency('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.1/css/bootstrap.css" integrity="sha256-5U3z9K3P17cKgGYxXQA5rBZO5EDju+lgtXG6oDXNbNY=" crossorigin="anonymous" />');
+
+        // assert
+        $this->assertTrue(File::exists($dependencyPath));
+
+        $dependencies = File::get($dependencyPath);
+        $expectedDependencies = [
+            'fonts' => [],
+            'styles' => [
+                [
+                    'src' => 'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.1/css/bootstrap.css',
+                    'integrity' => 'sha256-5U3z9K3P17cKgGYxXQA5rBZO5EDju+lgtXG6oDXNbNY=',
+                    'crossorigin' => 'anonymous'
+                ]
+            ],
+            'scripts' => [],
+        ];
+        $this->assertEquals($expectedDependencies, json_decode($dependencies, true));
+    }
+
+    /**
+     * @test
+     * @covers \Laratomics\Services\DependenciesService
+     */
+    public function it_should_add_a_script_dependency_with_multiple_attributes()
+    {
+        $dependencyPath = "{$this->tempDir}/dependencies.json";
+        $this->assertFalse(File::exists($dependencyPath));
+
+        // act
+        $this->cut->addDependency('<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.1/js/bootstrap.js" integrity="sha256-K0KkaRh1fs/UYfKcnzBK9G/X7HgzuaeVI1hJPS8Sxs4=" crossorigin="anonymous"></script>');
+
+        // assert
+        $this->assertTrue(File::exists($dependencyPath));
+
+        $dependencies = File::get($dependencyPath);
+        $expectedDependencies = [
+            'fonts' => [],
+            'styles' => [],
+            'scripts' => [
+                [
+                    'src' => 'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.1/js/bootstrap.js',
+                    'integrity' => 'sha256-K0KkaRh1fs/UYfKcnzBK9G/X7HgzuaeVI1hJPS8Sxs4=',
+                    'crossorigin' => 'anonymous'
+                ]
+            ],
+        ];
+        $this->assertEquals($expectedDependencies, json_decode($dependencies, true));
+    }
+
+    /**
+     * @test
+     * @covers \Laratomics\Services\DependenciesService
+     */
+    public function it_should_add_a_script_and_a_style_dependency()
+    {
+        $dependencyPath = "{$this->tempDir}/dependencies.json";
+        $this->assertFalse(File::exists($dependencyPath));
+
+        // act
+        $this->cut->addDependency('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.1/css/bootstrap.css" integrity="sha256-5U3z9K3P17cKgGYxXQA5rBZO5EDju+lgtXG6oDXNbNY=" crossorigin="anonymous" />');
+        $this->cut->addDependency('<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.1/js/bootstrap.js" integrity="sha256-K0KkaRh1fs/UYfKcnzBK9G/X7HgzuaeVI1hJPS8Sxs4=" crossorigin="anonymous"></script>');
+
+        // assert
+        $this->assertTrue(File::exists($dependencyPath));
+
+        $dependencies = File::get($dependencyPath);
+        $expectedDependencies = [
+            'fonts' => [],
+            'styles' => [
+                [
+                    'src' => 'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.1/css/bootstrap.css',
+                    'integrity' => 'sha256-5U3z9K3P17cKgGYxXQA5rBZO5EDju+lgtXG6oDXNbNY=',
+                    'crossorigin' => 'anonymous'
+                ]
+            ],
+            'scripts' => [
+                [
+                    'src' => 'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.1/js/bootstrap.js',
+                    'integrity' => 'sha256-K0KkaRh1fs/UYfKcnzBK9G/X7HgzuaeVI1hJPS8Sxs4=',
+                    'crossorigin' => 'anonymous'
+                ]
+            ],
+        ];
+        $this->assertEquals($expectedDependencies, json_decode($dependencies, true));
     }
 }

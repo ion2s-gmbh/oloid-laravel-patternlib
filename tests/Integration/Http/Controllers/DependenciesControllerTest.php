@@ -3,6 +3,8 @@
 namespace Integration\Http\Controllers;
 
 use Illuminate\Foundation\Testing\TestResponse;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\File;
 use Tests\BaseTestCase;
 use Tests\Traits\TestStubs;
 
@@ -73,5 +75,38 @@ class DependenciesControllerTest extends BaseTestCase
             ]
         ];
         $response->assertJson($expectedJson);
+    }
+
+    /**
+     * @test
+     * @covers \Laratomics\Http\Controllers\DependenciesController
+     */
+    public function it_should_add_a_global_dependency()
+    {
+        $dependencyPath = "{$this->tempDir}/dependencies.json";
+        $this->assertFalse(File::exists($dependencyPath));
+
+        // act
+        $response = $this->postJson('workshop/api/v1/dependencies', [
+            'dependency' => '<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,600">'
+        ]);
+
+        // assert
+        $response->assertStatus(Response::HTTP_CREATED);
+        $this->assertTrue(File::exists($dependencyPath));
+
+        $dependencies = File::get($dependencyPath);
+        $expectedDependencies = [
+                'fonts' => [],
+                'styles' => [
+                    [
+                        'src' => 'https://fonts.googleapis.com/css?family=Nunito:200,600',
+                        'integrity' => null,
+                        'crossorigin' => null
+                    ]
+                ],
+                'scripts' => [],
+            ];
+        $this->assertEquals($expectedDependencies, json_decode($dependencies, true));
     }
 }

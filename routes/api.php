@@ -83,3 +83,11 @@ Route::get('status-list', 'StatusListController@get');
 | Get a list of all global dependencies.
 */
 Route::get('dependencies', 'DependenciesController@get');
+
+/*
+|--------------------------------------------------------------------------
+| POST /dependencies
+|--------------------------------------------------------------------------
+| Add a new global dependency.
+*/
+Route::post('dependencies', 'DependenciesController@store');

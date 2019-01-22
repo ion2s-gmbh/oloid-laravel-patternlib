@@ -36,10 +36,26 @@ class DependenciesController extends Controller
         ]);
     }
 
+    /**
+     * Store a new global dependency.
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function store(Request $request)
     {
         $this->dependenciesService->addDependency($request->get('dependency'));
 
         return JsonResponse::create([], JsonResponse::HTTP_CREATED);
+    }
+
+    /**
+     * Remove a global dependency.
+     *
+     * @param Request $request
+     */
+    public function remove(Request $request)
+    {
+
     }
 }

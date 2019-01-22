@@ -27,7 +27,6 @@ class DependenciesControllerTest extends BaseTestCase
         $response->assertSuccessful();
         $expectedJson = [
             'data' => [
-                'fonts' => [],
                 'styles' => [],
                 'scripts' => [],
             ]
@@ -51,13 +50,6 @@ class DependenciesControllerTest extends BaseTestCase
         $response->assertSuccessful();
         $expectedJson = [
             'data' => [
-                'fonts' => [
-                    [
-                        'src' => 'https://fonts.googleapis.com/css?family=Nunito:200,600',
-                        'integrity' => null,
-                        'crossorigin' => null
-                    ]
-                ],
                 'styles' => [
                     [
                         'src' => 'https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css',
@@ -97,7 +89,6 @@ class DependenciesControllerTest extends BaseTestCase
 
         $dependencies = File::get($dependencyPath);
         $expectedDependencies = [
-                'fonts' => [],
                 'styles' => [
                     [
                         'src' => 'https://fonts.googleapis.com/css?family=Nunito:200,600',
@@ -108,5 +99,40 @@ class DependenciesControllerTest extends BaseTestCase
                 'scripts' => [],
             ];
         $this->assertEquals($expectedDependencies, json_decode($dependencies, true));
+    }
+
+    /**
+     * @test
+     * @covers \Laratomics\Http\Controllers\DependenciesController
+     */
+    public function it_should_remove_a_global_dependency()
+    {
+        // arrange
+        $this->prepareDependenciesStub();
+
+        // act
+        $response = $this->deleteJson('workshop/api/v1/dependencies', [
+            'type' => 'styles',
+            'url' => 'https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css'
+        ]);
+
+        // assert
+        $response->assertSuccessful();
+    }
+
+    /**
+     * @test
+     * @covers \Laratomics\Http\Controllers\DependenciesController
+     */
+    public function it_should_get_an_error_if_dependency_does_not_exist()
+    {
+        // act
+        $response = $this->deleteJson('workshop/api/v1/dependencies', [
+            'type' => 'styles',
+            'url' => 'https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css'
+        ]);
+
+        // assert
+        $response->assertStatus(Response::HTTP_NOT_FOUND);
     }
 }

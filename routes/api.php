@@ -91,3 +91,11 @@ Route::get('dependencies', 'DependenciesController@get');
 | Add a new global dependency.
 */
 Route::post('dependencies', 'DependenciesController@store');
+
+/*
+|--------------------------------------------------------------------------
+| DELETE /dependencies
+|--------------------------------------------------------------------------
+| Remove a global dependency
+*/
+Route::delete('dependencies', 'DependenciesController@remove');

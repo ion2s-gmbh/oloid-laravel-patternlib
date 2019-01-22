@@ -6,6 +6,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Laratomics\Services\DependenciesService;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class DependenciesController extends Controller
 {
@@ -53,9 +54,24 @@ class DependenciesController extends Controller
      * Remove a global dependency.
      *
      * @param Request $request
+     * @return JsonResponse
      */
     public function remove(Request $request)
     {
+        /*
+         * Check if the dependency exist
+         */
+        $type = $request->get('type');
+        $src = $request->get('url');
+        if (!$this->dependenciesService->dependencyExists($type, $src)) {
+           throw new NotFoundHttpException('Dependency not found.');
+        }
 
+        /*
+         * Remove the dependency
+         */
+        $this->dependenciesService->removeDependency($type, $src);
+
+        return JsonResponse::create([]);
     }
 }

@@ -51,14 +51,14 @@ class DependenciesControllerTest extends BaseTestCase
         $expectedJson = [
             'data' => [
                 'styles' => [
-                    [
+                    '7c6d7f6528dd5848ebc15c7ab14de532' => [
                         'src' => 'https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css',
                         'integrity' => 'sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=',
                         'crossorigin' => 'anonymous'
                     ]
                 ],
                 'scripts' => [
-                    [
+                    '094841b35e7f2d90c081a6f3d18040b4' => [
                         'src' => 'https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js',
                         'integrity' => 'sha256-KsRuvuRtUVvobe66OFtOQfjP8WA2SzYsmm4VPfMnxms=',
                         'crossorigin' => 'anonymous'
@@ -90,7 +90,7 @@ class DependenciesControllerTest extends BaseTestCase
         $dependencies = File::get($dependencyPath);
         $expectedDependencies = [
                 'styles' => [
-                    [
+                    'e057686a09b387a9e5b9a1886763ec31' => [
                         'src' => 'https://fonts.googleapis.com/css?family=Nunito:200,600',
                         'integrity' => null,
                         'crossorigin' => null

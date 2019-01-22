@@ -219,4 +219,49 @@ class DependenciesServiceTest extends BaseTestCase
         // assert
         $this->assertEquals($expected, $this->cut->getAllGlobals());
     }
+
+    /**
+     * @test
+     * @covers \Laratomics\Services\DependenciesService
+     */
+    public function it_should_check_if_a_dependency_with_given_type_exists()
+    {
+        // arrange
+        $this->prepareDependenciesStub();
+        $this->cut = new DependenciesService();
+
+        // assert
+        $this->assertTrue($this->cut->dependencyExists('styles', 'https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css'));
+        $this->assertFalse($this->cut->dependencyExists('styles', 'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.1/css/bootstrap.min.css'));
+    }
+
+    /**
+     * @test
+     * @covers \Laratomics\Services\DependenciesService
+     */
+    public function it_should_remove_a_dependency()
+    {
+        // arrange
+        $this->prepareDependenciesStub();
+        $this->cut = new DependenciesService();
+
+        $expected = [
+            'styles' => [],
+            'scripts' => [
+                '094841b35e7f2d90c081a6f3d18040b4' => [
+                    'src' => 'https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js',
+                    'integrity' => 'sha256-KsRuvuRtUVvobe66OFtOQfjP8WA2SzYsmm4VPfMnxms=',
+                    'crossorigin' => 'anonymous'
+                ]
+            ]
+        ];
+
+        // act
+        $this->cut->removeDependency('styles', 'https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css');
+
+        // assert
+        $this->assertEquals($expected, $this->cut->getAllGlobals());
+        $json = File::get("{$this->tempDir}/dependencies.json");
+        $this->assertEquals($expected, json_decode($json, true));
+    }
 }

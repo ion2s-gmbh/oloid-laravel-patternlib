@@ -1,16 +1,6 @@
 <!-- GLOBALS -->
 @inject('dependencies', 'Laratomics\Services\DependenciesService')
 
-@section('workshop.fonts')
-    <!-- Fonts -->
-    @foreach($dependencies->getGlobals('fonts') as $font)
-        <link rel="stylesheet"
-              href="{{ $font['src'] }}"
-              integrity="{{ $font['integrity'] }}"
-              crossorigin="{{ $font['crossorigin'] }}" />
-    @endforeach
-@show
-
 @section('workshop.styles')
     <!-- CSS -->
     @foreach($dependencies->getGlobals('styles') as $style)

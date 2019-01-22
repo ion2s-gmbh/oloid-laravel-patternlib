@@ -131,4 +131,30 @@ class DependenciesService
         $crossorigin = $linkElement->getAttribute('crossorigin');
         return ['styles', $src, $integrity, $crossorigin];
     }
+
+    /**
+     * Check if a global dependency exists.
+     *
+     * @param string $type
+     * @param string $src
+     * @return bool
+     */
+    public function dependencyExists(string $type, string $src)
+    {
+        $hash = hash('md5', $src);
+        return array_key_exists($hash, $this->globals[$type]);
+    }
+
+    /**
+     * Remove a global dependency.
+     *
+     * @param string $type
+     * @param string $src
+     */
+    public function removeDependency(string $type, string $src)
+    {
+        $hash = hash('md5', $src);
+        unset($this->globals[$type][$hash]);
+        File::put($this->globalsPath, json_encode($this->globals));
+    }
 }

@@ -105,6 +105,23 @@ class DependenciesControllerTest extends BaseTestCase
      * @test
      * @covers \Laratomics\Http\Controllers\DependenciesController
      */
+    public function it_should_throw_validation_exception_on_malformed_dependency()
+    {
+        // arrange
+
+        // act
+        $response = $this->postJson('workshop/api/v1/dependencies', [
+            'dependency' => 'https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css'
+        ]);
+
+        // assert
+        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
+    /**
+     * @test
+     * @covers \Laratomics\Http\Controllers\DependenciesController
+     */
     public function it_should_remove_a_global_dependency()
     {
         // arrange

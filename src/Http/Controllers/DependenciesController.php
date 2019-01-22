@@ -5,6 +5,7 @@ namespace Laratomics\Http\Controllers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Validation\ValidationException;
 use Laratomics\Services\DependenciesService;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -45,7 +46,13 @@ class DependenciesController extends Controller
      */
     public function store(Request $request)
     {
-        $this->dependenciesService->addDependency($request->get('dependency'));
+        $dependency = $request->get('dependency');
+        if (!starts_with($dependency, '<link') && !starts_with($dependency, '<script')) {
+            throw ValidationException::withMessages([
+                'dependency' => 'The dependency is malformed!'
+            ]);
+        }
+        $this->dependenciesService->addDependency($dependency);
 
         return JsonResponse::create([], JsonResponse::HTTP_CREATED);
     }

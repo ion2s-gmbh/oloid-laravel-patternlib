@@ -29,7 +29,6 @@ class DependenciesServiceTest extends BaseTestCase
     public function it_should_have_empty_globals()
     {
         // assert
-        $this->assertEmpty($this->cut->getGlobals('fonts'));
         $this->assertEmpty($this->cut->getGlobals('styles'));
         $this->assertEmpty($this->cut->getGlobals('scripts'));
     }
@@ -47,17 +46,8 @@ class DependenciesServiceTest extends BaseTestCase
         $globalsService = new DependenciesService();
 
         // assert
-        $fonts = $globalsService->getGlobals('fonts');
         $this->assertEquals([
-            [
-                'src' => 'https://fonts.googleapis.com/css?family=Nunito:200,600',
-                'integrity' => null,
-                'crossorigin' => null
-            ]
-        ], $fonts);
-
-        $this->assertEquals([
-            [
+            '7c6d7f6528dd5848ebc15c7ab14de532' => [
                 'src' => 'https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css',
                 'integrity' => 'sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=',
                 'crossorigin' => 'anonymous'
@@ -65,7 +55,7 @@ class DependenciesServiceTest extends BaseTestCase
         ], $globalsService->getGlobals('styles'));
 
         $this->assertEquals([
-            [
+            '094841b35e7f2d90c081a6f3d18040b4' => [
                 'src' => 'https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js',
                 'integrity' => 'sha256-KsRuvuRtUVvobe66OFtOQfjP8WA2SzYsmm4VPfMnxms=',
                 'crossorigin' => 'anonymous'
@@ -82,22 +72,15 @@ class DependenciesServiceTest extends BaseTestCase
         // arrange
         $this->prepareDependenciesStub();
         $expected = [
-            'fonts' => [
-                [
-                    'src' => 'https://fonts.googleapis.com/css?family=Nunito:200,600',
-                    'integrity' => null,
-                    'crossorigin' => null
-                ]
-            ],
             'styles' => [
-                [
+                '7c6d7f6528dd5848ebc15c7ab14de532' => [
                     'src' => 'https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css',
                     'integrity' => 'sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=',
                     'crossorigin' => 'anonymous'
                 ]
             ],
             'scripts' => [
-                [
+                '094841b35e7f2d90c081a6f3d18040b4' => [
                     'src' => 'https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js',
                     'integrity' => 'sha256-KsRuvuRtUVvobe66OFtOQfjP8WA2SzYsmm4VPfMnxms=',
                     'crossorigin' => 'anonymous'
@@ -127,9 +110,8 @@ class DependenciesServiceTest extends BaseTestCase
 
         $dependencies = File::get($dependencyPath);
         $expectedDependencies = [
-            'fonts' => [],
             'styles' => [
-                [
+                '84c829e356071cb73726c65596dd26cd' => [
                     'src' => 'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.1/css/bootstrap.css',
                     'integrity' => 'sha256-5U3z9K3P17cKgGYxXQA5rBZO5EDju+lgtXG6oDXNbNY=',
                     'crossorigin' => 'anonymous'
@@ -157,10 +139,9 @@ class DependenciesServiceTest extends BaseTestCase
 
         $dependencies = File::get($dependencyPath);
         $expectedDependencies = [
-            'fonts' => [],
             'styles' => [],
             'scripts' => [
-                [
+                'b7dacb8de74b94cf9fbe7fa1c1915bc1' => [
                     'src' => 'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.1/js/bootstrap.js',
                     'integrity' => 'sha256-K0KkaRh1fs/UYfKcnzBK9G/X7HgzuaeVI1hJPS8Sxs4=',
                     'crossorigin' => 'anonymous'
@@ -188,16 +169,15 @@ class DependenciesServiceTest extends BaseTestCase
 
         $dependencies = File::get($dependencyPath);
         $expectedDependencies = [
-            'fonts' => [],
             'styles' => [
-                [
+                '84c829e356071cb73726c65596dd26cd' => [
                     'src' => 'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.1/css/bootstrap.css',
                     'integrity' => 'sha256-5U3z9K3P17cKgGYxXQA5rBZO5EDju+lgtXG6oDXNbNY=',
                     'crossorigin' => 'anonymous'
                 ]
             ],
             'scripts' => [
-                [
+                'b7dacb8de74b94cf9fbe7fa1c1915bc1' => [
                     'src' => 'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.1/js/bootstrap.js',
                     'integrity' => 'sha256-K0KkaRh1fs/UYfKcnzBK9G/X7HgzuaeVI1hJPS8Sxs4=',
                     'crossorigin' => 'anonymous'
@@ -205,5 +185,38 @@ class DependenciesServiceTest extends BaseTestCase
             ],
         ];
         $this->assertEquals($expectedDependencies, json_decode($dependencies, true));
+    }
+
+    /**
+     * @test
+     * @covers \Laratomics\Services\DependenciesService
+     */
+    public function it_should_not_add_an_exact_dependency_twice()
+    {
+        // arrange
+        $this->prepareDependenciesStub();
+        $expected = [
+            'styles' => [
+                '7c6d7f6528dd5848ebc15c7ab14de532' => [
+                    'src' => 'https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css',
+                    'integrity' => 'sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=',
+                    'crossorigin' => 'anonymous'
+                ]
+            ],
+            'scripts' => [
+                '094841b35e7f2d90c081a6f3d18040b4' => [
+                    'src' => 'https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js',
+                    'integrity' => 'sha256-KsRuvuRtUVvobe66OFtOQfjP8WA2SzYsmm4VPfMnxms=',
+                    'crossorigin' => 'anonymous'
+                ]
+            ]
+        ];
+
+        // act
+        $this->cut = new DependenciesService();
+        $this->cut->addDependency('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />');
+
+        // assert
+        $this->assertEquals($expected, $this->cut->getAllGlobals());
     }
 }

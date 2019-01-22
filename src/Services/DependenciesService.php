@@ -20,7 +20,6 @@ class DependenciesService
      * @var array
      */
     private $globals = [
-        'fonts' => [],
         'styles' => [],
         'scripts' => []
     ];
@@ -65,18 +64,22 @@ class DependenciesService
     }
 
     /**
-     * Add a new
+     * Add a new global dependency.
      *
      * @param string $dependency
      */
     public function addDependency(string $dependency)
     {
         list($type, $src, $integrity, $crossorigin) = $this->extract($dependency);
-        $this->globals[$type][] = [
-            'src' => $src,
-            'integrity' => $integrity,
-            'crossorigin' => $crossorigin
-        ];
+        $hash = hash('md5', $src);
+
+        if (! array_key_exists($hash, $this->globals[$type])) {
+            $this->globals[$type][$hash] = [
+                'src' => $src,
+                'integrity' => $integrity,
+                'crossorigin' => $crossorigin
+            ];
+        }
 
         File::put($this->globalsPath, json_encode($this->globals));
     }

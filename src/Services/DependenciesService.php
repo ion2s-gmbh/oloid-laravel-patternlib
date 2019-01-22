@@ -73,7 +73,7 @@ class DependenciesService
         list($type, $src, $integrity, $crossorigin) = $this->extract($dependency);
         $hash = hash('md5', $src);
 
-        if (! array_key_exists($hash, $this->globals[$type])) {
+        if (! $this->dependencyExists($type, $hash)) {
             $this->globals[$type][$hash] = [
                 'src' => $src,
                 'integrity' => $integrity,
@@ -136,12 +136,11 @@ class DependenciesService
      * Check if a global dependency exists.
      *
      * @param string $type
-     * @param string $src
+     * @param string $hash
      * @return bool
      */
-    public function dependencyExists(string $type, string $src)
+    public function dependencyExists(string $type, string $hash)
     {
-        $hash = hash('md5', $src);
         return array_key_exists($hash, $this->globals[$type]);
     }
 
@@ -149,11 +148,10 @@ class DependenciesService
      * Remove a global dependency.
      *
      * @param string $type
-     * @param string $src
+     * @param string $hash
      */
-    public function removeDependency(string $type, string $src)
+    public function removeDependency(string $type, string $hash)
     {
-        $hash = hash('md5', $src);
         unset($this->globals[$type][$hash]);
         File::put($this->globalsPath, json_encode($this->globals));
     }

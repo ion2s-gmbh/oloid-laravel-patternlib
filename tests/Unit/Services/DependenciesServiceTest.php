@@ -231,8 +231,8 @@ class DependenciesServiceTest extends BaseTestCase
         $this->cut = new DependenciesService();
 
         // assert
-        $this->assertTrue($this->cut->dependencyExists('styles', 'https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css'));
-        $this->assertFalse($this->cut->dependencyExists('styles', 'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.1/css/bootstrap.min.css'));
+        $this->assertTrue($this->cut->dependencyExists('styles', '7c6d7f6528dd5848ebc15c7ab14de532'));
+        $this->assertFalse($this->cut->dependencyExists('styles', '84c829e356071cb73726c65596dd26cd'));
     }
 
     /**
@@ -257,7 +257,7 @@ class DependenciesServiceTest extends BaseTestCase
         ];
 
         // act
-        $this->cut->removeDependency('styles', 'https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css');
+        $this->cut->removeDependency('styles', '7c6d7f6528dd5848ebc15c7ab14de532');
 
         // assert
         $this->assertEquals($expected, $this->cut->getAllGlobals());

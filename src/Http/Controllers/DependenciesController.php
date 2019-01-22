@@ -69,15 +69,15 @@ class DependenciesController extends Controller
          * Check if the dependency exist
          */
         $type = $request->get('type');
-        $src = $request->get('url');
-        if (!$this->dependenciesService->dependencyExists($type, $src)) {
+        $hash = $request->get('hash');
+        if (!$this->dependenciesService->dependencyExists($type, $hash)) {
            throw new NotFoundHttpException('Dependency not found.');
         }
 
         /*
          * Remove the dependency
          */
-        $this->dependenciesService->removeDependency($type, $src);
+        $this->dependenciesService->removeDependency($type, $hash);
 
         return JsonResponse::create([]);
     }

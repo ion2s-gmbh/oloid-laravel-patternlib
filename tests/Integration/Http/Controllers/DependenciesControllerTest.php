@@ -130,7 +130,7 @@ class DependenciesControllerTest extends BaseTestCase
         // act
         $response = $this->deleteJson('workshop/api/v1/dependencies', [
             'type' => 'styles',
-            'url' => 'https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css'
+            'hash' => '7c6d7f6528dd5848ebc15c7ab14de532'
         ]);
 
         // assert
@@ -146,7 +146,7 @@ class DependenciesControllerTest extends BaseTestCase
         // act
         $response = $this->deleteJson('workshop/api/v1/dependencies', [
             'type' => 'styles',
-            'url' => 'https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css'
+            'hash' => '84c829e356071cb73726c65596dd26cd'
         ]);
 
         // assert

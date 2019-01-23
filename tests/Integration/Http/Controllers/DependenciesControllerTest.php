@@ -14,7 +14,7 @@ class DependenciesControllerTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Http\Controllers\DependenciesController
+     * @covers \Oloid\Http\Controllers\DependenciesController
      */
     public function it_should_return_empty_global_dependencies()
     {
@@ -36,7 +36,7 @@ class DependenciesControllerTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Http\Controllers\DependenciesController
+     * @covers \Oloid\Http\Controllers\DependenciesController
      */
     public function it_should_return_global_dependencies()
     {
@@ -71,7 +71,7 @@ class DependenciesControllerTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Http\Controllers\DependenciesController
+     * @covers \Oloid\Http\Controllers\DependenciesController
      */
     public function it_should_add_a_global_dependency()
     {
@@ -103,7 +103,7 @@ class DependenciesControllerTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Http\Controllers\DependenciesController
+     * @covers \Oloid\Http\Controllers\DependenciesController
      */
     public function it_should_throw_validation_exception_on_malformed_dependency()
     {
@@ -120,7 +120,7 @@ class DependenciesControllerTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Http\Controllers\DependenciesController
+     * @covers \Oloid\Http\Controllers\DependenciesController
      */
     public function it_should_remove_a_global_dependency()
     {
@@ -139,7 +139,7 @@ class DependenciesControllerTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Http\Controllers\DependenciesController
+     * @covers \Oloid\Http\Controllers\DependenciesController
      */
     public function it_should_get_an_error_if_dependency_does_not_exist()
     {

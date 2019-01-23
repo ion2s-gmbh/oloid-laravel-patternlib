@@ -1,6 +1,6 @@
 <?php
 
-namespace Laratomics\Http\Controllers;
+namespace Oloid\Http\Controllers;
 
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Http\JsonResponse;

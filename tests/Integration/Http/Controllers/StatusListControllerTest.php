@@ -12,7 +12,7 @@ class StatusListControllerTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Http\Controllers\StatusListController
+     * @covers \Oloid\Http\Controllers\StatusListController
      */
     public function it_should_return_patterns_grouped_by_status()
     {

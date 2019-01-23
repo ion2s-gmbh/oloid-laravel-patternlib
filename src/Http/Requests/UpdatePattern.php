@@ -1,9 +1,9 @@
 <?php
 
-namespace Laratomics\Http\Requests;
+namespace Oloid\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Laratomics\Rules\UniquePattern;
+use Oloid\Rules\UniquePattern;
 
 class UpdatePattern extends FormRequest
 {

@@ -1,10 +1,10 @@
 <?php
 
 
-namespace Laratomics\Services;
+namespace Oloid\Services;
 
 
-use Laratomics\Models\Pattern;
+use Oloid\Models\Pattern;
 
 class PatternStatusService
 {

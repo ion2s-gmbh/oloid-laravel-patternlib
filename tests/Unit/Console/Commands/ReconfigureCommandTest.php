@@ -2,15 +2,15 @@
 
 namespace Unit\Console\Commands;
 
-use Laratomics\Services\ConfigurationService;
 use Mockery;
+use Oloid\Services\ConfigurationService;
 use Tests\BaseTestCase;
 
 class ReconfigureCommandTest extends BaseTestCase
 {
     /**
      * @test
-     * @covers \Laratomics\Console\Commands\ReconfigureCommand
+     * @covers \Oloid\Console\Commands\ReconfigureCommand
      */
     public function it_should_not_reconfigure_view_of_laravel_application()
     {
@@ -28,7 +28,7 @@ class ReconfigureCommandTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Console\Commands\ReconfigureCommand
+     * @covers \Oloid\Console\Commands\ReconfigureCommand
      */
     public function it_should_reconfigure_view_of_laravel_application()
     {

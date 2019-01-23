@@ -1,9 +1,9 @@
 <?php
 
-namespace Laratomics\Console\Commands;
+namespace Oloid\Console\Commands;
 
 use Illuminate\Console\Command;
-use Laratomics\Services\ConfigurationService;
+use Oloid\Services\ConfigurationService;
 
 class InstallCommand extends Command
 {
@@ -19,7 +19,7 @@ class InstallCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Install all the Laratomics Workshop Resoureces';
+    protected $description = 'Install all the Workshop Resources';
 
     /**
      * @var ConfigurationService
@@ -43,17 +43,17 @@ class InstallCommand extends Command
      */
     public function handle()
     {
-        $this->comment('Publishing Laratomics Workshop Assets...');
+        $this->comment('Publishing Workshop Assets...');
         $this->callSilent('vendor:publish', ['--tag' => 'workshop-assets']);
 
-        $this->comment('Publishing Laratomics Workshop Configuration...');
+        $this->comment('Publishing Workshop Configuration...');
         $this->callSilent('vendor:publish', ['--tag' => 'workshop-config']);
 
         if ($this->configurationService->registerViewResources(config_path('view.php'))) {
             $this->comment('Extra view resources configuration have been added in the project\'s view.php');
         }
 
-        $this->info('Laratomics Workshop installed successfully.');
+        $this->info('Workshop installed successfully.');
 
         return 0;
     }

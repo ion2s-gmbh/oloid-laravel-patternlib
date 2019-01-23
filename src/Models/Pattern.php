@@ -1,6 +1,6 @@
 <?php
 
-namespace Laratomics\Models;
+namespace Oloid\Models;
 
 use Illuminate\Database\Eloquent\Model;
 

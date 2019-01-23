@@ -3,7 +3,7 @@
 namespace Services;
 
 use Illuminate\Support\Facades\File;
-use Laratomics\Services\DependenciesService;
+use Oloid\Services\DependenciesService;
 use Tests\BaseTestCase;
 use Tests\Traits\TestStubs;
 
@@ -24,7 +24,7 @@ class DependenciesServiceTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Services\DependenciesService
+     * @covers \Oloid\Services\DependenciesService
      */
     public function it_should_have_empty_globals()
     {
@@ -35,7 +35,7 @@ class DependenciesServiceTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Services\DependenciesService
+     * @covers \Oloid\Services\DependenciesService
      */
     public function it_should_load_global_dependencies_from_file()
     {
@@ -65,7 +65,7 @@ class DependenciesServiceTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Services\DependenciesService
+     * @covers \Oloid\Services\DependenciesService
      */
     public function it_should_return_all_global_dependencies()
     {
@@ -95,7 +95,7 @@ class DependenciesServiceTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Services\DependenciesService
+     * @covers \Oloid\Services\DependenciesService
      */
     public function it_should_add_a_style_dependency_with_multiple_attributes()
     {
@@ -124,7 +124,7 @@ class DependenciesServiceTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Services\DependenciesService
+     * @covers \Oloid\Services\DependenciesService
      */
     public function it_should_add_a_script_dependency_with_multiple_attributes()
     {
@@ -153,7 +153,7 @@ class DependenciesServiceTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Services\DependenciesService
+     * @covers \Oloid\Services\DependenciesService
      */
     public function it_should_add_a_script_and_a_style_dependency()
     {
@@ -189,7 +189,7 @@ class DependenciesServiceTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Services\DependenciesService
+     * @covers \Oloid\Services\DependenciesService
      */
     public function it_should_not_add_an_exact_dependency_twice()
     {
@@ -222,7 +222,7 @@ class DependenciesServiceTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Services\DependenciesService
+     * @covers \Oloid\Services\DependenciesService
      */
     public function it_should_check_if_a_dependency_with_given_type_exists()
     {
@@ -237,7 +237,7 @@ class DependenciesServiceTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Services\DependenciesService
+     * @covers \Oloid\Services\DependenciesService
      */
     public function it_should_remove_a_dependency()
     {

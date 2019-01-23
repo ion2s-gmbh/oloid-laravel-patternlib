@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Laratomics\Services;
+namespace Oloid\Services;
 
 
 use Illuminate\Support\Str;

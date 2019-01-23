@@ -2,8 +2,8 @@
 
 namespace Unit\Services;
 
-use Laratomics\Models\Pattern;
-use Laratomics\Services\PatternStatusService;
+use Oloid\Models\Pattern;
+use Oloid\Services\PatternStatusService;
 use Tests\BaseTestCase;
 use Tests\Traits\TestStubs;
 
@@ -13,7 +13,7 @@ class PatternStatusServiceTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Services\PatternStatusService
+     * @covers \Oloid\Services\PatternStatusService
      */
     public function it_should_get_the_patterns_by_status()
     {
@@ -37,7 +37,7 @@ class PatternStatusServiceTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Services\PatternStatusService
+     * @covers \Oloid\Services\PatternStatusService
      */
     public function it_should_evaluate_a_patterns_status()
     {
@@ -61,7 +61,7 @@ class PatternStatusServiceTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Services\PatternStatusService
+     * @covers \Oloid\Services\PatternStatusService
      */
     public function it_should_only_list_a_pattern_once()
     {

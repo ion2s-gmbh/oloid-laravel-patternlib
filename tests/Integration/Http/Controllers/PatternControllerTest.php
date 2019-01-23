@@ -23,7 +23,7 @@ class PatternControllerTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Http\Controllers\PatternController
+     * @covers \Oloid\Http\Controllers\PatternController
      */
     public function it_should_create_a_new_pattern()
     {
@@ -50,7 +50,7 @@ class PatternControllerTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Http\Controllers\PatternController
+     * @covers \Oloid\Http\Controllers\PatternController
      */
     public function it_should_be_an_invalide_request_name_missing()
     {
@@ -69,7 +69,7 @@ class PatternControllerTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Http\Controllers\PatternController
+     * @covers \Oloid\Http\Controllers\PatternController
      */
     public function it_should_not_create_pattern_if_it_already_exists()
     {
@@ -91,7 +91,7 @@ class PatternControllerTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Http\Controllers\PatternController
+     * @covers \Oloid\Http\Controllers\PatternController
      */
     public function it_should_load_all_pattern_information()
     {
@@ -121,7 +121,7 @@ class PatternControllerTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Http\Controllers\PatternController
+     * @covers \Oloid\Http\Controllers\PatternController
      */
     public function it_should_return_404_if_a_pattern_does_not_exist()
     {
@@ -135,7 +135,7 @@ class PatternControllerTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Http\Controllers\PatternController
+     * @covers \Oloid\Http\Controllers\PatternController
      */
     public function it_should_get_a_html_preview_of_a_pattern()
     {
@@ -155,7 +155,7 @@ class PatternControllerTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Http\Controllers\PatternController
+     * @covers \Oloid\Http\Controllers\PatternController
      */
     public function it_should_remove_a_pattern()
     {
@@ -172,7 +172,7 @@ class PatternControllerTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Http\Controllers\PatternController
+     * @covers \Oloid\Http\Controllers\PatternController
      */
     public function it_should_get_404_error_if_nonexistend_pattern_is_deleted()
     {
@@ -188,7 +188,7 @@ class PatternControllerTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Http\Controllers\PatternController
+     * @covers \Oloid\Http\Controllers\PatternController
      */
     public function it_should_update_the_status_of_a_pattern()
     {
@@ -209,7 +209,7 @@ class PatternControllerTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Http\Controllers\PatternController
+     * @covers \Oloid\Http\Controllers\PatternController
      */
     public function it_should_change_the_description_of_a_pattern()
     {
@@ -236,7 +236,7 @@ class PatternControllerTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Http\Controllers\PatternController
+     * @covers \Oloid\Http\Controllers\PatternController
      */
     public function it_should_not_change_the_description_if_request_input_is_missing()
     {
@@ -263,7 +263,7 @@ class PatternControllerTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Http\Controllers\PatternController
+     * @covers \Oloid\Http\Controllers\PatternController
      */
     public function it_should_not_rename_a_pattern_if_name_already_exists()
     {
@@ -284,7 +284,7 @@ class PatternControllerTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Http\Controllers\PatternController
+     * @covers \Oloid\Http\Controllers\PatternController
      */
     public function it_should_check_that_a_pattern_exists()
     {
@@ -307,7 +307,7 @@ class PatternControllerTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Http\Controllers\PatternController
+     * @covers \Oloid\Http\Controllers\PatternController
      */
     public function it_should_check_that_a_pattern_does_not_exists()
     {

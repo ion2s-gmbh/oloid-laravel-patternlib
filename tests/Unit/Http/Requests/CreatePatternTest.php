@@ -3,8 +3,8 @@
 namespace Unit\Http\Requests;
 
 
-use Laratomics\Http\Requests\CreatePattern;
-use Laratomics\Rules\UniquePattern;
+use Oloid\Http\Requests\CreatePattern;
+use Oloid\Rules\UniquePattern;
 use Tests\BaseTestCase;
 
 class CreatePatternTest extends BaseTestCase
@@ -22,7 +22,7 @@ class CreatePatternTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Http\Requests\CreatePattern
+     * @covers \Oloid\Http\Requests\CreatePattern
      */
     public function it_should_always_be_authorized()
     {
@@ -31,7 +31,7 @@ class CreatePatternTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Http\Requests\CreatePattern
+     * @covers \Oloid\Http\Requests\CreatePattern
      */
     public function it_should_contain_validation_rules()
     {

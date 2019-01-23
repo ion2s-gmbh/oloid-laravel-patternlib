@@ -1,6 +1,6 @@
 <?php
 
-namespace Laratomics\Rules;
+namespace Oloid\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Facades\File;

@@ -1,11 +1,11 @@
 <?php
 
-namespace Laratomics\Http\Controllers;
+namespace Oloid\Http\Controllers;
 
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
-use Laratomics\Services\PatternService;
+use Oloid\Services\PatternService;
 
 class NavigationController extends Controller
 {

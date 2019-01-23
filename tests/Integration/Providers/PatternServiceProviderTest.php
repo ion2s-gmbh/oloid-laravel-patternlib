@@ -4,7 +4,7 @@ namespace Integration\Providers;
 
 use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\Support\Facades\Blade;
-use Laratomics\Providers\PatternServiceProvider;
+use Oloid\Providers\PatternServiceProvider;
 use Tests\BaseTestCase;
 use Tests\Traits\TestStubs;
 
@@ -14,7 +14,7 @@ class PatternServiceProviderTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Providers\PatternServiceProvider
+     * @covers \Oloid\Providers\PatternServiceProvider
      */
     public function it_should_use_a_pattern_with_include()
     {
@@ -33,7 +33,7 @@ class PatternServiceProviderTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Providers\PatternServiceProvider
+     * @covers \Oloid\Providers\PatternServiceProvider
      */
     public function it_should_use_a_pattern_with_atom()
     {
@@ -52,7 +52,7 @@ class PatternServiceProviderTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Providers\PatternServiceProvider
+     * @covers \Oloid\Providers\PatternServiceProvider
      */
     public function it_should_register_component_directives()
     {
@@ -69,7 +69,7 @@ class PatternServiceProviderTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Providers\PatternServiceProvider
+     * @covers \Oloid\Providers\PatternServiceProvider
      */
     public function it_should_not_register_component_directives()
     {
@@ -85,7 +85,7 @@ class PatternServiceProviderTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Providers\PatternServiceProvider
+     * @covers \Oloid\Providers\PatternServiceProvider
      */
     public function it_should_return_the_callable_handler_for_blade_directive()
     {

@@ -6,7 +6,7 @@ namespace Unit;
 
 use Exception;
 use Illuminate\Filesystem\Filesystem;
-use Laratomics\Models\Pattern;
+use Oloid\Models\Pattern;
 use Tests\BaseTestCase;
 use Tests\Traits\TestStubs;
 

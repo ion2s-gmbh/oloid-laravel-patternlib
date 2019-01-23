@@ -1,15 +1,15 @@
 <?php
 
-namespace Laratomics\Http\Controllers;
+namespace Oloid\Http\Controllers;
 
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Laratomics\Http\Requests\CreatePattern;
-use Laratomics\Http\Requests\UpdatePattern;
-use Laratomics\Http\Resources\PatternResource;
-use Laratomics\Services\PatternService;
+use Oloid\Http\Requests\CreatePattern;
+use Oloid\Http\Requests\UpdatePattern;
+use Oloid\Http\Resources\PatternResource;
+use Oloid\Services\PatternService;
 
 class PatternController extends Controller
 {

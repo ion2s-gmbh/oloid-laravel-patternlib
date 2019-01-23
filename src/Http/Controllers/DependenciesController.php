@@ -1,12 +1,12 @@
 <?php
 
-namespace Laratomics\Http\Controllers;
+namespace Oloid\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Validation\ValidationException;
-use Laratomics\Services\DependenciesService;
+use Oloid\Services\DependenciesService;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class DependenciesController extends Controller

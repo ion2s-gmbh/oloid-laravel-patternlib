@@ -8,7 +8,7 @@ class ApplicationControllerTest extends BaseTestCase
 {
     /**
      * @test
-     * @covers \Laratomics\Http\Controllers\ApplicationController
+     * @covers \Oloid\Http\Controllers\ApplicationController
      */
     public function it_should_get_info_about_the_app_name()
     {

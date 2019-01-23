@@ -1,9 +1,9 @@
 <?php
 
-namespace Laratomics\Console\Commands;
+namespace Oloid\Console\Commands;
 
 use Illuminate\Console\Command;
-use Laratomics\Services\ConfigurationService;
+use Oloid\Services\ConfigurationService;
 
 class ReconfigureCommand extends Command
 {

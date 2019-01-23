@@ -4,8 +4,8 @@
 namespace Tests\Traits;
 
 use Illuminate\Filesystem\Filesystem;
-use Laratomics\Models\Pattern;
-use Laratomics\Services\PatternService;
+use Oloid\Models\Pattern;
+use Oloid\Services\PatternService;
 
 trait TestStubs
 {

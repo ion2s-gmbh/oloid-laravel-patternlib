@@ -1,5 +1,5 @@
 <!-- GLOBALS -->
-@inject('dependencies', 'Laratomics\Services\DependenciesService')
+@inject('dependencies', 'Oloid\Services\DependenciesService')
 
 @section('workshop.styles')
     <!-- CSS -->

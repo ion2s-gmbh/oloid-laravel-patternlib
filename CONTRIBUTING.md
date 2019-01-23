@@ -1,26 +1,26 @@
 # Contributing
 
-First things first: Thanks for considering to contributing to laratomics-workshop.
+First things first: Thanks for considering to contributing to oloid-laravel-patternlib.
 
 Feel free to fork our repository and send a PR to the master branch.
 
 # Setup the development environment
 
 1. Create a standard Laravel application.
-2. Link the package laratomics-workshop in composer.json
+2. Link the package oloid-laravel-patternlib in composer.json
 
 ## Recommended folder structure
-* laratomics
+* oloid
     * packages
-        * laratomics-workshop
+        * oloid-laravel-patternlib
     * laravel
 
 This structure will be created in the following steps.
 
-### Laratomics-workshop
+### Oloid-laravel-patternlib
 ```bash
-mkdir -p laratomics/packages
-git clone git@github.com:poolingpeople/laratomics-workshop.git
+mkdir -p oloid/packages
+git clone git@github.com:ion2s-gmbh/oloid-laravel-patternlib.git
 ```
 
 ### Laravel
@@ -30,26 +30,26 @@ composer create-project --prefer-dist laravel/laravel laravel
 ```
 
 ### Link the package
-Finally you have to link the laravel-workshop package in the Laravel application and you're ready to go.
+Finally you have to link the oloid-laravel-patternlib package in the Laravel application and you're ready to go.
 In Laravel's composer.json add:
 ```
 "repositories": [
     {
       "type":"path",
-      "url":"/path/to/laratomics-workshop"
+      "url":"/path/to/oloid-laravel-patternlib"
     }
   ],
 ```
 And in the require-dev section add:
 ```
-"ion2s/laratomics-workshop": "*",
+"ion2s/oloid-laravel-patternlib": "*",
 ```
 
 Then run:
 ```bash
 composer update
 ```
-You should see ion2s/laratomics-workshop in the list of discovered packages.
+You should see ion2s/oloid-laravel-patternlib in the list of discovered packages.
 
 You can execute the tests with:
 ```bash
@@ -59,7 +59,7 @@ composer test
 ### Preparing the frontend
 Finally you have to build the frontend:
 ```bash
-cd /path/to/laratomics-workshop
+cd /path/to/oloid-laravel-patternlib
 npm install
 npm run dev
 ```

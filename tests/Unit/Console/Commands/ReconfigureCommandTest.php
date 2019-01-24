@@ -43,6 +43,7 @@ class ReconfigureCommandTest extends BaseTestCase
         $path = config('workshop.basePath');
         $this->artisan('workshop:reconfig')
             ->expectsOutput("Reset extra view path to {$path}.")
+            ->expectsOutput('Creating new pattern path...')
             ->assertExitCode(0);
     }
 }

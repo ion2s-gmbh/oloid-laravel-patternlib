@@ -45,6 +45,8 @@ class CleanCommand extends Command
             return File::deleteDirectory($path);
         }
 
+        File::makeDirectory(config('workshop.patternPath'), 0755, true);
+
         return -1;
     }
 }

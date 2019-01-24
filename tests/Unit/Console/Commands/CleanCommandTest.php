@@ -3,6 +3,7 @@
 namespace Unit\Console\Commands;
 
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Facades\File;
 use Tests\BaseTestCase;
 
 class CleanCommandTest extends BaseTestCase
@@ -34,8 +35,7 @@ class CleanCommandTest extends BaseTestCase
     public function it_should_abort_removal_of_the_packages_resource_folder()
     {
         // arrange
-        $fs = new Filesystem();
-        $this->assertTrue($fs->exists($this->tempDir));
+        $this->assertTrue(File::exists($this->tempDir));
 
         // act
         $path = config('workshop.basePath');
@@ -44,6 +44,6 @@ class CleanCommandTest extends BaseTestCase
             ->assertExitCode(-1);
 
         // assert
-        $this->assertTrue($fs->exists($this->tempDir));
+        $this->assertTrue(File::exists($this->tempDir . '/patterns'));
     }
 }

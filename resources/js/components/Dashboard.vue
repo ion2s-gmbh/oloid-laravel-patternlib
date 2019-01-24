@@ -7,10 +7,10 @@
       <h2 class="headline--one">
         Welcome!
         <small>Let's build something awesome!</small>
-        <span class="dashboard-info" title="Current branch: Hajpoei">
-          <i class="fas fa-code-branch"></i> -
-          Hajopei
-        </span>
+        <!--<span class="dashboard-info" title="Current branch: Hajpoei">-->
+          <!--<i class="fas fa-code-branch"></i> - -->
+          <!--Hajopei-->
+        <!--</span>-->
       </h2>
 
     </div>

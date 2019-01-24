@@ -104,7 +104,7 @@ class WorkshopServiceProvider extends BaseServiceProvider
          * Publish views
          */
         $this->publishes([
-            __DIR__.'/../resources/views' => resource_path('views/vendor/workshop'),
+            __DIR__ . '/../resources/views' => resource_path('views/vendor/workshop'),
         ], 'workshop-views');
 
         /*

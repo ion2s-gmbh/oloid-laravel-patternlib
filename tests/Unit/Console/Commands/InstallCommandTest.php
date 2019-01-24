@@ -25,6 +25,7 @@ class InstallCommandTest extends BaseTestCase
         $this->artisan('workshop:install')
             ->expectsOutput('Publishing Workshop Assets...')
             ->expectsOutput('Publishing Workshop Configuration...')
+            ->expectsOutput('Creating pattern path...')
             ->expectsOutput('Workshop installed successfully.')
             ->assertExitCode(0);
     }
@@ -47,6 +48,7 @@ class InstallCommandTest extends BaseTestCase
             ->expectsOutput('Publishing Workshop Assets...')
             ->expectsOutput('Publishing Workshop Configuration...')
             ->expectsOutput('Extra view resources configuration have been added in the project\'s view.php')
+            ->expectsOutput('Creating pattern path...')
             ->expectsOutput('Workshop installed successfully.')
             ->assertExitCode(0);
     }

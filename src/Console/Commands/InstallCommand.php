@@ -3,6 +3,7 @@
 namespace Oloid\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\File;
 use Oloid\Services\ConfigurationService;
 
 class InstallCommand extends Command
@@ -52,6 +53,9 @@ class InstallCommand extends Command
         if ($this->configurationService->registerViewResources(config_path('view.php'))) {
             $this->comment('Extra view resources configuration have been added in the project\'s view.php');
         }
+
+        $this->comment('Creating pattern path...');
+        File::makeDirectory(config('workshop.patternPath'), 0755, true);
 
         $this->info('Workshop installed successfully.');
 

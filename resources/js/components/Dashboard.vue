@@ -101,7 +101,12 @@
     data() {
       return {
         loadingStatusList: false,
-        statusList: {},
+        statusList: {
+          todo: [],
+          review: [],
+          rejected: [],
+          done: []
+        },
         globalShortcuts
       }
     },

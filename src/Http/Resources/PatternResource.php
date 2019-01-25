@@ -1,9 +1,9 @@
 <?php
 
-namespace Laratomics\Http\Resources;
+namespace Oloid\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use Laratomics\Services\PatternStatusService;
+use Oloid\Services\PatternStatusService;
 
 class PatternResource extends JsonResource
 {

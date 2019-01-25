@@ -2,7 +2,7 @@
 
 
 use Illuminate\Filesystem\Filesystem;
-use Laratomics\Models\Pattern;
+use Oloid\Models\Pattern;
 
 if (!function_exists('compile_blade_string')) {
     /**

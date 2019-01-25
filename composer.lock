@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "19fcaa55dba1e0712f04dcd02c610f11",
+    "content-hash": "bfc9a62834ae1ac6a6cdfa083cbb2d6d",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -464,16 +464,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.7.20",
+            "version": "v5.7.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "10cd20294b5668f90ba91996236834e71f7ff670"
+                "reference": "64a7749bd9e8df68addce1d01a54bcf606141f29"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/10cd20294b5668f90ba91996236834e71f7ff670",
-                "reference": "10cd20294b5668f90ba91996236834e71f7ff670",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/64a7749bd9e8df68addce1d01a54bcf606141f29",
+                "reference": "64a7749bd9e8df68addce1d01a54bcf606141f29",
                 "shasum": ""
             },
             "require": {
@@ -606,7 +606,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2019-01-08T14:39:11+00:00"
+            "time": "2019-01-22T15:08:35+00:00"
         },
         {
             "name": "laravel/nexmo-notification-channel",
@@ -1002,16 +1002,16 @@
         },
         {
             "name": "nexmo/client",
-            "version": "1.6.0",
+            "version": "1.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Nexmo/nexmo-php.git",
-                "reference": "01809cc1e17a5af275913c49bb5d444eb6cc06d4"
+                "reference": "3dc03ca1dab726a23b757110897740e54304fc65"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Nexmo/nexmo-php/zipball/01809cc1e17a5af275913c49bb5d444eb6cc06d4",
-                "reference": "01809cc1e17a5af275913c49bb5d444eb6cc06d4",
+                "url": "https://api.github.com/repos/Nexmo/nexmo-php/zipball/3dc03ca1dab726a23b757110897740e54304fc65",
+                "reference": "3dc03ca1dab726a23b757110897740e54304fc65",
                 "shasum": ""
             },
             "require": {
@@ -1046,20 +1046,20 @@
                 }
             ],
             "description": "PHP Client for using Nexmo's API.",
-            "time": "2018-12-17T10:47:50+00:00"
+            "time": "2019-01-02T09:06:47+00:00"
         },
         {
             "name": "opis/closure",
-            "version": "3.1.3",
+            "version": "3.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/opis/closure.git",
-                "reference": "5e9095ce871a425ab87a854b285b7766de38a7d9"
+                "reference": "41f5da65d75cf473e5ee582df8fc7f2c733ce9d6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/opis/closure/zipball/5e9095ce871a425ab87a854b285b7766de38a7d9",
-                "reference": "5e9095ce871a425ab87a854b285b7766de38a7d9",
+                "url": "https://api.github.com/repos/opis/closure/zipball/41f5da65d75cf473e5ee582df8fc7f2c733ce9d6",
+                "reference": "41f5da65d75cf473e5ee582df8fc7f2c733ce9d6",
                 "shasum": ""
             },
             "require": {
@@ -1107,7 +1107,103 @@
                 "serialization",
                 "serialize"
             ],
-            "time": "2019-01-06T22:07:38+00:00"
+            "time": "2019-01-14T14:45:33+00:00"
+        },
+        {
+            "name": "paquettg/php-html-parser",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/paquettg/php-html-parser.git",
+                "reference": "8b759abeea51df22f6a6cc473039758d95aceea4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/paquettg/php-html-parser/zipball/8b759abeea51df22f6a6cc473039758d95aceea4",
+                "reference": "8b759abeea51df22f6a6cc473039758d95aceea4",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "paquettg/string-encode": "~1.0.0",
+                "php": ">=7.1"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.2",
+                "php-coveralls/php-coveralls": "^2.1",
+                "phpunit/phpunit": "^7.5.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "PHPHtmlParser": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Gilles Paquette",
+                    "email": "paquettg@gmail.com",
+                    "homepage": "http://gillespaquette.ca"
+                }
+            ],
+            "description": "An HTML DOM parser. It allows you to manipulate HTML. Find tags on an HTML page with selectors just like jQuery.",
+            "homepage": "https://github.com/paquettg/php-html-parser",
+            "keywords": [
+                "dom",
+                "html",
+                "parser"
+            ],
+            "time": "2019-01-21T02:00:26+00:00"
+        },
+        {
+            "name": "paquettg/string-encode",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/paquettg/string-encoder.git",
+                "reference": "a8708e9fac9d5ddfc8fc2aac6004e2cd05d80fee"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/paquettg/string-encoder/zipball/a8708e9fac9d5ddfc8fc2aac6004e2cd05d80fee",
+                "reference": "a8708e9fac9d5ddfc8fc2aac6004e2cd05d80fee",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7.5.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "stringEncode": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Gilles Paquette",
+                    "email": "paquettg@gmail.com",
+                    "homepage": "http://gillespaquette.ca"
+                }
+            ],
+            "description": "Facilitating the process of altering string encoding in PHP.",
+            "homepage": "https://github.com/paquettg/string-encoder",
+            "keywords": [
+                "charset",
+                "encoding",
+                "string"
+            ],
+            "time": "2018-12-21T02:25:09+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -3456,16 +3552,16 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v4.1.1",
+            "version": "v4.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "8aae5b59b83bb4d0dbf07b0a835f2680a658f610"
+                "reference": "594bcae1fc0bccd3993d2f0d61a018e26ac2865a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/8aae5b59b83bb4d0dbf07b0a835f2680a658f610",
-                "reference": "8aae5b59b83bb4d0dbf07b0a835f2680a658f610",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/594bcae1fc0bccd3993d2f0d61a018e26ac2865a",
+                "reference": "594bcae1fc0bccd3993d2f0d61a018e26ac2865a",
                 "shasum": ""
             },
             "require": {
@@ -3481,7 +3577,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "4.1-dev"
+                    "dev-master": "4.2-dev"
                 }
             },
             "autoload": {
@@ -3503,7 +3599,7 @@
                 "parser",
                 "php"
             ],
-            "time": "2018-12-26T11:32:39+00:00"
+            "time": "2019-01-12T16:31:37+00:00"
         },
         {
             "name": "orchestra/testbench",
@@ -4252,16 +4348,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "7.5.1",
+            "version": "7.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "c23d78776ad415d5506e0679723cb461d71f488f"
+                "reference": "7c89093bd00f7d5ddf0ab81dee04f801416b4944"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/c23d78776ad415d5506e0679723cb461d71f488f",
-                "reference": "c23d78776ad415d5506e0679723cb461d71f488f",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/7c89093bd00f7d5ddf0ab81dee04f801416b4944",
+                "reference": "7c89093bd00f7d5ddf0ab81dee04f801416b4944",
                 "shasum": ""
             },
             "require": {
@@ -4332,7 +4428,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-12-12T07:20:32+00:00"
+            "time": "2019-01-15T08:19:08+00:00"
         },
         {
             "name": "react/event-loop",

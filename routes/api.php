@@ -75,3 +75,27 @@ Route::get('navi', 'NavigationController@get');
 | Get a list with all Patterns grouped by their status.
 */
 Route::get('status-list', 'StatusListController@get');
+
+/*
+|--------------------------------------------------------------------------
+| GET /dependencies
+|--------------------------------------------------------------------------
+| Get a list of all global dependencies.
+*/
+Route::get('dependencies', 'DependenciesController@get');
+
+/*
+|--------------------------------------------------------------------------
+| POST /dependencies
+|--------------------------------------------------------------------------
+| Add a new global dependency.
+*/
+Route::post('dependencies', 'DependenciesController@store');
+
+/*
+|--------------------------------------------------------------------------
+| DELETE /dependencies
+|--------------------------------------------------------------------------
+| Remove a global dependency
+*/
+Route::delete('dependencies', 'DependenciesController@remove');

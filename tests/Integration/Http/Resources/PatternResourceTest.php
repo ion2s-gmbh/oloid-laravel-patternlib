@@ -2,9 +2,9 @@
 
 namespace Integration\Http\Resources;
 
-use Laratomics\Http\Resources\PatternResource;
-use Laratomics\Models\Pattern;
 use Mockery;
+use Oloid\Http\Resources\PatternResource;
+use Oloid\Models\Pattern;
 use Spatie\YamlFrontMatter\YamlFrontMatter;
 use Tests\BaseTestCase;
 
@@ -56,7 +56,7 @@ class PatternResourceTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Http\Resources\PatternResource
+     * @covers \Oloid\Http\Resources\PatternResource
      */
     public function it_should_respond_with_pattern_representation_as_array()
     {

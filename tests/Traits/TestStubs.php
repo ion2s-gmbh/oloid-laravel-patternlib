@@ -4,8 +4,8 @@
 namespace Tests\Traits;
 
 use Illuminate\Filesystem\Filesystem;
-use Laratomics\Models\Pattern;
-use Laratomics\Services\PatternService;
+use Oloid\Models\Pattern;
+use Oloid\Services\PatternService;
 
 trait TestStubs
 {
@@ -32,11 +32,25 @@ trait TestStubs
         $fs->copy($sourcePath, $this->viewConfigPath);
     }
 
+    /**
+     * Copy the patterns folder in place for testing.
+     */
     public function preparePatternStub()
     {
         $fs = new Filesystem();
         $sourcePath = realpath(__DIR__ . '/../Stubs/patterns');
         $targetPath = "{$this->tempDir}/patterns";
         $fs->copyDirectory($sourcePath, $targetPath);
+    }
+
+    /**
+     * Copy the dependencies.json file in place for testing.
+     */
+    public function prepareDependenciesStub()
+    {
+        $fs = new Filesystem();
+        $sourcePath = realpath(__DIR__ . '/../Stubs/dependencies.json');
+        $targetPath = "{$this->tempDir}/dependencies.json";
+        $fs->copy($sourcePath, $targetPath);
     }
 }

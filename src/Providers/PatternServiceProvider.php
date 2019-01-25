@@ -1,13 +1,13 @@
 <?php
 
-namespace Laratomics\Providers;
+namespace Oloid\Providers;
 
 use Closure;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
-use Laratomics\Services\PatternService;
-use Laratomics\Services\PatternStatusService;
+use Oloid\Services\PatternService;
+use Oloid\Services\PatternStatusService;
 
 class PatternServiceProvider extends ServiceProvider
 {

@@ -3,15 +3,16 @@
 namespace Unit\Console\Commands;
 
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Facades\File;
 use Tests\BaseTestCase;
 
 class CleanCommandTest extends BaseTestCase
 {
     /**
      * @test
-     * @covers \Laratomics\Console\Commands\CleanCommand
+     * @covers \Oloid\Console\Commands\CleanCommand
      */
-    public function it_should_remove_the_laratomics_resources_folder()
+    public function it_should_remove_the_packages_resources_folder()
     {
         // arrange
         $fs = new Filesystem();
@@ -29,13 +30,12 @@ class CleanCommandTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Console\Commands\CleanCommand
+     * @covers \Oloid\Console\Commands\CleanCommand
      */
-    public function it_should_abort_removal_of_the_laratomics_resource_folder()
+    public function it_should_abort_removal_of_the_packages_resource_folder()
     {
         // arrange
-        $fs = new Filesystem();
-        $this->assertTrue($fs->exists($this->tempDir));
+        $this->assertTrue(File::exists($this->tempDir));
 
         // act
         $path = config('workshop.basePath');
@@ -44,6 +44,6 @@ class CleanCommandTest extends BaseTestCase
             ->assertExitCode(-1);
 
         // assert
-        $this->assertTrue($fs->exists($this->tempDir));
+        $this->assertTrue(File::exists($this->tempDir . '/patterns'));
     }
 }

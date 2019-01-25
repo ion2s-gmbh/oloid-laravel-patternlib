@@ -1,13 +1,13 @@
 <?php
 
 
-namespace Laratomics\Services;
+namespace Oloid\Services;
 
 
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Facades\File;
-use Laratomics\Exceptions\RenderingException;
-use Laratomics\Models\Pattern;
+use Oloid\Exceptions\RenderingException;
+use Oloid\Models\Pattern;
 use Spatie\YamlFrontMatter\YamlFrontMatter;
 use SplFileInfo;
 

@@ -12,7 +12,7 @@ class NavigationControllerTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Http\Controllers\NavigationController
+     * @covers \Oloid\Http\Controllers\NavigationController
      */
     public function it_should_return_the_navigation_structure()
     {
@@ -56,7 +56,7 @@ class NavigationControllerTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Http\Controllers\NavigationController
+     * @covers \Oloid\Http\Controllers\NavigationController
      */
     public function it_should_return_empty_navi_if_no_patterns_exist()
     {

@@ -2,16 +2,16 @@
 
 namespace Unit\Console\Commands;
 
-use Laratomics\Services\ConfigurationService;
 use Mockery;
+use Oloid\Services\ConfigurationService;
 use Tests\BaseTestCase;
 
 class InstallCommandTest extends BaseTestCase
 {
     /**
      * @test
-     * @covers \Laratomics\Console\Commands\InstallCommand
-     * @covers \Laratomics\WorkshopServiceProvider
+     * @covers \Oloid\Console\Commands\InstallCommand
+     * @covers \Oloid\WorkshopServiceProvider
      */
     public function it_should_publish_workshop_resources_and_configs_without_extra_view_registration()
     {
@@ -23,16 +23,17 @@ class InstallCommandTest extends BaseTestCase
             return $mock;
         });
         $this->artisan('workshop:install')
-            ->expectsOutput('Publishing Laratomics Workshop Assets...')
-            ->expectsOutput('Publishing Laratomics Workshop Configuration...')
-            ->expectsOutput('Laratomics Workshop installed successfully.')
+            ->expectsOutput('Publishing Workshop Assets...')
+            ->expectsOutput('Publishing Workshop Configuration...')
+            ->expectsOutput('Creating pattern path...')
+            ->expectsOutput('Workshop installed successfully.')
             ->assertExitCode(0);
     }
 
     /**
      * @test
-     * @covers \Laratomics\Console\Commands\InstallCommand
-     * @covers \Laratomics\WorkshopServiceProvider
+     * @covers \Oloid\Console\Commands\InstallCommand
+     * @covers \Oloid\WorkshopServiceProvider
      */
     public function it_should_publish_workshop_resources_and_configs_with_extra_view_registration()
     {
@@ -44,10 +45,11 @@ class InstallCommandTest extends BaseTestCase
             return $mock;
         });
         $this->artisan('workshop:install')
-            ->expectsOutput('Publishing Laratomics Workshop Assets...')
-            ->expectsOutput('Publishing Laratomics Workshop Configuration...')
+            ->expectsOutput('Publishing Workshop Assets...')
+            ->expectsOutput('Publishing Workshop Configuration...')
             ->expectsOutput('Extra view resources configuration have been added in the project\'s view.php')
-            ->expectsOutput('Laratomics Workshop installed successfully.')
+            ->expectsOutput('Creating pattern path...')
+            ->expectsOutput('Workshop installed successfully.')
             ->assertExitCode(0);
     }
 }

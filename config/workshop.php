@@ -14,11 +14,12 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    |
+    | Package base path
     |--------------------------------------------------------------------------
-    |
+    | This is the base path where all package specific files and folders are
+    | stored.
     */
-    'basePath' => resource_path(env('WORKSHOP_BASE_PATH', 'laratomics')),
+    'basePath' => resource_path(env('WORKSHOP_BASE_PATH', 'patternlib')),
 
     /*
     |--------------------------------------------------------------------------
@@ -27,6 +28,15 @@ return [
     | Here you configure the path where your patterns are stored. This should be
     | a subdirectory of the package's basePath.
     */
-    'patternPath' => resource_path(env('WORKSHOP_PATTERN_PATH', 'laratomics/patterns'))
+    'patternPath' => resource_path(env('WORKSHOP_PATTERN_PATH', 'patternlib/patterns')),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Global dependencies file
+    |--------------------------------------------------------------------------
+    | The name of the file, that contains global dependencies like fonts, styles
+    | and javascript libs loaded via a CDN.
+    */
+    'dependenciesFile' => 'dependencies.json'
 
 ];

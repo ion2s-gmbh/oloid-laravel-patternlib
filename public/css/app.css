@@ -351,6 +351,127 @@ template {
 [hidden] {
   display: none;
 }
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: slategray;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
 /*
 Here we do define the variables that we are using across all pages of our project.
 We use the CSS variables to keep theming a possibility in the future.
@@ -445,7 +566,7 @@ containing the header and the so called view, containing most of the UI.
   height: 100vh;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: var(--headerheight) auto;
-  grid-template-areas: "header header header header" "main main main main";
+  grid-template-areas: "header header header header" "main main main main";
   overflow: hidden;
 }
 
@@ -461,21 +582,21 @@ containing the header and the so called view, containing most of the UI.
 @media (max-width: 599px) {
   .view,
   .view--inner {
-    grid-template-areas: "code code code code" "view view view view" "view view view view" "footer footer footer footer";
+    grid-template-areas: "code code code code" "view view view view" "view view view view" "footer footer footer footer";
   }
 }
 
 @media (min-width: 600px) {
   .view,
   .view--inner {
-    grid-template-areas: "code code code code" "view view view view" "view view view view" "footer footer footer footer";
+    grid-template-areas: "code code code code" "view view view view" "view view view view" "footer footer footer footer";
   }
 }
 
 @media (min-width: 1200px) {
   .view,
   .view--inner {
-    grid-template-areas: "code view view view" "code view view view" "code view view view" ".... footer footer footer";
+    grid-template-areas: "code view view view" "code view view view" "code view view view" ".... footer footer footer";
   }
 }
 
@@ -489,6 +610,19 @@ containing the header and the so called view, containing most of the UI.
 
 .u-hide {
   display: none !important;
+}
+
+.u-transparent {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.u-transparent#usage {
+  position: absolute;
+}
+
+.u-center {
+  text-align: center;
 }
 
 .u-right {
@@ -591,6 +725,35 @@ These are the only ones that are allowed.
           animation-iteration-count: 1;
 }
 
+.warning-includes,
+.preview-menu,
+.status-menue {
+  background: var(--brandDark, #02273C);
+  min-width: 10rem;
+  padding: calc(var(--gap, $l-gap) / 2) 0;
+  position: absolute;
+  top: 1.4rem;
+  z-index: 1;
+}
+
+.warning-listItem,
+.preview-option,
+.status-option {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background: transparent;
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  font-weight: normal;
+  padding: calc(var(--gap, $l-gap) / 2) var(--gap, 1rem);
+  text-align: left;
+  text-decoration: none;
+  width: 100%;
+}
+
 /* 
 These are the styles for all interactive elements that aren't buttons.
 */
@@ -617,6 +780,7 @@ These are the styles for every interactive element that is clickable but no link
   padding: 0;
   position: relative;
   white-space: nowrap;
+  text-decoration: none;
 }
 
 .btn--primary > span,
@@ -757,12 +921,29 @@ These are the styles for every interactive element that is clickable but no link
   border: none;
   color: white;
   font-size: 1rem;
+  padding: 0 0.35rem;
 }
 
 .toggle--more.active,
 .toggle--more:hover {
   color: #10E2AB;
   color: var(--positive, #10E2AB);
+}
+
+.toggle--more.shortcuts {
+  bottom: 0;
+  left: 0;
+  position: fixed;
+}
+
+.toggle--showIncludes {
+  font-size: inherit;
+  text-shadow: inherit;
+}
+
+.toggle--showIncludes:hover {
+  color: #fff;
+  text-decoration: underline;
 }
 
 /* 
@@ -863,6 +1044,12 @@ h2,
   font-weight: 400;
 }
 
+.welcome h2,
+.welcome
+.headline--two {
+  margin-top: 1rem;
+}
+
 /* 
 These are the styles for lists. 
 */
@@ -876,6 +1063,8 @@ ul {
 
 .tooltip {
   display: block !important;
+  font-family: sans-serif;
+  font-size: 0.75rem;
   z-index: 10000;
 }
 
@@ -983,6 +1172,34 @@ ul {
   transition: opacity .15s;
 }
 
+/* 
+These are the styles for the feedback or warning boxes that giove the user feedback
+*/
+
+.warning {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: var(--alert);
+  border-radius: 1rem;
+  color: #fff;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 0.5rem 1rem;
+  position: relative;
+  text-shadow: 1px 1px 1px rgba(58, 58, 58, 0.8);
+}
+
+.warning-message {
+  color: inherit;
+  margin: 0;
+}
+
+.warning-includes {
+  right: 0;
+}
+
 .header {
   background: var(--brandDark);
   height: var(--headerheight);
@@ -1002,18 +1219,63 @@ ul {
 These are the styles that are needed to render our welcome dashboard. 
 */
 
-.dashboard {
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  grid-area: code / code / view / view;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+.dashboard-container {
+  max-height: 100%;
+  overflow: hidden;
+  padding: 1rem;
   padding: var(--gap, 1rem);
+}
+
+.dashboard-container.welcome {
+  grid-column: span 2;
+}
+
+.dashboard-info {
+  display: block;
+  font-family: sans-serif;
+  font-size: 0.75rem;
+  padding: 0.5rem 0;
+}
+
+.dashboard-list {
+  height: 100%;
+  list-style-type: none;
+  margin-left: -1rem;
+  min-width: 300px;
+  overflow: auto;
+}
+
+.dashboard-listItem > a {
+  background: transparent;
+  display: block;
+  padding: 1rem;
+  padding: var(--gap, 1rem);
+}
+
+.dashboard-listItem > a:hover {
+  background: #02273C;
+  background: var(--brandDark, #02273C);
+  color: #10E2AB;
+  color: var(--positive, #10E2AB);
+}
+
+.rejected .dashboard-list .dashboard-listItem > a:hover {
+  color: #FF4F4F;
+  color: var(--alert, #FF4F4F);
+}
+
+.dashboard-list--empty {
+  margin-left: -1rem;
+  padding: 1rem;
+  padding: var(--gap, 1rem);
+}
+
+.dashboard-list--empty span {
+  opacity: 0.6;
+}
+
+pre[class*="language-"] {
+  background: var(--brandMain, #03314B);
 }
 
 .code {
@@ -1157,6 +1419,7 @@ These are the styles that are needed to render the pattern preview.
   display: flex;
   font-family: Arial, sans-serif;
   font-size: 0.75rem;
+  height: 50px;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
@@ -1183,26 +1446,15 @@ These are the styles that are needed to render the pattern preview.
   color: red;
 }
 
-.preview-options {
-  background: #02273C;
-  background: var(--brandDark, #02273C);
+.preview-menu {
   min-width: 10rem;
-  padding: 0;
-  position: absolute;
   right: 0;
-  top: 1.2rem;
   z-index: 1;
 }
 
 .preview-option {
-  background: transparent;
   border: 0;
   color: #fff;
-  cursor: pointer;
-  padding: calc(var(--gap, $l-gap) / 2) var(--gap, 1rem);
-  text-align: left;
-  text-decoration: none;
-  width: 100%;
 }
 
 .preview-option:hover {
@@ -1222,7 +1474,7 @@ These are the styles that are needed to render the pattern preview.
 }
 
 .statusbar {
-  padding: 0 0.5rem;
+  padding: 0 0.45rem;
   position: relative;
 }
 
@@ -1232,24 +1484,8 @@ These are the styles that are needed to render the pattern preview.
 }
 
 .status-menue {
-  background: var(--brandDark, #02273C);
   left: -0.5rem;
-  padding: calc(var(--gap, $l-gap) / 2) 0;
-  position: absolute;
-  top: 1.2rem;
   z-index: 500;
-}
-
-.status-option {
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  background: transparent;
-  cursor: pointer;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  padding: calc(var(--gap, $l-gap) / 2) var(--gap, 1rem);
 }
 
 .status-option:before {
@@ -1437,8 +1673,16 @@ These are the styles for the inline footer underneath the preview window - carry
   font-size: 0.75rem;
 }
 
-.u-center {
-  text-align: center;
+.popUp {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 .navbar-laravel {

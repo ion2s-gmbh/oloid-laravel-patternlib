@@ -1,5 +1,5 @@
 {
-  "name": "ion2s/laratomics-workshop",
+  "name": "ion2s/oloid-laravel-patternlib",
   "type": "library",
   "description": "Package to add laratomics powers to your Laravel application",
   "version": "0.5.0",

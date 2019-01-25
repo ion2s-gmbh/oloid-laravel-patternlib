@@ -1,0 +1,22 @@
+%dropdown {
+
+    background: var(--brandDark, #02273C);
+    min-width: 10rem;
+    padding: calc(var(--gap, $l-gap) / 2) 0;
+    position: absolute;
+    top: 1.4rem;
+    z-index: 1;
+    
+}
+
+%dropdownItem {
+	align-items: center;
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    font-weight: normal;
+    padding: calc(var(--gap, $l-gap) / 2) var(--gap, 1rem);
+    text-align: left;
+    text-decoration: none;
+    width: 100%;
+}

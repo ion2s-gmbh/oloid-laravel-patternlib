@@ -184,3 +184,17 @@ These are the styles for every interactive element that is clickable but no link
   }
 
 }
+
+.toggle--showIncludes {
+  
+  font-size: inherit;
+  text-shadow: inherit;
+
+  &:hover {
+
+    color: #fff;
+    text-decoration: underline;
+
+  }
+
+}

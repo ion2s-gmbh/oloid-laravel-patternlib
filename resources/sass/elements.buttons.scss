@@ -24,7 +24,7 @@ These are the styles for every interactive element that is clickable but no link
     	position: relative;
     	top: 0; 
     	transform: translate(5px, -5px);
-    	transition: 150ms cubic-bezier(0.4, 0, 0.2, 1) transform;      
+    	transition: 150ms cubic-bezier(0.4, 0, 0.2, 1) transform ;     
     	z-index: 1;
 
       > i {
@@ -167,6 +167,7 @@ These are the styles for every interactive element that is clickable but no link
   border: none;
   color: white;
   font-size: 1rem;
+  padding: 0 0.35rem;
 
   &.active,
   &:hover {
@@ -179,6 +180,20 @@ These are the styles for every interactive element that is clickable but no link
     bottom: 0;
     left: 0;
     position: fixed;
+
+  }
+
+}
+
+.toggle--showIncludes {
+  
+  font-size: inherit;
+  text-shadow: inherit;
+
+  &:hover {
+
+    color: #fff;
+    text-decoration: underline;
 
   }
 

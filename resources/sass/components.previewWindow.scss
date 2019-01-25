@@ -50,7 +50,8 @@ These are the styles that are needed to render the pattern preview.
 	background: var(--brandMain, $c-brandMain);
 	display: flex;
 	font-family: Arial, sans-serif;
-	font-size: 0.75rem;	
+	font-size: 0.75rem;
+	height: 50px;
 	justify-content: space-between;
 	left: 0;
 	padding: var(--gap, $l-gap);
@@ -74,29 +75,25 @@ These are the styles that are needed to render the pattern preview.
 
 }
 
-.preview-options {
+.preview-menu {
 
-	background: $c-brandDark;
-	background: var(--brandDark,$c-brandDark);
+	@extend %dropdown;
 	min-width: 10rem;
-	padding: 0;	
-	position: absolute;
 	right: 0;	
-	top: 1.2rem;
 	z-index: 1;
 
 }
 
 .preview-option {
 
-	background: transparent;
+	@extend %dropdownItem;
 	border: 0;
 	color: #fff;
-	cursor: pointer;
-	padding: calc(var(--gap, $l-gap) / 2) var(--gap, 1rem);
-	text-align: left;
-	text-decoration: none;
-	width: 100%;
+	// cursor: pointer;
+	// padding: calc(var(--gap, $l-gap) / 2) var(--gap, 1rem);
+	// text-align: left;
+	// text-decoration: none;
+	// width: 100%;
 
 	&:hover {
 		background: $c-brandMain;
@@ -120,7 +117,7 @@ These are the styles that are needed to render the pattern preview.
 
 .statusbar {
 
-	padding: 0 0.5rem;
+	padding: 0 0.45rem;
 	position: relative;
 
 }
@@ -139,28 +136,21 @@ These are the styles that are needed to render the pattern preview.
 
 .status-menue {
 	
-	background: var(--brandDark, $c-brandDark);
+	@extend %dropdown; 
 	left: -0.5rem;
-	padding: calc(var(--gap, $l-gap) / 2) 0;
-	position: absolute;
-	top: 1.2rem;
 	z-index: 500;	
 
 }
 
 .status-option {
 	
-	align-items: center;
-	background: transparent;
-	cursor: pointer;
-	display: flex;	
-	padding: calc(var(--gap, $l-gap) / 2) var(--gap, $l-gap);
+	@extend %dropdownItem;
 
 	&:before {
 		display: inline-block;
 		content: '';
 		@extend %status;
-	}
+	}	
 
 	&:hover {
 		background: var(--brandMain, $c-brandMain);

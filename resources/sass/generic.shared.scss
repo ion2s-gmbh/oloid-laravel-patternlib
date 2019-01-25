@@ -118,6 +118,10 @@ containing the header and the so called view, containing most of the UI.
   opacity: 0;
   pointer-events: none;
 
+  &#usage {
+    position: absolute; // Can't be display none beause copy to clipboard won't work - but we want it to take no space
+  }
+
 }
 
 .u-center {

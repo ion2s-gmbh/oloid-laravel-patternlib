@@ -19,16 +19,25 @@
 
       <ul class="status-list">
 
-        <li class="status-option toCheck" @click="changeStatus('review')">
-          Unreviewed
+        <li class="status-optionWrap" @click="changeStatus('review')">
+          <span class="status-option toCheck">
+            Unreviewed  
+          </span>
+          
         </li>
 
-        <li class="status-option rejected" @click="changeStatus('rejected')">
-          Rejected
+        <li class="status-optionWrap" @click="changeStatus('rejected')">
+          <span class="status-option rejected">
+            Rejected  
+          </span>
+          
         </li>
 
-        <li class="status-option accepted" @click="changeStatus('done')">
-          Accepted
+        <li class="status-optionWrap" @click="changeStatus('done')">
+          <span class="status-option accepted">
+            Accepted  
+          </span>
+          
         </li>
 
       </ul>

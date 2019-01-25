@@ -6,27 +6,13 @@
 
       <div class="code-el">
 
-        <template v-if="totalRejectedCount">
-          <p>
-            You are using rejected Patterns:
-          </p>
-          <ul>
-            <li v-for="rejected in pattern.subPatterns.rejected">
-              <router-link :to="{ name: 'preview', params: { patternName: `${rejected}` }}">
-                {{ rejected }}
-              </router-link>
-            </li>
-          </ul>
-          <br>
-        </template>
-
         <div class="code-header">
 
           <span v-if="!isToggled" class="code-type a-fadeIn">HTML</span>
 
           <span v-if="isToggled" class="code-type a-fadeIn">Blade</span>
 
-          <label class="toggle-wrap"  v-tooltip.top-center="'Switch between HTML and Blade'">
+          <label class="toggle-wrap" v-tooltip.top-center="'Switch between HTML and Blade'">
 
             <input type="checkbox" class="toggle" v-model="isToggled" />
 
@@ -124,6 +110,46 @@
 
         </div>
 
+        <template v-if="totalRejectedCount">
+          
+          <div class="warning">
+
+            <p class="warning-message">
+              This item contains rejected patterns: 
+            </p>
+
+            <button class="toggle--more toggle--showIncludes"
+                    @click="showWarningIncludes = !showWarningIncludes"
+                    v-tooltip.top-center="'Show components that cause this message'">
+
+              <span v-if="!showWarningIncludes" class="a-slideIn">Show</span>
+
+              <span v-if="showWarningIncludes" class="a-slideIn">Hide</span>
+
+            </button>
+
+            <!-- TODO:  @seb Make se dröpdöwn close when se ossas are open -->
+
+            <div class="warning-includes a-dropIn" v-if="showWarningIncludes">
+
+              <ul class="warning-list">
+
+                <li v-for="rejected in pattern.subPatterns.rejected" class="warning-listItemWrap">
+
+                  <router-link :to="{ name: 'preview', params: { patternName: `${rejected}` }}"  class="warning-listItem">
+                    {{ rejected }}
+                  </router-link>
+
+                </li>
+
+              </ul>
+
+            </div>
+
+          </div>
+
+        </template>
+
 
         <template v-if="showDescription">
 
@@ -184,11 +210,11 @@
 
           <!-- ACTUAL MENUE -->
 
-          <div class="preview-options a-dropIn" v-if="showOptions">
+          <div class="preview-menu a-dropIn" v-if="showOptions">
 
-            <ul>              
+            <ul class="preview-list">              
 
-              <li>
+              <li class="preview-optionWrap">
 
                 <router-link :to="{ name: 'rename', params: { pattern: `${pattern.name}` } }" class="preview-option">
 
@@ -200,9 +226,9 @@
 
               </li>
 
-              <li>
+              <li class="preview-optionWrap">
 
-                <button class="preview-option" @click="confirmDelete">
+                <button @click="confirmDelete" class="preview-option">
 
                   <span>                    
                     Delete
@@ -291,6 +317,7 @@
         isToggled: false,
         showDescription: false,
         showDeleteConfirm: false,
+        showWarningIncludes: false,
         editModeDescription: false,
         oldDescription: '',
         usageTooltip: {

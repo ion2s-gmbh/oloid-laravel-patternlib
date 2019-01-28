@@ -81,7 +81,7 @@ class PatternServiceProvider extends ServiceProvider
         $prefix = array_pop($parts);
 
         $extComponent = "{$prefix}.{$path}.{$strippedComponent}";
-        $extExpression = str_replace($strippedComponent, "{$extComponent}", $expression);
+        $extExpression = str_replace_first($strippedComponent, "{$extComponent}", $expression);
 
         $pattern = empty($strippedComponent) ? $path : "{$path}.{$strippedComponent}";
 

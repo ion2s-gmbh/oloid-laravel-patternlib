@@ -251,8 +251,7 @@
 
       <div class="preview-inner">
 
-        <iframe height="1500" width="1100"
-                frameBorder="0"
+        <iframe frameBorder="0"
                 :src="`workshop/preview/${pattern.name}`"></iframe>
 
 

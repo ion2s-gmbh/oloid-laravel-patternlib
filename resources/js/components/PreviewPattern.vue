@@ -20,10 +20,7 @@
 
             <span>Show Blade</span>
 
-          </label>
-
-          <!-- Couter for patterns -->
-          <span>{{ totalTodoCount }} | {{ totalReviewCount }} | {{ totalRejectedCount }} | {{ totalDoneCount }} </span>
+          </label>          
 
         </div>
 

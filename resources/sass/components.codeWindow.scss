@@ -38,12 +38,15 @@ pre[class*="language-"] {
 }
 
 .code-lang {
+	align-content: center;
+	display: flex;
 	margin: 0;
 }
 
 .code-header {
 	align-items: center;
 	display: flex;
+	justify-content: space-between;
 	padding: 0 0 1rem 0;
 	position: relative;
 

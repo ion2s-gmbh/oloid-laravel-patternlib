@@ -8,19 +8,35 @@
 
         <div class="code-header">
 
-          <span v-if="!isToggled" class="code-type a-fadeIn">HTML</span>
+          <div class="code-lang">
 
-          <span v-if="isToggled" class="code-type a-fadeIn">Blade</span>
+            <span v-if="!isToggled" class="code-type a-fadeIn">HTML</span>
 
-          <label class="toggle-wrap" v-tooltip.top-center="'Switch between HTML and Blade'">
+            <span v-if="isToggled" class="code-type a-fadeIn">Blade</span>
 
-            <input type="checkbox" class="toggle" v-model="isToggled" />
+            <label class="toggle-wrap" v-tooltip.top-center="'Switch between HTML and Blade'">
 
-            <div></div>
+              <input type="checkbox" class="toggle" v-model="isToggled" />
 
-            <span>Show Blade</span>
+              <div></div>
 
-          </label>          
+              <span>Show Blade</span>
+
+            </label>
+
+          </div>
+
+          <button class="toggle--more clipboard"
+                  v-tooltip.top-center="usageTooltip"
+                  data-clipboard-target="#usage"
+                  @mouseleave="resetTooltip">
+
+            <i class="far fa-clipboard"></i>
+
+          </button> 
+
+          <!-- Hidden usage for copy to clipboard -->
+          <span id="usage" class="u-transparent">{{ pattern.usage }}</span>         
 
         </div>
 
@@ -84,15 +100,6 @@
 
           </button>
 
-          <button class="toggle--more clipboard"
-                  v-tooltip.top-center="usageTooltip"
-                  data-clipboard-target="#usage"
-                  @mouseleave="resetTooltip">
-
-            <i class="far fa-clipboard"></i>
-
-          </button>
-
           <a class="toggle--more"
              :href="`workshop/preview/${pattern.name}`"
              target="_blank"
@@ -102,8 +109,7 @@
 
           </a>
 
-          <!-- Hidden usage for copy to clipboard -->
-          <span id="usage" class="u-transparent">{{ pattern.usage }}</span>
+          
 
         </div>
 

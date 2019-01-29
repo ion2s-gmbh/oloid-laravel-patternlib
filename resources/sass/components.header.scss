@@ -4,18 +4,33 @@
 // Header Base --------- //
 
 .header {
+	
 	background: var(--brandDark);
   	height: var(--headerheight);
 	grid-area: header;
+	
 }
 
 // Header Content
 
 .project-info {
+	
   text-align: center;
+  
 }
 
 .project-name {
+	
   font-family: sans-serif;
   font-size: 0.75rem;
+  
+}
+
+.project-actions {
+	
+	padding: 0.375em 1rem;
+	position: absolute;
+	right: 0;
+	top: 0;
+	
 }

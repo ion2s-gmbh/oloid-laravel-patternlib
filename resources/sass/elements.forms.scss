@@ -54,15 +54,17 @@ label {
 
 .label-hint {
 	font-size: 0.8rem;
+	opacity: 0.6;
 }
 
 input:not([type="checkbox"]), 
 textarea {
 	background: transparent;
-	border: 1px solid white;
+	border: 1px dashed currentColor;
 	color: inherit;
 	margin: var(--gap, $l-gap) 0;
 	padding: 1rem;
+	resize: none;
 	width: 100%;
 }
 

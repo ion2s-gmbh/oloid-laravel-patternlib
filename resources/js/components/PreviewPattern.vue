@@ -27,7 +27,7 @@
           </div>
 
           <button class="toggle--more clipboard"
-                  v-tooltip.top-center="usageTooltip"
+                  v-tooltip.bottom-center="usageTooltip"
                   data-clipboard-target="#usage"
                   @mouseleave="resetTooltip">
 
@@ -255,9 +255,11 @@
                 :src="`workshop/preview/${pattern.name}`"></iframe>
 
 
-      </div>
+      </div>      
 
     </div>
+
+    
 
     <confirmation-window
             v-if="showDeleteConfirm"

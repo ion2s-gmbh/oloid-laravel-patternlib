@@ -21,15 +21,21 @@ These are the styles for the confirmation modal.
 	z-index: 999;
 
 	.popUp-inner {
-		background: var(--brandMain, $c-brandMain);
+
+		background: #fff;
+		color: $c-brandMain;
+		color: var(--brandMain, $c-brandMain);
 		padding: var(--gap, $l-gap);
+		max-width: 40rem;
+		width: 100%;
+
 	}	
 
 }
 
 .darken {
 		
-	background: var(--brandMain, $c-brandMain);
+	background: var(--brandDark, $c-brandDark);
 	height: 100%;
 	left: 0;
 	opacity: 0.95;

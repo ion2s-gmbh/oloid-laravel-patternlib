@@ -44,6 +44,7 @@ These are the styles for every interactive element that is clickable but no link
 .btn--primary {
 
   @extend %btn;
+  min-width: 100px;
 
   > span {
 
@@ -60,10 +61,34 @@ These are the styles for every interactive element that is clickable but no link
   
   > span {
 
-    background: var(--brandMain, $c-brandMain);	
+    background: var(--brandMain, $c-brandMain); 
     border: 1px solid white;
     color: white;
 
+  }
+
+}
+
+.btn--save {
+
+  @extend %btn;
+  border: 1px solid var(--positive, $c-positive);
+  
+  > span {
+
+    background: var(--positive, $c-positive);        
+
+  }
+
+}
+
+.btn--cancel {
+  border: none;  
+  background: transparent;  
+
+  > span {
+    background: inherit;
+    color: var(--brandMain, $c-brandMain);
   }
 
 }
@@ -183,6 +208,23 @@ These are the styles for every interactive element that is clickable but no link
 
   }
 
+  &.close {
+
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+
+  }
+
+  > svg {
+    max-height: 14px;
+
+    path,line, rect {
+       fill: #fff;
+     }
+
+  }
+
 }
 
 .toggle--showIncludes {
@@ -194,6 +236,51 @@ These are the styles for every interactive element that is clickable but no link
 
     color: #fff;
     text-decoration: underline;
+
+  }
+
+}
+
+//TABS
+
+.tabs-list {
+
+  align-items: center;
+  display: flex;
+  margin: 1rem 0;  
+
+}
+
+.tab {
+
+  background: transparent;
+  border-bottom: 1px solid;  
+  border-color: var(--brandMain, $c-brandMain);
+  cursor: pointer;
+  padding: $l-gap;
+  padding: var(--gap, $l-gap);
+  width: 100%;
+
+  &:not(:first-child) {
+    border-left: 1px solid;
+  }
+
+  &.active {
+
+    background: var(--brandMain, $c-brandMain);
+    color: #fff;
+
+  }
+
+  span {
+    transition: 150ms ease-in color & transform;
+  }
+
+  &:hover > span,
+  &:focus > span {
+    
+    display: inline-block;
+    transform: translate(-2px,2px);
 
   }
 

@@ -119,7 +119,7 @@
             </p>
 
             <button class="toggle--more toggle--showIncludes"
-                    @click="showWarningIncludes = !showWarningIncludes"
+                    @click.prevent.stop="toggleWarningIncludes"
                     v-tooltip.top-center="'Show components that cause this message'">
 
               <span v-if="!showWarningIncludes" class="a-slideIn">Show</span>
@@ -127,8 +127,6 @@
               <span v-if="showWarningIncludes" class="a-slideIn">Hide</span>
 
             </button>
-
-            <!-- TODO:  @seb Make se dröpdöwn close when se ossas are open -->
 
             <div class="warning-includes a-dropIn" v-if="showWarningIncludes">
 
@@ -317,7 +315,6 @@
         isToggled: false,
         showDescription: false,
         showDeleteConfirm: false,
-        showWarningIncludes: false,
         editModeDescription: false,
         oldDescription: '',
         usageTooltip: {
@@ -327,6 +324,7 @@
         globalShortcuts,
         previewShortcuts,
         optionsDropdown: 'PreviewPattern::dropdown-options',
+        warningIncludesDropdown: 'PreviewPattern::dropdown-warning-includes',
         globalKeyListener: null
       }
     },
@@ -377,6 +375,13 @@
        */
       totalDoneCount: function () {
         return this.pattern.subPatterns.done.length;
+      },
+
+      /**
+       * Determine if the warning includes dropdown is active.
+       */
+      showWarningIncludes: function () {
+        return this.$store.getters.activeDropdown === this.warningIncludesDropdown;
       }
     },
 
@@ -522,6 +527,13 @@
        */
       resetDropdowns: function () {
         this.$store.dispatch('resetDropdowns');
+      },
+
+      /**
+       * Toggle the warning includes dropdown.
+       */
+      toggleWarningIncludes: function () {
+        this.$store.dispatch('toggleDropdown', this.warningIncludesDropdown);
       }
     },
 

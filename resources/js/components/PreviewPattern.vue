@@ -326,7 +326,8 @@
         },
         globalShortcuts,
         previewShortcuts,
-        optionsDropdown: 'PreviewPattern::dropdown-options'
+        optionsDropdown: 'PreviewPattern::dropdown-options',
+        globalKeyListener: null
       }
     },
 
@@ -542,6 +543,9 @@
       this.fetchPattern(this.patternName);
     },
 
+    /**
+     * Mounted hook, adds global event listener.
+     */
     mounted() {
 
       /**
@@ -555,7 +559,7 @@
       /**
        * Global shortcuts
        */
-      window.addEventListener('keydown', (event) => {
+      this.globalKeyListener = (event) => {
 
         const DEL = 46;
         const E = 69;
@@ -577,7 +581,16 @@
           event.preventDefault();
           this.renamePattern();
         }
-      });
+      };
+
+      window.addEventListener('keydown', this.globalKeyListener);
+    },
+
+    /**
+     * BeforeDestory hook, removes the global event listener.
+     */
+    beforeDestroy() {
+      window.removeEventListener('keydown', this.globalKeyListener);
     }
   }
 </script>

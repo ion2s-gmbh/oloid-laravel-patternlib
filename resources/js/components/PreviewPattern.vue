@@ -545,6 +545,7 @@
      */
     beforeRouteUpdate (to, from, next) {
       this.fetchPattern(to.params.patternName);
+      this.$store.dispatch('resetMenu');
       next();
     },
 

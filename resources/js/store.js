@@ -61,6 +61,11 @@ export default new Vuex.Store({
      */
     showKeyMap: state => state.showKeyMap,
 
+    /**
+     *
+     * @param state
+     * @returns {getters.activeDropdown|(function(*))|string|any}
+     */
     activeDropdown: state => state.activeDropdown,
   },
 
@@ -127,6 +132,11 @@ export default new Vuex.Store({
       state.showKeyMap = !state.showKeyMap;
     },
 
+    /**
+     * Toogle a dropdown.
+     * @param state
+     * @param dropdown
+     */
     toggleDropdown: (state, dropdown) => {
       state.activeDropdown = dropdown;
     },

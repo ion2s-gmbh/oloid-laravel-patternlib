@@ -5,7 +5,7 @@
 
     <div class="project-info">
 
-      <h1 class="project-name">{{ $store.getters.appName }}</h1>
+      <a class="a" href="/" target="_blank"><h1 class="project-name">{{ $store.getters.appName }}</h1></a>
 
     </div>
 

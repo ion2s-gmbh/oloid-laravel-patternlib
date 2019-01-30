@@ -8,8 +8,8 @@
 
         v-tooltip.top-center="`${title}`"
 
-        :class="{accepted: isAccepted,
-	          toCheck: isToCheck,
+        :class="{accepted: isDone,
+	          toCheck: isReview,
 	          rejected: isRejected,
 	          wip: isTodo}">
 
@@ -21,7 +21,7 @@
 
         <li class="status-optionWrap" @click="changeStatus('review')">
           <span class="status-option toCheck">
-            Unreviewed  
+            Review
           </span>
           
         </li>
@@ -67,11 +67,11 @@
         return this.status === 'todo';
       },
 
-      isToCheck: function () {
+      isReview: function () {
         return this.status === 'review';
       },
 
-      isAccepted: function () {
+      isDone: function () {
         return this.status === 'done';
       },
 

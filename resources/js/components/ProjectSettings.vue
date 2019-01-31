@@ -8,9 +8,9 @@
 
         <div class="settings">
           
-          <nav-tabs :selected="selected">
+          <tab-bar :selected="selected">
             
-          </nav-tabs>
+          </tab-bar>
           
           <form action="" class="settings-form">
 
@@ -28,31 +28,13 @@
                class="form-control"
                type="text"
                name="name"
-               autofocus /></textarea> 
+               autofocus></textarea>
               
-            </div> 
-
-            <div class="form-group">
-
-              <label for="link">
-
-                <span class="label-name">Link / Stylesheet</span>
-                <span class="label-hint">Paste your CDN Links or paths into here.</span>
-                <!-- <small class="error a-slideIn" v-if="errors.has('')">{{ errors.first('') }}</small> -->
-
-              </label>
-
-              <textarea id="name"
-               class="form-control"
-               type="text"
-               name="name"
-               autofocus /></textarea> 
-              
-            </div> 
+            </div>
 
             <div class="form-group form-group--end">
               
-              <button class="btn btn--secondary btn--cancel" >
+              <button class="btn btn--secondary btn--cancel" @click="close">
                 <span>Cancel</span>
               </button>
 
@@ -87,12 +69,18 @@
 
 </template>
 
-<script>  
+<script>
+
+  import TabBar from "./TabBar";
 
   export default {
     name: "ProjectSettings",
 
-    props: ['selected'], 
+    components: {
+      TabBar
+    },
+
+    props: ['selected'],
 
     data() {
       return {

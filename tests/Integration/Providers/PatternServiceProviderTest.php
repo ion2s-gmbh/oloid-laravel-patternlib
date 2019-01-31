@@ -64,7 +64,7 @@ class PatternServiceProviderTest extends BaseTestCase
         $patternServiceProvider->boot();
 
         // assert
-        $this->assertCount(1, Blade::getCustomDirectives());
+        $this->assertCount(2, Blade::getCustomDirectives());
     }
 
     /**

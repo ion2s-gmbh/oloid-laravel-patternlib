@@ -14,8 +14,7 @@ if (!function_exists('compile_blade_string')) {
     function compile_blade_string(Pattern $pattern): string
     {
         /*
-         * For status evaluation the template is also compiled as String. Therefore we avoid
-         * the cache.
+         * Trigger a fresh compilation of the pattern's template.
          */
         Blade::compileString($pattern->template);
 

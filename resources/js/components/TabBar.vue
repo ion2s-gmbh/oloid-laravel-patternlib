@@ -6,9 +6,9 @@
 
       <li class="tab"
           v-for="(tab, index) in tabs"
-          :class="{active: selected === tab }"
+          :class="{active: selectedItem === tab }"
           :key="index"
-          @click="selected = tab">
+          @click="selectedItem = tab">
 
         <span>{{tab}}</span>
 
@@ -24,10 +24,14 @@
   export default {
     name: "TabBar",
 
+    props: [
+      'tabs',
+      'selected'
+    ],
+
     data() {
       return {
-        tabs: ['for <head>','above </body>'],
-        selected: 'for <head>'
+        selectedItem: this.tabs[this.selected]
       }
     }
   }

@@ -8,8 +8,8 @@
 
         <div class="settings">
           
-          <tab-bar :selected="selected">
-            
+          <tab-bar :tabs="['for <head>', 'above </body>']"
+                   :selected="0">
           </tab-bar>
           
           <form action="" class="settings-form">

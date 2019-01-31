@@ -46,6 +46,11 @@ export default new Vuex.Store({
      */
     reloadNavi: state => state.navi.reload === true,
 
+    /**
+     * Check if the given menu is active.
+     * @param state
+     * @returns {function(*): boolean}
+     */
     isActiveMainMenu: (state) => (menu) => state.navi.activeMain === menu,
 
     /**
@@ -62,6 +67,11 @@ export default new Vuex.Store({
      */
     showKeyMap: state => state.showKeyMap,
 
+    /**
+     * Determine if the project settings are shown.
+     * @param state
+     * @returns {getters.showSettings|(function(*))|default.computed.showSettings|showSettings|boolean|*}
+     */
     showSettings: state => state.showSettings,
 
     /**

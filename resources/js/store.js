@@ -64,6 +64,11 @@ export default new Vuex.Store({
 
     showSettings: state => state.showSettings,
 
+    /**
+     *
+     * @param state
+     * @returns {getters.activeDropdown|(function(*))|string|any}
+     */
     activeDropdown: state => state.activeDropdown,
   },
 
@@ -138,6 +143,11 @@ export default new Vuex.Store({
       state.showSettings = !state.showSettings;
     },
 
+    /**
+     * Toogle a dropdown.
+     * @param state
+     * @param dropdown
+     */
     toggleDropdown: (state, dropdown) => {
       state.activeDropdown = dropdown;
     },

@@ -29,11 +29,12 @@ pre[class*="language-"] {
 // Content
 
 .code-el {
-
-	@include size(100%);
+	
 	display: flex;	
 	flex-direction: column;
+	flex: 1 1 0;
 	margin-bottom: 2rem;
+	width: 100%;
 
 }
 
@@ -79,7 +80,9 @@ pre[class*="language-"] {
 
 	.tab {
 		@include size(100%);
+		border: 0;
 		left: 0;
+		padding: 0;
 		position: absolute;	
 		top: 0;
 	}

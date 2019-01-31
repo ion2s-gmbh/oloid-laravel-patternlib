@@ -4,13 +4,19 @@
 namespace Oloid\Services;
 
 
+use Illuminate\Support\Facades\Blade;
 use Oloid\Models\Pattern;
 
 class PatternStatusService
 {
     /**
+     * Patterns that are already evaluated.
+     * @var array
+     */
+    protected $evaluatedPatterns = [];
+
+    /**
      * Patterns by status.
-     *
      * @var array
      */
     protected $patterns = [
@@ -39,6 +45,15 @@ class PatternStatusService
     {
         if (!in_array($pattern->name, $this->patterns[$pattern->status])) {
             $this->patterns[$pattern->status][] = $pattern->name;
+        }
+
+        /*
+         * If the pattern has not been evaluated yet, trigger a fresh compilation of the pattern's
+         * template in order to evaluate nested patterns, too.
+         */
+        if (!in_array($pattern->name, $this->evaluatedPatterns)) {
+            $this->evaluatedPatterns[] = $pattern->name;
+            Blade::compileString($pattern->template);
         }
     }
 }

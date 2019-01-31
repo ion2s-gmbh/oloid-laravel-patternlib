@@ -5,6 +5,7 @@ namespace Oloid\Providers;
 use Closure;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
 use Oloid\Services\PatternService;
 use Oloid\Services\PatternStatusService;
@@ -51,6 +52,16 @@ class PatternServiceProvider extends ServiceProvider
             }
         }
 
+        $files = File::files(pattern_path());
+        if (is_array($files)) {
+            foreach ($files as $file) {
+                if (ends_with($file->getRelativePathname(), '.blade.php')) {
+                    $component = str_before($file->getRelativePathname(), '.blade.php');
+                    $components[$component] = $component;
+                }
+            }
+        }
+
         return $components;
     }
 
@@ -58,8 +69,9 @@ class PatternServiceProvider extends ServiceProvider
      * Parse an expression.
      *
      * @param $expression
-     * @param $path
+     * @param string $path
      * @return string
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     private function parse($expression, $path = ''): string
     {
@@ -69,9 +81,11 @@ class PatternServiceProvider extends ServiceProvider
         $prefix = array_pop($parts);
 
         $extComponent = "{$prefix}.{$path}.{$strippedComponent}";
-        $extExpression = str_replace($strippedComponent, "{$extComponent}", $expression);
+        $extExpression = str_replace_first($strippedComponent, "{$extComponent}", $expression);
 
-        $this->evaluatePatternStatus("{$path}.{$strippedComponent}");
+        $pattern = empty($strippedComponent) ? $path : "{$path}.{$strippedComponent}";
+
+        $this->evaluatePatternStatus($pattern);
 
         return $extExpression;
     }
@@ -95,7 +109,10 @@ class PatternServiceProvider extends ServiceProvider
     public function directiveResolution($path): Closure
     {
         return function ($expression) use ($path) {
-            $extExpression = $this->parse($expression, $path);
+            $extExpression = '\'patterns.' . $path . '\'';
+            if (explode(',', $expression)[0] !== "''") {
+                $extExpression = $this->parse($expression, $path);
+            }
             return "<?php echo view({$extExpression}, array_except(get_defined_vars(), array('__data', '__path')))->render() ?>";
         };
     }

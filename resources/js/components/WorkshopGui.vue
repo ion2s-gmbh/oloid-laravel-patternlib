@@ -29,6 +29,12 @@
   export default {
     name: "WorkshopGui",
 
+    data() {
+      return {
+        globalKeyListener: null
+      }
+    },
+
     components: {
       Navbar
     },
@@ -51,6 +57,9 @@
         this.$store.dispatch('resetMenu')
       },
 
+      /**
+       * Toogle the key map overlay.
+       */
       toggleKeyMap: function () {
         this.$store.commit('toggleKeyMap');
       }
@@ -64,12 +73,15 @@
       this.$store.dispatch('fetchAppInfo')
     },
 
+    /**
+     * Mounted hook, adds a global event listener.
+     */
     mounted() {
 
       /**
        * Global shortcuts
        */
-      window.addEventListener('keydown', (event) => {
+      this.globalKeyListener = (event) => {
 
         const C = 67;
         const K = 75;
@@ -92,7 +104,16 @@
           event.preventDefault();
         }
 
-      });
+      };
+
+      window.addEventListener('keydown', this.globalKeyListener);
+    },
+
+    /**
+     * BeforeDestroy hook, removes the global event listener.
+     */
+    beforeDestroy() {
+      window.removeEventListener('keydown', this.globalKeyListener);
     }
   }
 </script>

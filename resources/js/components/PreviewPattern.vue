@@ -31,7 +31,7 @@
                   data-clipboard-target="#usage"
                   @mouseleave="resetTooltip">
 
-            <i class="far fa-clipboard"></i>
+            <i class="far fa-clipboard"></i>            
 
           </button> 
 

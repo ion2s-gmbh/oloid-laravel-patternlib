@@ -19,7 +19,8 @@ export default new Vuex.Store({
       reload: false
     },
     showKeyMap: false,
-    activeDropdown: ''
+    activeDropdown: '',
+    showSettings: false
   },
 
   getters: {
@@ -60,6 +61,8 @@ export default new Vuex.Store({
      * @returns {getters.showKeyMap|(function(*))|boolean}
      */
     showKeyMap: state => state.showKeyMap,
+
+    showSettings: state => state.showSettings,
 
     activeDropdown: state => state.activeDropdown,
   },
@@ -125,6 +128,14 @@ export default new Vuex.Store({
      */
     toggleKeyMap: (state) => {
       state.showKeyMap = !state.showKeyMap;
+    },
+
+    /**
+     * Toggle the project settings.
+     * @param state
+     */
+    toggleSettings: (state) => {
+      state.showSettings = !state.showSettings;
     },
 
     toggleDropdown: (state, dropdown) => {

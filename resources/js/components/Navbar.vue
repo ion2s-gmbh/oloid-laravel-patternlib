@@ -2,14 +2,13 @@
 
   <section class="project">
 
-
     <div class="project-info">
 
       <h1 class="project-name">{{ $store.getters.appName }}</h1>
 
       <div class="project-actions">
 
-        <button class="toggle--more" v-tooltip.top-center="'Show project settings'">
+        <button class="toggle--more" v-tooltip.top-center="'Show project settings'" @click="toggleSettings">
 
           <i class="fas fa-cog"></i>
 
@@ -50,81 +49,9 @@
 
       </router-link>      
 
-    </nav>
+    </nav>    
 
-    <div class="popUp popUp--settings" @click="close">
-
-      <div class="popUp-inner a-dropIn">
-      
-        <p class="headline--two">Project settings</p>
-
-        <div class="settings">
-          
-          <nav class="tabs tabs--settings">
-            
-            <ul class="tabs-list">
-
-              <li class="tab"><span>CSS</span></li>              
-              <li class="tab active"><span>JS</span></li>
-              <li class="tab"><span>Privacy</span></li>
-
-            </ul>
-
-          </nav>
-          
-          <form action="" class="settings-form">
-
-            <div class="form-group">
-
-              <label for="link">
-
-                <span class="label-name">Link / Stylesheet</span>
-                <span class="label-hint">Paste your CDN Links or paths into here.</span>
-                <!-- <small class="error a-slideIn" v-if="errors.has('name')">{{ errors.first('name') }}</small> -->
-
-              </label>
-
-              <textarea id="name"
-               class="form-control"
-               type="text"
-               name="name"
-               placeholder="e.g. <meta>, <link>, <script>"
-               autofocus /></textarea>
-              
-            </div> 
-
-            <div class="form-group form-group--end">
-              
-              <button class="btn btn--secondary btn--cancel">
-                <span>Cancel</span>
-              </button>
-
-              <button class="btn btn--primary btn--save">
-                <span>Save</span>
-              </button>                   
-
-            </div>                
-
-          </form>
-
-        </div>
-
-
-      </div>
-
-
-      <!-- END SETTINGS  -->
-      <button class="toggle--more close">
-
-        <i class="fas fa-times"></i>
-        
-        <span class="u-hide">Close</span>
-
-      </button>
-
-      <div class="darken a-dropIn"></div>
-
-  </div>    
+    <project-settings v-if="showSettings"></project-settings>
 
   </section>
 
@@ -135,18 +62,20 @@
   import NavbarMain from "./NavbarMain";
   import {API} from '../restClient';
   import LOG from '../logger';
+  import ProjectSettings from './ProjectSettings';
 
   export default {
     name: "Navbar",
 
     components: {
-      NavbarMain
+      NavbarMain,
+      ProjectSettings
     },
 
     data() {
       return {
-        navi: []
-      }
+        navi: [],        
+      }      
     },
 
     computed: {
@@ -156,7 +85,16 @@
        */
       notDashboard: function () {
         return this.$route.name !== 'dashboard';
+      },
+
+
+      /** 
+        * Get the global state if the settings are visible 
+      */
+      showSettings: function () {
+        return this.$store.getters.showSettings;
       }
+
     },
 
     methods: {
@@ -173,6 +111,10 @@
           LOG.error(e);
         }
       },
+
+      toggleSettings: function () {
+        this.$store.commit('toggleSettings');
+      }, 
 
       /**
        * Reload the menu if requested.

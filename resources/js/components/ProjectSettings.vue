@@ -1,6 +1,6 @@
 <template>
 
-  <div class="popUp popUp--settings" @click="close">
+  <div class="popUp popUp--settings">
 
       <div class="popUp-inner a-dropIn">
       
@@ -8,14 +8,11 @@
 
         <div class="settings">
           
-          <nav class="settings-nav">
-            <ul>
-              <li>CSS</li>
-              <li>JS</li>
-            </ul>
-          </nav>
+          <nav-tabs :selected="selected">
+            
+          </nav-tabs>
           
-          <form action="" class="settings-content">
+          <form action="" class="settings-form">
 
             <div class="form-group">
 
@@ -23,7 +20,7 @@
 
                 <span class="label-name">Link / Stylesheet</span>
                 <span class="label-hint">Paste your CDN Links or paths into here.</span>
-                <!-- <small class="error a-slideIn" v-if="errors.has('name')">{{ errors.first('name') }}</small> -->
+                <!-- <small class="error a-slideIn" v-if="errors.has('')">{{ errors.first('') }}</small> -->
 
               </label>
 
@@ -31,10 +28,39 @@
                class="form-control"
                type="text"
                name="name"
-               placeholder="e.g. <meta>, <link>, <script>"
-               autofocus /></textarea>
+               autofocus /></textarea> 
               
-            </div>                    
+            </div> 
+
+            <div class="form-group">
+
+              <label for="link">
+
+                <span class="label-name">Link / Stylesheet</span>
+                <span class="label-hint">Paste your CDN Links or paths into here.</span>
+                <!-- <small class="error a-slideIn" v-if="errors.has('')">{{ errors.first('') }}</small> -->
+
+              </label>
+
+              <textarea id="name"
+               class="form-control"
+               type="text"
+               name="name"
+               autofocus /></textarea> 
+              
+            </div> 
+
+            <div class="form-group form-group--end">
+              
+              <button class="btn btn--secondary btn--cancel" >
+                <span>Cancel</span>
+              </button>
+
+              <button class="btn btn--primary btn--save">
+                <span>Save</span>
+              </button>                   
+
+            </div>                
 
           </form>
 
@@ -45,7 +71,7 @@
 
 
       <!-- END SETTINGS  -->
-      <button class="toggle--more close">
+      <button class="toggle--more close" @click="close">
 
         <i class="fas fa-times"></i>
         
@@ -53,20 +79,27 @@
 
       </button>
 
+
+      <!-- DARKEN BACKGROUND -->
       <div class="darken a-dropIn"></div>
 
-  </div>
+    </div> 
 
 </template>
 
-<script>
-  export default {
-    name: "Shortcuts",
+<script>  
 
-    props: [
-      'globalKeymap',
-      'pageKeymap'
-    ],
+  export default {
+    name: "ProjectSettings",
+
+    props: ['selected'], 
+
+    data() {
+      return {
+        cssOpen: false,
+        jsOpen: true
+      }
+    },
 
     methods: {
 
@@ -74,8 +107,11 @@
        * Close the shortcuts window.
        */
       close: function () {
-        this.$store.commit('toggleKeyMap');
+        this.$store.commit('toggleSettings');
       }
     }
+
+
+
   }
 </script>

@@ -20,8 +20,8 @@ class DependenciesService
      * @var array
      */
     private $globals = [
-        'styles' => [],
-        'scripts' => []
+        'head' => '',
+        'body' => ''
     ];
 
     /**
@@ -36,9 +36,10 @@ class DependenciesService
     /**
      * Get the defined globals.
      *
-     * @return array
+     * @param string $name
+     * @return string
      */
-    public function getGlobals(string $name): array
+    public function getGlobals(string $name): string
     {
         return $this->globals[$name];
     }
@@ -68,18 +69,10 @@ class DependenciesService
      *
      * @param string $dependency
      */
-    public function addDependency(string $dependency)
+    public function storeDependencies(string $headerDependencies, string $bodyDependencies)
     {
-        list($type, $src, $integrity, $crossorigin) = $this->extract($dependency);
-        $hash = hash('md5', $src);
-
-        if (! $this->dependencyExists($type, $hash)) {
-            $this->globals[$type][$hash] = [
-                'src' => $src,
-                'integrity' => $integrity,
-                'crossorigin' => $crossorigin
-            ];
-        }
+        $this->globals['head'] = $headerDependencies;
+        $this->globals['body'] = $bodyDependencies;
 
         File::put($this->globalsPath, json_encode($this->globals));
     }

@@ -10,12 +10,12 @@
 
         <script src="{{ asset('js/app.js') }}"></script>
 
-        @yield('workshop.scripts')
-
         <title>Workshop - Preview</title>
     </head>
 
     <body>
         {!! $preview !!}
+
+        @yield('workshop.body')
     </body>
 </html>

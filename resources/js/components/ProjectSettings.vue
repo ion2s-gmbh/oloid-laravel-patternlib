@@ -62,13 +62,17 @@
               <button type="button"
                       class="btn btn--cancel"
                       @click.prevent="close">
+                      
                 <span>Cancel</span>
+                
               </button>
 
               <button type="button"
                       class="btn btn--primary btn--save"
                       @click.prevent="save">
+                      
                 <span>Save</span>
+                
               </button>                   
 
             </div>                

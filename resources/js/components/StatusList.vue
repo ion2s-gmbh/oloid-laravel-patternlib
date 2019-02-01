@@ -1,6 +1,9 @@
 <template>
+
   <div class="dashboard-container" :class="containerClass">
+
     <slot></slot>
+    
     <template v-if="!loadingStatus">
 
       <template v-if="patterns.length > 0">
@@ -18,11 +21,13 @@
       <template v-else-if="patterns.length === 0">
         <p class="dashboard-list--empty"><span>Nothing to review</span> 😄 </p>
       </template>
+
     </template>
 
     <template v-else-if="loadingStatus">
       <img src="vendor/workshop/images/loader.gif">
     </template>
+
   </div>
   
 </template>

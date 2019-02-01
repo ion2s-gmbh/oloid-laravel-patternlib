@@ -43,15 +43,11 @@
       </ul>
 
       <!-- CREATE BUTTON -->
-      <router-link :to="{ name: 'create' }"  class="btn btn--primary btn--sm" v-tooltip.top-center="'Create new Pattern'">
+      <router-link :to="{ name: 'create' }"  class="btn btn--create" v-tooltip.top-center="'Add new pattern to the project'">
 
-        <span>
+        <i class="fas fa-plus"></i>
 
-          <i class="fas fa-plus"></i>
-
-          New Pattern
-
-        </span>
+          <span>Create</span>
 
       </router-link>      
 

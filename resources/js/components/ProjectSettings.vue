@@ -60,7 +60,7 @@
             <div class="form-group form-group--end">
               
               <button type="button"
-                      class="btn btn--secondary btn--cancel"
+                      class="btn btn--cancel"
                       @click.prevent="close">
                 <span>Cancel</span>
               </button>

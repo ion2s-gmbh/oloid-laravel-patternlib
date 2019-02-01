@@ -6,9 +6,9 @@
 
       <li class="tab"
           v-for="(tab, index) in tabs"
-          :class="{active: selectedItem === tab }"
+          :class="{active: selectedTab === tab }"
           :key="index"
-          @click="selectedItem = tab">
+          @click="changeTab(tab)">
 
         <span>{{tab}}</span>
 
@@ -31,7 +31,14 @@
 
     data() {
       return {
-        selectedItem: this.tabs[this.selected]
+        selectedTab: this.tabs[this.selected]
+      }
+    },
+
+    methods: {
+      changeTab: function (tab) {
+        this.selectedTab = tab;
+        this.$emit('changeTab', tab);
       }
     }
   }

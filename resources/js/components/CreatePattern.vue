@@ -54,9 +54,15 @@
 
       <div class="form-group form-group--end">
 
-        <router-link :to="{ name: 'dashboard' }">
+        <!-- <router-link :to="{ name: 'dashboard' }">
           <span>Cancel</span>
-        </router-link>
+        </router-link> -->
+
+        <button type="button"
+                class="btn btn--cancel "
+                @click.prevent="close">
+          <span>Cancel</span>
+        </button>
 
         <button class="btn btn--primary"
                 @click.prevent="save">

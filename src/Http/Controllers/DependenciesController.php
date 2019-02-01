@@ -5,7 +5,7 @@ namespace Oloid\Http\Controllers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Oloid\Http\Requests\DependenciesRequest;
+use Oloid\Http\Requests\GlobalDependencies;
 use Oloid\Services\DependenciesService;
 
 class DependenciesController extends Controller
@@ -39,10 +39,10 @@ class DependenciesController extends Controller
     /**
      * Store a new global dependency.
      *
-     * @param DependenciesRequest $request
+     * @param GlobalDependencies $request
      * @return JsonResponse
      */
-    public function store(DependenciesRequest $request)
+    public function store(GlobalDependencies $request)
     {
         $headerDependencies = $request->get('head') ?: '';
         $bodyDependencies = $request->get('body') ?: '';

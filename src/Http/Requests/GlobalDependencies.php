@@ -4,7 +4,7 @@ namespace Oloid\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class DependenciesRequest extends FormRequest
+class GlobalDependencies extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

@@ -21,8 +21,21 @@
 
 .project-name {
 	
-  font-family: sans-serif;
-  font-size: 0.75rem;
+	color: #fff;
+	font-family: sans-serif;
+	font-size: 0.75rem;
+	text-decoration: none;
+	
+	&:hover {
+		color: $c-positive;
+		color: var(--positive, $c-positive);
+	}
+
+	> a { 
+
+  		text-decoration: inherit; 	
+
+  	}
   
 }
 

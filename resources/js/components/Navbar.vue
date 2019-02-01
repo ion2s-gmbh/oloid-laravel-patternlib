@@ -80,7 +80,7 @@
 
     data() {
       return {
-        navi: [],        
+        navi: [],
       }      
     },
 
@@ -93,14 +93,12 @@
         return this.$route.name !== 'dashboard';
       },
 
-
       /** 
-        * Get the global state if the settings are visible 
-      */
+       * Get the global state if the settings are visible
+       */
       showSettings: function () {
         return this.$store.getters.showSettings;
       }
-
     },
 
     methods: {

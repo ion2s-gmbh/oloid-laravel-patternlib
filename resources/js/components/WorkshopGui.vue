@@ -66,11 +66,12 @@
     },
 
     /**
-     * Fetch application information before creating.
+     * Fetch application information and settings before creating.
      * @returns {Promise<void>}
      */
     beforeCreate() {
-      this.$store.dispatch('fetchAppInfo')
+      this.$store.dispatch('fetchAppInfo');
+      this.$store.dispatch('fetchDependencies');
     },
 
     /**

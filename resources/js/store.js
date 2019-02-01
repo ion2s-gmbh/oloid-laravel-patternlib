@@ -20,7 +20,11 @@ export default new Vuex.Store({
     },
     showKeyMap: false,
     activeDropdown: '',
-    showSettings: false
+    showSettings: false,
+    settings: {
+      head: '',
+      body: ''
+    }
   },
 
   getters: {
@@ -46,6 +50,11 @@ export default new Vuex.Store({
      */
     reloadNavi: state => state.navi.reload === true,
 
+    /**
+     * Check if the given menu is active.
+     * @param state
+     * @returns {function(*): boolean}
+     */
     isActiveMainMenu: (state) => (menu) => state.navi.activeMain === menu,
 
     /**
@@ -62,6 +71,11 @@ export default new Vuex.Store({
      */
     showKeyMap: state => state.showKeyMap,
 
+    /**
+     * Determine if the project settings are shown.
+     * @param state
+     * @returns {getters.showSettings|(function(*))|default.computed.showSettings|showSettings|boolean|*}
+     */
     showSettings: state => state.showSettings,
 
     /**
@@ -70,6 +84,10 @@ export default new Vuex.Store({
      * @returns {getters.activeDropdown|(function(*))|string|any}
      */
     activeDropdown: state => state.activeDropdown,
+
+    headSettings: state => state.settings.head,
+
+    bodySettigs: state => state.settings.body,
   },
 
   mutations: {
@@ -158,6 +176,14 @@ export default new Vuex.Store({
      */
     resetDropdown: (state) => {
       state.activeDropdown = '';
+    },
+
+    headerSettings: (state, settings) => {
+      state.settings.head = settings;
+    },
+
+    bodySettings: (state, settings) => {
+      state.settings.body = settings;
     }
   },
 
@@ -172,6 +198,20 @@ export default new Vuex.Store({
       try {
         let json = await API.get('info');
         commit('appInfo', json.data);
+      } catch (e) {
+        LOG.error(e);
+      }
+    },
+
+    /**
+     * Fetch the global dependencies from the API.
+     * @returns {Promise<void>}
+     */
+    fetchDependencies: async function () {
+      try {
+        const response = await API.get('dependencies');
+        this.commit('headerSettings', response.data.data.head);
+        this.commit('bodySettings', response.data.data.body);
       } catch (e) {
         LOG.error(e);
       }

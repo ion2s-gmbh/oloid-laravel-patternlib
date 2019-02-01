@@ -103,7 +103,7 @@ class DependenciesServiceTest extends BaseTestCase
         $this->assertFalse(File::exists($dependencyPath));
 
         // act
-        $this->cut->addDependency('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.1/css/bootstrap.css" integrity="sha256-5U3z9K3P17cKgGYxXQA5rBZO5EDju+lgtXG6oDXNbNY=" crossorigin="anonymous" />');
+        $this->cut->storeDependencies('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.1/css/bootstrap.css" integrity="sha256-5U3z9K3P17cKgGYxXQA5rBZO5EDju+lgtXG6oDXNbNY=" crossorigin="anonymous" />');
 
         // assert
         $this->assertTrue(File::exists($dependencyPath));
@@ -132,7 +132,7 @@ class DependenciesServiceTest extends BaseTestCase
         $this->assertFalse(File::exists($dependencyPath));
 
         // act
-        $this->cut->addDependency('<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.1/js/bootstrap.js" integrity="sha256-K0KkaRh1fs/UYfKcnzBK9G/X7HgzuaeVI1hJPS8Sxs4=" crossorigin="anonymous"></script>');
+        $this->cut->storeDependencies('<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.1/js/bootstrap.js" integrity="sha256-K0KkaRh1fs/UYfKcnzBK9G/X7HgzuaeVI1hJPS8Sxs4=" crossorigin="anonymous"></script>');
 
         // assert
         $this->assertTrue(File::exists($dependencyPath));
@@ -161,8 +161,8 @@ class DependenciesServiceTest extends BaseTestCase
         $this->assertFalse(File::exists($dependencyPath));
 
         // act
-        $this->cut->addDependency('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.1/css/bootstrap.css" integrity="sha256-5U3z9K3P17cKgGYxXQA5rBZO5EDju+lgtXG6oDXNbNY=" crossorigin="anonymous" />');
-        $this->cut->addDependency('<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.1/js/bootstrap.js" integrity="sha256-K0KkaRh1fs/UYfKcnzBK9G/X7HgzuaeVI1hJPS8Sxs4=" crossorigin="anonymous"></script>');
+        $this->cut->storeDependencies('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.1/css/bootstrap.css" integrity="sha256-5U3z9K3P17cKgGYxXQA5rBZO5EDju+lgtXG6oDXNbNY=" crossorigin="anonymous" />');
+        $this->cut->storeDependencies('<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.1/js/bootstrap.js" integrity="sha256-K0KkaRh1fs/UYfKcnzBK9G/X7HgzuaeVI1hJPS8Sxs4=" crossorigin="anonymous"></script>');
 
         // assert
         $this->assertTrue(File::exists($dependencyPath));
@@ -214,7 +214,7 @@ class DependenciesServiceTest extends BaseTestCase
 
         // act
         $this->cut = new DependenciesService();
-        $this->cut->addDependency('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />');
+        $this->cut->storeDependencies('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=" crossorigin="anonymous" />');
 
         // assert
         $this->assertEquals($expected, $this->cut->getAllGlobals());

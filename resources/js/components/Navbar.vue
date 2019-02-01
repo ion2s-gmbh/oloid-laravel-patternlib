@@ -4,7 +4,13 @@
 
     <div class="project-info">
 
-      <a class="a" href="/" target="_blank"><h1 class="project-name">{{ $store.getters.appName }}</h1></a>
+      <h1 class="project-name">
+        
+        <a class="a" href="/" target="_blank">
+          {{ $store.getters.appName }}
+        </a>
+        
+      </h1>
 
       <div class="project-actions">
 

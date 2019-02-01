@@ -29,11 +29,17 @@
 
       <div class="form-group form-group--end">
 
-        <router-link :to="{ name: 'preview', params: { patternName: currentName }}">
+        <!-- <router-link :to="{ name: 'preview', params: { patternName: currentName }}">
           <span>Cancel</span>
-        </router-link>
+        </router-link> -->
 
-        <button @click.prevent="save" class="btn btn--primary btn--sm">
+        <button type="button"
+                class="btn btn--cancel "
+                @click.prevent="close">
+          <span>Cancel</span>
+        </button>
+
+        <button @click.prevent="save" class="btn btn--primary">
           <span>Save</span>
         </button>
 

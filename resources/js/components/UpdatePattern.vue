@@ -1,7 +1,7 @@
 <template>
-  <div class="popUp">
+  <div class="fullscreen">
 
-    <form method="post" class="form form--create">
+    <form method="post" class="form form--fullscreen">
 
       <div class="form-group">
 

@@ -75,11 +75,13 @@ textarea {
 // Validation --------- //
 
 .error {
+	color: $c-alert;
 	color: var(--alert, $c-alert);
 	display: inline-block;
 }
 
 .success {
+  color: $c-positive;
   color: var(--positive, $c-positive);
   display: inline-block;
 }

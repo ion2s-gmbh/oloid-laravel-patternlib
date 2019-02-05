@@ -99,7 +99,19 @@ containing the header and the so called view, containing most of the UI.
 }
 
 .view--inner { // We unfortunately need this until sub-grid is usable. :/  
-  grid-area: code / code/ footer / footer;
+  grid-area: code / code / footer / footer;
+}
+
+.fullscreen {
+  align-items: center;
+  display: flex;
+  grid-area: code / code / footer / footer;
+  justify-content: center;
+}
+
+.form--fullscreen {
+  max-width: 50rem;
+  width: 100%;
 }
 
 .footer {  

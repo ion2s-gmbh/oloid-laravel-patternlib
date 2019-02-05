@@ -60,15 +60,19 @@
             <div class="form-group form-group--end">
               
               <button type="button"
-                      class="btn btn--secondary btn--cancel"
+                      class="btn btn--cancel"
                       @click.prevent="close">
+                      
                 <span>Cancel</span>
+                
               </button>
 
               <button type="button"
                       class="btn btn--primary btn--save"
                       @click.prevent="save">
+                      
                 <span>Save</span>
+                
               </button>                   
 
             </div>                

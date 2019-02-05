@@ -7,7 +7,6 @@ These are the styles for every interactive element that is clickable but no link
 %btn {
   	background: none;
     border: 1px solid #fff;
-    color: #fff;    
     margin: 0 1rem 1rem 0;
     padding: 0;    
     position: relative;
@@ -44,6 +43,7 @@ These are the styles for every interactive element that is clickable but no link
 .btn--primary {
 
   @extend %btn;
+  color: #fff;
   min-width: 100px;
 
   > span {
@@ -62,8 +62,8 @@ These are the styles for every interactive element that is clickable but no link
   > span {
 
     background: var(--brandMain, $c-brandMain); 
-    border: 1px solid white;
-    color: white;
+    border: 1px solid transparent;
+    color: currentColor;
 
   }
 
@@ -83,12 +83,28 @@ These are the styles for every interactive element that is clickable but no link
 }
 
 .btn--cancel {
+  @extend %btn;
   border: none;  
   background: transparent;  
+  color: currentColor;
 
   > span {
-    background: inherit;
-    color: var(--brandMain, $c-brandMain);
+    background: none;
+    color: inherit;
+  }
+
+}
+
+.btn--create {
+  
+  font-size: 0.875rem;
+  white-space: nowrap;
+  padding: 0.5rem var(--gap, 1rem);
+  
+  &:hover,
+  > i {
+    color: $c-positive;
+    color: var(--positive, $c-positive);
   }
 
 }
@@ -192,7 +208,7 @@ These are the styles for every interactive element that is clickable but no link
   border: none;
   color: white;
   font-size: 1rem;
-  padding: 0 0.35rem;
+  padding: 0 0.5rem;
 
   &.active,
   &:hover {

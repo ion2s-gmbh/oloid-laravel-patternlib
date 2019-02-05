@@ -5,6 +5,7 @@ namespace Oloid\Http\Controllers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Oloid\Http\Requests\GlobalDependencies;
 use Oloid\Services\DependenciesService;
 
 class DependenciesController extends Controller
@@ -26,7 +27,6 @@ class DependenciesController extends Controller
     /**
      * Get all global dependencies
      *
-     * @param DependenciesService $dependenciesService
      * @return JsonResponse
      */
     public function get()
@@ -39,10 +39,10 @@ class DependenciesController extends Controller
     /**
      * Store a new global dependency.
      *
-     * @param Request $request
+     * @param GlobalDependencies $request
      * @return JsonResponse
      */
-    public function store(Request $request)
+    public function store(GlobalDependencies $request)
     {
         $headerDependencies = $request->get('head') ?: '';
         $bodyDependencies = $request->get('body') ?: '';
@@ -50,29 +50,4 @@ class DependenciesController extends Controller
 
         return JsonResponse::create([], JsonResponse::HTTP_CREATED);
     }
-
-//    /**
-//     * Remove a global dependency.
-//     *
-//     * @param Request $request
-//     * @return JsonResponse
-//     */
-//    public function remove(Request $request)
-//    {
-//        /*
-//         * Check if the dependency exist
-//         */
-//        $type = $request->get('type');
-//        $hash = $request->get('hash');
-//        if (!$this->dependenciesService->dependencyExists($type, $hash)) {
-//           throw new NotFoundHttpException('Dependency not found.');
-//        }
-//
-//        /*
-//         * Remove the dependency
-//         */
-//        $this->dependenciesService->removeDependency($type, $hash);
-//
-//        return JsonResponse::create([]);
-//    }
 }

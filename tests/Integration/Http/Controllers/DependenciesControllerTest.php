@@ -27,8 +27,8 @@ class DependenciesControllerTest extends BaseTestCase
         $response->assertSuccessful();
         $expectedJson = [
             'data' => [
-                'styles' => [],
-                'scripts' => [],
+                'head' => '',
+                'body' => '',
             ]
         ];
         $response->assertJson($expectedJson);
@@ -50,20 +50,8 @@ class DependenciesControllerTest extends BaseTestCase
         $response->assertSuccessful();
         $expectedJson = [
             'data' => [
-                'styles' => [
-                    '7c6d7f6528dd5848ebc15c7ab14de532' => [
-                        'src' => 'https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css',
-                        'integrity' => 'sha256-l85OmPOjvil/SOvVt3HnSSjzF1TUMyT9eV0c2BzEGzU=',
-                        'crossorigin' => 'anonymous'
-                    ]
-                ],
-                'scripts' => [
-                    '094841b35e7f2d90c081a6f3d18040b4' => [
-                        'src' => 'https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js',
-                        'integrity' => 'sha256-KsRuvuRtUVvobe66OFtOQfjP8WA2SzYsmm4VPfMnxms=',
-                        'crossorigin' => 'anonymous'
-                    ]
-                ],
+                'head' => '<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha256-KsRuvuRtUVvobe66OFtOQfjP8WA2SzYsmm4VPfMnxms=" crossorigin="anonymous"></script>',
+                'body' => ''
             ]
         ];
         $response->assertJson($expectedJson);
@@ -80,7 +68,8 @@ class DependenciesControllerTest extends BaseTestCase
 
         // act
         $response = $this->postJson('workshop/api/v1/dependencies', [
-            'dependency' => '<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,600">'
+            'head' => '<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,600">',
+            'body' => ''
         ]);
 
         // assert
@@ -89,15 +78,9 @@ class DependenciesControllerTest extends BaseTestCase
 
         $dependencies = File::get($dependencyPath);
         $expectedDependencies = [
-                'styles' => [
-                    'e057686a09b387a9e5b9a1886763ec31' => [
-                        'src' => 'https://fonts.googleapis.com/css?family=Nunito:200,600',
-                        'integrity' => null,
-                        'crossorigin' => null
-                    ]
-                ],
-                'scripts' => [],
-            ];
+            'head' => '<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,600">',
+            'body' => '',
+        ];
         $this->assertEquals($expectedDependencies, json_decode($dependencies, true));
     }
 
@@ -105,51 +88,16 @@ class DependenciesControllerTest extends BaseTestCase
      * @test
      * @covers \Oloid\Http\Controllers\DependenciesController
      */
-    public function it_should_throw_validation_exception_on_malformed_dependency()
+    public function it_should_throw_validation_exception_on_missing_fields()
     {
         // arrange
 
         // act
         $response = $this->postJson('workshop/api/v1/dependencies', [
-            'dependency' => 'https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css'
+            'head' => 'https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css'
         ]);
 
         // assert
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
-    }
-
-    /**
-     * @test
-     * @covers \Oloid\Http\Controllers\DependenciesController
-     */
-    public function it_should_remove_a_global_dependency()
-    {
-        // arrange
-        $this->prepareDependenciesStub();
-
-        // act
-        $response = $this->deleteJson('workshop/api/v1/dependencies', [
-            'type' => 'styles',
-            'hash' => '7c6d7f6528dd5848ebc15c7ab14de532'
-        ]);
-
-        // assert
-        $response->assertSuccessful();
-    }
-
-    /**
-     * @test
-     * @covers \Oloid\Http\Controllers\DependenciesController
-     */
-    public function it_should_get_an_error_if_dependency_does_not_exist()
-    {
-        // act
-        $response = $this->deleteJson('workshop/api/v1/dependencies', [
-            'type' => 'styles',
-            'hash' => '84c829e356071cb73726c65596dd26cd'
-        ]);
-
-        // assert
-        $response->assertStatus(Response::HTTP_NOT_FOUND);
     }
 }

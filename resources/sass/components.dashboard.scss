@@ -17,9 +17,30 @@ These are the styles that are needed to render our welcome dashboard.
 	padding: $l-gap;
 	padding: var(--gap, $l-gap);	
 
+	
+	&.toReview {
 
-	&.welcome {
 		grid-column: span 2;
+		
+		@include for-desktop-up {
+
+			grid-column: 3 / 4;
+
+		}		
+
+	}
+
+	&.rejected {
+
+		grid-column: span 2;
+
+		@include for-desktop-up {
+
+			grid-column: 4 / 5;
+			
+
+		}		
+
 	}
 
 }
@@ -58,7 +79,7 @@ These are the styles that are needed to render our welcome dashboard.
 
 		}		
 
-	}
+	}	
 
 	.rejected & {
 

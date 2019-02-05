@@ -55,7 +55,7 @@ class ResourcesService
     }
 
     /**
-     * Get all global dependencies.
+     * Get all global resources.
      * @return array
      */
     public function getAll()
@@ -64,15 +64,15 @@ class ResourcesService
     }
 
     /**
-     * Add a new global dependency.
+     * Add a new global resources.
      *
-     * @param string $headerDependencies
-     * @param string $bodyDependencies
+     * @param string $headResources
+     * @param string $bodyResources
      */
-    public function store(string $headerDependencies, string $bodyDependencies)
+    public function store(string $headResources, string $bodyResources)
     {
-        $this->globals['head'] = $headerDependencies;
-        $this->globals['body'] = $bodyDependencies;
+        $this->globals['head'] = $headResources;
+        $this->globals['body'] = $bodyResources;
 
         File::put($this->globalsPath, json_encode($this->globals));
     }

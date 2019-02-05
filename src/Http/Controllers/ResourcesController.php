@@ -15,7 +15,7 @@ class ResourcesController extends Controller
     private $resourcesService;
 
     /**
-     * DependenciesController constructor.
+     * ResourcesController constructor.
      * @param ResourcesService $resourcesService
      */
     public function __construct(ResourcesService $resourcesService)

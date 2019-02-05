@@ -29,13 +29,9 @@
 
       <div class="form-group form-group--end">
 
-        <!-- <router-link :to="{ name: 'preview', params: { patternName: currentName }}">
-          <span>Cancel</span>
-        </router-link> -->
-
         <button type="button"
                 class="btn btn--cancel "
-                @click.prevent="close">
+                @click.prevent="cancel">
           <span>Cancel</span>
         </button>
 

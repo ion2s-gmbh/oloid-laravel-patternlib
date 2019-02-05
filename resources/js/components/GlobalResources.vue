@@ -32,7 +32,9 @@
                         type="text"
                         name="head-resources"
                         autofocus
-                        v-model="headResources">
+                        v-model="headResources"
+                        @keydown.ctrl.83.prevent="save"
+                        @keydown.esc="close">
               </textarea>
               
             </div>
@@ -54,7 +56,9 @@
                         type="text"
                         name="body-resources"
                         autofocus
-                        v-model="bodyResources">
+                        v-model="bodyResources"
+                        @keydown.ctrl.83.prevent="save"
+                        @keydown.esc="close">
               </textarea>
 
             </div>

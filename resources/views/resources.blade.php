@@ -1,4 +1,4 @@
-<!-- GLOBALS -->
+<!-- GLOBAL RESOURCES -->
 @inject('dependencies', 'Oloid\Services\DependenciesService')
 
 @section('workshop.head')

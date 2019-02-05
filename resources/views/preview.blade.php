@@ -4,7 +4,7 @@
 
         <!-- Styles -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
-        @include('workshop::dependencies')
+        @include('workshop::resources')
 
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
@@ -16,6 +16,6 @@
     <body>
         {!! $preview !!}
 
-        @yield('workshop.body')
+        @yield('workshop.scripts')
     </body>
 </html>

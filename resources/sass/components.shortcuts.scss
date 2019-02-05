@@ -1,0 +1,55 @@
+//-------------------   SHORTCUTS LIST    -----------------------//
+
+/* 
+These are the styles for the shortcut-hint popUp component. 
+*/
+
+// ShortCut PopUp base Base --------- //
+
+
+
+// Content
+
+.shortcut-list {
+
+	margin: 0;
+	padding: 0;
+
+}
+
+
+.shortcut {
+
+	align-items: center;
+	display: flex;
+	justify-content: space-between;	
+	line-height: 1.2;
+	margin-bottom: 1rem;
+
+	&:last-child {
+		
+		margin-bottom: 2rem;
+		
+	}
+
+	&-keys {
+		
+		background: $c-brandMain;
+		background: var(--brandMain, $c-brandMain);
+		border-radius: 1rem;
+		color: #fff;
+		display: inline-block;		
+		padding: 0.5rem;
+		text-align: center;
+
+	}
+
+	&-description {
+		
+		color: $c-basicCopy;
+		font-family: Arial, sans-serif;
+		width: 80%;
+
+	}
+
+}

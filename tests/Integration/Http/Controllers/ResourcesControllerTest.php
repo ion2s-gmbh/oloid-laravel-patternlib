@@ -8,20 +8,20 @@ use Illuminate\Support\Facades\File;
 use Tests\BaseTestCase;
 use Tests\Traits\TestStubs;
 
-class DependenciesControllerTest extends BaseTestCase
+class ResourcesControllerTest extends BaseTestCase
 {
     use TestStubs;
 
     /**
      * @test
-     * @covers \Oloid\Http\Controllers\DependenciesController
+     * @covers \Oloid\Http\Controllers\ResourcesController
      */
     public function it_should_return_empty_global_dependencies()
     {
         // arrange
 
         /** @var TestResponse $response */
-        $response = $this->getJson("workshop/api/v1/dependencies");
+        $response = $this->getJson("workshop/api/v1/resources");
 
         // assert
         $response->assertSuccessful();
@@ -36,15 +36,15 @@ class DependenciesControllerTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Oloid\Http\Controllers\DependenciesController
+     * @covers \Oloid\Http\Controllers\ResourcesController
      */
     public function it_should_return_global_dependencies()
     {
         // arrange
-        $this->prepareDependenciesStub();
+        $this->prepareResourcesStub();
 
         /** @var TestResponse $response */
-        $response = $this->getJson("workshop/api/v1/dependencies");
+        $response = $this->getJson("workshop/api/v1/resources");
 
         // assert
         $response->assertSuccessful();
@@ -59,15 +59,15 @@ class DependenciesControllerTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Oloid\Http\Controllers\DependenciesController
+     * @covers \Oloid\Http\Controllers\ResourcesController
      */
     public function it_should_add_a_global_dependency()
     {
-        $dependencyPath = "{$this->tempDir}/dependencies.json";
+        $dependencyPath = "{$this->tempDir}/resources.json";
         $this->assertFalse(File::exists($dependencyPath));
 
         // act
-        $response = $this->postJson('workshop/api/v1/dependencies', [
+        $response = $this->postJson('workshop/api/v1/resources', [
             'head' => '<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,600">',
             'body' => ''
         ]);
@@ -86,14 +86,14 @@ class DependenciesControllerTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Oloid\Http\Controllers\DependenciesController
+     * @covers \Oloid\Http\Controllers\ResourcesController
      */
     public function it_should_throw_validation_exception_on_missing_fields()
     {
         // arrange
 
         // act
-        $response = $this->postJson('workshop/api/v1/dependencies', [
+        $response = $this->postJson('workshop/api/v1/resources', [
             'head' => 'https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css'
         ]);
 

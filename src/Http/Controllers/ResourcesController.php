@@ -3,12 +3,11 @@
 namespace Oloid\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Oloid\Http\Requests\GlobalDependencies;
 use Oloid\Services\DependenciesService;
 
-class DependenciesController extends Controller
+class ResourcesController extends Controller
 {
     /**
      * @var DependenciesService
@@ -37,7 +36,7 @@ class DependenciesController extends Controller
     }
 
     /**
-     * Store a new global dependency.
+     * Store a new global resource.
      *
      * @param GlobalDependencies $request
      * @return JsonResponse

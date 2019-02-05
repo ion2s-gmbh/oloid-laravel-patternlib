@@ -40,7 +40,7 @@ class DependenciesServiceTest extends BaseTestCase
     public function it_should_load_global_dependencies_from_file()
     {
         // arrange
-        $this->prepareDependenciesStub();
+        $this->prepareResourcesStub();
 
         // act
         $globalsService = new DependenciesService();
@@ -59,7 +59,7 @@ class DependenciesServiceTest extends BaseTestCase
     public function it_should_return_all_global_dependencies()
     {
         // arrange
-        $this->prepareDependenciesStub();
+        $this->prepareResourcesStub();
         $expected = [
             'head' => '<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha256-KsRuvuRtUVvobe66OFtOQfjP8WA2SzYsmm4VPfMnxms=" crossorigin="anonymous"></script>',
             'body' => ''
@@ -76,7 +76,7 @@ class DependenciesServiceTest extends BaseTestCase
      */
     public function it_should_add_a_head_and_a_body_dependency()
     {
-        $dependencyPath = "{$this->tempDir}/dependencies.json";
+        $dependencyPath = "{$this->tempDir}/resources.json";
         $this->assertFalse(File::exists($dependencyPath));
 
         // act

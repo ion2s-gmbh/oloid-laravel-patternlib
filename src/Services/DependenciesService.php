@@ -5,7 +5,6 @@ namespace Oloid\Services;
 
 
 use Illuminate\Support\Facades\File;
-use PHPHtmlParser\Dom;
 
 class DependenciesService
 {
@@ -29,7 +28,7 @@ class DependenciesService
      */
     public function __construct()
     {
-        $this->globalsPath = config('workshop.basePath') . '/' . config('workshop.dependenciesFile');
+        $this->globalsPath = config('workshop.basePath') . '/' . config('workshop.resourcesFile');
         $this->loadGlobals();
     }
 

@@ -37,6 +37,6 @@ return [
     | The name of the file, that contains global dependencies like fonts, styles
     | and javascript libs loaded via a CDN.
     */
-    'dependenciesFile' => 'dependencies.json'
+    'resourcesFile' => 'resources.json'
 
 ];

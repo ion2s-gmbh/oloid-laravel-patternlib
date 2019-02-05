@@ -1,7 +1,7 @@
 <template>
-  <div class="popUp">
+  <div class="fullscreen">
 
-    <form method="post" class="form form--create">
+    <form method="post" class="form form--fullscreen">
 
       <div class="form-group">
 
@@ -29,11 +29,13 @@
 
       <div class="form-group form-group--end">
 
-        <router-link :to="{ name: 'preview', params: { patternName: currentName }}">
+        <button type="button"
+                class="btn btn--cancel "
+                @click.prevent="cancel">
           <span>Cancel</span>
-        </router-link>
+        </button>
 
-        <button @click.prevent="save" class="btn btn--primary btn--sm">
+        <button @click.prevent="save" class="btn btn--primary">
           <span>Save</span>
         </button>
 

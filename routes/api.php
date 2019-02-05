@@ -78,24 +78,16 @@ Route::get('status-list', 'StatusListController@get');
 
 /*
 |--------------------------------------------------------------------------
-| GET /dependencies
+| GET /resources
 |--------------------------------------------------------------------------
-| Get a list of all global dependencies.
+| Get a list of all global resources.
 */
-Route::get('dependencies', 'DependenciesController@get');
+Route::get('resources', 'ResourcesController@get');
 
 /*
 |--------------------------------------------------------------------------
-| POST /dependencies
+| POST /resources
 |--------------------------------------------------------------------------
 | Add a new global dependency.
 */
-Route::post('dependencies', 'DependenciesController@store');
-
-/*
-|--------------------------------------------------------------------------
-| DELETE /dependencies
-|--------------------------------------------------------------------------
-| Remove a global dependency
-*/
-Route::delete('dependencies', 'DependenciesController@remove');
+Route::post('resources', 'ResourcesController@store');

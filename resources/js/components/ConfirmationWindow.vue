@@ -8,11 +8,11 @@
 
       <div class="popUp-controls">
         
-        <button class="btn btn--sm btn--secondary" @click="confirmNo">
+        <button class="btn btn--sm btn--cancel" @click="confirmNo">
           <span>no</span>
         </button>
 
-        <button class="btn btn--sm btn--primary" @click="confirmYes">
+        <button class="btn btn--sm btn--save" @click="confirmYes">
           <span>yes</span>
         </button>
 

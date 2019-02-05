@@ -1,8 +1,8 @@
 <template>
 
-  <div class="popUp">
+  <div class="fullscreen">
 
-    <form method="post" class="form form--create">
+    <form method="post" class="form form--fullscreen">
 
       <div class="form-group">
 
@@ -54,11 +54,13 @@
 
       <div class="form-group form-group--end">
 
-        <router-link :to="{ name: 'dashboard' }">
+        <button type="button"
+                class="btn btn--cancel "
+                @click.prevent="cancel">
           <span>Cancel</span>
-        </router-link>
+        </button>
 
-        <button class="btn btn--primary btn--sm"
+        <button class="btn btn--primary"
                 @click.prevent="save">
           <span>Create pattern</span>
         </button>

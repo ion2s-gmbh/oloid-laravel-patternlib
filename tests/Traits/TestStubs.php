@@ -46,11 +46,11 @@ trait TestStubs
     /**
      * Copy the dependencies.json file in place for testing.
      */
-    public function prepareDependenciesStub()
+    public function prepareResourcesStub()
     {
         $fs = new Filesystem();
-        $sourcePath = realpath(__DIR__ . '/../Stubs/dependencies.json');
-        $targetPath = "{$this->tempDir}/dependencies.json";
+        $sourcePath = realpath(__DIR__ . '/../Stubs/resources.json');
+        $targetPath = "{$this->tempDir}/resources.json";
         $fs->copy($sourcePath, $targetPath);
     }
 }

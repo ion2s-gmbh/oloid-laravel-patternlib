@@ -7,7 +7,6 @@ These are the styles for every interactive element that is clickable but no link
 %btn {
   	background: none;
     border: 1px solid #fff;
-    color: #fff;    
     margin: 0 1rem 1rem 0;
     padding: 0;    
     position: relative;
@@ -44,6 +43,8 @@ These are the styles for every interactive element that is clickable but no link
 .btn--primary {
 
   @extend %btn;
+  color: #fff;
+  min-width: 100px;
 
   > span {
 
@@ -60,10 +61,50 @@ These are the styles for every interactive element that is clickable but no link
   
   > span {
 
-    background: var(--brandMain, $c-brandMain);	
-    border: 1px solid white;
-    color: white;
+    background: var(--brandMain, $c-brandMain); 
+    border: 1px solid transparent;
+    color: currentColor;
 
+  }
+
+}
+
+.btn--save {
+
+  @extend %btn;
+  border: 1px solid var(--positive, $c-positive);
+  
+  > span {
+
+    background: var(--positive, $c-positive);        
+
+  }
+
+}
+
+.btn--cancel {
+  @extend %btn;
+  border: none;  
+  background: transparent;  
+  color: currentColor;
+
+  > span {
+    background: none;
+    color: inherit;
+  }
+
+}
+
+.btn--create {
+  
+  font-size: 0.875rem;
+  white-space: nowrap;
+  padding: 0.5rem var(--gap, 1rem);
+  
+  &:hover,
+  > i {
+    color: $c-positive;
+    color: var(--positive, $c-positive);
   }
 
 }
@@ -167,7 +208,7 @@ These are the styles for every interactive element that is clickable but no link
   border: none;
   color: white;
   font-size: 1rem;
-  padding: 0 0.35rem;
+  padding: 0 0.5rem;
 
   &.active,
   &:hover {
@@ -179,7 +220,25 @@ These are the styles for every interactive element that is clickable but no link
 
     bottom: 0;
     left: 0;
+    padding: 0.5rem;
     position: fixed;
+
+  }
+
+  &.close {
+
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+
+  }
+
+  > svg {
+    max-height: 14px;
+
+    path,line, rect {
+       fill: #fff;
+     }
 
   }
 
@@ -194,6 +253,51 @@ These are the styles for every interactive element that is clickable but no link
 
     color: #fff;
     text-decoration: underline;
+
+  }
+
+}
+
+//TABS
+
+.tabs-list {
+
+  align-items: center;
+  display: flex;
+  margin: 1rem 0;  
+
+}
+
+.tab {
+
+  background: transparent;
+  border-bottom: 1px solid;  
+  border-color: var(--brandMain, $c-brandMain);
+  cursor: pointer;
+  padding: $l-gap;
+  padding: var(--gap, $l-gap);
+  width: 100%;
+
+  &:not(:first-child) {
+    border-left: 1px solid;
+  }
+
+  &.active {
+
+    background: var(--brandMain, $c-brandMain);
+    color: #fff;
+
+  }
+
+  span {
+    transition: 150ms ease-in color & transform;
+  }
+
+  &:hover > span,
+  &:focus > span {
+    
+    display: inline-block;
+    transform: translate(-2px,2px);
 
   }
 

@@ -2,10 +2,27 @@
 
   <section class="project">
 
-
     <div class="project-info">
 
-      <h1 class="project-name">{{ $store.getters.appName }}</h1>
+      <h1 class="project-name">
+        
+        <a class="a" href="/" target="_blank">
+          {{ $store.getters.appName }}
+        </a>
+        
+      </h1>
+
+      <div class="project-actions">
+
+        <button class="toggle--more" v-tooltip.top-center="'Show project settings'" @click="toggleResources">
+
+          <i class="fas fa-cog"></i>
+
+          <span class="u-hide">Show project settings</span>
+
+        </button>
+        
+      </div>      
 
     </div>
 
@@ -25,19 +42,18 @@
         
       </ul>
 
-      <router-link :to="{ name: 'create' }"  class="btn btn--primary btn--sm" v-tooltip.top-center="'Create new Pattern'">
+      <!-- CREATE BUTTON -->
+      <router-link :to="{ name: 'create' }"  class="btn btn--create" v-tooltip.top-center="'Add new pattern to the project'">
 
-        <span>
+        <i class="fas fa-plus"></i>
 
-          <i class="fas fa-plus"></i>
+          <span>Create</span>
 
-          New Pattern
+      </router-link>      
 
-        </span>
+    </nav>    
 
-      </router-link>
-
-    </nav>
+    <global-resources v-if="showResources"></global-resources>
 
   </section>
 
@@ -48,18 +64,20 @@
   import NavbarMain from "./NavbarMain";
   import {API} from '../restClient';
   import LOG from '../logger';
+  import GlobalResources from './GlobalResources';
 
   export default {
     name: "Navbar",
 
     components: {
-      NavbarMain
+      NavbarMain,
+      GlobalResources
     },
 
     data() {
       return {
-        navi: []
-      }
+        navi: [],
+      }      
     },
 
     computed: {
@@ -69,6 +87,13 @@
        */
       notDashboard: function () {
         return this.$route.name !== 'dashboard';
+      },
+
+      /** 
+       * Get the global state if the settings are visible
+       */
+      showResources: function () {
+        return this.$store.getters.showResources;
       }
     },
 
@@ -85,6 +110,13 @@
         } catch (e) {
           LOG.error(e);
         }
+      },
+
+      /**
+       * Toggle the resources window.
+       */
+      toggleResources: function () {
+        this.$store.commit('toggleResources');
       },
 
       /**

@@ -1,7 +1,7 @@
 <template>
   <li class="pattern u-center" :class="{ active: $store.getters.isActiveMainMenu(menu.path) }">
 
-    <!-- Single stupid link to a pattern -->
+    <!-- Single link to a pattern -->
     <navbar-link v-if="!menu.items.length"
                  :item="menu">
     </navbar-link>

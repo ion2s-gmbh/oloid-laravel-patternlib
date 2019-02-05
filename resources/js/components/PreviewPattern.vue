@@ -8,22 +8,35 @@
 
         <div class="code-header">
 
-          <span v-if="!isToggled" class="code-type a-fadeIn">HTML</span>
+          <div class="code-lang">
 
-          <span v-if="isToggled" class="code-type a-fadeIn">Blade</span>
+            <span v-if="!isToggled" class="code-type a-fadeIn">HTML</span>
 
-          <label class="toggle-wrap" v-tooltip.top-center="'Switch between HTML and Blade'">
+            <span v-if="isToggled" class="code-type a-fadeIn">Blade</span>
 
-            <input type="checkbox" class="toggle" v-model="isToggled" />
+            <label class="toggle-wrap" v-tooltip.top-center="'Switch between HTML and Blade'">
 
-            <div></div>
+              <input type="checkbox" class="toggle" v-model="isToggled" />
 
-            <span>Show Blade</span>
+              <div></div>
 
-          </label>
+              <span>Show Blade</span>
 
-          <!-- Couter for patterns -->
-          <span>{{ totalTodoCount }} | {{ totalReviewCount }} | {{ totalRejectedCount }} | {{ totalDoneCount }} </span>
+            </label>
+
+          </div>
+
+          <button class="toggle--more clipboard"
+                  v-tooltip.bottom-center="usageTooltip"
+                  data-clipboard-target="#usage"
+                  @mouseleave="resetTooltip">
+
+            <i class="far fa-clipboard"></i>            
+
+          </button> 
+
+          <!-- Hidden usage for copy to clipboard -->
+          <span id="usage" class="u-transparent">{{ pattern.usage }}</span>         
 
         </div>
 
@@ -87,15 +100,6 @@
 
           </button>
 
-          <button class="toggle--more clipboard"
-                  v-tooltip.top-center="usageTooltip"
-                  data-clipboard-target="#usage"
-                  @mouseleave="resetTooltip">
-
-            <i class="far fa-clipboard"></i>
-
-          </button>
-
           <a class="toggle--more"
              :href="`workshop/preview/${pattern.name}`"
              target="_blank"
@@ -105,8 +109,7 @@
 
           </a>
 
-          <!-- Hidden usage for copy to clipboard -->
-          <span id="usage" class="u-transparent">{{ pattern.usage }}</span>
+          
 
         </div>
 
@@ -119,7 +122,7 @@
             </p>
 
             <button class="toggle--more toggle--showIncludes"
-                    @click="showWarningIncludes = !showWarningIncludes"
+                    @click.prevent.stop="toggleWarningIncludes"
                     v-tooltip.top-center="'Show components that cause this message'">
 
               <span v-if="!showWarningIncludes" class="a-slideIn">Show</span>
@@ -127,8 +130,6 @@
               <span v-if="showWarningIncludes" class="a-slideIn">Hide</span>
 
             </button>
-
-            <!-- TODO:  @seb Make se dröpdöwn close when se ossas are open -->
 
             <div class="warning-includes a-dropIn" v-if="showWarningIncludes">
 
@@ -248,14 +249,15 @@
 
       <div class="preview-inner">
 
-        <iframe height="1500" width="1100"
-                frameBorder="0"
+        <iframe frameBorder="0"
                 :src="`workshop/preview/${pattern.name}`"></iframe>
 
 
-      </div>
+      </div>      
 
     </div>
+
+    
 
     <confirmation-window
             v-if="showDeleteConfirm"
@@ -317,7 +319,6 @@
         isToggled: false,
         showDescription: false,
         showDeleteConfirm: false,
-        showWarningIncludes: false,
         editModeDescription: false,
         oldDescription: '',
         usageTooltip: {
@@ -326,7 +327,9 @@
         },
         globalShortcuts,
         previewShortcuts,
-        optionsDropdown: 'PreviewPattern::dropdown-options'
+        optionsDropdown: 'PreviewPattern::dropdown-options',
+        warningIncludesDropdown: 'PreviewPattern::dropdown-warning-includes',
+        globalKeyListener: null
       }
     },
 
@@ -376,6 +379,13 @@
        */
       totalDoneCount: function () {
         return this.pattern.subPatterns.done.length;
+      },
+
+      /**
+       * Determine if the warning includes dropdown is active.
+       */
+      showWarningIncludes: function () {
+        return this.$store.getters.activeDropdown === this.warningIncludesDropdown;
       }
     },
 
@@ -521,6 +531,13 @@
        */
       resetDropdowns: function () {
         this.$store.dispatch('resetDropdowns');
+      },
+
+      /**
+       * Toggle the warning includes dropdown.
+       */
+      toggleWarningIncludes: function () {
+        this.$store.dispatch('toggleDropdown', this.warningIncludesDropdown);
       }
     },
 
@@ -532,6 +549,7 @@
      */
     beforeRouteUpdate (to, from, next) {
       this.fetchPattern(to.params.patternName);
+      this.$store.dispatch('resetMenu');
       next();
     },
 
@@ -542,6 +560,9 @@
       this.fetchPattern(this.patternName);
     },
 
+    /**
+     * Mounted hook, adds global event listener.
+     */
     mounted() {
 
       /**
@@ -555,7 +576,7 @@
       /**
        * Global shortcuts
        */
-      window.addEventListener('keydown', (event) => {
+      this.globalKeyListener = (event) => {
 
         const DEL = 46;
         const E = 69;
@@ -577,7 +598,16 @@
           event.preventDefault();
           this.renamePattern();
         }
-      });
+      };
+
+      window.addEventListener('keydown', this.globalKeyListener);
+    },
+
+    /**
+     * BeforeDestory hook, removes the global event listener.
+     */
+    beforeDestroy() {
+      window.removeEventListener('keydown', this.globalKeyListener);
     }
   }
 </script>

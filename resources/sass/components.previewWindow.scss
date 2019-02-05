@@ -37,8 +37,13 @@ These are the styles that are needed to render the pattern preview.
   max-width: 100%;
   position: relative;
   overflow: auto;
+
+  &-inner {
+  	height: calc(100% - 50px);
+  }
   
   iframe { //  THIS IS THE IFRAME CONTAINING THE PATTERN.
+  	height: 100%;
     width: 100%;
   } 
 

@@ -22,7 +22,8 @@
 
                 <span class="label-name">Links / Stylesheets / Scripts</span>
                 <span class="label-hint">Paste your CDN Links or paths into here.</span>
-                <!-- <small class="error a-slideIn" v-if="errors.has('')">{{ errors.first('') }}</small> -->
+                <small class="error a-slideIn" v-if="errorOnSave">Sorry, we couldn't store the globla resources.</small>
+                <small class="success a-slideIn" v-if="successOnSave">Global resources have been saved.</small>
 
               </label>
 
@@ -43,7 +44,8 @@
 
                 <span class="label-name">Scripts</span>
                 <span class="label-hint">Paste your CDN Links or paths into here.</span>
-                <!-- <small class="error a-slideIn" v-if="errors.has('')">{{ errors.first('') }}</small> -->
+                <small class="error a-slideIn" v-if="errorOnSave">Sorry, we couldn't store the global resources.</small>
+                <small class="success a-slideIn" v-if="successOnSave">Global resources have been saved.</small>
 
               </label>
 
@@ -118,6 +120,8 @@
     data() {
       return {
         selectedTab: 'for <head>',
+        errorOnSave: false,
+        successOnSave: false
       }
     },
 
@@ -163,8 +167,13 @@
 
         try {
           const response = await API.post('resources', resources);
+          if (response.status !== 201) {
+            this.errorOnSave = true;
+          } else {
+            this.successOnSave = true;
+          }
         } catch (e) {
-          this.$store.dispatch('fetchResources');
+          this.errorOnSave = true;
           LOG.error(e);
         }
       },

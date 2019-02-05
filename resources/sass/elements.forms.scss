@@ -78,3 +78,8 @@ textarea {
 	color: var(--alert, $c-alert);
 	display: inline-block;
 }
+
+.success {
+  color: var(--positive, $c-positive);
+  display: inline-block;
+}

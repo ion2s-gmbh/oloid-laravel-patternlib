@@ -14,7 +14,7 @@
 
       <div class="project-actions">
 
-        <button class="toggle--more" v-tooltip.top-center="'Show project settings'" @click="toggleSettings">
+        <button class="toggle--more" v-tooltip.top-center="'Show project settings'" @click="toggleResources">
 
           <i class="fas fa-cog"></i>
 
@@ -53,7 +53,7 @@
 
     </nav>    
 
-    <project-settings v-if="showSettings"></project-settings>
+    <global-resources v-if="showResources"></global-resources>
 
   </section>
 
@@ -64,14 +64,14 @@
   import NavbarMain from "./NavbarMain";
   import {API} from '../restClient';
   import LOG from '../logger';
-  import ProjectSettings from './ProjectSettings';
+  import GlobalResources from './GlobalResources';
 
   export default {
     name: "Navbar",
 
     components: {
       NavbarMain,
-      ProjectSettings
+      GlobalResources
     },
 
     data() {
@@ -92,8 +92,8 @@
       /** 
        * Get the global state if the settings are visible
        */
-      showSettings: function () {
-        return this.$store.getters.showSettings;
+      showResources: function () {
+        return this.$store.getters.showResources;
       }
     },
 
@@ -112,9 +112,12 @@
         }
       },
 
-      toggleSettings: function () {
-        this.$store.commit('toggleSettings');
-      }, 
+      /**
+       * Toggle the resources window.
+       */
+      toggleResources: function () {
+        this.$store.commit('toggleResources');
+      },
 
       /**
        * Reload the menu if requested.

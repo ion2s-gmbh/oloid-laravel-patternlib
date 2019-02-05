@@ -20,8 +20,8 @@ export default new Vuex.Store({
     },
     showKeyMap: false,
     activeDropdown: '',
-    showSettings: false,
-    settings: {
+    showResources: false,
+    resources: {
       head: '',
       body: ''
     }
@@ -72,11 +72,11 @@ export default new Vuex.Store({
     showKeyMap: state => state.showKeyMap,
 
     /**
-     * Determine if the project settings are shown.
+     * Determine if the global resources are shown.
      * @param state
-     * @returns {getters.showSettings|(function(*))|default.computed.showSettings|showSettings|boolean|*}
+     * @returns {getters.showResources|(function(*))|default.computed.showResources|showResources|boolean|*}
      */
-    showSettings: state => state.showSettings,
+    showResources: state => state.showResources,
 
     /**
      *
@@ -85,9 +85,19 @@ export default new Vuex.Store({
      */
     activeDropdown: state => state.activeDropdown,
 
-    headSettings: state => state.settings.head,
+    /**
+     * Get the global head resources.
+     * @param state
+     * @returns {string}
+     */
+    headResources: state => state.resources.head,
 
-    bodySettigs: state => state.settings.body,
+    /**
+     * Get the global body resources.
+     * @param state
+     * @returns {string}
+     */
+    bodyResources: state => state.resources.body,
   },
 
   mutations: {
@@ -154,11 +164,11 @@ export default new Vuex.Store({
     },
 
     /**
-     * Toggle the project settings.
+     * Toggle the global resources configuration.
      * @param state
      */
-    toggleSettings: (state) => {
-      state.showSettings = !state.showSettings;
+    toggleResources: (state) => {
+      state.showResources = !state.showResources;
     },
 
     /**
@@ -178,12 +188,22 @@ export default new Vuex.Store({
       state.activeDropdown = '';
     },
 
-    headerSettings: (state, settings) => {
-      state.settings.head = settings;
+    /**
+     * Set the global resources for the head section.
+     * @param state
+     * @param resources
+     */
+    headResources: (state, resources) => {
+      state.resources.head = resources;
     },
 
-    bodySettings: (state, settings) => {
-      state.settings.body = settings;
+    /**
+     * Set the global resources for the body section.
+     * @param state
+     * @param resources
+     */
+    bodyResources: (state, resources) => {
+      state.resources.body = resources;
     }
   },
 
@@ -204,14 +224,14 @@ export default new Vuex.Store({
     },
 
     /**
-     * Fetch the global dependencies from the API.
+     * Fetch the global resources from the API.
      * @returns {Promise<void>}
      */
-    fetchDependencies: async function () {
+    fetchResources: async function () {
       try {
-        const response = await API.get('dependencies');
-        this.commit('headerSettings', response.data.data.head);
-        this.commit('bodySettings', response.data.data.body);
+        const response = await API.get('resources');
+        this.commit('headResources', response.data.data.head);
+        this.commit('bodyResources', response.data.data.body);
       } catch (e) {
         LOG.error(e);
       }

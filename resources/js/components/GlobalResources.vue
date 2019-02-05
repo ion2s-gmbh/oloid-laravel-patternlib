@@ -4,7 +4,7 @@
 
       <div class="popUp-inner a-dropIn">
       
-        <p class="headline--two">Project settings</p>
+        <p class="headline--two">Project Resources</p>
 
         <div class="settings">
           
@@ -18,7 +18,7 @@
             <!-- FOR <HEAD>-->
             <div class="form-group a-slideIn" v-show="selectedTab === 'for <head>'">
 
-              <label for="head-dependencies">
+              <label for="head-resources">
 
                 <span class="label-name">Links / Stylesheets / Scripts</span>
                 <span class="label-hint">Paste your CDN Links or paths into here.</span>
@@ -26,12 +26,12 @@
 
               </label>
 
-              <textarea id="head-dependencies"
+              <textarea id="head-resources"
                         class="form-control"
                         type="text"
-                        name="head-dependencies"
+                        name="head-resources"
                         autofocus
-                        v-model="headDependencies">
+                        v-model="headResources">
               </textarea>
               
             </div>
@@ -39,7 +39,7 @@
             <!-- ABOVE </BODY>-->
             <div class="form-group a-slideIn" v-show="selectedTab === 'above </body>'">
 
-              <label for="body-dependencies">
+              <label for="body-resources">
 
                 <span class="label-name">Scripts</span>
                 <span class="label-hint">Paste your CDN Links or paths into here.</span>
@@ -47,12 +47,12 @@
 
               </label>
 
-              <textarea id="body-dependencies"
+              <textarea id="body-resources"
                         class="form-control"
                         type="text"
-                        name="body-dependencies"
+                        name="body-resources"
                         autofocus
-                        v-model="bodyDependencies">
+                        v-model="bodyResources">
               </textarea>
 
             </div>
@@ -109,7 +109,7 @@
   import LOG from '../logger';
 
   export default {
-    name: "ProjectSettings",
+    name: "GlobalResources",
 
     components: {
       TabBar
@@ -123,21 +123,21 @@
 
     computed: {
 
-      headDependencies: {
+      headResources: {
         get () {
-          return this.$store.getters.headSettings;
+          return this.$store.getters.headResources;
         },
-        set (headerSettings) {
-          this.$store.commit('headerSettings', headerSettings);
+        set (headResources) {
+          this.$store.commit('headResources', headResources);
         }
       },
 
-      bodyDependencies: {
+      bodyResources: {
         get () {
-          return this.$store.getters.bodySettigs;
+          return this.$store.getters.bodyResources;
         },
-        set (bodySettings) {
-          this.$store.commit('bodySettings', bodySettings);
+        set (bodyResources) {
+          this.$store.commit('bodyResources', bodyResources);
         }
       }
     },
@@ -145,26 +145,26 @@
     methods: {
 
       /**
-       * Close the global settings window.
+       * Close the global resources window.
        */
       close: function () {
-        this.$store.dispatch('fetchDependencies');
-        this.$store.commit('toggleSettings');
+        this.$store.dispatch('fetchResources');
+        this.$store.commit('toggleResources');
       },
 
       /**
-       * Save the global settings.
+       * Save the global resources.
        */
       save: async function () {
-        const dependencies = {
-          head: this.headDependencies,
-          body: this.bodyDependencies
+        const resources = {
+          head: this.headResources,
+          body: this.bodyResources
         };
 
         try {
-          const response = await API.post('dependencies', dependencies);
+          const response = await API.post('resources', resources);
         } catch (e) {
-          this.$store.dispatch('fetchDependencies');
+          this.$store.dispatch('fetchResources');
           LOG.error(e);
         }
       },

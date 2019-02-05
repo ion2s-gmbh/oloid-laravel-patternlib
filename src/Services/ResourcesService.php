@@ -6,7 +6,7 @@ namespace Oloid\Services;
 
 use Illuminate\Support\Facades\File;
 
-class DependenciesService
+class ResourcesService
 {
     /**
      * Path to the globals file.
@@ -58,7 +58,7 @@ class DependenciesService
      * Get all global dependencies.
      * @return array
      */
-    public function getAllGlobals()
+    public function getAll()
     {
         return $this->globals;
     }
@@ -69,7 +69,7 @@ class DependenciesService
      * @param string $headerDependencies
      * @param string $bodyDependencies
      */
-    public function storeDependencies(string $headerDependencies, string $bodyDependencies)
+    public function store(string $headerDependencies, string $bodyDependencies)
     {
         $this->globals['head'] = $headerDependencies;
         $this->globals['body'] = $bodyDependencies;

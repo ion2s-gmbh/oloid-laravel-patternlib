@@ -4,48 +4,48 @@ namespace Oloid\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
-use Oloid\Http\Requests\GlobalDependencies;
-use Oloid\Services\DependenciesService;
+use Oloid\Http\Requests\GlobalResource;
+use Oloid\Services\ResourcesService;
 
 class ResourcesController extends Controller
 {
     /**
-     * @var DependenciesService
+     * @var ResourcesService
      */
-    private $dependenciesService;
+    private $resourcesService;
 
     /**
      * DependenciesController constructor.
-     * @param DependenciesService $dependenciesService
+     * @param ResourcesService $resourcesService
      */
-    public function __construct(DependenciesService $dependenciesService)
+    public function __construct(ResourcesService $resourcesService)
     {
-        $this->dependenciesService = $dependenciesService;
+        $this->resourcesService = $resourcesService;
     }
 
     /**
-     * Get all global dependencies
+     * Get all global resources.
      *
      * @return JsonResponse
      */
     public function get()
     {
         return JsonResponse::create([
-            'data' => $this->dependenciesService->getAllGlobals()
+            'data' => $this->resourcesService->getAll()
         ]);
     }
 
     /**
      * Store a new global resource.
      *
-     * @param GlobalDependencies $request
+     * @param GlobalResource $request
      * @return JsonResponse
      */
-    public function store(GlobalDependencies $request)
+    public function store(GlobalResource $request)
     {
-        $headerDependencies = $request->get('head') ?: '';
-        $bodyDependencies = $request->get('body') ?: '';
-        $this->dependenciesService->storeDependencies($headerDependencies, $bodyDependencies);
+        $headResource = $request->get('head') ?: '';
+        $bodyResource = $request->get('body') ?: '';
+        $this->resourcesService->store($headResource, $bodyResource);
 
         return JsonResponse::create([], JsonResponse::HTTP_CREATED);
     }

@@ -3,25 +3,25 @@
 namespace Unit\Http\Requests;
 
 
-use Oloid\Http\Requests\GlobalDependencies;
+use Oloid\Http\Requests\GlobalResource;
 use Tests\BaseTestCase;
 
 class GlobalDependenciesTest extends BaseTestCase
 {
     /**
-     * @var \Oloid\Http\Requests\GlobalDependencies
+     * @var \Oloid\Http\Requests\GlobalResource
      */
     private $cut;
 
     protected function setUp()
     {
         parent::setUp();
-        $this->cut = new GlobalDependencies();
+        $this->cut = new GlobalResource();
     }
 
     /**
      * @test
-     * @covers \Oloid\Http\Requests\GlobalDependencies
+     * @covers \Oloid\Http\Requests\GlobalResource
      */
     public function it_should_always_be_authorized()
     {
@@ -30,7 +30,7 @@ class GlobalDependenciesTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Oloid\Http\Requests\GlobalDependencies
+     * @covers \Oloid\Http\Requests\GlobalResource
      */
     public function it_should_contain_validation_rules()
     {

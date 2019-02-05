@@ -1,10 +1,10 @@
 <!-- GLOBAL RESOURCES -->
-@inject('dependencies', 'Oloid\Services\DependenciesService')
+@inject('resources', 'Oloid\Services\ResourcesService')
 
 @section('workshop.head')
-    {!! $dependencies->getGlobals('head') !!}
+    {!! $resources->getGlobals('head') !!}
 @show
 
 @section('workshop.scripts')
-    {!! $dependencies->getGlobals('body') !!}
+    {!! $resources->getGlobals('body') !!}
 @endsection

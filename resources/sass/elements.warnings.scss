@@ -1,0 +1,38 @@
+//-------------------   WARNINGS & MESSAGES    -----------------------//
+
+/* 
+These are the styles for the feedback or warning boxes that giove the user feedback
+*/
+
+.warning {
+
+	align-items: center;
+	background-color: var(--alert);
+	border-radius: 1rem;
+	color: #fff;
+	display: flex;
+	padding: 0.5rem 1rem;	
+	position: relative;
+	text-shadow: 1px 1px 1px rgba(58,58,58,0.8);
+
+	&-message {
+
+		color: inherit;	
+		margin: 0;			
+
+	}
+
+}
+
+.warning-includes {
+
+	@extend %dropdown;
+	right: 0;
+
+}
+
+.warning-listItem {
+
+	@extend %dropdownItem;
+
+}

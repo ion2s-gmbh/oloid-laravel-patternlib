@@ -1,10 +1,10 @@
 <?php
 
-namespace Tests\Unit\Rules;
+namespace Unit\Rules;
 
-use Laratomics\Rules\UniquePattern;
-use Laratomics\Tests\BaseTestCase;
-use Laratomics\Tests\Traits\TestStubs;
+use Oloid\Rules\UniquePattern;
+use Tests\BaseTestCase;
+use Tests\Traits\TestStubs;
 
 class UniquePatternTest extends BaseTestCase
 {
@@ -12,7 +12,7 @@ class UniquePatternTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Rules\UniquePattern
+     * @covers \Oloid\Rules\UniquePattern
      */
     public function it_should_pass_the_validation()
     {
@@ -25,7 +25,7 @@ class UniquePatternTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Rules\UniquePattern
+     * @covers \Oloid\Rules\UniquePattern
      */
     public function it_should_fail_the_validation()
     {

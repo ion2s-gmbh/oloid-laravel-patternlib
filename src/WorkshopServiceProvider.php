@@ -1,12 +1,12 @@
 <?php
 
-namespace Laratomics;
+namespace Oloid;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
-use Laratomics\Console\Commands\CleanCommand;
-use Laratomics\Console\Commands\InstallCommand;
-use Laratomics\Console\Commands\ReconfigureCommand;
+use Oloid\Console\Commands\CleanCommand;
+use Oloid\Console\Commands\InstallCommand;
+use Oloid\Console\Commands\ReconfigureCommand;
 
 class WorkshopServiceProvider extends BaseServiceProvider
 {
@@ -43,7 +43,7 @@ class WorkshopServiceProvider extends BaseServiceProvider
     private function webRouteConfiguration()
     {
         return [
-            'namespace' => 'Laratomics\Http\Controllers',
+            'namespace' => 'Oloid\Http\Controllers',
             'prefix' => config('workshop.uri')
         ];
     }
@@ -51,7 +51,7 @@ class WorkshopServiceProvider extends BaseServiceProvider
     private function apiRouteConfiguration()
     {
         return [
-            'namespace' => 'Laratomics\Http\Controllers',
+            'namespace' => 'Oloid\Http\Controllers',
             'prefix' => config('workshop.uri') . '/api/v1'
         ];
     }
@@ -104,7 +104,7 @@ class WorkshopServiceProvider extends BaseServiceProvider
          * Publish views
          */
         $this->publishes([
-            __DIR__.'/../resources/views' => resource_path('views/vendor/workshop'),
+            __DIR__ . '/../resources/views' => resource_path('views/vendor/workshop'),
         ], 'workshop-views');
 
         /*

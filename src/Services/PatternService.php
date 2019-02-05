@@ -1,14 +1,15 @@
 <?php
 
 
-namespace Laratomics\Services;
+namespace Oloid\Services;
 
 
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Facades\File;
-use Laratomics\Exceptions\RenderingException;
-use Laratomics\Models\Pattern;
+use Oloid\Exceptions\RenderingException;
+use Oloid\Models\Pattern;
 use Spatie\YamlFrontMatter\YamlFrontMatter;
+use SplFileInfo;
 
 
 class PatternService
@@ -132,12 +133,10 @@ class PatternService
 
     /**
      * @param $name
-     * @param array $values
      * @return Pattern
      * @throws FileNotFoundException
-     * @throws RenderingException
      */
-    public function loadPattern($name, $values = []): Pattern
+    public function loadPattern($name): Pattern
     {
         $pattern = new Pattern();
         $pattern->name = $name;
@@ -166,16 +165,29 @@ class PatternService
          * Load Pattern content
          */
         $pattern->template = $this->loadBladeFile($name);
-        $markdown = $this->loadMarkdownFile($name);
-        $pattern->markdown = $markdown;
-        $pattern->metadata = YamlFrontMatter::parse($markdown);
+        $pattern->markdown = $this->loadMarkdownFile($name);
+        $pattern->metadata = YamlFrontMatter::parse($pattern->markdown);
+        $pattern->status = $pattern->metadata->status;
         $pattern->sass = $this->loadSassFile($name);
+
+        return $pattern;
+    }
+
+    /**
+     * @param $name
+     * @param array $values
+     * @return Pattern
+     * @throws FileNotFoundException
+     */
+    public function loadPatternWithPreview($name, $values = [])
+    {
+        $pattern = $this->loadPattern($name);
 
         /*
          * Create the preview
          */
-        $values = !is_null($pattern->metadata->values) ? $pattern->metadata->values : array_merge($values, []);
-        $pattern->html = compile_blade_string($pattern->template, $values);
+        $pattern->values = !is_null($pattern->metadata->values) ? $pattern->metadata->values : array_merge($values, []);
+        $pattern->html = compile_blade_string($pattern);
 
         return $pattern;
     }
@@ -399,6 +411,61 @@ class PatternService
 
         $this->removeSassImport($oldPattern);
 
-        return $this->loadPattern($newName);
+        $newPattern = $this->loadPattern($newName);
+        $this->updatePatternReferences($oldPattern, $newPattern);
+
+        return $newPattern;
+    }
+
+    /**
+     * Update the reference of the Pattern in other Patterns and view files.
+     *
+     * @param Pattern $oldPattern
+     * @param Pattern $newPattern
+     */
+    private function updatePatternReferences(Pattern $oldPattern, Pattern $newPattern)
+    {
+        $patternFiles = File::allFiles(pattern_path());
+        $viewFiles = File::allFiles(resource_path('views'));
+        $files = array_merge($patternFiles, $viewFiles);
+
+        /*
+         * Get all the templates
+         */
+        $templates = [];
+        foreach ($files as $file) {
+            if (ends_with($file->getRelativePathname(), 'blade.php')) {
+                $templates[] = $file;
+            }
+        }
+
+        /*
+         * Replace reference in template files
+         */
+        /** @var SplFileInfo $template */
+        foreach ($templates as $template) {
+            $content = $template->getContents();
+
+            /*
+             * Search and replace directive reference
+             */
+            $search = "/@{$oldPattern->getType()}\('{$oldPattern->getNameWithoutType()}'/";
+            $replacement = "@{$newPattern->getType()}('{$newPattern->getNameWithoutType()}'";
+            $newContent = preg_replace($search, $replacement, $content);
+
+            /*
+             * Search and replace include reference
+             */
+            $search = "/@include\('patterns.{$oldPattern->name}'/";
+            $replacement = "@include('patterns.{$newPattern->name}'";
+            $newContent = preg_replace($search, $replacement, $newContent);
+
+            /*
+             * Save contents back to file
+             */
+            if ($content !== $newContent && !is_null($newContent)) {
+                File::put($template->getPathname(), $newContent);
+            }
+        }
     }
 }

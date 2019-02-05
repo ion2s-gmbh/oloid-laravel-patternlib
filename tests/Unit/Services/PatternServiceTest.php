@@ -1,14 +1,15 @@
 <?php
 
-namespace Tests\Unit\Services;
+namespace Unit\Services;
 
 use Exception;
+use File;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Filesystem\Filesystem;
-use Laratomics\Services\PatternService;
-use Laratomics\Tests\BaseTestCase;
-use Laratomics\Tests\Traits\TestStubs;
+use Oloid\Services\PatternService;
 use Spatie\YamlFrontMatter\Document;
+use Tests\BaseTestCase;
+use Tests\Traits\TestStubs;
 
 class PatternServiceTest extends BaseTestCase
 {
@@ -43,7 +44,7 @@ class PatternServiceTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Services\PatternService
+     * @covers \Oloid\Services\PatternService
      */
     public function it_should_create_a_blade_template_file()
     {
@@ -56,7 +57,7 @@ class PatternServiceTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Services\PatternService
+     * @covers \Oloid\Services\PatternService
      */
     public function it_should_create_a_markdown_file()
     {
@@ -69,7 +70,7 @@ class PatternServiceTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Services\PatternService
+     * @covers \Oloid\Services\PatternService
      */
     public function it_should_create_a_sass_file()
     {
@@ -82,7 +83,7 @@ class PatternServiceTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Services\PatternService
+     * @covers \Oloid\Services\PatternService
      */
     public function it_should_create_a_nested_pattern_structure()
     {
@@ -103,7 +104,7 @@ class PatternServiceTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Services\PatternService
+     * @covers \Oloid\Services\PatternService
      * @todo improve this test
      */
     public function it_should_create_an_unnested_pattern_structure()
@@ -221,7 +222,7 @@ class PatternServiceTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Services\PatternService
+     * @covers \Oloid\Services\PatternService
      */
     public function it_should_load_a_pattern_template()
     {
@@ -242,7 +243,7 @@ class PatternServiceTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Services\PatternService
+     * @covers \Oloid\Services\PatternService
      */
     public function it_should_load_a_markdown_file()
     {
@@ -263,7 +264,7 @@ class PatternServiceTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Services\PatternService
+     * @covers \Oloid\Services\PatternService
      */
     public function it_should_load_a_sass_file()
     {
@@ -284,7 +285,7 @@ class PatternServiceTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Services\PatternService
+     * @covers \Oloid\Services\PatternService
      */
     public function it_should_load_a_whole_pattern()
     {
@@ -303,12 +304,49 @@ class PatternServiceTest extends BaseTestCase
         $this->assertMarkdownContentUsingStub($pattern->markdown);
         $this->assertSassContentUsingStub($pattern->sass);
         $this->assertInstanceOf(Document::class, $pattern->metadata);
-        $this->assertEquals('TODO', $pattern->metadata->status);
+        $this->assertEquals('review', $pattern->metadata->status);
+        $this->assertEquals('review', $pattern->status);
         $this->assertEquals("{$this->tempDir}/patterns/atoms/text/headline1.blade.php", $pattern->templateFile);
         $this->assertEquals("{$this->tempDir}/patterns/atoms/text/headline1.scss", $pattern->sassFile);
         $this->assertEquals("{$this->tempDir}/patterns/atoms/atoms.scss", $pattern->rootSassFile);
         $this->assertEquals("{$this->tempDir}/patterns/patterns.scss", $pattern->mainSassFile);
         $this->assertEquals("{$this->tempDir}/patterns/atoms/text/headline1.md", $pattern->markdownFile);
+
+        $this->assertNull($pattern->html);
+        $this->assertNull($pattern->values);
+    }
+
+    /**
+     * @test
+     * @covers \Oloid\Services\PatternService
+     */
+    public function it_should_load_a_whole_pattern_with_preview()
+    {
+        // arrange
+        $this->preparePatternStub();
+
+        // act
+        try {
+            $pattern = $this->cut->loadPatternWithPreview($this->name, []);
+        } catch (Exception $e) {
+            $this->fail($e->getMessage());
+        }
+
+        // assert
+        $this->assertTemplateContentUsingStub($pattern->template);
+        $this->assertMarkdownContentUsingStub($pattern->markdown);
+        $this->assertSassContentUsingStub($pattern->sass);
+        $this->assertInstanceOf(Document::class, $pattern->metadata);
+        $this->assertEquals('review', $pattern->metadata->status);
+        $this->assertEquals('review', $pattern->status);
+        $this->assertEquals("{$this->tempDir}/patterns/atoms/text/headline1.blade.php", $pattern->templateFile);
+        $this->assertEquals("{$this->tempDir}/patterns/atoms/text/headline1.scss", $pattern->sassFile);
+        $this->assertEquals("{$this->tempDir}/patterns/atoms/atoms.scss", $pattern->rootSassFile);
+        $this->assertEquals("{$this->tempDir}/patterns/patterns.scss", $pattern->mainSassFile);
+        $this->assertEquals("{$this->tempDir}/patterns/atoms/text/headline1.md", $pattern->markdownFile);
+
+        $this->assertNotNull($pattern->html);
+        $this->assertNotNull($pattern->values);
     }
 
     /**
@@ -325,7 +363,7 @@ class PatternServiceTest extends BaseTestCase
      */
     private function assertMarkdownContentUsingStub($markdown)
     {
-        $markdownContent = "---\nstatus: TODO\nvalues:\n    text: Testing\n---\n{$this->description}";
+        $markdownContent = "---\nstatus: review\nvalues:\n    text: Testing\n---\n{$this->description}";
         $this->assertEquals($markdownContent, $markdown);
     }
 
@@ -339,7 +377,7 @@ class PatternServiceTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Services\PatternService
+     * @covers \Oloid\Services\PatternService
      */
     public function it_should_remove_all_pattern_files_and_empty_folders_of_a_nested_pattern()
     {
@@ -367,7 +405,7 @@ class PatternServiceTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Services\PatternService
+     * @covers \Oloid\Services\PatternService
      */
     public function it_should_remove_a_1_level_pattern()
     {
@@ -397,7 +435,7 @@ class PatternServiceTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Services\PatternService
+     * @covers \Oloid\Services\PatternService
      * @expectedException \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function it_should_throw_an_exception_if_an_unexisting_pattern_should_be_deleted()
@@ -411,7 +449,7 @@ class PatternServiceTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Services\PatternService
+     * @covers \Oloid\Services\PatternService
      */
     public function it_should_remove_a_pattern_and_keep_the_patterns_root_and_parallel_patterns()
     {
@@ -453,7 +491,7 @@ class PatternServiceTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Services\PatternService
+     * @covers \Oloid\Services\PatternService
      */
     public function it_should_remove_deeply_nested_pattern_and_keep_other_branches()
     {
@@ -494,17 +532,17 @@ class PatternServiceTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Services\PatternService
+     * @covers \Oloid\Services\PatternService
      */
     public function it_should_update_the_status_of_a_pattern()
     {
         // arrange
         $this->preparePatternStub();
         $pattern = $this->cut->loadPattern('atoms.text.headline1');
-        $this->assertEquals('TODO', $pattern->metadata->status);
+        $this->assertEquals('review', $pattern->metadata->status);
 
         $mdContent = file_get_contents("{$this->tempDir}/patterns/atoms/text/headline1.md");
-        $this->assertContains('status: TODO', $mdContent);
+        $this->assertContains('status: review', $mdContent);
 
         // act
         $this->cut->updateStatus('TESTED', $pattern->name);
@@ -516,7 +554,7 @@ class PatternServiceTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Services\PatternService
+     * @covers \Oloid\Services\PatternService
      */
     public function it_should_check_that_a_pattern_exists()
     {
@@ -529,7 +567,7 @@ class PatternServiceTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Services\PatternService
+     * @covers \Oloid\Services\PatternService
      */
     public function it_should_check_that_a_patter_does_not_exist()
     {
@@ -542,7 +580,7 @@ class PatternServiceTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Services\PatternService
+     * @covers \Oloid\Services\PatternService
      */
     public function it_should_update_an_existing_description_of_a_pattern()
     {
@@ -563,7 +601,7 @@ class PatternServiceTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Services\PatternService
+     * @covers \Oloid\Services\PatternService
      */
     public function it_should_add_a_description_to_a_pattern()
     {
@@ -590,7 +628,7 @@ class PatternServiceTest extends BaseTestCase
      * - do not touch the description
      *
      * @test
-     * @covers \Laratomics\Services\PatternService
+     * @covers \Oloid\Services\PatternService
      */
     public function it_should_rename_a_pattern_in_the_same_directory()
     {
@@ -617,7 +655,7 @@ class PatternServiceTest extends BaseTestCase
         // assert Pattern instance
         $this->assertEquals('atoms.buttons.submit', $pattern->name);
         $this->assertInstanceOf(Document::class, $pattern->metadata);
-        $this->assertEquals('TODO', $pattern->metadata->status);
+        $this->assertEquals('todo', $pattern->metadata->status);
         $this->assertEquals("{$this->tempDir}/patterns/atoms/buttons/submit.blade.php", $pattern->templateFile);
         $this->assertEquals("{$this->tempDir}/patterns/atoms/buttons/submit.scss", $pattern->sassFile);
         $this->assertEquals("{$this->tempDir}/patterns/atoms/atoms.scss", $pattern->rootSassFile);
@@ -639,7 +677,7 @@ class PatternServiceTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Services\PatternService
+     * @covers \Oloid\Services\PatternService
      */
     public function it_should_move_a_pattern_in_a_subdirectory()
     {
@@ -666,7 +704,7 @@ class PatternServiceTest extends BaseTestCase
         // assert Pattern instance
         $this->assertEquals('atoms.buttons.submit.button', $pattern->name);
         $this->assertInstanceOf(Document::class, $pattern->metadata);
-        $this->assertEquals('TODO', $pattern->metadata->status);
+        $this->assertEquals('todo', $pattern->metadata->status);
         $this->assertEquals("{$this->tempDir}/patterns/atoms/buttons/submit/button.blade.php", $pattern->templateFile);
         $this->assertEquals("{$this->tempDir}/patterns/atoms/buttons/submit/button.scss", $pattern->sassFile);
         $this->assertEquals("{$this->tempDir}/patterns/atoms/atoms.scss", $pattern->rootSassFile);
@@ -688,7 +726,7 @@ class PatternServiceTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Services\PatternService
+     * @covers \Oloid\Services\PatternService
      */
     public function it_should_move_a_pattern_into_another_branch_and_remove_the_old_directory()
     {
@@ -717,7 +755,7 @@ class PatternServiceTest extends BaseTestCase
         // assert Pattern instance
         $this->assertEquals('molecules.buttons.submit', $pattern->name);
         $this->assertInstanceOf(Document::class, $pattern->metadata);
-        $this->assertEquals('TODO', $pattern->metadata->status);
+        $this->assertEquals('todo', $pattern->metadata->status);
         $this->assertEquals("{$this->tempDir}/patterns/molecules/buttons/submit.blade.php", $pattern->templateFile);
         $this->assertEquals("{$this->tempDir}/patterns/molecules/buttons/submit.scss", $pattern->sassFile);
         $this->assertEquals("{$this->tempDir}/patterns/molecules/molecules.scss", $pattern->rootSassFile);
@@ -739,7 +777,7 @@ class PatternServiceTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Services\PatternService
+     * @covers \Oloid\Services\PatternService
      */
     public function it_should_move_a_pattern_from_level_one_into_a_sub_directory()
     {
@@ -765,7 +803,7 @@ class PatternServiceTest extends BaseTestCase
         // assert Pattern instance
         $this->assertEquals('pages.homepage', $pattern->name);
         $this->assertInstanceOf(Document::class, $pattern->metadata);
-        $this->assertEquals('TODO', $pattern->metadata->status);
+        $this->assertEquals('done', $pattern->metadata->status);
         $this->assertEquals("{$this->tempDir}/patterns/pages/homepage.blade.php", $pattern->templateFile);
         $this->assertEquals("{$this->tempDir}/patterns/pages/homepage.scss", $pattern->sassFile);
         $this->assertEquals("{$this->tempDir}/patterns/pages/pages.scss", $pattern->rootSassFile);
@@ -782,5 +820,30 @@ class PatternServiceTest extends BaseTestCase
 
         $this->assertContains('homepage', $fs->get("{$this->tempDir}/patterns/pages/pages.scss"));
         $this->assertContains('pages/pages', $fs->get("{$this->tempDir}/patterns/patterns.scss"));
+    }
+
+    /**
+     * @test
+     * @covers \Oloid\Services\PatternService
+     */
+    public function it_should_update_a_reference_of_a_renamed_pattern()
+    {
+        // arrange
+        $this->preparePatternStub();
+
+        $oldPattern = $this->cut->loadPattern('atoms.buttons.button');
+
+        $homepage = File::get("{$this->tempDir}/patterns/homepage.blade.php");
+        $this->assertContains("@atoms('buttons.button', ['text' => 'Submit']", $homepage);
+        $this->assertContains("@include('patterns.atoms.buttons.button', ['text' => 'Submit'])", $homepage);
+
+        // act
+        $pattern = $this->cut->rename('atoms.buttons.button', 'atoms.buttons.submit');
+
+        $homepage = File::get("{$this->tempDir}/patterns/homepage.blade.php");
+
+        // assert
+        $this->assertContains("@atoms('buttons.submit', ['text' => 'Submit'])", $homepage);
+        $this->assertContains("@include('patterns.atoms.buttons.submit', ['text' => 'Submit'])", $homepage);
     }
 }

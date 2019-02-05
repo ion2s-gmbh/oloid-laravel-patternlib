@@ -10,7 +10,13 @@
 
       <router-view></router-view>
 
-    </section>    
+    </section>
+
+    <button class="toggle--more has-tooltip shortcuts" v-tooltip.top-center="'Show keyboard shortcuts'">
+      <i class="fas fa-keyboard"
+       @click="toggleKeyMap">
+      </i>
+    </button>
 
   </main>
 
@@ -18,11 +24,16 @@
 
 <script>
   import Navbar from './Navbar';
-  import {API} from '../httpClient';
-  import LOG from '../logger';
+  import {keyPressed} from "../helpers";
 
   export default {
     name: "WorkshopGui",
+
+    data() {
+      return {
+        globalKeyListener: null
+      }
+    },
 
     components: {
       Navbar
@@ -43,41 +54,67 @@
        * Reset the main menu state.
        */
       resetMenu: function () {
-        this.$store.commit('resetMainMenu');
+        this.$store.dispatch('resetMenu')
+      },
+
+      /**
+       * Toogle the key map overlay.
+       */
+      toggleKeyMap: function () {
+        this.$store.commit('toggleKeyMap');
       }
     },
 
     /**
-     * Fetch application information before creating.
+     * Fetch application information and global resources before creating.
      * @returns {Promise<void>}
      */
-    async beforeCreate() {
-      try {
-        let json = await API.get('info');
-        this.$store.commit('appInfo', json.data);
-      } catch (e) {
-        LOG.error(e);
-      }
+    beforeCreate() {
+      this.$store.dispatch('fetchAppInfo');
+      this.$store.dispatch('fetchResources');
     },
 
+    /**
+     * Mounted hook, adds a global event listener.
+     */
     mounted() {
 
       /**
        * Global shortcuts
        */
-      window.addEventListener('keydown', (event) => {
+      this.globalKeyListener = (event) => {
 
         const C = 67;
+        const K = 75;
+
+        const key = keyPressed(event);
 
         /*
-         * Trigger the delete confirmation by Ctrl+DEL
+         * Trigger the creation of a new Pattern by Ctrl+C
          */
-        if (event.ctrlKey && event.keyCode === C) {
+        if (event.ctrlKey && key === C) {
           this.createPattern();
           event.preventDefault();
         }
 
-      });
+        /*
+         * Trigger the explanation of the shortcuts
+         */
+        if (event.ctrlKey && key === K) {
+          this.toggleKeyMap();
+          event.preventDefault();
+        }
+
+      };
+
+      window.addEventListener('keydown', this.globalKeyListener);
+    },
+
+    /**
+     * BeforeDestroy hook, removes the global event listener.
+     */
+    beforeDestroy() {
+      window.removeEventListener('keydown', this.globalKeyListener);
     }
   }
 </script>

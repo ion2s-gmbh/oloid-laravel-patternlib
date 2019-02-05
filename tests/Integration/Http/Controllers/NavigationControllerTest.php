@@ -1,10 +1,10 @@
 <?php
 
-namespace Tests\Integration\Http\Controllers;
+namespace Integration\Http\Controllers;
 
 use Illuminate\Foundation\Testing\TestResponse;
-use Laratomics\Tests\BaseTestCase;
-use Laratomics\Tests\Traits\TestStubs;
+use Tests\BaseTestCase;
+use Tests\Traits\TestStubs;
 
 class NavigationControllerTest extends BaseTestCase
 {
@@ -12,7 +12,7 @@ class NavigationControllerTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Http\Controllers\NavigationController
+     * @covers \Oloid\Http\Controllers\NavigationController
      */
     public function it_should_return_the_navigation_structure()
     {
@@ -56,7 +56,7 @@ class NavigationControllerTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Http\Controllers\NavigationController
+     * @covers \Oloid\Http\Controllers\NavigationController
      */
     public function it_should_return_empty_navi_if_no_patterns_exist()
     {

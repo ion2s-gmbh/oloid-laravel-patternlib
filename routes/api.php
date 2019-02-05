@@ -29,6 +29,14 @@ Route::put('pattern/{pattern}', 'PatternController@update');
 
 /*
 |--------------------------------------------------------------------------
+| DELETE /pattern/{pattern}
+|--------------------------------------------------------------------------
+| Route to remove the given Pattern.
+*/
+Route::delete('pattern/{pattern}', 'PatternController@remove');
+
+/*
+|--------------------------------------------------------------------------
 | PUT /pattern/status/{pattern}
 |--------------------------------------------------------------------------
 | Update the status of the Pattern.
@@ -39,9 +47,18 @@ Route::put('pattern/status/{pattern}', 'PatternController@status');
 |--------------------------------------------------------------------------
 | GET /pattern/exists/{pattern}
 |--------------------------------------------------------------------------
-|
+| Check if a Pattern with this name already exists.
 */
 Route::get('pattern/exists/{pattern}', 'PatternController@exists');
+
+/*
+|--------------------------------------------------------------------------
+| GET /pattern/preview/{pattern}
+|--------------------------------------------------------------------------
+| Get all all information for the preview screen.
+| Except the actual rendered preview, that will be loaded by an iframe.
+*/
+Route::get('pattern/preview/{pattern}', 'PatternController@preview');
 
 /*
 |--------------------------------------------------------------------------
@@ -53,19 +70,24 @@ Route::get('navi', 'NavigationController@get');
 
 /*
 |--------------------------------------------------------------------------
-| GET /{pattern}
+| GET /status-list
 |--------------------------------------------------------------------------
-| Get all all information for the preview screen.
-| Except the actual rendered preview, that will be loaded by an iframe.
+| Get a list with all Patterns grouped by their status.
 */
-Route::get('{pattern}', 'PatternController@preview');
+Route::get('status-list', 'StatusListController@get');
 
 /*
 |--------------------------------------------------------------------------
-| DELETE /{pattern}
+| GET /resources
 |--------------------------------------------------------------------------
-| Route to remove the given Pattern.
+| Get a list of all global resources.
 */
-Route::delete('{pattern}', 'PatternController@remove');
+Route::get('resources', 'ResourcesController@get');
 
-
+/*
+|--------------------------------------------------------------------------
+| POST /resources
+|--------------------------------------------------------------------------
+| Add a new global dependency.
+*/
+Route::post('resources', 'ResourcesController@store');

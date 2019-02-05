@@ -1,11 +1,11 @@
 <?php
 
 
-namespace Laratomics\Tests;
+namespace Tests;
 
 use Illuminate\Filesystem\Filesystem;
-use Laratomics\Providers\PatternServiceProvider;
-use Laratomics\WorkshopServiceProvider;
+use Oloid\Providers\PatternServiceProvider;
+use Oloid\WorkshopServiceProvider;
 use Orchestra\Testbench\TestCase;
 
 abstract class BaseTestCase extends TestCase

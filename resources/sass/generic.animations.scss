@@ -18,13 +18,13 @@ These are the only ones that are allowed.
 
 @keyframes slideIn {
 	
-	0% {		
+	0% {			
 		opacity: 0;
 		transform: scaleX(0.5) ()translateX(-1000px);
 
 	}
 
-	75% {
+	75% {		
 		opacity: 1;
 	}
 
@@ -46,17 +46,17 @@ These are the only ones that are allowed.
 
 @keyframes dropIn {
 	
-	0% {		
+	0% {				
 		opacity: 0;
 		transform: scaleY(0.5) ()translateY(-1000px);
 
 	}
 
-	75% {
+	75% {				
 		opacity: 1;
 	}
 
-	100% {		
+	100% {				
 		transform: scaleY(1) translateY(0px);
 	}
 

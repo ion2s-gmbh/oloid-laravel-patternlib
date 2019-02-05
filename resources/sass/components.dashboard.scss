@@ -5,15 +5,104 @@ These are the styles that are needed to render our welcome dashboard.
 
 // Dasboard Base --------- //
 
-.dashboard {
-  align-items: center;
-  display: flex;
-  grid-area: code / code / view / view; 
-  justify-content: center;
-  padding: var(--gap, $l-gap);
-}
+
 
 // Dasboard Content
+
+
+.dashboard-container {	
+		
+	max-height: 100%;
+	overflow: hidden; 
+	padding: $l-gap;
+	padding: var(--gap, $l-gap);	
+
+	
+	&.toReview {
+
+		grid-column: span 2;
+		
+		@include for-desktop-up {
+
+			grid-column: 3 / 4;
+
+		}		
+
+	}
+
+	&.rejected {
+
+		grid-column: span 2;
+
+		@include for-desktop-up {
+
+			grid-column: 4 / 5;
+			
+
+		}		
+
+	}
+
+}
+
+.dashboard-info {
+
+	display: block;
+	font-family: sans-serif;
+	font-size: 0.75rem;
+	padding: 0.5rem 0;
+
+}
+
+.dashboard-list {
+
+	height: 100%;
+	list-style-type: none;
+	margin-left: -$l-gap;	
+	min-width: 300px;
+	overflow: auto;
+
+
+	&Item > a {
+		
+		background: transparent;
+		display: block;
+		padding: $l-gap;
+		padding: var(--gap, $l-gap);
+
+		&:hover {
+
+			background: $c-brandDark;
+			background: var(--brandDark, $c-brandDark);	
+			color: $c-positive;					
+			color: var(--positive,$c-positive);					
+
+		}		
+
+	}	
+
+	.rejected & {
+
+		.dashboard-listItem > a:hover {
+			color: $c-alert;					
+			color: var(--alert,$c-alert);
+		}
+
+	}		
+
+}
+
+.dashboard-list--empty {
+	margin-left: -$l-gap;		
+	padding: $l-gap;
+	padding: var(--gap, $l-gap);
+
+	span {
+		opacity: 0.6;
+	}
+
+}
+
 
 
 

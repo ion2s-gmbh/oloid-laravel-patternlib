@@ -1,6 +1,6 @@
 <?php
 
-namespace Laratomics\Console\Commands;
+namespace Oloid\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
@@ -19,7 +19,7 @@ class CleanCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Removes the laratomics folder and all patterns from your project.';
+    protected $description = 'Removes the package\'s base folder and all patterns from your project.';
 
     /**
      * Create a new command instance.
@@ -44,6 +44,8 @@ class CleanCommand extends Command
         if ($sure) {
             return File::deleteDirectory($path);
         }
+
+        File::makeDirectory(config('workshop.patternPath'), 0755, true);
 
         return -1;
     }

@@ -7,11 +7,14 @@
 @import 'generic.shared';
 @import 'generic.animations';
 
+@import 'elements.dropdowns';
 @import 'elements.links';
 @import 'elements.buttons';
 @import 'elements.forms';
 @import 'elements.headings';
 @import 'elements.lists';
+@import 'elements.tooltips';
+@import 'elements.warnings';
 
 @import 'components.header';
 @import 'components.dashboard';
@@ -19,14 +22,15 @@
 @import 'components.previewWindow';
 @import 'components.projectMenue';
 @import 'components.confirmationWindow';
+@import 'components.shortcuts';
 @import 'components.footer';
 
 
-// @import '~prismjs/themes/prism.css';
 
-
-.u-center {
-  text-align: center;
+.popUp {
+	align-items: center;
+	display: flex;
+	justify-content: center;
 }
 
 //--------------------------------------------------------//

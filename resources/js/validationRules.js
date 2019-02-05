@@ -1,5 +1,5 @@
 import {Validator} from 'vee-validate';
-import {API} from './httpClient';
+import {API} from './restClient';
 import LOG from './logger';
 
 /**
@@ -14,7 +14,7 @@ Validator.extend('uniquePattern', {
    */
   validate: async (patternName) => {
     try {
-      let response = await API.get(`pattern/exists/${patternName}`);
+      const response = await API.get(`pattern/exists/${patternName}`);
       return {
         valid: !response.data.data.exists,
         data: {

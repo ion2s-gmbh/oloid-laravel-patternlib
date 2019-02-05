@@ -1,8 +1,9 @@
 <?php
 
-namespace Laratomics\Http\Resources;
+namespace Oloid\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Oloid\Services\PatternStatusService;
 
 class PatternResource extends JsonResource
 {
@@ -14,6 +15,11 @@ class PatternResource extends JsonResource
      */
     public function toArray($request)
     {
+        /*
+         * Get the PatternStatusService singleton from the IoC container.
+         */
+        $patternStatusService = app(PatternStatusService::class);
+
         return [
             'data' => [
                 'name' => $this->name,
@@ -23,28 +29,53 @@ class PatternResource extends JsonResource
                 'usage' => $this->getUsage(),
                 'template' => $this->template,
                 'html' => $this->html,
-                'sass' => $this->sass
+                'sass' => $this->sass,
+                'values' => $this->values,
+                'subPatterns' => $patternStatusService->getPatterns()
             ]
         ];
     }
 
     /**
-     * Get the Pattern's type.
+     * Generate the usage string.
      *
-     * @return bool|string
+     * @return string
      */
-    private function getType()
-    {
-        $explode = explode('.', $this->name);
-        return $type = substr(array_first($explode), 0, -1);
-    }
-
     private function getUsage()
     {
         $explode = explode('.', $this->name);
         array_shift($explode);
-        return implode('.', $explode);
+        $name = implode('.', $explode);
+        $type = $this->getType();
+
+        $valuesString = $this->getValuesAsString($this->metadata->values);
+
+        return "@{$type}('{$name}', {$valuesString})";
     }
 
+    /**
+     * Convert the metadata values to an array string representation.
+     *
+     * @return string
+     */
+    private function getValuesAsString($values): string
+    {
+        $argsString = '[';
+        $args = [];
 
+        if (is_array($values)) {
+            foreach ($values as $key => $value) {
+                if (is_array($value)) {
+                    $value = $this->getValuesAsString($value);
+                    $args[] = "'{$key}' => {$value}";
+                } else {
+                    $args[] = "'{$key}' => '{$value}'";
+                }
+            }
+        }
+
+        $argsString .= implode(', ', $args);
+        $argsString .= ']';
+        return $argsString;
+    }
 }

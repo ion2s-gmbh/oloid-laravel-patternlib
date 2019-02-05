@@ -4,12 +4,12 @@
 
     <div class="status-current"
 
-         @click="isActive = !isActive"
+        @click="toggleStatus"
 
-         :title="title"
+        v-tooltip.top-center="`${title}`"
 
-         :class="{accepted: isAccepted,
-	          toCheck: isToCheck,
+        :class="{accepted: isDone,
+	          toCheck: isReview,
 	          rejected: isRejected,
 	          wip: isTodo}">
 
@@ -19,16 +19,25 @@
 
       <ul class="status-list">
 
-        <li class="status-option toCheck" @click="changeStatus('review')">
-          Unreviewed
+        <li class="status-optionWrap" @click="changeStatus('review')">
+          <span class="status-option toCheck">
+            Review
+          </span>
+          
         </li>
 
-        <li class="status-option rejected" @click="changeStatus('rejected')">
-          Rejected
+        <li class="status-optionWrap" @click="changeStatus('rejected')">
+          <span class="status-option rejected">
+            Rejected  
+          </span>
+          
         </li>
 
-        <li class="status-option accepted" @click="changeStatus('done')">
-          Accepted
+        <li class="status-optionWrap" @click="changeStatus('done')">
+          <span class="status-option accepted">
+            Accepted  
+          </span>
+          
         </li>
 
       </ul>
@@ -49,7 +58,7 @@
 
     data() {
       return {
-        isActive: false
+        'dropdownName': 'StatusBar::dropdown-status'
       }
     },
 
@@ -58,11 +67,11 @@
         return this.status === 'todo';
       },
 
-      isToCheck: function () {
+      isReview: function () {
         return this.status === 'review';
       },
 
-      isAccepted: function () {
+      isDone: function () {
         return this.status === 'done';
       },
 
@@ -72,17 +81,29 @@
 
       title: function () {
         return `status: ${this.status}`;
+      },
+
+      isActive: function () {
+        return this.$store.getters.activeDropdown === this.dropdownName;
       }
     },
 
     methods: {
+
+      /**
+       * Toggle the status dropdown.
+       */
+      toggleStatus: function () {
+        this.$store.dispatch('toggleDropdown', this.dropdownName);
+      },
+
       /**
        * Change the status of the Pattern.
        * @param status
        */
       changeStatus: function (status) {
         this.$emit('update-status', status);
-        this.isActive = false;
+        this.$store.dispatch('toggleDropdown', this.dropdownName);
       }
     }
   }

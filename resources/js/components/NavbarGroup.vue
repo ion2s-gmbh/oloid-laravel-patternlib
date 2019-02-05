@@ -2,13 +2,13 @@
   <ul class="patterns--sub">
 
     <li class="pattern" v-for="item in items"
-        :class="{ active: $store.state.navi.activeSub.includes(item.path) }">
-      <navbar-link v-if="item.items.length === 0"
+        :class="{ active: $store.getters.isActiveSubmenu(item.path) }">
+      <navbar-link v-if="!item.items.length"
                    :parent="name"
                    :item="item">
       </navbar-link>
 
-      <span v-if="item.items.length > 0"
+      <span v-if="item.items.length"
             @click="toggleSubMenu(item.path)">{{ item.name }}
         <i class="fas fa-caret-down"></i>
       </span>
@@ -43,14 +43,12 @@
        * @param subMenu
        */
       toggleSubMenu: function (subMenu) {
-        if (this.$store.state.navi.activeSub.includes(subMenu)) {
+        if (this.$store.getters.isActiveSubmenu(subMenu)) {
           let pathComponents = subMenu.split('.');
           pathComponents.pop();
           subMenu = pathComponents.join('.');
-          this.$store.commit('toggleSubMenu', subMenu);
-        } else {
-          this.$store.commit('toggleSubMenu', subMenu);
         }
+        this.$store.commit('toggleSubMenu', subMenu);
       }
     }
   }

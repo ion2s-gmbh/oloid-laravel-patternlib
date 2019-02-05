@@ -1,13 +1,17 @@
 {
-  "name": "ion2s/laratomics-workshop",
+  "name": "ion2s/oloid-laravel-patternlib",
   "type": "library",
-  "description": "Package to add laratomics powers to your Laravel application",
-  "version": "0.4.0",
+  "description": "Package to add patternlib powers to your Laravel application",
+  "keywords": ["laravel","patternlib","blade"],
   "license": "MIT",
   "authors": [
     {
       "name": "Sebastian Baum",
       "email": "sebastian.baum@ion2s.com"
+    },
+    {
+      "name": "Marek Gebka",
+      "email": "marek.gebka@ion2s.com"
     }
   ],
   "require": {
@@ -27,19 +31,19 @@
       "src/helpers.php"
     ],
     "psr-4": {
-      "Laratomics\\": "src/"
+      "Oloid\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Laratomics\\Tests\\": "tests/"
+      "Tests\\": "tests/"
     }
   },
   "extra": {
     "laravel": {
       "providers": [
-        "Laratomics\\WorkshopServiceProvider",
-        "Laratomics\\Providers\\PatternServiceProvider"
+        "Oloid\\WorkshopServiceProvider",
+        "Oloid\\Providers\\PatternServiceProvider"
       ]
     }
   },

@@ -1,16 +1,15 @@
 <?php
 
-namespace Laratomics\Http\Controllers;
+namespace Oloid\Http\Controllers;
 
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Laratomics\Exceptions\RenderingException;
-use Laratomics\Http\Requests\CreatePattern;
-use Laratomics\Http\Requests\UpdatePattern;
-use Laratomics\Http\Resources\PatternResource;
-use Laratomics\Services\PatternService;
+use Oloid\Http\Requests\CreatePattern;
+use Oloid\Http\Requests\UpdatePattern;
+use Oloid\Http\Resources\PatternResource;
+use Oloid\Services\PatternService;
 
 class PatternController extends Controller
 {
@@ -48,12 +47,11 @@ class PatternController extends Controller
      *
      * @param string $pattern
      * @return JsonResponse
-     * @throws RenderingException
      */
     public function preview(string $pattern): JsonResponse
     {
         try {
-            $patternInstance = $this->patternService->loadPattern($pattern);
+            $patternInstance = $this->patternService->loadPatternWithPreview($pattern);
         } catch (FileNotFoundException $exception) {
             return JsonResponse::create([], JsonResponse::HTTP_NOT_FOUND);
         }
@@ -66,11 +64,10 @@ class PatternController extends Controller
      * @param string $pattern
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @throws FileNotFoundException
-     * @throws RenderingException
      */
     public function getPreview(string $pattern)
     {
-        $pattern = $this->patternService->loadPattern($pattern);
+        $pattern = $this->patternService->loadPatternWithPreview($pattern);
         return view('workshop::preview', [
             'preview' => $pattern->html
         ]);
@@ -81,7 +78,6 @@ class PatternController extends Controller
      *
      * @param string $pattern
      * @return JsonResponse
-     * @throws FileNotFoundException
      */
     public function remove(string $pattern): JsonResponse
     {

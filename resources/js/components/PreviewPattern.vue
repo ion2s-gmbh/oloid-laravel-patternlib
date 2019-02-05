@@ -8,33 +8,49 @@
 
         <div class="code-header">
 
-          <span v-if="!isToggled" class="code-type a-fadeIn">HTML</span>
+          <div class="code-lang">
 
-          <span v-if="isToggled" class="code-type a-fadeIn">Blade</span>
+            <span v-if="!isToggled" class="code-type a-fadeIn">HTML</span>
 
-          <label class="toggle-wrap">
+            <span v-if="isToggled" class="code-type a-fadeIn">Blade</span>
 
-            <input type="checkbox" class="toggle" v-model="isToggled"/>
+            <label class="toggle-wrap" v-tooltip.top-center="'Switch between HTML and Blade'">
 
-            <div></div>
+              <input type="checkbox" class="toggle" v-model="isToggled" />
 
-            <span>Show Blade</span>
+              <div></div>
 
-          </label>
+              <span>Show Blade</span>
+
+            </label>
+
+          </div>
+
+          <button class="toggle--more clipboard"
+                  v-tooltip.bottom-center="usageTooltip"
+                  data-clipboard-target="#usage"
+                  @mouseleave="resetTooltip">
+
+            <i class="far fa-clipboard"></i>            
+
+          </button> 
+
+          <!-- Hidden usage for copy to clipboard -->
+          <span id="usage" class="u-transparent">{{ pattern.usage }}</span>         
 
         </div>
 
         <div class="code-tabs">
 
-          <div class="tab a-fadeIn" role="tabpanel" aria-labelledby="markup-view" v-if="isToggled" >
+          <div class="tab a-fadeIn" role="tabpanel" aria-labelledby="markup-view" v-show="isToggled" >
 
-            <pre><code class="language-html">{{ pattern.template }}</code></pre>
+            <pre><code class="code-template language-html">{{ pattern.template }}</code></pre>
 
           </div>
 
-          <div class="tab a-fadeIn" id="html-view" role="tabpanel" aria-labelledby="html-view" v-if="!isToggled" >
+          <div class="tab a-fadeIn" id="html-view" role="tabpanel" aria-labelledby="html-view" v-show="!isToggled" >
 
-            <pre><code class="language-html">{{ pattern.html }}</code></pre>
+            <pre><code class="code-html language-html">{{ pattern.html }}</code></pre>
 
           </div>
 
@@ -54,7 +70,7 @@
 
           <div class="tab" id="markup-view" role="tabpanel" aria-labelledby="markup-view">
 
-            <pre><code>{{ pattern.sass }}</code></pre>
+            <pre><code class="code-sass language-css">{{ pattern.sass }}</code></pre>
 
           </div>
 
@@ -74,16 +90,66 @@
 
           <status-bar
                   @update-status="updateStatus"
+                  v-on-clickaway="resetDropdowns"
                   :status="pattern.status">
           </status-bar>
 
-          <button class="toggle--more" @click="showDescription = !showDescription" :class="{ active: showDescription }" title="Show Pattern description">
+          <button class="toggle--more" @click="showDescription = !showDescription" :class="{ active: showDescription }" v-tooltip.top-center="'Show pattern description'">
 
             <i class="fas fa-align-left"></i>
 
-          </button>          
+          </button>
+
+          <a class="toggle--more"
+             :href="`workshop/preview/${pattern.name}`"
+             target="_blank"
+             v-tooltip.top-center="'Open in fullscreen'">
+
+            <i class="fas fa-external-link-alt"></i>
+
+          </a>
+
+          
 
         </div>
+
+        <template v-if="totalRejectedCount">
+          
+          <div class="warning">
+
+            <p class="warning-message">
+              This item contains rejected patterns: 
+            </p>
+
+            <button class="toggle--more toggle--showIncludes"
+                    @click.prevent.stop="toggleWarningIncludes"
+                    v-tooltip.top-center="'Show components that cause this message'">
+
+              <span v-if="!showWarningIncludes" class="a-slideIn">Show</span>
+
+              <span v-if="showWarningIncludes" class="a-slideIn">Hide</span>
+
+            </button>
+
+            <div class="warning-includes a-dropIn" v-if="showWarningIncludes">
+
+              <ul class="warning-list">
+
+                <li v-for="rejected in pattern.subPatterns.rejected" class="warning-listItemWrap">
+
+                  <router-link :to="{ name: 'preview', params: { patternName: `${rejected}` }}"  class="warning-listItem">
+                    {{ rejected }}
+                  </router-link>
+
+                </li>
+
+              </ul>
+
+            </div>
+
+          </div>
+
+        </template>
 
 
         <template v-if="showDescription">
@@ -102,6 +168,7 @@
               </span>
 
             </label>
+
 
             <textarea id="description"
                       class="form-control"
@@ -134,7 +201,9 @@
 
           <!-- MENUE TOGGLE -->
 
-          <button class="toggle--more" @click="showOptions = !showOptions" :class="{ active: showOptions }">
+          <button class="toggle--more"
+                  @click.prevent.stop="toggleOptions"
+                  :class="{ active: showOptions }">
             
             <i class="fas fa-ellipsis-v"></i>
             
@@ -142,11 +211,11 @@
 
           <!-- ACTUAL MENUE -->
 
-          <div class="preview-options a-dropIn" v-if="showOptions">
+          <div class="preview-menu a-dropIn" v-if="showOptions">
 
-            <ul>              
+            <ul class="preview-list">              
 
-              <li>
+              <li class="preview-optionWrap">
 
                 <router-link :to="{ name: 'rename', params: { pattern: `${pattern.name}` } }" class="preview-option">
 
@@ -158,9 +227,9 @@
 
               </li>
 
-              <li>
+              <li class="preview-optionWrap">
 
-                <button class="preview-option" @click="confirmDelete">
+                <button @click="confirmDelete" class="preview-option">
 
                   <span>                    
                     Delete
@@ -180,14 +249,15 @@
 
       <div class="preview-inner">
 
-        <iframe height="1500" width="1100"
-                frameBorder="0"
+        <iframe frameBorder="0"
                 :src="`workshop/preview/${pattern.name}`"></iframe>
 
 
-      </div>
+      </div>      
 
     </div>
+
+    
 
     <confirmation-window
             v-if="showDeleteConfirm"
@@ -195,56 +265,165 @@
             @confirm-no="showDeleteConfirm = false">
       Do you really want to delete '{{ pattern.name }}'?
     </confirmation-window>
+
+    <shortcuts v-if="showKeyMap"
+               :globalKeymap="globalShortcuts"
+               :pageKeymap="previewShortcuts">
+    </shortcuts>
+
   </div>
 
 </template>
 
 <script>
-  import {API} from '../httpClient';
-  import LOG from '../logger';
   import StatusBar from './StatusBar';
-  import ConfirmationWindow from "./ConfirmationWindow";
+  import ConfirmationWindow from './ConfirmationWindow';
+  import Shortcuts from './Shortcuts'
+  import {API} from '../restClient';
+  import LOG from '../logger';
   import marked from 'marked';
+  import ClipboardJS from 'clipboard';
+  import {globalShortcuts, previewShortcuts, showKeyMap} from '../shortcuts';
+  import Prism from 'prismjs';
+  import {keyPressed} from "../helpers";
+  import {mixin as clickaway} from 'vue-clickaway'
 
   export default {
     name: "PreviewPattern",
 
+    mixins: [clickaway],
+
     components: {
       ConfirmationWindow,
-      StatusBar
+      StatusBar,
+      Shortcuts
     },
+
+    props: [
+      'patternName'
+    ],
 
     data() {
       return {
         pattern: {
-          name: this.$route.params.pattern,
-          description: ''
+          name: this.patternName,
+          description: '',
+          subPatterns: {
+            todo: [],
+            review: [],
+            rejected: [],
+            done: []
+          }
         },
         loading: false,
         isToggled: false,
-        showOptions: false,
         showDescription: false,
         showDeleteConfirm: false,
         editModeDescription: false,
-        oldDescription: ''
+        oldDescription: '',
+        usageTooltip: {
+          content: 'Copy usage to clipboard',
+          hideOnTargetClick: false
+        },
+        globalShortcuts,
+        previewShortcuts,
+        optionsDropdown: 'PreviewPattern::dropdown-options',
+        warningIncludesDropdown: 'PreviewPattern::dropdown-warning-includes',
+        globalKeyListener: null
       }
     },
 
     computed: {
+      /**
+       * Imported computed properties
+       */
+      showKeyMap,
 
       /**
        * Parse the given description markdown to html.
        */
       markdownDescription: function () {
         return marked(this.pattern.description);
+      },
+
+      /**
+       * Determine if the options dropdown is active.
+       */
+      showOptions: function () {
+        return this.$store.getters.activeDropdown === this.optionsDropdown;
+      },
+
+      /**
+       * Get the total of used Patterns with status 'todo' in the current Pattern.
+       */
+      totalTodoCount: function () {
+        return this.pattern.subPatterns.todo.length;
+      },
+
+      /**
+       * Get the total of used Patterns with status 'review' in the current Pattern.
+       */
+      totalReviewCount: function () {
+        return this.pattern.subPatterns.review.length;
+      },
+
+      /**
+       * Get the total of used Patterns with status 'rejected' in the current Pattern.
+       */
+      totalRejectedCount: function () {
+        return this.pattern.subPatterns.rejected.length;
+      },
+
+      /**
+       * Get the total of used Patterns with status 'done' in the current Pattern.
+       */
+      totalDoneCount: function () {
+        return this.pattern.subPatterns.done.length;
+      },
+
+      /**
+       * Determine if the warning includes dropdown is active.
+       */
+      showWarningIncludes: function () {
+        return this.$store.getters.activeDropdown === this.warningIncludesDropdown;
       }
     },
 
     watch: {
-      '$route': 'fetchPattern',
+      'pattern.sass': function (value) {
+          const codeBox = document.querySelector('.code-sass');
+        this.resetCodeBox(value, codeBox);
+      },
+      'pattern.html': function (value) {
+        const codeBox = document.querySelector('.code-html');
+        this.resetCodeBox(value, codeBox);
+      },
+      'pattern.template': function (value) {
+        const codeBox = document.querySelector('.code-template');
+        this.resetCodeBox(value, codeBox);
+      }
     },
 
     methods: {
+
+      /**
+       * Reset the textContent of the highlighted code element.
+       * In the next tick, this code is highlighted with Prismjs.
+       */
+      resetCodeBox: function (value, codeBox) {
+        codeBox.textContent = value;
+        this.$nextTick(() => {
+          Prism.highlightElement(codeBox);
+        });
+      },
+
+      /**
+       * Reset the tooltip to the initial content.
+       * @todo Improve this in the future.
+       */
+      resetTooltip: function () {
+        this.usageTooltip.content = 'Copy usage to clipboard';
+      },
 
       /**
        * Navigate to the rename pattern view. This is triggered by a shortcut.
@@ -252,7 +431,7 @@
       renamePattern: function () {
         this.$router.push({
           name: 'rename',
-          params: { pattern: this.$route.params.pattern }
+          params: { pattern: this.pattern.name }
         })
       },
 
@@ -278,7 +457,7 @@
       updatePattern: async function () {
         this.editModeDescription = false;
         try {
-          let response = await API.put(`pattern/${this.pattern.name}`, {
+          const response = await API.put(`pattern/${this.pattern.name}`, {
             description: this.pattern.description
           });
         } catch (e) {
@@ -293,11 +472,11 @@
       /**
        * Fetch the Pattern's data from the API.
        */
-      fetchPattern: async function () {
+      fetchPattern: async function (patternName) {
         // set to true, if we have to show a loading spinner
         this.loading = true;
         try {
-          let response = await API.get(this.$route.params.pattern);
+          const response = await API.get(`pattern/preview/${patternName}`);
           this.pattern = response.data.data;
           this.loading = false;
         } catch (e) {
@@ -310,7 +489,7 @@
        */
       updateStatus: async function (status) {
         try {
-          let response = await API.put(`pattern/status/${this.pattern.name}`, {
+          const response = await API.put(`pattern/status/${this.pattern.name}`, {
             status
           });
           this.pattern.status = status;
@@ -332,33 +511,82 @@
        */
       deletePattern: async function (pattern) {
         try {
-          let response = await API.delete(pattern);
+          const response = await API.delete(`pattern/${pattern}`);
           this.$store.commit('reloadNavi', true);
           this.$router.push('/');
         } catch (e) {
           LOG.error(e);
         }
+      },
+
+      /**
+       * Toggle the options dropdown
+       */
+      toggleOptions: function () {
+        this.$store.dispatch('toggleDropdown', this.optionsDropdown);
+      },
+
+      /**
+       * Reset dropdowns if clicked somewhere else.
+       */
+      resetDropdowns: function () {
+        this.$store.dispatch('resetDropdowns');
+      },
+
+      /**
+       * Toggle the warning includes dropdown.
+       */
+      toggleWarningIncludes: function () {
+        this.$store.dispatch('toggleDropdown', this.warningIncludesDropdown);
       }
     },
 
-    created() {
-      this.fetchPattern();
+    /**
+     * Fetch Pattern on route change.
+     * @param to
+     * @param from
+     * @param next
+     */
+    beforeRouteUpdate (to, from, next) {
+      this.fetchPattern(to.params.patternName);
+      this.$store.dispatch('resetMenu');
+      next();
     },
 
+    /**
+     * Fetch Pattern on created hook.
+     */
+    created() {
+      this.fetchPattern(this.patternName);
+    },
+
+    /**
+     * Mounted hook, adds global event listener.
+     */
     mounted() {
 
-      /*
+      /**
+       * Clipboard initialization.
+       */
+      let clipboard = new ClipboardJS('.clipboard');
+      clipboard.on('success', (e) => {
+        this.usageTooltip.content = 'Copied to clipboard';
+      });
+
+      /**
        * Global shortcuts
        */
-      window.addEventListener('keydown', (event) => {
+      this.globalKeyListener = (event) => {
 
         const DEL = 46;
         const E = 69;
 
+        const key = keyPressed(event);
+
         /*
          * Trigger the delete confirmation by Ctrl+DEL
          */
-        if (event.ctrlKey && event.keyCode === DEL) {
+        if (event.ctrlKey && key === DEL) {
           event.preventDefault();
           this.confirmDelete();
         }
@@ -366,11 +594,20 @@
         /*
          * Trigger renaming of the Pattern by Ctrl+E
          */
-        if (event.ctrlKey && event.keyCode === E) {
+        if (event.ctrlKey && key === E) {
           event.preventDefault();
           this.renamePattern();
         }
-      });
+      };
+
+      window.addEventListener('keydown', this.globalKeyListener);
+    },
+
+    /**
+     * BeforeDestory hook, removes the global event listener.
+     */
+    beforeDestroy() {
+      window.removeEventListener('keydown', this.globalKeyListener);
     }
   }
 </script>

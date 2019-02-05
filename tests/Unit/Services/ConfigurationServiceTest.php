@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\Unit\Services;
+namespace Unit\Services;
 
 use Illuminate\Support\Str;
-use Laratomics\Services\ConfigurationService;
-use Laratomics\Tests\BaseTestCase;
-use Laratomics\Tests\Traits\TestStubs;
+use Oloid\Services\ConfigurationService;
+use Tests\BaseTestCase;
+use Tests\Traits\TestStubs;
 
 class ConfigurationServiceTest extends BaseTestCase
 {
@@ -33,9 +33,9 @@ class ConfigurationServiceTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Services\ConfigurationService
+     * @covers \Oloid\Services\ConfigurationService
      */
-    public function it_should_add_extra_laratomics_path_to_view_config()
+    public function it_should_add_extra_path_to_view_config()
     {
         // arrange
         $resourcePath = $this->getResourcePathString();
@@ -52,9 +52,9 @@ class ConfigurationServiceTest extends BaseTestCase
 
     /**
      * @test
-     * @covers \Laratomics\Services\ConfigurationService
+     * @covers \Oloid\Services\ConfigurationService
      */
-    public function it_should_add_extra_laratomics_path_to_view_config_only_once()
+    public function it_should_add_extra_path_to_view_config_only_once()
     {
         // arrange
         $resourcePath = $this->getResourcePathString();

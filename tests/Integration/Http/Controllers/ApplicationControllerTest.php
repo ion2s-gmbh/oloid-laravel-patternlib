@@ -1,14 +1,14 @@
 <?php
 
-namespace Tests\Integration\Http\Controllers;
+namespace Integration\Http\Controllers;
 
-use Laratomics\Tests\BaseTestCase;
+use Tests\BaseTestCase;
 
 class ApplicationControllerTest extends BaseTestCase
 {
     /**
      * @test
-     * @covers \Laratomics\Http\Controllers\ApplicationController
+     * @covers \Oloid\Http\Controllers\ApplicationController
      */
     public function it_should_get_info_about_the_app_name()
     {

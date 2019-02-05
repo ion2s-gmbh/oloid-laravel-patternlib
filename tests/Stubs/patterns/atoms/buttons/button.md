@@ -1,5 +1,5 @@
 ---
-status: TODO
+status: todo
 values:
     text: Click
 ---

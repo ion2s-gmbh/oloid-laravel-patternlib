@@ -1,8 +1,8 @@
 <template>
 
-  <div class="dashboard">
+  <div class="fullscreen">
 
-    <form method="post" class="form form--create">
+    <form method="post" class="form form--fullscreen">
 
       <div class="form-group">
 
@@ -54,11 +54,13 @@
 
       <div class="form-group form-group--end">
 
-        <router-link :to="{ name: 'dashboard' }">
+        <button type="button"
+                class="btn btn--cancel "
+                @click.prevent="cancel">
           <span>Cancel</span>
-        </router-link>
+        </button>
 
-        <button class="btn btn--primary btn--sm"
+        <button class="btn btn--primary"
                 @click.prevent="save">
           <span>Create pattern</span>
         </button>
@@ -68,21 +70,41 @@
 
     </form>
 
+    <shortcuts v-if="showKeyMap"
+               :globalKeymap="globalShortcuts"
+               :pageKeymap="createShortcuts">
+    </shortcuts>
+
   </div>
 
 </template>
 
 <script>
-  import {API} from '../httpClient';
+  import {API} from '../restClient';
   import LOG from '../logger';
+  import Shortcuts from './Shortcuts';
+  import {createShortcuts, globalShortcuts, showKeyMap} from '../shortcuts';
 
   export default {
     name: "CreatePattern",
 
+    components: {
+      Shortcuts
+    },
+
     data() {
       return {
-        pattern: {}
+        pattern: {},
+        globalShortcuts,
+        createShortcuts
       }
+    },
+
+    computed: {
+      /**
+       * Imported computed properties
+       */
+      showKeyMap
     },
 
     methods: {
@@ -91,9 +113,7 @@
        * Cancel the create action by navigating to the dashboard.
        */
       cancel: function () {
-        this.$router.push({
-          name: 'dashboard'
-        });
+        this.$router.back();
       },
 
       /**
@@ -103,29 +123,26 @@
         /*
          * Validate the form
          */
-        let valid = false;
         try {
-          valid = await this.$validator.validate();
-        } catch (e) {
-          LOG.error(e);
-        }
+          const valid = await this.$validator.validate();
 
-        /*
-         * API request
-         */
-        if (valid) {
-          try {
-            let response = await API.post('pattern', {
+          /*
+           * API request
+           */
+          if (valid) {
+            const response = await API.post('pattern', {
               'name': this.pattern.name,
               'description': this.pattern.description
             });
             if (response.status === 201) {
               this.$store.commit('reloadNavi', true);
               this.$router.push('/preview/' + this.pattern.name);
+            } else {
+              alert('Pattern could not be saved!');
             }
-          } catch (e) {
-            LOG.error(e.status);
           }
+        } catch (e) {
+          LOG.error(e);
         }
       }
     }

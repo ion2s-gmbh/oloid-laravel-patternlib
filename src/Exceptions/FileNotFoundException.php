@@ -1,6 +1,6 @@
 <?php
 
-namespace Laratomics\Exceptions;
+namespace Oloid\Exceptions;
 
 use Exception;
 

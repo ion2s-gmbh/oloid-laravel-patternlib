@@ -1,6 +1,8 @@
 
 // Code Window Base --------- //
 
+@import '~prismjs/themes/prism-okaidia.css';
+
 .code {
 
 	display: flex;	
@@ -24,21 +26,25 @@
 // Content
 
 .code-el {
-
-	@include size(100%);
+	
 	display: flex;	
 	flex-direction: column;
+	flex: 1 1 0;
 	margin-bottom: 2rem;
+	width: 100%;
 
 }
 
 .code-lang {
+	align-content: center;
+	display: flex;
 	margin: 0;
 }
 
 .code-header {
 	align-items: center;
 	display: flex;
+	justify-content: space-between;
 	padding: 0 0 1rem 0;
 	position: relative;
 
@@ -71,10 +77,19 @@
 
 	.tab {
 		@include size(100%);
+		border: 0;
+		display: flex;
 		left: 0;
+		padding: 0;
 		position: absolute;	
 		top: 0;
 	}
 
+}
+
+pre[class*="language-"] {
+  background: var(--brandMain, $c-brandMain);
+  padding: 0;
+  width: 100%;
 }
 

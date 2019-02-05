@@ -1,7 +1,7 @@
 <template>
-  <div class="dashboard">
+  <div class="fullscreen">
 
-    <form method="post" class="form form--create">
+    <form method="post" class="form form--fullscreen">
 
       <div class="form-group">
 
@@ -29,11 +29,13 @@
 
       <div class="form-group form-group--end">
 
-        <router-link :to="{ name: 'preview', params: { pattern: currentName }}">
+        <button type="button"
+                class="btn btn--cancel "
+                @click.prevent="cancel">
           <span>Cancel</span>
-        </router-link>
+        </button>
 
-        <button @click.prevent="save" class="btn btn--primary btn--sm">
+        <button @click.prevent="save" class="btn btn--primary">
           <span>Save</span>
         </button>
 
@@ -42,23 +44,47 @@
 
     </form>
 
+    <shortcuts v-if="showKeyMap"
+               :globalKeymap="globalShortcuts"
+               :pageKeymap="updateShortcuts">
+    </shortcuts>
+
   </div>
 </template>
 
 <script>
   import LOG from '../logger';
-  import {API} from '../httpClient';
+  import {API} from '../restClient';
+  import Shortcuts from './Shortcuts'
+  import {globalShortcuts, showKeyMap, updateShortcuts} from "../shortcuts";
 
   export default {
     name: "UpdatePattern",
 
+    components: {
+      Shortcuts
+    },
+
+    props: [
+      'patternName'
+    ],
+
     data() {
       return {
         pattern: {
-          name: this.$route.params.pattern
+          name: this.patternName
         },
-        currentName: this.$route.params.pattern
+        currentName: this.patternName,
+        globalShortcuts,
+        updateShortcuts
       }
+    },
+
+    computed: {
+      /**
+       * Imported computed properties
+       */
+      showKeyMap
     },
 
     methods: {
@@ -67,10 +93,7 @@
        * Cancel the renaming of the pattern by navigating back to the preview page.
        */
       cancel: function () {
-        this.$router.push({
-          name: 'preview',
-          params: { pattern: this.currentName }
-        });
+        this.$router.back();
       },
 
       /**
@@ -81,27 +104,25 @@
         /*
          * Validate the name
          */
-        let valid = false;
         try {
-          valid = await this.$validator.validate();
-        } catch (e) {
-          LOG.error(e);
-        }
+          const valid = await this.$validator.validate();
 
-        if (valid) {
-          try {
-            let response = await API.put(`pattern/${this.currentName}`, {
+          /*
+           * API request
+           */
+          if (valid) {
+            const response = await API.put(`pattern/${this.currentName}`, {
               name: this.pattern.name
             });
 
             this.$store.commit('reloadNavi', true);
             this.$router.push({
               name: 'preview',
-              params: { pattern: this.pattern.name }
+              params: {patternName: this.pattern.name}
             });
-          } catch (e) {
-            LOG.error(e);
           }
+        } catch (e) {
+          LOG.error(e);
         }
       }
     }

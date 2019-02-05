@@ -12,7 +12,7 @@
 
     </section>
 
-    <button class="toggle--more has-tooltip shortcuts">
+    <button class="toggle--more has-tooltip shortcuts" v-tooltip.top-center="'Show keyboard shortcuts'">
       <i class="fas fa-keyboard"
        @click="toggleKeyMap">
       </i>

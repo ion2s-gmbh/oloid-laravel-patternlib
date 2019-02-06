@@ -42,7 +42,7 @@
       toggleMainMenu: function (menu) {
 
         if (this.$store.getters.isActiveMainMenu(menu)) {
-          this.$store.commit('resetMainMenu');
+          this.$store.commit('resetMenu');
         } else {
           this.$store.commit('toggleMainMenu', menu);
         }

@@ -19,7 +19,7 @@ return [
     | This is the base path where all package specific files and folders are
     | stored.
     */
-    'basePath' => resource_path(env('WORKSHOP_BASE_PATH', 'patternlib')),
+    'basePath' => resource_path(env('WORKSHOP_BASE_PATH', 'views')),
 
     /*
     |--------------------------------------------------------------------------
@@ -28,7 +28,7 @@ return [
     | Here you configure the path where your patterns are stored. This should be
     | a subdirectory of the package's basePath.
     */
-    'patternPath' => resource_path(env('WORKSHOP_PATTERN_PATH', 'patternlib/patterns')),
+    'patternPath' => resource_path(env('WORKSHOP_PATTERN_PATH', 'views/patterns')),
 
     /*
     |--------------------------------------------------------------------------

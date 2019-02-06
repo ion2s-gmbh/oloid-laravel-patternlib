@@ -4,7 +4,7 @@
 import 'es6-promise/auto'
 import Vue from 'vue';
 import router from './router';
-import store from './store';
+import store from './store/store';
 import VeeValidate from 'vee-validate';
 import VTooltip from 'v-tooltip'
 import './validationRules';

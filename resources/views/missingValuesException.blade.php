@@ -4,25 +4,23 @@
 
         <!-- Styles -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
-        @include('workshop::resources')
 
-        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
-        <script src="{{ asset('js/app.js') }}"></script>
+        <!-- Styles -->
+        <link href='{{ asset('vendor/workshop/css/app.css') }}' rel='stylesheet' type='text/css'>
 
         <title>Workshop - Error</title>
     </head>
 
     <body>
         <h1>Missing values in pattern</h1>
-        <p><b>{{ $message }}</b></p>
+        <p class="error">{{ $message }}</p>
         <p>
             You can define used variables in pattern templates in the corresponding markdown file.
             Use the frontmatter part to define a <code>values</code> property.
             See the following example:
         </p>
         <p>
-            <code>
+            <code class="code">
                 ---<br>
                 status: todo<br>
                 values:<br>
@@ -36,7 +34,5 @@
         </p>
 
         <p>For more information see <a href="https://oloid.ion2s.com/usage/use-pattern.html#replacing-dynamic-content" target="_blank">our documentation</a>.</p>
-
-        @yield('workshop.scripts')
     </body>
 </html>

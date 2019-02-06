@@ -44,18 +44,14 @@ class InstallCommand extends Command
      */
     public function handle()
     {
-        $this->comment('Publishing Workshop Assets...');
-        $this->callSilent('vendor:publish', ['--tag' => 'workshop-assets']);
-
-        $this->comment('Publishing Workshop Configuration...');
-        $this->callSilent('vendor:publish', ['--tag' => 'workshop-config']);
-
         if ($this->configurationService->registerViewResources(config_path('view.php'))) {
             $this->comment('Extra view resources configuration have been added in the project\'s view.php');
         }
 
-        $this->comment('Creating pattern path...');
-        File::makeDirectory(config('workshop.patternPath'), 0755, true);
+        if (!File::exists(config('workshop.patternPath'))) {
+            $this->comment('Creating pattern path...');
+            File::makeDirectory(config('workshop.patternPath'), 0755, true);
+        }
 
         $this->info('Workshop installed successfully.');
 

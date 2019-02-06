@@ -8,6 +8,7 @@
             :patterns="statusList['review']"
             :loading-status="loadingStatusList">
       <h3>To Review:</h3>
+      <p slot="empty-list" class="dashboard-list--empty"><span>Nothing to review</span> 😄 </p>
     </status-list>
 
     <!-- List with rejected patterns -->
@@ -16,6 +17,7 @@
             :patterns="statusList['rejected']"
             :loading-status="loadingStatusList">
       <h3>Rejected <i class="fas fa-exclamation-triangle"></i> :</h3>
+      <p slot="empty-list" class="dashboard-list--empty"><span>Nothing rejected</span> 😰 </p>
     </status-list>
 
     <shortcuts v-if="showKeyMap"

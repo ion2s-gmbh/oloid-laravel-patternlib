@@ -19,7 +19,7 @@
       </template>
 
       <template v-else-if="patterns.length === 0">
-        <p class="dashboard-list--empty"><span>Nothing to review</span> 😄 </p>
+        <slot name="empty-list"></slot>
       </template>
 
     </template>

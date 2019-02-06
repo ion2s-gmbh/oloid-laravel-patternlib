@@ -2,6 +2,7 @@
 
 
 use Illuminate\Filesystem\Filesystem;
+use Oloid\Exceptions\MissingValuesException;
 use Oloid\Models\Pattern;
 
 if (!function_exists('compile_blade_string')) {
@@ -10,6 +11,7 @@ if (!function_exists('compile_blade_string')) {
      *
      * @param Pattern $pattern
      * @return false|string
+     * @throws Throwable
      */
     function compile_blade_string(Pattern $pattern): string
     {
@@ -22,7 +24,21 @@ if (!function_exists('compile_blade_string')) {
          * Compile the view using the default Laravel View.
          */
         $path = "patterns.{$pattern->name}";
-        return view($path, $pattern->values);
+        $view = view($path, $pattern->values);
+
+        /*
+         * Try to convert the template to a string. If there are undefinded variables in the template,
+         * an exception is thrown.
+         */
+        try {
+            $view->__toString();
+        } catch (ErrorException $e) {
+            throw new MissingValuesException(
+                'Undefined variables in pattern template. Define the missing variables in the corresponding markdown file in the frontmatter part.',
+                0, $e);
+        }
+
+        return $view;
     }
 }
 
@@ -31,7 +47,7 @@ if (!function_exists('pattern_path')) {
      * Returns the absolute path to the patterns directory.
      *
      * @param string $subpath
-     * @return \Illuminate\Config\Repository|mixed
+     * @return string
      */
     function pattern_path(string $subpath = ''): string
     {

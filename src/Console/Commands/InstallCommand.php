@@ -44,12 +44,6 @@ class InstallCommand extends Command
      */
     public function handle()
     {
-        $this->comment('Publishing Workshop Assets...');
-        $this->callSilent('vendor:publish', ['--tag' => 'workshop-assets']);
-
-        $this->comment('Publishing Workshop Configuration...');
-        $this->callSilent('vendor:publish', ['--tag' => 'workshop-config']);
-
         if ($this->configurationService->registerViewResources(config_path('view.php'))) {
             $this->comment('Extra view resources configuration have been added in the project\'s view.php');
         }

@@ -39,6 +39,27 @@ class HelperMethodsTest extends BaseTestCase
 
     /**
      * @test
+     * @covers ::compile_blade_string
+     * @expectedException \Oloid\Exceptions\MissingValuesException
+     */
+    public function it_should_parse_a_php_template_with_missing_values()
+    {
+        // arrange
+        $this->preparePatternStub();
+        $pattern = new Pattern();
+        $pattern->name = 'atoms.text.headline1';
+        $pattern->status = 'todo';
+        $pattern->values = [];
+        $pattern->template = '<h1>{{ $text }}</h1>';
+
+        // act
+        $html = compile_blade_string($pattern);
+        $this->assertEquals('<h1>TEST</h1>', $html);
+        $this->fail();
+    }
+
+    /**
+     * @test
      * @covers ::pattern_path
      */
     public function it_should_return_the_pattern_base_path()

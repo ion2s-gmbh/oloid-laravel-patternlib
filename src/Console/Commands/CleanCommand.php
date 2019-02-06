@@ -38,14 +38,13 @@ class CleanCommand extends Command
      */
     public function handle()
     {
-        $path = config('workshop.basePath');
+        $path = config('workshop.patternPath');
         $sure = $this->confirm("Are you sure, you want to remove all created patterns ({$path}) from your project?", false);
 
         if ($sure) {
-            return File::deleteDirectory($path);
+            File::deleteDirectory($path);
+            return File::makeDirectory($path, 0755, true);
         }
-
-        File::makeDirectory(config('workshop.patternPath'), 0755, true);
 
         return -1;
     }

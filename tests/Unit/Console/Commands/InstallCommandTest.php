@@ -13,7 +13,7 @@ class InstallCommandTest extends BaseTestCase
      * @covers \Oloid\Console\Commands\InstallCommand
      * @covers \Oloid\WorkshopServiceProvider
      */
-    public function it_should_install_workshop_without_extra_view_registration()
+    public function it_should_publish_workshop_resources_and_configs_without_extra_view_registration()
     {
         $this->app->bind(ConfigurationService::class, function () {
             $mock = Mockery::mock(ConfigurationService::class)
@@ -23,6 +23,7 @@ class InstallCommandTest extends BaseTestCase
             return $mock;
         });
         $this->artisan('workshop:install')
+            ->expectsOutput('Publishing Workshop Assets...')
             ->expectsOutput('Creating pattern path...')
             ->expectsOutput('Workshop installed successfully.')
             ->assertExitCode(0);
@@ -33,7 +34,7 @@ class InstallCommandTest extends BaseTestCase
      * @covers \Oloid\Console\Commands\InstallCommand
      * @covers \Oloid\WorkshopServiceProvider
      */
-    public function it_should_install_workshop_with_extra_view_registration()
+    public function it_should_publish_workshop_resources_and_configs_with_extra_view_registration()
     {
         $this->app->bind(ConfigurationService::class, function () {
             $mock = Mockery::mock(ConfigurationService::class)
@@ -43,6 +44,7 @@ class InstallCommandTest extends BaseTestCase
             return $mock;
         });
         $this->artisan('workshop:install')
+            ->expectsOutput('Publishing Workshop Assets...')
             ->expectsOutput('Extra view resources configuration have been added in the project\'s view.php')
             ->expectsOutput('Creating pattern path...')
             ->expectsOutput('Workshop installed successfully.')

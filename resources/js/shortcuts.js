@@ -4,12 +4,16 @@
  */
 const globalShortcuts = [
   {
-    stroke: 'Ctrl + C',
+    stroke: '?',
+    description: 'Show/hide the shortcuts on the current page.'
+  },
+  {
+    stroke: 'c',
     description: 'Trigger creation of a new Pattern.'
   },
   {
-    stroke: 'Ctrl + K',
-    description: 'Show/hide the shortcuts on the current page.'
+    stroke: 'esc',
+    description: 'Close or cancel'
   }
 ];
 

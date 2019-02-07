@@ -24,7 +24,6 @@
 
 <script>
   import Navbar from './Navbar';
-  import {keyPressed} from "../helpers";
 
   export default {
     name: "WorkshopGui",
@@ -84,27 +83,37 @@
        */
       this.globalKeyListener = (event) => {
 
-        const C = 67;
-        const K = 75;
+        console.error(event.key);
+        console.error(event.keyCode);
+        console.error(event.keyIdentifier);
 
-        const key = keyPressed(event);
+        const C = 'c';
+        const QUESTION_MARK = '?';
+        const target = event.target || event.srcElement;
+        const key = event.key;
 
-        /*
-         * Trigger the creation of a new Pattern by Ctrl+C
-         */
-        if (event.ctrlKey && key === C) {
-          this.createPattern();
+        if (key === undefined) {
           event.preventDefault();
+          event.stopPropagation();
+          console.error(event);
         }
 
         /*
-         * Trigger the explanation of the shortcuts
+         * Trigger the creation of a new Pattern by 'c'
          */
-        if (event.ctrlKey && key === K) {
-          this.toggleKeyMap();
-          event.preventDefault();
-        }
+        if ( target.tagName !== "TEXTAREA" && target.tagName !== "INPUT" ) {
+          if (key === C) {
+            this.createPattern();
+          }
 
+          /*
+           * Trigger the explanation of the shortcuts
+           */
+          if (event.shiftKey && key === QUESTION_MARK) {
+            this.toggleKeyMap();
+          }
+          event.stopPropagation();
+        }
       };
 
       window.addEventListener('keydown', this.globalKeyListener);

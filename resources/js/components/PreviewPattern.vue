@@ -285,7 +285,6 @@
   import ClipboardJS from 'clipboard';
   import {globalShortcuts, previewShortcuts, showKeyMap} from '../shortcuts';
   import Prism from 'prismjs';
-  import {keyPressed} from "../helpers";
   import {mixin as clickaway} from 'vue-clickaway'
 
   export default {
@@ -581,7 +580,7 @@
         const DEL = 46;
         const E = 69;
 
-        const key = keyPressed(event);
+        const key = event.key;
 
         /*
          * Trigger the delete confirmation by Ctrl+DEL

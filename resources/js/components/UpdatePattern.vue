@@ -19,8 +19,8 @@
                name="name"
                v-model="pattern.name"
                aria-describedby="nameHelp"
-               @keydown.ctrl.83.prevent="save"
-               @keydown.esc="cancel"
+               @keydown.ctrl.enter.stop="save"
+               @keydown.esc.stop="cancel"
                v-validate.disable="'required|uniquePattern'"
                autofocus
         />
@@ -56,7 +56,7 @@
   import LOG from '../logger';
   import {API} from '../restClient';
   import Shortcuts from './Shortcuts'
-  import {globalShortcuts, showKeyMap, updateShortcuts} from "../shortcuts";
+  import {globalShortcuts, keys, showKeyMap, updateShortcuts} from "../shortcuts";
 
   export default {
     name: "UpdatePattern",
@@ -125,6 +125,32 @@
           LOG.error(e);
         }
       }
+    },
+
+    /**
+     * Mounted hook, adds a global event listener.
+     */
+    mounted() {
+
+      /**
+       * Global shortcuts
+       */
+      this.globalKeyListener = (event) => {
+        const key = event.key;
+
+        if (key === keys.CLOSE) {
+          this.cancel();
+        }
+      };
+
+      window.addEventListener('keydown', this.globalKeyListener);
+    },
+
+    /**
+     * BeforeDestroy hook, removes the global event listener.
+     */
+    beforeDestroy() {
+      window.removeEventListener('keydown', this.globalKeyListener);
     }
   }
 </script>

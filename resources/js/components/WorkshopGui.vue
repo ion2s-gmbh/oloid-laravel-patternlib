@@ -84,16 +84,14 @@
        */
       this.globalKeyListener = (event) => {
 
-        // console.error(event.key);
-        // console.error(event.keyCode);
-
         const target = event.target || event.srcElement;
         const key = event.key;
 
-        /*
-         * Trigger the creation of a new Pattern by 'c'
-         */
         if ( target.tagName !== "TEXTAREA" && target.tagName !== "INPUT" ) {
+
+          /*
+           * Trigger the creation of a new Pattern
+           */
           if (key === keys.CREATE) {
             this.createPattern();
           }
@@ -105,20 +103,26 @@
             this.$store.dispatch('openKeyMap');
           }
 
+          /*
+           * Close the keymap
+           */
           if (key === keys.CLOSE) {
-            this.$store.dispatch('closeKeyMap');
+            if (this.$store.getters.showKeyMap === true) {
+              event.stopPropagation();
+              this.$store.dispatch('closeKeyMap');
+            }
           }
         }
       };
 
-      window.addEventListener('keydown', this.globalKeyListener);
+      window.addEventListener('keydown', this.globalKeyListener, true);
     },
 
     /**
      * BeforeDestroy hook, removes the global event listener.
      */
     beforeDestroy() {
-      window.removeEventListener('keydown', this.globalKeyListener);
+      window.removeEventListener('keydown', this.globalKeyListener, true);
     }
   }
 </script>

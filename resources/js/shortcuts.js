@@ -24,12 +24,8 @@ const globalShortcuts = [
  */
 const createShortcuts = [
   {
-    stroke: 'Ctrl + S',
+    stroke: 'ctrl + enter',
     description: 'Save the newly created Pattern.'
-  },
-  {
-    stroke: 'ESC',
-    description: 'Cancel the creation of the new Pattern.'
   }
 ];
 
@@ -62,12 +58,8 @@ const previewShortcuts = [
  */
 const updateShortcuts = [
   {
-    stroke: 'Ctrl + S',
+    stroke: 'ctrl + enter',
     description: 'Save the new name of the Pattern.'
-  },
-  {
-    stroke: 'ESC',
-    description: 'Cancel the renaming of the Pattern.'
   }
 ];
 

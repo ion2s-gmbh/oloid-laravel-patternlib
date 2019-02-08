@@ -61,10 +61,11 @@
 
 <script>
 
-  import NavbarMain from "./NavbarMain";
+  import NavbarMain from './NavbarMain';
   import {API} from '../restClient';
   import LOG from '../logger';
   import GlobalResources from './GlobalResources';
+  import {keys} from '../shortcuts';
 
   export default {
     name: "Navbar",
@@ -77,6 +78,7 @@
     data() {
       return {
         navi: [],
+        globalKeyListener: null
       }      
     },
 
@@ -139,7 +141,49 @@
      */
     created() {
       this.fetchNavi();
+    },
+
+    /**
+     * Mounted hook, adds a global event listener.
+     */
+    mounted() {
+
+      /**
+       * Global shortcuts
+       */
+      this.globalKeyListener = (event) => {
+
+        const key = event.key;
+
+        /*
+         * Open the globale resources
+         */
+        if (key === keys.RESOURCES) {
+          this.$store.dispatch('openGlobalResources');
+        }
+
+        /*
+         * Close the globale resources
+         */
+        if (key === keys.CLOSE) {
+          if (this.$store.getters.showResources === true) {
+            event.stopPropagation();
+            this.$store.dispatch('closeGloablResources');
+          }
+        }
+      };
+
+      window.addEventListener('keydown', this.globalKeyListener);
+    },
+
+    /**
+     * BeforeDestroy hook, removes the global event listener.
+     */
+    beforeDestroy() {
+      window.removeEventListener('keydown', this.globalKeyListener);
     }
   }
+
+
 
 </script>

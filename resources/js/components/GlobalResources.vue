@@ -33,8 +33,8 @@
                         name="head-resources"
                         autofocus
                         v-model="headResources"
-                        @keydown.ctrl.83.prevent="save"
-                        @keydown.esc="close">
+                        @keydown.ctrl.enter.stop="save"
+                        @keydown.esc.stop="close">
               </textarea>
               
             </div>

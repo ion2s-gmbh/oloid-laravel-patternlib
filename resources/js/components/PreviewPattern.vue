@@ -540,6 +540,13 @@
       }
     },
 
+    beforeRouteEnter (to, form, next) {
+      next(vm => {
+        vm.resetDropdowns();
+        vm.$store.dispatch('resetMenu');
+      });
+    },
+
     /**
      * Fetch Pattern on route change.
      * @param to

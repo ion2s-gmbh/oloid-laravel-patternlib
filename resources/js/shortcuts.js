@@ -12,6 +12,10 @@ const globalShortcuts = [
     description: 'Trigger creation of a new Pattern.'
   },
   {
+    stroke: 'r',
+    description: 'Open the global resources definition'
+  },
+  {
     stroke: 'esc',
     description: 'Close or cancel'
   }
@@ -35,11 +39,15 @@ const createShortcuts = [
  */
 const previewShortcuts = [
   {
-    stroke: 'Delete',
+    stroke: 'e',
+    description: 'Rename the Pattern'
+  },
+  {
+    stroke: 'delete',
     description: 'Trigger deletion of the Pattern.'
   },
   {
-    stroke: 'Ctrl + S',
+    stroke: 'ctrl + enter',
     description: 'Save the edited description of the Pattern.'
   },
 ];

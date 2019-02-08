@@ -9,15 +9,15 @@ const globalShortcuts = [
   },
   {
     stroke: 'c',
-    description: 'Trigger creation of a new Pattern.'
+    description: 'Create a new Pattern.'
   },
   {
     stroke: 'r',
-    description: 'Open the global resources definition'
+    description: 'Open the global resources definition.'
   },
   {
     stroke: 'esc',
-    description: 'Close or cancel'
+    description: 'Close or cancel.'
   }
 ];
 
@@ -40,15 +40,15 @@ const createShortcuts = [
 const previewShortcuts = [
   {
     stroke: 'e',
-    description: 'Rename the Pattern'
+    description: 'Rename this Pattern.'
   },
   {
-    stroke: 'delete',
-    description: 'Trigger deletion of the Pattern.'
+    stroke: 'd',
+    description: 'Delete this Pattern.'
   },
   {
     stroke: 'ctrl + enter',
-    description: 'Save the edited description of the Pattern.'
+    description: 'Save the form.'
   },
 ];
 
@@ -80,7 +80,7 @@ const keys = {
   "HELP": '?',
   "CLOSE": 'Escape',
   "EDIT": 'e',
-  "DELETE": 'Delete',
+  "DELETE": 'd',
   "RESOURCES": 'r'
 };
 

@@ -173,14 +173,14 @@
         }
       };
 
-      window.addEventListener('keydown', this.globalKeyListener);
+      window.addEventListener('keydown', this.globalKeyListener, true);
     },
 
     /**
      * BeforeDestroy hook, removes the global event listener.
      */
     beforeDestroy() {
-      window.removeEventListener('keydown', this.globalKeyListener);
+      window.removeEventListener('keydown', this.globalKeyListener, true);
     }
   }
 

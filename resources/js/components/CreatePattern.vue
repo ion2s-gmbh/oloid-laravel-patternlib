@@ -21,7 +21,6 @@
                v-model="pattern.name"
                aria-describedby="nameHelp"
                @keydown.ctrl.enter.prevent.stop="save"
-               @keydown.esc.stop="cancel"
                @keydown.enter.prevent=""
                v-validate.disable="'required|uniquePattern'"
                autofocus
@@ -45,8 +44,7 @@
         <textarea id="description"
                   class="form-control"
                   name="description"
-                  @keydown.ctrl.enter.stop="save"
-                  @keydown.esc.stop="cancel"
+                  @keydown.ctrl.enter.prevent.stop="save"
                   v-model="pattern.description">
                     
           </textarea>

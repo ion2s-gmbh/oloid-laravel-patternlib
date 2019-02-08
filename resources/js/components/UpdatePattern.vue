@@ -20,7 +20,6 @@
                v-model="pattern.name"
                aria-describedby="nameHelp"
                @keydown.ctrl.enter.stop="save"
-               @keydown.esc.stop="cancel"
                @keydown.enter.prevent=""
                v-validate.disable="'required|uniquePattern'"
                autofocus

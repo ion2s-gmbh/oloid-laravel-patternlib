@@ -4,12 +4,20 @@
  */
 const globalShortcuts = [
   {
-    stroke: 'Ctrl + C',
-    description: 'Trigger creation of a new Pattern.'
+    stroke: '?',
+    description: 'Show/hide the shortcuts on the current page.'
   },
   {
-    stroke: 'Ctrl + K',
-    description: 'Show/hide the shortcuts on the current page.'
+    stroke: 'c',
+    description: 'Create a new Pattern.'
+  },
+  {
+    stroke: 'r',
+    description: 'Open the global resources definition.'
+  },
+  {
+    stroke: 'esc',
+    description: 'Close or cancel.'
   }
 ];
 
@@ -20,12 +28,8 @@ const globalShortcuts = [
  */
 const createShortcuts = [
   {
-    stroke: 'Ctrl + S',
+    stroke: 'ctrl + enter',
     description: 'Save the newly created Pattern.'
-  },
-  {
-    stroke: 'ESC',
-    description: 'Cancel the creation of the new Pattern.'
   }
 ];
 
@@ -35,21 +39,17 @@ const createShortcuts = [
  */
 const previewShortcuts = [
   {
-    stroke: 'Ctrl + DEL',
-    description: 'Trigger deletion of the Pattern.'
+    stroke: 'e',
+    description: 'Rename this Pattern.'
   },
   {
-    stroke: 'ESC',
-    description: 'Cancel deletion of the Pattern.'
+    stroke: 'd',
+    description: 'Delete this Pattern.'
   },
   {
-    stroke: 'Ctrl + S',
-    description: 'Save the edited description of the Pattern.'
+    stroke: 'ctrl + enter',
+    description: 'Save the form.'
   },
-  {
-    stroke: 'ESC',
-    description: 'Cancel edit mode of the Pattern\'s description.'
-  }
 ];
 
 /**
@@ -58,12 +58,8 @@ const previewShortcuts = [
  */
 const updateShortcuts = [
   {
-    stroke: 'Ctrl + S',
+    stroke: 'ctrl + enter',
     description: 'Save the new name of the Pattern.'
-  },
-  {
-    stroke: 'ESC',
-    description: 'Cancel the renaming of the Pattern.'
   }
 ];
 
@@ -75,10 +71,24 @@ const showKeyMap = function () {
   return this.$store.getters.showKeyMap;
 };
 
+/**
+ * Constants for shortcuts.
+ * @type {{HELP: string, CREATE: string, CLOSE: string}}
+ */
+const keys = {
+  "CREATE": 'c',
+  "HELP": '?',
+  "CLOSE": 'Escape',
+  "EDIT": 'e',
+  "DELETE": 'd',
+  "RESOURCES": 'r'
+};
+
 export {
   createShortcuts,
   globalShortcuts,
   previewShortcuts,
   updateShortcuts,
-  showKeyMap
+  showKeyMap,
+  keys
 };

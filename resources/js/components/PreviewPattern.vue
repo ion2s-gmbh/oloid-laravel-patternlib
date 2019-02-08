@@ -173,8 +173,8 @@
             <textarea id="description"
                       class="form-control"
                       name="description"
-                      @keydown.ctrl.83.prevent="updatePattern"
-                      @keydown.esc="cancelDescription"
+                      @keydown.ctrl.enter.stop="updatePattern"
+                      @keydown.esc.stop="cancelDescription"
                       v-model="pattern.description" autofocus>{{ pattern.description }}</textarea>
 
             <div class="form-group form-group--end">
@@ -283,9 +283,8 @@
   import LOG from '../logger';
   import marked from 'marked';
   import ClipboardJS from 'clipboard';
-  import {globalShortcuts, previewShortcuts, showKeyMap} from '../shortcuts';
+  import {globalShortcuts, keys, previewShortcuts, showKeyMap} from '../shortcuts';
   import Prism from 'prismjs';
-  import {keyPressed} from "../helpers";
   import {mixin as clickaway} from 'vue-clickaway'
 
   export default {
@@ -541,6 +540,13 @@
       }
     },
 
+    beforeRouteEnter (to, form, next) {
+      next(vm => {
+        vm.resetDropdowns();
+        vm.$store.dispatch('resetMenu');
+      });
+    },
+
     /**
      * Fetch Pattern on route change.
      * @param to
@@ -578,25 +584,24 @@
        */
       this.globalKeyListener = (event) => {
 
-        const DEL = 46;
-        const E = 69;
+        const target = event.target || event.srcElement;
+        const key = event.key;
 
-        const key = keyPressed(event);
+        if ( target.tagName !== "TEXTAREA" && target.tagName !== "INPUT" ) {
 
-        /*
-         * Trigger the delete confirmation by Ctrl+DEL
-         */
-        if (event.ctrlKey && key === DEL) {
-          event.preventDefault();
-          this.confirmDelete();
-        }
+          /*
+           * Trigger the delete confirmation
+           */
+          if (key === keys.DELETE) {
+            this.confirmDelete();
+          }
 
-        /*
-         * Trigger renaming of the Pattern by Ctrl+E
-         */
-        if (event.ctrlKey && key === E) {
-          event.preventDefault();
-          this.renamePattern();
+          /*
+           * Trigger renaming of the Pattern by Ctrl+E
+           */
+          if (key === keys.EDIT) {
+            this.renamePattern();
+          }
         }
       };
 

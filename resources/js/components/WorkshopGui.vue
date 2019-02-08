@@ -24,7 +24,7 @@
 
 <script>
   import Navbar from './Navbar';
-  import {keyPressed} from "../helpers";
+  import {keys} from '../shortcuts';
 
   export default {
     name: "WorkshopGui",
@@ -58,7 +58,7 @@
       },
 
       /**
-       * Toogle the key map overlay.
+       * Toogle the key map.
        */
       toggleKeyMap: function () {
         this.$store.commit('toggleKeyMap');
@@ -84,37 +84,45 @@
        */
       this.globalKeyListener = (event) => {
 
-        const C = 67;
-        const K = 75;
+        const target = event.target || event.srcElement;
+        const key = event.key;
 
-        const key = keyPressed(event);
+        if ( target.tagName !== "TEXTAREA" && target.tagName !== "INPUT" ) {
 
-        /*
-         * Trigger the creation of a new Pattern by Ctrl+C
-         */
-        if (event.ctrlKey && key === C) {
-          this.createPattern();
-          event.preventDefault();
+          /*
+           * Trigger the creation of a new Pattern
+           */
+          if (key === keys.CREATE) {
+            this.createPattern();
+          }
+
+          /*
+           * Trigger the explanation of the shortcuts
+           */
+          if (key === keys.HELP) {
+            this.$store.dispatch('openKeyMap');
+          }
+
+          /*
+           * Close the keymap
+           */
+          if (key === keys.CLOSE) {
+            if (this.$store.getters.showKeyMap === true) {
+              event.stopPropagation();
+              this.$store.dispatch('closeKeyMap');
+            }
+          }
         }
-
-        /*
-         * Trigger the explanation of the shortcuts
-         */
-        if (event.ctrlKey && key === K) {
-          this.toggleKeyMap();
-          event.preventDefault();
-        }
-
       };
 
-      window.addEventListener('keydown', this.globalKeyListener);
+      window.addEventListener('keydown', this.globalKeyListener, true);
     },
 
     /**
      * BeforeDestroy hook, removes the global event listener.
      */
     beforeDestroy() {
-      window.removeEventListener('keydown', this.globalKeyListener);
+      window.removeEventListener('keydown', this.globalKeyListener, true);
     }
   }
 </script>

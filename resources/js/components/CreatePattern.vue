@@ -20,8 +20,8 @@
                name="name"
                v-model="pattern.name"
                aria-describedby="nameHelp"
-               @keydown.ctrl.83.prevent="save"
-               @keydown.esc="cancel"
+               @keydown.ctrl.enter.prevent.stop="save"
+               @keydown.enter.prevent=""
                v-validate.disable="'required|uniquePattern'"
                autofocus
         />
@@ -44,8 +44,7 @@
         <textarea id="description"
                   class="form-control"
                   name="description"
-                  @keydown.ctrl.83.prevent="save"
-                  @keydown.esc="cancel"
+                  @keydown.ctrl.enter.prevent.stop="save"
                   v-model="pattern.description">
                     
           </textarea>
@@ -60,7 +59,8 @@
           <span>Cancel</span>
         </button>
 
-        <button class="btn btn--primary"
+        <button type="button"
+                class="btn btn--primary"
                 @click.prevent="save">
           <span>Create pattern</span>
         </button>
@@ -83,7 +83,7 @@
   import {API} from '../restClient';
   import LOG from '../logger';
   import Shortcuts from './Shortcuts';
-  import {createShortcuts, globalShortcuts, showKeyMap} from '../shortcuts';
+  import {createShortcuts, globalShortcuts, keys, showKeyMap} from '../shortcuts';
 
   export default {
     name: "CreatePattern",
@@ -96,7 +96,8 @@
       return {
         pattern: {},
         globalShortcuts,
-        createShortcuts
+        createShortcuts,
+        globalKeyListener: null
       }
     },
 
@@ -145,6 +146,32 @@
           LOG.error(e);
         }
       }
+    },
+
+    /**
+     * Mounted hook, adds a global event listener.
+     */
+    mounted() {
+
+      /**
+       * Global shortcuts
+       */
+      this.globalKeyListener = (event) => {
+        const key = event.key;
+
+        if (key === keys.CLOSE) {
+          this.cancel();
+        }
+      };
+
+      window.addEventListener('keydown', this.globalKeyListener);
+    },
+
+    /**
+     * BeforeDestroy hook, removes the global event listener.
+     */
+    beforeDestroy() {
+      window.removeEventListener('keydown', this.globalKeyListener);
     }
   }
 </script>

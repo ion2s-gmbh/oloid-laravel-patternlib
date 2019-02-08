@@ -66,5 +66,49 @@ export default {
     if (state.navi.activeMain !== '') {
       commit('resetMenu');
     }
-  }
+  },
+
+  /**
+   * Open/show the keymap.
+   * @param commit
+   * @param state
+   */
+  openKeyMap: ({commit, state}) => {
+    if (state.showKeyMap === false) {
+      commit('toggleKeyMap');
+    }
+  },
+
+  /**
+   * Close/hide the keymap.
+   * @param commit
+   * @param state
+   */
+  closeKeyMap: ({commit, state}) => {
+    if (state.showKeyMap === true) {
+      commit('toggleKeyMap');
+    }
+  },
+
+  /**
+   * Open the global resources.
+   * @param commit
+   * @param state
+   */
+  openGlobalResources: ({commit, state}) => {
+    if (state.showResources === false) {
+      commit('toggleResources');
+    }
+  },
+
+  /**
+   * Close the global resources.
+   * @param commit
+   * @param state
+   */
+  closeGloablResources: ({commit, state}) => {
+    if (state.showResources === true) {
+      commit('toggleResources');
+    }
+  },
 }

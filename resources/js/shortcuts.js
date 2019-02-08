@@ -35,21 +35,13 @@ const createShortcuts = [
  */
 const previewShortcuts = [
   {
-    stroke: 'Ctrl + DEL',
+    stroke: 'Delete',
     description: 'Trigger deletion of the Pattern.'
-  },
-  {
-    stroke: 'ESC',
-    description: 'Cancel deletion of the Pattern.'
   },
   {
     stroke: 'Ctrl + S',
     description: 'Save the edited description of the Pattern.'
   },
-  {
-    stroke: 'ESC',
-    description: 'Cancel edit mode of the Pattern\'s description.'
-  }
 ];
 
 /**
@@ -78,7 +70,10 @@ const showKeyMap = function () {
 const keys = {
   "CREATE": 'c',
   "HELP": '?',
-  "CLOSE": 'Escape'
+  "CLOSE": 'Escape',
+  "EDIT": 'e',
+  "DELETE": 'Delete',
+  "RESOURCES": 'r'
 };
 
 export {

@@ -66,5 +66,27 @@ export default {
     if (state.navi.activeMain !== '') {
       commit('resetMenu');
     }
+  },
+
+  /**
+   * Open/show the keymap.
+   * @param commit
+   * @param state
+   */
+  openKeyMap: ({commit, state}) => {
+    if (state.showKeyMap === false) {
+      commit('toggleKeyMap');
+    }
+  },
+
+  /**
+   * Close/hide the keymap.
+   * @param commit
+   * @param state
+   */
+  closeKeyMap: ({commit, state}) => {
+    if (state.showKeyMap === true) {
+      commit('toggleKeyMap');
+    }
   }
 }

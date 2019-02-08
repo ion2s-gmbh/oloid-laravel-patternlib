@@ -79,10 +79,21 @@ const showKeyMap = function () {
   return this.$store.getters.showKeyMap;
 };
 
+/**
+ * Constants for shortcuts.
+ * @type {{HELP: string, CREATE: string, CLOSE: string}}
+ */
+const keys = {
+  "CREATE": 'c',
+  "HELP": '?',
+  "CLOSE": 'Escape'
+};
+
 export {
   createShortcuts,
   globalShortcuts,
   previewShortcuts,
   updateShortcuts,
-  showKeyMap
+  showKeyMap,
+  keys
 };

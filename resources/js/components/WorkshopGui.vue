@@ -24,6 +24,7 @@
 
 <script>
   import Navbar from './Navbar';
+  import {keys} from '../shortcuts';
 
   export default {
     name: "WorkshopGui",
@@ -57,7 +58,7 @@
       },
 
       /**
-       * Toogle the key map overlay.
+       * Toogle the key map.
        */
       toggleKeyMap: function () {
         this.$store.commit('toggleKeyMap');
@@ -83,36 +84,30 @@
        */
       this.globalKeyListener = (event) => {
 
-        console.error(event.key);
-        console.error(event.keyCode);
-        console.error(event.keyIdentifier);
+        // console.error(event.key);
+        // console.error(event.keyCode);
 
-        const C = 'c';
-        const QUESTION_MARK = '?';
         const target = event.target || event.srcElement;
         const key = event.key;
-
-        if (key === undefined) {
-          event.preventDefault();
-          event.stopPropagation();
-          console.error(event);
-        }
 
         /*
          * Trigger the creation of a new Pattern by 'c'
          */
         if ( target.tagName !== "TEXTAREA" && target.tagName !== "INPUT" ) {
-          if (key === C) {
+          if (key === keys.CREATE) {
             this.createPattern();
           }
 
           /*
            * Trigger the explanation of the shortcuts
            */
-          if (event.shiftKey && key === QUESTION_MARK) {
-            this.toggleKeyMap();
+          if (key === keys.HELP) {
+            this.$store.dispatch('openKeyMap');
           }
-          event.stopPropagation();
+
+          if (key === keys.CLOSE) {
+            this.$store.dispatch('closeKeyMap');
+          }
         }
       };
 

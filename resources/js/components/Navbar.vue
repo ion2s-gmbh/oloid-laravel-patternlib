@@ -153,22 +153,26 @@
        */
       this.globalKeyListener = (event) => {
 
+        const target = event.target || event.srcElement;
         const key = event.key;
 
-        /*
-         * Open the globale resources
-         */
-        if (key === keys.RESOURCES) {
-          this.$store.dispatch('openGlobalResources');
-        }
+        if ( target.tagName !== "TEXTAREA" && target.tagName !== "INPUT" ) {
 
-        /*
-         * Close the globale resources
-         */
-        if (key === keys.CLOSE) {
-          if (this.$store.getters.showResources === true) {
-            event.stopPropagation();
-            this.$store.dispatch('closeGloablResources');
+          /*
+           * Open the globale resources
+           */
+          if (key === keys.RESOURCES) {
+            this.$store.dispatch('openGlobalResources');
+          }
+
+          /*
+           * Close the globale resources
+           */
+          if (key === keys.CLOSE) {
+            if (this.$store.getters.showResources === true) {
+              event.stopPropagation();
+              this.$store.dispatch('closeGloablResources');
+            }
           }
         }
       };

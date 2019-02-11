@@ -6,19 +6,23 @@ These are the styles that are needed to render the pattern preview.
 %status { // Styles for the status bubbles
 
 	@include size(1rem);
+	background: $c-inactive;
 	background: var(--inactive, $c-inactive);
 	border-radius: 100%;
 	margin: 0 0.5rem 0 0;
 
 	&.accepted {
+		background: $c-positive;
 		background: var(--positive, $c-positive);
 	}
 
 	&.rejected {
+		background: $c-alert;
 		background: var(--alert, $c-alert);
 	}
 
 	&.toCheck {
+		background: $c-warning;
 		background: var(--warning, $c-warning);
 	}
 

@@ -56,8 +56,8 @@ containing the header and the so called view, containing most of the UI.
 .window {
   display: grid;
   height: 100vh;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: var(--headerheight) auto;
+  grid-template-columns: 1fr 1fr 1fr 1fr;  
+  grid-template-rows: minmax(var(--headerheight),min-content) auto; // allows the nav to wrap.
   grid-template-areas: 
     "header header header header"
     "main main main main";

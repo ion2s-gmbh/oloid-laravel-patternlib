@@ -112,10 +112,13 @@ These are the styles for the project pattern navigation.
 
 	&.active {
 
+		color: $c-positive;
+		color: var(--positive, $c-positive);
 		opacity: 1 !important;
 
 		> .patterns--sub {
-
+			
+			color: #fff;
 			max-height: 120em;
 
 		}

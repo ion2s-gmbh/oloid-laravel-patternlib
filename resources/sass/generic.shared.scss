@@ -18,6 +18,7 @@ html {
 }
 
 body {
+  background: $c-brandMain;  
   background: var(--brandMain, $c-brandMain);  
 }
 

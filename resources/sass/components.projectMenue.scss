@@ -26,6 +26,7 @@ These are the styles for the project pattern navigation.
 
 	align-items: center;
 	display: flex;
+	flex-wrap: wrap; // needed if somebody needs more nav-categories then expected. 
 	justify-content: flex-start;
 	width: 100%;
 
@@ -33,9 +34,10 @@ These are the styles for the project pattern navigation.
 
 		background: var(--brandDark, $c-brandDark);
 		left: 0;
+		min-width: 100%;
 		position: absolute;
-		top: 2rem;
-		width: 100%;
+		top: 2rem;		
+		width: auto;
 		z-index: 500;
 
 	}	
@@ -71,7 +73,7 @@ These are the styles for the project pattern navigation.
 
 		&:not(:hover) {
 			
-			opacity: 0.5;
+			opacity: 0.65;
 
 		}		
 
@@ -88,6 +90,7 @@ These are the styles for the project pattern navigation.
 
 			border: none;
     		text-align: left;
+    		word-break: break-all;
 
     	}
 
@@ -109,10 +112,13 @@ These are the styles for the project pattern navigation.
 
 	&.active {
 
+		color: $c-positive;
+		color: var(--positive, $c-positive);
 		opacity: 1 !important;
 
 		> .patterns--sub {
-
+			
+			color: #fff;
 			max-height: 120em;
 
 		}

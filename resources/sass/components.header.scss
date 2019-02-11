@@ -4,9 +4,9 @@
 // Header Base --------- //
 
 .header {
-	
-	background: var(--brandDark);
-  	height: var(--headerheight);
+	background: $c-brandDark;
+	background: var(--brandDark,$c-brandDark);
+  	min-height: var(--headerheight); // only Min-height, so we can wrap if needed.
 	grid-area: header;
 	
 }

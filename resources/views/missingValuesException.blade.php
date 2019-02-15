@@ -22,7 +22,7 @@
 
         <p>
             You can define variables directly in the corresponding markdown file of a pattern-template.
-            <br>Use the frontmatter part to define a <code class="codeblock--inline">$values</code> property.
+            <br>Use the frontmatter part to define a <code class="codeblock--inline">values</code> property.
             See the following example:
         </p>
 

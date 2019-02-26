@@ -6,8 +6,7 @@
     "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --host 0.0.0.0 --public localhost --watch-poll --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
     "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
     "lint": "eslint --ext .js,.vue resources/js/",
-    "lint-fix": "eslint --ext .js,.vue resources/js/ --fix",
-    "release": "npm run production; git commit -am '- build for production'; git push origin master"
+    "lint-fix": "eslint --ext .js,.vue resources/js/ --fix"
   },
   "devDependencies": {
     "browser-sync": "^2.23.6",

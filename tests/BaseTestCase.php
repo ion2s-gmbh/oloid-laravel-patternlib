@@ -29,7 +29,7 @@ abstract class BaseTestCase extends TestCase
     /**
      * Cleanup after testing.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->deleteTempDirectory();
         parent::tearDown();

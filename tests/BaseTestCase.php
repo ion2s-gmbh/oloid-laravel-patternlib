@@ -19,7 +19,7 @@ abstract class BaseTestCase extends TestCase
     /**
      * Setup before testing.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->deleteTempDirectory();
         mkdir($this->tempDir);

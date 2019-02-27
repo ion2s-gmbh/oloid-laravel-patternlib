@@ -35,7 +35,7 @@ class PatternServiceTest extends BaseTestCase
      */
     private $fs;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->cut = new PatternService();

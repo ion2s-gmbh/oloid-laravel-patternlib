@@ -13,7 +13,7 @@ class GlobalDependenciesTest extends BaseTestCase
      */
     private $cut;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->cut = new GlobalResource();

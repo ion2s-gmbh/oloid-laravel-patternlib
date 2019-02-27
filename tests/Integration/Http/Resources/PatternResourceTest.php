@@ -20,7 +20,7 @@ class PatternResourceTest extends BaseTestCase
      */
     private $pattern;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

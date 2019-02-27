@@ -3,7 +3,6 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <!-- Styles -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
         @include('workshop::resources')
 
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">

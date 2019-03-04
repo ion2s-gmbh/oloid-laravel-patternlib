@@ -5,7 +5,6 @@ namespace Oloid\Services;
 
 
 use Illuminate\Support\Facades\Blade;
-use Oloid\Models\Pattern;
 
 class PatternStatusService
 {
@@ -14,6 +13,8 @@ class PatternStatusService
      * @var array
      */
     protected $evaluatedPatterns = [];
+
+    protected $enabled = false;
 
     /**
      * Patterns by status.
@@ -39,10 +40,19 @@ class PatternStatusService
     /**
      * Evaluate the Pattern's status. Only add the Pattern to the appropriate status once.
      *
-     * @param Pattern $pattern
+     * @param string $pattern
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
-    public function evaluate(Pattern $pattern)
+    public function evaluate(string $pattern)
     {
+        if (!$this->enabled) {
+            return;
+        }
+
+        /** @var PatternService $patternService */
+        $patternService = app()->make(PatternService::class);
+        $pattern = $patternService->loadPattern($pattern);
+
         if (!in_array($pattern->name, $this->patterns[$pattern->status])) {
             $this->patterns[$pattern->status][] = $pattern->name;
         }
@@ -55,5 +65,13 @@ class PatternStatusService
             $this->evaluatedPatterns[] = $pattern->name;
             Blade::compileString($pattern->template);
         }
+    }
+
+    /**
+     * Enable the checking of pattern status.
+     */
+    public function enable()
+    {
+        $this->enabled = true;
     }
 }

@@ -55,7 +55,8 @@ class PatternStatusServiceTest extends BaseTestCase
             'done' => [],
         ];
 
-        $cut->evaluate($pattern);
+        $cut->enable();
+        $cut->evaluate($pattern->name);
         $this->assertEquals($expected, $cut->getPatterns());
     }
 

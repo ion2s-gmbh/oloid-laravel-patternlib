@@ -35,7 +35,8 @@ composer test
 ```
 
 ## Credits
-* [ion2s GmbH](https://github.com/ion2s-gmbh)
+* [Sebastian Baum](https://github.com/sebbaum)
+* [Marek Gebka](https://github.com/marekgebka)
 * [All Contributors](https://github.com/ion2s-gmbh/oloid-laravel-patternlib/graphs/contributors)
 
 ## Security Vulnerabilities

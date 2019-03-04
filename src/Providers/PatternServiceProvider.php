@@ -113,7 +113,7 @@ class PatternServiceProvider extends ServiceProvider
             if (explode(',', $expression)[0] !== "''") {
                 $extExpression = $this->parse($expression, $path);
             }
-            return "<?php echo view({$extExpression}, array_except(get_defined_vars(), array('__data', '__path')))->render() ?>";
+            return "<?php echo \$__env->make({$extExpression}, \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>";
         };
     }
 
@@ -125,8 +125,12 @@ class PatternServiceProvider extends ServiceProvider
      */
     private function evaluatePatternStatus(string $pattern)
     {
+        /** @var PatternService $patternService */
         $patternService = $this->app->make(PatternService::class);
+
+        /** @var PatternStatusService $patternStatusService */
         $patternStatusService = $this->app->make(PatternStatusService::class);
+
         $pattern = $patternService->loadPattern($pattern);
         $patternStatusService->evaluate($pattern);
     }

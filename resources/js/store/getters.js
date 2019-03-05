@@ -1,13 +1,6 @@
 export default {
 
   /**
-   * Return the devMode.
-   * @param state
-   * @returns {boolean}
-   */
-  isDevMode: state => state.config.devMode,
-
-  /**
    * Get the Laravel app name.
    * @param state
    * @returns {string}

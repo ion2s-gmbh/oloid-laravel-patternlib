@@ -1,6 +1,6 @@
 <template>
 
-  <div class="view--inner" v-if="$store.getters.isDevMode">    
+  <div class="view--inner">
 
     <!-- List with patterns to review -->
     <status-list

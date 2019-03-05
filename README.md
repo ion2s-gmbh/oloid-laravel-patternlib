@@ -15,19 +15,8 @@ Oloid-laravel-patternlib enables a development GUI besides your current project.
 Using the workshop you can create and manage template snippets (patterns) and build your whole frontend
 using these reusable patterns.
 
-## Installation & Configuration
-
-### Installation
-The package is not yet available. So there is no straight forward installation process.
-Stay tuned.
-
-### Configuration
-#### .env configuration
-```
-WORKSHOP_URI=workshop
-WORKSHOP_BASE_PATH=patternlib
-WORKSHOP_PATTERN_PATH="${WORKSHOP_BASE_PATH}/patterns"
-```
+## Official documentation
+For installation instructions please see the [official documentation](https://oloid.ion2s.com).
 
 ## Testing
 ``` bash

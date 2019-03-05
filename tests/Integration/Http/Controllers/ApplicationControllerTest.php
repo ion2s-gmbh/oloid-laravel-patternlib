@@ -14,7 +14,7 @@ class ApplicationControllerTest extends BaseTestCase
     {
         $this->getJson('workshop/api/v1/info')
             ->assertSuccessful()
-            ->assertJsonFragment([
+            ->assertJson([
                 'data' => [
                     'appName' => 'testApp'
                 ]

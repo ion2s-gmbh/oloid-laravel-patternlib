@@ -20,7 +20,7 @@ class ApplicationController extends Controller
         return Response::json([
             'data' => [
                 'appName' => config('app.name'),
-                'branch' => $vcsService->getCurrentBranch()
+                'currentBranch' => $vcsService->getCurrentBranch()
             ]
         ]);
     }

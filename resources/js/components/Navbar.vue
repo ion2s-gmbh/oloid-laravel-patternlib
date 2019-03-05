@@ -11,7 +11,7 @@
         </a>
         <span class="dashboard-info" title="Current branch: Hajpoei">
           <i class="fas fa-code-branch"></i> -
-          {{ $store.getters.branch }}
+          {{ $store.getters.currentBranch }}
         </span>
         
       </h1>

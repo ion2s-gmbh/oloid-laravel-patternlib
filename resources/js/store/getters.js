@@ -7,6 +7,8 @@ export default {
    */
   appName: state => state.appInfo.appName,
 
+  branch: state => state.appInfo.branch,
+
   /**
    * Determine if the navi should be reloaded.
    * @param state

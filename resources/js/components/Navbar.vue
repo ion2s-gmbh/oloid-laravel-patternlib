@@ -9,6 +9,10 @@
         <a class="a" href="/" target="_blank">
           {{ $store.getters.appName }}
         </a>
+        <span class="dashboard-info" title="Current branch: Hajpoei">
+          <i class="fas fa-code-branch"></i> -
+          {{ $store.getters.branch }}
+        </span>
         
       </h1>
 

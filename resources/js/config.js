@@ -5,7 +5,7 @@ export default {
   |--------------------------------------------------------------------------
   | Here you can configure the URI to the backend API.
   */
-  apiUri: `workshop/api/v1`,
+  apiUri: `${workshopUri}/api/v1`,
 
   /*
   |--------------------------------------------------------------------------

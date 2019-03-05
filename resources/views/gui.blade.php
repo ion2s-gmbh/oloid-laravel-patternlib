@@ -25,7 +25,11 @@
 
 
         <!-- Styles -->
-        <link href='{{ asset('vendor/workshop/css/app.css') }}' rel='stylesheet' type='text/css'>        
+        <link href='{{ asset('vendor/workshop/css/app.css') }}' rel='stylesheet' type='text/css'>
+
+        <script>
+            const workshopUri = '{{ config('workshop.uri') }}'
+        </script>
 
     </head>
 

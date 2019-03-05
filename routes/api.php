@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Oloid\Http\Middleware\EnablePatternStatusCheck;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,7 +59,8 @@ Route::get('pattern/exists/{pattern}', 'PatternController@exists');
 | Get all all information for the preview screen.
 | Except the actual rendered preview, that will be loaded by an iframe.
 */
-Route::get('pattern/preview/{pattern}', 'PatternController@preview');
+Route::get('pattern/preview/{pattern}', 'PatternController@preview')
+    ->middleware(EnablePatternStatusCheck::class);
 
 /*
 |--------------------------------------------------------------------------

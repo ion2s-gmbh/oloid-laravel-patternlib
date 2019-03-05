@@ -42,20 +42,19 @@ class PatternStatusServiceTest extends BaseTestCase
     public function it_should_evaluate_a_patterns_status()
     {
         // arrange
-        $pattern = new Pattern();
-        $pattern->name = 'atoms.text.h1';
-        $pattern->status = 'rejected';
+        $this->preparePatternStub();
 
         $cut = new PatternStatusService();
 
         $expected = [
             'todo' => [],
             'review' => [],
-            'rejected' => ['atoms.text.h1'],
+            'rejected' => ['atoms.text.headline2'],
             'done' => [],
         ];
 
-        $cut->evaluate($pattern);
+        $cut->enable();
+        $cut->evaluate('atoms.text.headline2');
         $this->assertEquals($expected, $cut->getPatterns());
     }
 
@@ -66,29 +65,67 @@ class PatternStatusServiceTest extends BaseTestCase
     public function it_should_only_list_a_pattern_once()
     {
         // arrange
-        $pattern = new Pattern();
-        $pattern->name = 'atoms.text.h1';
-        $pattern->status = 'rejected';
+        $this->preparePatternStub();
+        $name = 'atoms.text.headline2';
 
         $cut = new PatternStatusService();
 
         $expected = [
             'todo' => [],
             'review' => [],
-            'rejected' => ['atoms.text.h1'],
+            'rejected' => ['atoms.text.headline2'],
             'done' => [],
         ];
+
+        $cut->enable();
 
         /*
          * Evaluate first occurrence of the pattern in an other pattern
          */
-        $cut->evaluate($pattern);
+        $cut->evaluate($name);
 
         /*
          * Evaluate second occurrence of the pattern in an other pattern
          */
-        $cut->evaluate($pattern);
+        $cut->evaluate($name);
 
         $this->assertEquals($expected, $cut->getPatterns());
+    }
+
+    /**
+     * @test
+     * @covers \Oloid\Services\PatternStatusService
+     */
+    public function it_should_not_run_evaluation_if_not_enabled()
+    {
+        // arrange
+        $this->preparePatternStub();
+        $cut = new PatternStatusService();
+
+        $expected = [
+            'todo' => [],
+            'review' => [],
+            'rejected' => [],
+            'done' => [],
+        ];
+
+        $cut->evaluate('atoms.text.headline2');
+
+        $this->assertEquals($expected, $cut->getPatterns());
+    }
+
+    /**
+     * @test
+     * @covers \Oloid\Services\PatternStatusService
+     */
+    public function it_should_enable_the_evaluation()
+    {
+        // arrange
+        $cut = new PatternStatusService();
+
+        // assert
+        $this->assertFalse($cut->isEnabled());
+        $cut->enable();
+        $this->assertTrue($cut->isEnabled());
     }
 }

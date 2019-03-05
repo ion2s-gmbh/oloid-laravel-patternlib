@@ -93,7 +93,7 @@ class PatternServiceProviderTest extends BaseTestCase
         $this->preparePatternStub();
         $patternServiceProvider = new PatternServiceProvider(app());
         $closure = $patternServiceProvider->directiveResolution('atoms');
-        $expected = "<?php echo view('patterns.atoms.text.headline1', ['text' => 'Heading 1'], array_except(get_defined_vars(), array('__data', '__path')))->render() ?>";
+        $expected = "<?php echo \$__env->make('patterns.atoms.text.headline1', ['text' => 'Heading 1'], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>";
 
         // act
         $parsed = $closure->call($patternServiceProvider, "'text.headline1', ['text' => 'Heading 1']");

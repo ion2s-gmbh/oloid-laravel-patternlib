@@ -7,7 +7,6 @@ use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
-use Oloid\Services\PatternService;
 use Oloid\Services\PatternStatusService;
 
 class PatternServiceProvider extends ServiceProvider
@@ -125,13 +124,8 @@ class PatternServiceProvider extends ServiceProvider
      */
     private function evaluatePatternStatus(string $pattern)
     {
-        /** @var PatternService $patternService */
-        $patternService = $this->app->make(PatternService::class);
-
         /** @var PatternStatusService $patternStatusService */
         $patternStatusService = $this->app->make(PatternStatusService::class);
-
-        $pattern = $patternService->loadPattern($pattern);
         $patternStatusService->evaluate($pattern);
     }
 }

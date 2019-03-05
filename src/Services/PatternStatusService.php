@@ -74,4 +74,15 @@ class PatternStatusService
     {
         $this->enabled = true;
     }
+
+    /**
+     * Check if the evaluatuation is encabled.
+     * @return bool
+     */
+    public function isEnabled(): bool
+    {
+        return $this->enabled;
+    }
+
+
 }

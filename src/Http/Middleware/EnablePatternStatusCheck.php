@@ -5,7 +5,7 @@ namespace Oloid\Http\Middleware;
 use Closure;
 use Oloid\Services\PatternStatusService;
 
-class CheckPatternStatus
+class EnablePatternStatusCheck
 {
     /**
      * Handle an incoming request.

@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Oloid\Http\Middleware\CheckPatternStatus;
+use Oloid\Http\Middleware\EnablePatternStatusCheck;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,7 +60,7 @@ Route::get('pattern/exists/{pattern}', 'PatternController@exists');
 | Except the actual rendered preview, that will be loaded by an iframe.
 */
 Route::get('pattern/preview/{pattern}', 'PatternController@preview')
-    ->middleware(CheckPatternStatus::class);
+    ->middleware(EnablePatternStatusCheck::class);
 
 /*
 |--------------------------------------------------------------------------

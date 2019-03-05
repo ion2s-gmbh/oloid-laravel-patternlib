@@ -113,4 +113,19 @@ class PatternStatusServiceTest extends BaseTestCase
 
         $this->assertEquals($expected, $cut->getPatterns());
     }
+
+    /**
+     * @test
+     * @covers \Oloid\Services\PatternStatusService
+     */
+    public function it_should_enable_the_evaluation()
+    {
+        // arrange
+        $cut = new PatternStatusService();
+
+        // assert
+        $this->assertFalse($cut->isEnabled());
+        $cut->enable();
+        $this->assertTrue($cut->isEnabled());
+    }
 }

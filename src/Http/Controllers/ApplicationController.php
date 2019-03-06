@@ -12,15 +12,15 @@ class ApplicationController extends Controller
     /**
      * Get basic information about the main application.
      *
-     * @param GitService $vcsService
+     * @param GitService $gitService
      * @return JsonResponse
      */
-    public function info(GitService $vcsService): JsonResponse
+    public function info(GitService $gitService): JsonResponse
     {
         return Response::json([
             'data' => [
                 'appName' => config('app.name'),
-                'currentBranch' => $vcsService->getCurrentBranch()
+                'currentBranch' => $gitService->getCurrentBranch()
             ]
         ]);
     }

@@ -31,7 +31,7 @@ class GitServiceTest extends BaseTestCase
 
 
         // assert
-        $this->assertEquals('No git repo', $cut->getCurrentBranch());
+        $this->assertEquals('', $cut->getCurrentBranch());
     }
 
     /**

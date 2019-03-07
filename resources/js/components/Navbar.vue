@@ -8,12 +8,12 @@
         
         <a class="a" href="/" target="_blank">
           {{ $store.getters.appName }}
+          <template v-if="$store.getters.currentBranch">
+            |&nbsp;<i class="fas fa-code-branch"></i> -
+            {{ $store.getters.currentBranch }}
+          </template>
         </a>
-        <span class="dashboard-info" title="Current branch: Hajpoei">
-          <i class="fas fa-code-branch"></i> -
-          {{ $store.getters.currentBranch }}
-        </span>
-        
+
       </h1>
 
       <div class="project-actions">

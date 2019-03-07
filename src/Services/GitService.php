@@ -34,7 +34,7 @@ class GitService
          * If there is no .git folder, return. There is no current branch.
          */
         if (!$this->filesystem->exists(base_path('../.git'))) {
-            return 'No git repo';
+            return '';
         }
 
         /*
